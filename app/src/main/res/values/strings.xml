@@ -11,5 +11,5 @@
     <string name="otp_inst">Enter <b>OTP</b> recieved on your provided mobile number</string>
     <string name="otp_insta">Enter <b>OTP</b> recieved on your provided mobile number</string>
     <string name="please_grant_external_storage_permissions">In order to use this application, please grant External storage permission.</string>
-
+    <string name="mvvm">mvvm</string>
 </resources>
