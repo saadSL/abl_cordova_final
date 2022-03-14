@@ -7,6 +7,7 @@
     <string name="dummy_txt">Biometric Verification successfully done.</string>
     <string name="OTP_number">03XX-XXXXXXX</string>
     <string name="OTP_heading">Verify OTP</string>
+    <string name="extra">extra</string>
     <string name="OTP_question">Did not recieve OTP ?</string>
     <string name="otp_inst">Enter <b>OTP</b> recieved on your provided mobile number</string>
     <string name="otp_insta">Enter <b>OTP</b> recieved on your provided mobile number</string>
