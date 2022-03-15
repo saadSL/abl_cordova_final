@@ -37,6 +37,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     implementation 'br.com.simplepass:loading-button-android:1.7.2'
-       
+
+    //viewmodel
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+
 }
 

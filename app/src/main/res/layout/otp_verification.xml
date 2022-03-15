@@ -204,7 +204,6 @@
         <Button
             android:id="@+id/btn_verify"
             android:text="Verify"
-            android:onClick="OTPVerification"
             android:layout_marginTop="50sp"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
@@ -221,7 +220,6 @@
         <Button
             android:id="@+id/btn_cancel"
             android:layout_marginTop="10sp"
-            android:onClick="cancelActivity"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

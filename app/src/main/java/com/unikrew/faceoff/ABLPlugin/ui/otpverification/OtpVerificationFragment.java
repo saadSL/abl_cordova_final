@@ -1,32 +1,37 @@
-package com.unikrew.faceoff.ABLPlugin.ui;
+package com.unikrew.faceoff.ABLPlugin.ui.otpverification;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
 import com.unikrew.faceoff.ABLPlugin.OTPReciever;
 import com.unikrew.faceoff.ABLPlugin.model.CnicPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.OtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.OtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.ResponseDTO;
+import com.unikrew.faceoff.ABLPlugin.ui.fingerprintverification.FingerPrintFragment;
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
 
@@ -44,7 +49,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class OtpVerificationActivity extends AppCompatActivity implements TextWatcher {
+public class OtpVerificationFragment extends Fragment implements TextWatcher {
 
     private EditText otp1;
     private EditText otp2;
@@ -53,11 +58,10 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
     private EditText otp5;
     private EditText otp6;
 
-    private Button btnVerify;
-
     private TextView mobileNumber;
 
     private TextView timer;
+    private Button btnVerify, btnCancel;
 
     ResponseDTO res;
     CnicPostParams cnicPostParams;
@@ -65,62 +69,75 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
     public static CountDownTimer countDownTimer;
 
     boolean otpStatus = false;
+    OtpVerificationViewModel otpVerificationViewModel;
+    private Context mContext;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.otp_verification);
-
-        bind();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.otp_verification, container, false);
+        otpVerificationViewModel = new ViewModelProvider(this).get(OtpVerificationViewModel.class);
+        bind(view);
         set();
-        requestPermission();
-
+        clicks();
         new OTPReciever().setEditText_otp(
-                otp1,otp2,otp3,
-                otp4,otp5,otp6
+                otp1, otp2, otp3,
+                otp4, otp5, otp6
         );
 
         startTimer(Config.countDownTime);
+
+        return view;
     }
 
+    private void clicks() {
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendOtp();
+            }
+        });
 
-
-
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelActivity();
+            }
+        });
+    }
 
     private void set() {
-        res = (ResponseDTO) getIntent().getSerializableExtra(Config.RESPONSE);
-        mobileNumber.setText("03XX-XXXX"+res.getData().getMobileNo().substring(res.getData().getMobileNo().length()-3));
-        cnicPostParams = (CnicPostParams) getIntent().getSerializableExtra(Config.CNIC_ACC);
+        Bundle args = getArguments();
+        res = (ResponseDTO) args.getSerializable(Config.RESPONSE);
+        mobileNumber.setText("03XX-XXXX" + res.getData().getMobileNo().substring(res.getData().getMobileNo().length() - 3));
+        cnicPostParams = (CnicPostParams) args.getSerializable(Config.CNIC_ACC);
         otp6.addTextChangedListener(this);
     }
 
-    private void bind() {
-        otp1 = findViewById(R.id.et_otp1);
-        otp2 = findViewById(R.id.et_otp2);
-        otp3 = findViewById(R.id.et_otp3);
-        otp4 = findViewById(R.id.et_otp4);
-        otp5 = findViewById(R.id.et_otp5);
-        otp6 = findViewById(R.id.et_otp6);
-
-
-        btnVerify = findViewById(R.id.btn_verify);
-
-        mobileNumber = findViewById(R.id.tv_mobileNumber);
-
-        timer = findViewById(R.id.timer);
+    private void bind(View view) {
+        otp1 = view.findViewById(R.id.et_otp1);
+        otp2 = view.findViewById(R.id.et_otp2);
+        otp3 = view.findViewById(R.id.et_otp3);
+        otp4 = view.findViewById(R.id.et_otp4);
+        otp5 = view.findViewById(R.id.et_otp5);
+        otp6 = view.findViewById(R.id.et_otp6);
+        btnVerify = view.findViewById(R.id.btn_verify);
+        btnCancel = view.findViewById(R.id.btn_cancel);
+        mobileNumber = view.findViewById(R.id.tv_mobileNumber);
+        timer = view.findViewById(R.id.timer);
     }
 
     private void startTimer(int totalTime) {
-        countDownTimer = new CountDownTimer(totalTime,1000) {
+        countDownTimer = new CountDownTimer(totalTime, 1000) {
             @Override
             public void onTick(long l) {
-                int minutes = (int)(l/1000)/60;
-                int seconds = (int)(l/1000)%60;
-                String timeFormat = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
-                if (minutes==0){
-                    timer.setText(timeFormat+" seconds");
-                }else{
-                    timer.setText(timeFormat+" minutes");
+                int minutes = (int) (l / 1000) / 60;
+                int seconds = (int) (l / 1000) % 60;
+                String timeFormat = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                if (minutes == 0) {
+                    timer.setText(timeFormat + " seconds");
+                } else {
+                    timer.setText(timeFormat + " minutes");
                 }
 
             }
@@ -139,41 +156,40 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
                 isEmpty(otp3) || isEmpty(otp6)) {
             showAlert("OTP fields empty");
             return;
-        }else if (!isOnline()){
+        } else if (!isOnline()) {
             showAlert("No internet connection !!!");
             return;
         }
 
-        String otp = otp1.getText().toString()+otp2.getText().toString()+otp3.getText().toString()+otp4.getText().toString()+otp5.getText().toString()+otp6.getText().toString();
+        String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
         OtpPostParams otpPostParams = new OtpPostParams();
 
         otpPostParams.getData().setOtp(encrypt(otp));
-        otpPostParams.getData().setRdaCustomerProfileId(""+res.getData().getEntityId());
+        otpPostParams.getData().setRdaCustomerProfileId("" + res.getData().getEntityId());
 
-       CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-       vm.postOtp(otpPostParams,res.getData().getAccessToken(),this);
+        otpVerificationViewModel.postOtp(otpPostParams, res.getData().getAccessToken(), (Activity) mContext);
 
 
-       vm.OtpSuccessLiveData.observe(this, new Observer<OtpResponse>() {
-           @Override
-           public void onChanged(OtpResponse otpResponse) {
-               Intent i = new Intent(view.getContext(),FingerPrintActivity.class);
-               i.putExtra(Config.RESPONSE,otpResponse);
-               i.putExtra("TOKEN",res.getData().getAccessToken());
-               startActivity(i);
-               countDownTimer.cancel();
-               clearFields();
-           }
-       });
+        otpVerificationViewModel.OtpSuccessLiveData.observe(this, new Observer<OtpResponse>() {
+            @Override
+            public void onChanged(OtpResponse otpResponse) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Config.RESPONSE, otpResponse);
+                bundle.putString("TOKEN", res.getData().getAccessToken());
+                ((CNIC_Availability) mContext).replaceFingerPrintFragment(bundle);
+                countDownTimer.cancel();
+                clearFields();
+            }
+        });
 
-       vm.OtpErrorLiveData.observe(this, new Observer<String>() {
-           @Override
-           public void onChanged(String errorMsg) {
+        otpVerificationViewModel.OtpErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMsg) {
                 showAlert(errorMsg);
                 clearFields();
-           }
-       });
+            }
+        });
 //        startActivity(new Intent(OtpVerificationActivity.this, FingerPrintActivity.class));
     }
 
@@ -193,30 +209,31 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
         return false;
     }
 
-    public void cancelActivity(View view) {
-        finish();
+    public void cancelActivity() {
+
+//        finish();
     }
 
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         countDownTimer.cancel();
     }
 
-    public void sendOtp(View view) {
-        CnicAvailabilityViewModel viewModel = new CnicAvailabilityViewModel();
+    public void sendOtp() {
         try {
-            viewModel.postCNIC(cnicPostParams,this);
+            otpVerificationViewModel.postCNIC(cnicPostParams, (Activity) mContext);
             countDownTimer.start();
 
-            viewModel.CnicSuccessLiveData.observe(this, new Observer<ResponseDTO>() {
+            otpVerificationViewModel.CnicSuccessLiveData.observe(this, new Observer<ResponseDTO>() {
                 @Override
                 public void onChanged(ResponseDTO responseDTO) {
                     showAlert("OTP Request Send");
                 }
             });
 
-            viewModel.CnicErrorLiveData.observe(this, new Observer<String>() {
+            otpVerificationViewModel.CnicErrorLiveData.observe(this, new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
                     showAlert(s);
@@ -229,19 +246,19 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
         }
     }
 
-    public void messageFunc(View view) {
+    public void messageFunc() {
         showAlert("Sorry, currently the function is not responsive !!!");
     }
 
-    public void powerSettingFunc(View view) {
+    public void powerSettingFunc() {
         showAlert("Sorry, currently the function is not responsive !!!");
     }
 
     @SuppressLint("NewApi")
-    public String encrypt(String value)  {
+    public String encrypt(String value) {
 
-            String initVector = "0000000000000000";
-            String key = "4dweqdxcerfvc3rw";
+        String initVector = "0000000000000000";
+        String key = "4dweqdxcerfvc3rw";
         IvParameterSpec ivParameterSpec = null;
         try {
             ivParameterSpec = new IvParameterSpec(initVector.getBytes("UTF-8"));
@@ -250,7 +267,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
         }
         SecretKeySpec secretKeySpec = null;
         try {
-            secretKeySpec = new SecretKeySpec(key.getBytes("UTF-8"),"AES");
+            secretKeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -264,7 +281,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
         }
 
         try {
-            cipher.init(Cipher.ENCRYPT_MODE,secretKeySpec,ivParameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
         } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {
@@ -283,10 +300,9 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
     }
 
 
+    public void showAlert(String msg) {
 
-    public void showAlert(String msg){
-
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(OtpVerificationActivity.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
         builder1.setMessage(msg);
         builder1.setCancelable(true);
 
@@ -301,24 +317,17 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
     public boolean isOnline() {
-        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+        ConnectivityManager conMgr = (ConnectivityManager) mContext.getApplicationContext().getSystemService(mContext.getApplicationContext().CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             return false;
         }
         return true;
     }
 
-    private void requestPermission() {
-        if (ContextCompat.checkSelfPermission(OtpVerificationActivity.this, Manifest.permission.RECEIVE_SMS)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(OtpVerificationActivity.this,new String[]{
-                    Manifest.permission.RECEIVE_SMS
-            },100);
-        }
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -329,7 +338,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
         try {
-            if (otp6.getText().length()>0){
+            if (otp6.getText().length() > 0) {
                 OTPVerification(btnVerify);
             }
 
@@ -341,5 +350,11 @@ public class OtpVerificationActivity extends AppCompatActivity implements TextWa
     @Override
     public void afterTextChanged(Editable editable) {
         System.out.println("After Text changed : ");
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.mContext = context;
     }
 }

@@ -39,8 +39,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:padding="5dp"
-            android:onClick="changeStatus"
             android:src="@drawable/ic_msg"
+            android:visibility="gone"
             app:tint="@color/white" />
 
         <ImageView
@@ -50,6 +50,7 @@
             android:layout_margin="8dp"
             android:padding="5dp"
             android:src="@drawable/ic_power_setting"
+            android:visibility="gone"
             app:tint="@color/white" />
     </LinearLayout>
 
@@ -68,19 +69,19 @@
         android:id="@+id/iv_finger_print"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="20dp"
         android:layout_weight="1"
-        android:src="@drawable/ic_finger_print"
-         />
+        android:src="@drawable/ic_finger_print" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/li_success"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="60dp"
@@ -89,6 +90,7 @@
             android:layout_margin="8dp"
             android:padding="5dp"
             android:src="@drawable/ic_success" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
