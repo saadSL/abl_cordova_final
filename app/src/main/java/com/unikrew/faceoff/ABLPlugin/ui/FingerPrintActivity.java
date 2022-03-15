@@ -25,17 +25,27 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusResponse;
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.fingerprint.Customization.CustomUI;
 import com.unikrew.faceoff.fingerprint.FingerprintConfig;
+import com.unikrew.faceoff.fingerprint.FingerprintHelpers.Png;
 import com.unikrew.faceoff.fingerprint.FingerprintResponse;
 import com.unikrew.faceoff.fingerprint.FingerprintScannerActivity;
 import com.unikrew.faceoff.fingerprint.LivenessNotSupportedException;
 import com.unikrew.faceoff.fingerprint.NadraConfig;
 import com.unikrew.faceoff.fingerprint.ResultIPC;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FingerPrintActivity extends AppCompatActivity {
 
@@ -171,7 +181,6 @@ public class FingerPrintActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,34 +190,10 @@ public class FingerPrintActivity extends AppCompatActivity {
             if (responseCode > 0) {
                 FingerprintResponse fingerprintResponse = ResultIPC.getInstance().getFingerprintResponse(responseCode);
                 if (fingerprintResponse != null) {
-                    // If scanning and NADRA request were successful
-                    if (resultCode == FingerprintResponse.Response.SUCCESS_NADRA.getResponseCode()) {
-                        showNadraResults(responseCode);
-                    }
-
-                    // If scanning and ENROLLMENT request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_ENROLLMENT.getResponseCode()) {
-                        toastMessage("Fingerprint successfully enrolled");
-                    }
-
-                    // If scanning and IDENTIFICATION request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_IDENTIFICATION.getResponseCode()) {
-                        showIdentificationResults(responseCode);
-                    }
-
-                    // If scanning and EXPORT WSQ request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_WSQ_EXPORT.getResponseCode()
+                    if (resultCode == FingerprintResponse.Response.SUCCESS_WSQ_EXPORT.getResponseCode()
                             || resultCode == FingerprintResponse.Response.SUCCESS_PNG_EXPORT.getResponseCode()) {
 //                        showFingerprints(responseCode);
-
-                            submitFingerPrintToNetwork();
-//                        if (status){
-//                            submitFingerPrint();
-//                        }else{
-//                            showAlert(0,"Sorry, Finger print not approved by nadra. Please scan again.");
-//                        }
-
-
+                        postFingerPrints(fingerprintResponse);
                     }
 
                     // If unsuccessful, toast error message
@@ -224,37 +209,67 @@ public class FingerPrintActivity extends AppCompatActivity {
         }
     }
 
-    private void submitFingerPrintToNetwork() {
-        UpdateBioMetricStatusPostParams pp = new UpdateBioMetricStatusPostParams();
+    private void postFingerPrints(FingerprintResponse fingerprintResponse) {
+        List<JSONObject> fingerprints = new ArrayList<JSONObject>();
+        BioMetricVerificationNadraPostParams pp = new BioMetricVerificationNadraPostParams();
+        for (Png png : fingerprintResponse.getPngList()) {
 
-        pp.getData().setRdaCustomerProfileId("3003");
-        pp.getData().setRdaCustomerAccountInfoId("3195");
-        pp.getData().setBioMetricVerificationNadraStatus(status);
-        pp.getData().setNadraSessionId("afajhsdkjfhakjsdhfkjweu93845hriefha9we09u9f8u4398h");
+            String binaryBase64ObjectPNG = png.getBinaryBase64ObjectPNG();
+            int indexCode = png.getFingerPositionCode();
 
-        String token = (String) getIntent().getSerializableExtra("TOKEN");
+//            FingerPrintData fingerPrintData = new FingerPrintData();
+
+            JSONObject jsonObject = new JSONObject();
+//            fingerPrintData.setIndex(String.valueOf(indexCode));
+//            fingerPrintData.setTemplate(binaryBase64ObjectPNG);
+            try {
+                jsonObject.put("index",indexCode);
+                jsonObject.put("template",binaryBase64ObjectPNG);
+                fingerprints.add(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        BioMetricVerificationResponse res = (BioMetricVerificationResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+
+        pp.getData().setRdaCustomerProfileId(Integer.toString(res.getData().getEntityId()));
+        pp.getData().setRdaCustomerAccountInfoId(Integer.toString(res.getData().getAccountInfoId()));
+        pp.getData().setCnic(res.getData().getUsername());
+        pp.getData().setFingerprints(fingerprints);
+        pp.getData().setTemplateType(Config.templateType);
+        pp.getData().setContactNumber(res.getData().getMobileNo());
+        pp.getData().setAreaName(res.getData().getArea());
+        pp.getData().setAccountType(res.getData().getAccountType());
+
+        System.out.print(pp.getData());
 
         CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.updateBioMetricStatus(pp,token,this);
+        vm.updateBioMetricStatus(pp, res.getData().getAccessToken(), FingerPrintActivity.this);
 
-        vm.BioMetricStatusSuccessLiveData.observe(this, new Observer<UpdateBioMetricStatusResponse>() {
+        vm.BioMetricStatusSuccessLiveData.observe(this, new Observer<BioMetricVerificationNadraResponse>() {
             @Override
-            public void onChanged(UpdateBioMetricStatusResponse updateBioMetricStatusResponse) {
-                fingerPrintSuccess();
+            public void onChanged(BioMetricVerificationNadraResponse bioMetricVerificationNadraResponse) {
+               String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
+                if (code.equals("100")) {
+                    submitFingerPrint();
+                } else {
+                    showAlert(Config.errorType, "Not Approved.Please Scan Again");
+//                                    showAlert(Config.errorType,bioMetricVerificationNadraResponse.getData().getResponseMsg());
+                }
             }
         });
 
         vm.BioMetricStatusErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errorMsg) {
-                if (pp.getData().getBioMetricVerificationNadraStatus().equals("1")){
-                    fingerPrintSuccess();
-                }else{
-                    showAlert(Config.errorType,errorMsg);
-                }
-
+                showAlert(Config.errorType, errorMsg);
             }
         });
+    }
+
+    private void submitFingerPrint() {
     }
 
     private void showFingerprints(int responseCode) {

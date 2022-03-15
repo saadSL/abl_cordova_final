@@ -2,6 +2,8 @@ package com.unikrew.faceoff.ABLPlugin.interfaces;
 
 
 
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
 import com.unikrew.faceoff.ABLPlugin.model.CnicPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.ResponseDTO;
 import com.unikrew.faceoff.ABLPlugin.model.OtpPostParams;
@@ -21,7 +23,8 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/verify-otp-bio-metric-verification")
     Call<OtpResponse> OtpPost(@Body OtpPostParams pp, @Header("Authorization") String accessToken);
 
-    @POST("/RdaConsumer/api/consumer/update-bio-metric-verification-status")
-    Call<UpdateBioMetricStatusResponse> UpdateBioMetricStatus(@Body UpdateBioMetricStatusPostParams pp, @Header("Authorization") String accessToken);
+    @POST("/RdaConsumer/api/consumer/bio-metric-verification-nadra")
+    Call<BioMetricVerificationNadraResponse> UpdateBioMetricStatus(@Body BioMetricVerificationNadraPostParams pp, @Header("Authorization") String accessToken);
+
 
 }
