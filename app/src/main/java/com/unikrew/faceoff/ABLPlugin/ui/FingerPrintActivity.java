@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 
+import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
@@ -49,7 +50,7 @@ import java.util.List;
 
 public class FingerPrintActivity extends AppCompatActivity {
 
-    private Button btSubmit;
+    private Button btSubmit, btCancel;
     private ImageView ivFingerPrint, ivBack;
     private LinearLayout liSuccess;
 
@@ -91,6 +92,18 @@ public class FingerPrintActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCnicScreen();
+            }
+        });
+    }
+
+    private void goToCnicScreen() {
+        Intent intent = new Intent(this, CNIC_Availability.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void fingerPrintSuccess() {
@@ -102,6 +115,7 @@ public class FingerPrintActivity extends AppCompatActivity {
     private void bindViews() {
         ivBack = findViewById(R.id.iv_back);
         btSubmit = findViewById(R.id.bt_submit);
+        btCancel = findViewById(R.id.btn_cancel);
         ivFingerPrint = findViewById(R.id.iv_finger_print);
         liSuccess = findViewById(R.id.li_success);
     }
@@ -223,8 +237,8 @@ public class FingerPrintActivity extends AppCompatActivity {
 //            fingerPrintData.setIndex(String.valueOf(indexCode));
 //            fingerPrintData.setTemplate(binaryBase64ObjectPNG);
             try {
-                jsonObject.put("index",indexCode);
-                jsonObject.put("template",binaryBase64ObjectPNG);
+                jsonObject.put("index", indexCode);
+                jsonObject.put("template", binaryBase64ObjectPNG);
                 fingerprints.add(jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -251,11 +265,11 @@ public class FingerPrintActivity extends AppCompatActivity {
         vm.BioMetricStatusSuccessLiveData.observe(this, new Observer<BioMetricVerificationNadraResponse>() {
             @Override
             public void onChanged(BioMetricVerificationNadraResponse bioMetricVerificationNadraResponse) {
-               String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
+                String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
                 if (code.equals("100")) {
                     submitFingerPrint();
                 } else {
-                    showAlert(Config.errorType, "Not Approved.Please Scan Again");
+                    showAlert(Config.errorType, bioMetricVerificationNadraResponse.getData().getResponseDescription());
 //                                    showAlert(Config.errorType,bioMetricVerificationNadraResponse.getData().getResponseMsg());
                 }
             }
@@ -270,6 +284,9 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     private void submitFingerPrint() {
+        ivFingerPrint.setVisibility(View.GONE);
+        liSuccess.setVisibility(View.VISIBLE);
+        btSubmit.setText("Done");
     }
 
     private void showFingerprints(int responseCode) {
@@ -296,10 +313,10 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
 
-    public void showAlert(int type,String msg){
+    public void showAlert(int type, String msg) {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(FingerPrintActivity.this);
-        if (type == Config.errorType){
+        if (type == Config.errorType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
             spannableStringBuilder.setSpan(
@@ -309,7 +326,7 @@ public class FingerPrintActivity extends AppCompatActivity {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
             builder1.setTitle(spannableStringBuilder);
-        }else if (type==Config.successType){
+        } else if (type == Config.successType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
             spannableStringBuilder.setSpan(
@@ -338,9 +355,9 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     public void changeStatus(View view) {
-        if (status.equals("0")){
+        if (status.equals("0")) {
             status = "1";
-        }else{
+        } else {
             status = "0";
         }
     }

@@ -144,23 +144,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_cnicNumber"/>
 
-        <Button
-            android:id="@+id/btn_Cancel"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/transparent_bg"
-            android:onClick="cancelActivity"
-            android:padding="10dp"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textColor="@color/primary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Next" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

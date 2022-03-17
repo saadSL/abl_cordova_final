@@ -1,5 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin;
 
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.CnicPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.ResponseDTO;
 import com.unikrew.faceoff.ABLPlugin.ui.CnicAvailabilityViewModel;
@@ -42,6 +44,7 @@ public class CNIC_Availability extends AppCompatActivity {
 
     public void postCustomerDetail(View view) throws InterruptedException {
 
+
         if (isEmpty(etAccNumber) ||
                 isEmpty(etCnicNumber)){
             showAlert(Config.errorType,"Please fill all * fields");
@@ -58,13 +61,13 @@ public class CNIC_Availability extends AppCompatActivity {
             return;
         }
 
-        CnicPostParams CnicPostParams = new CnicPostParams();
+        BioMetricVerificationPostParams BioMetricVerificationPostParams = new BioMetricVerificationPostParams();
 
-        CnicPostParams.getData().setCnic(etCnicNumber.getText().toString());
-        CnicPostParams.getData().setAccountNo(etAccNumber.getText().toString());
+        BioMetricVerificationPostParams.getData().setCnic(etCnicNumber.getText().toString());
+        BioMetricVerificationPostParams.getData().setAccountNo(etAccNumber.getText().toString());
 
         CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.postCNIC(CnicPostParams, CNIC_Availability.this);
+        vm.postCNIC(BioMetricVerificationPostParams,CNIC_Availability.this);
 
 
         vm.CnicVerifiedLiveData.observe(this, new Observer<String>() {
@@ -74,12 +77,12 @@ public class CNIC_Availability extends AppCompatActivity {
             }
         });
 
-        vm.CnicSuccessLiveData.observe(this, new Observer<ResponseDTO>() {
+        vm.CnicSuccessLiveData.observe(this, new Observer<BioMetricVerificationResponse>() {
             @Override
-            public void onChanged(ResponseDTO responseDTO) {
+            public void onChanged(BioMetricVerificationResponse bioMetricVerificationResponse) {
                 Intent i = new Intent(view.getContext(), OtpVerificationActivity.class);
-                i.putExtra(Config.RESPONSE,responseDTO);
-                i.putExtra(Config.CNIC_ACC,CnicPostParams);
+                i.putExtra(Config.RESPONSE, bioMetricVerificationResponse);
+                i.putExtra(Config.CNIC_ACC, BioMetricVerificationPostParams);
                 startActivity(i);
                 clearFields();
             }
@@ -103,11 +106,6 @@ public class CNIC_Availability extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    public void cancelActivity(View view) {
-//        finish();
-        startActivity(new Intent(CNIC_Availability.this, FingerPrintActivity.class));
     }
 
     public void showAlert(int type,String msg){
