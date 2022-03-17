@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.FingerprintsItem;
 import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusResponse;
 import com.unikrew.faceoff.Config;
@@ -115,7 +117,7 @@ public class FingerPrintActivity extends AppCompatActivity {
     private void bindViews() {
         ivBack = findViewById(R.id.iv_back);
         btSubmit = findViewById(R.id.bt_submit);
-        btCancel = findViewById(R.id.btn_cancel);
+        btCancel = findViewById(R.id.bt_cancel);
         ivFingerPrint = findViewById(R.id.iv_finger_print);
         liSuccess = findViewById(R.id.li_success);
     }
@@ -224,25 +226,17 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     private void postFingerPrints(FingerprintResponse fingerprintResponse) {
-        List<JSONObject> fingerprints = new ArrayList<JSONObject>();
+        List<FingerprintsItem> fingerprints = new ArrayList<FingerprintsItem>();
         BioMetricVerificationNadraPostParams pp = new BioMetricVerificationNadraPostParams();
         for (Png png : fingerprintResponse.getPngList()) {
 
             String binaryBase64ObjectPNG = png.getBinaryBase64ObjectPNG();
             int indexCode = png.getFingerPositionCode();
 
-//            FingerPrintData fingerPrintData = new FingerPrintData();
-
-            JSONObject jsonObject = new JSONObject();
-//            fingerPrintData.setIndex(String.valueOf(indexCode));
-//            fingerPrintData.setTemplate(binaryBase64ObjectPNG);
-            try {
-                jsonObject.put("index", indexCode);
-                jsonObject.put("template", binaryBase64ObjectPNG);
-                fingerprints.add(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            FingerprintsItem fingerprintsItem = new FingerprintsItem();
+            fingerprintsItem.setIndex(Long.valueOf(indexCode));
+            fingerprintsItem.setTemplate(binaryBase64ObjectPNG);
+            fingerprints.add(fingerprintsItem);
         }
 
 
@@ -257,7 +251,7 @@ public class FingerPrintActivity extends AppCompatActivity {
         pp.getData().setAreaName(res.getData().getArea());
         pp.getData().setAccountType(res.getData().getAccountType());
 
-        System.out.print(pp.getData());
+        Log.d("finalData", pp.getData().toString());
 
         CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
         vm.updateBioMetricStatus(pp, res.getData().getAccessToken(), FingerPrintActivity.this);

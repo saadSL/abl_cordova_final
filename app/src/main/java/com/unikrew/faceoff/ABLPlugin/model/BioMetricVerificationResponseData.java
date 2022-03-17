@@ -3,23 +3,23 @@ package com.unikrew.faceoff.ABLPlugin.model;
 import java.io.Serializable;
 
 public class BioMetricVerificationResponseData implements Serializable {
-    private Object userId=null;
-    private int entityId=0;
-    private String fullName="";
-    private Object profilePicture=null;
-    private String username="";
-    private int userTypeId=0;
-    private Object helpDeskUserTypeId=0;
-    private Object statusId=null;
-    private String accessToken="";
-    private boolean existingCustomer=false;
-    private boolean guestConsumer=false;
-    private int accountInfoId=0;
-    private int sessionTimeout=0;
-    private Object menus=null;
-    private String mobileNo ="";
-    private String area ="sindh";
-    private String accountType ="Current";
+    private Object userId = null;
+    private int entityId = 0;
+    private String fullName = "";
+    private Object profilePicture = null;
+    private String username = "";
+    private int userTypeId = 0;
+    private Object helpDeskUserTypeId = 0;
+    private Object statusId = null;
+    private String accessToken = "";
+    private boolean existingCustomer = false;
+    private boolean guestConsumer = false;
+    private int accountInfoId = 0;
+    private int sessionTimeout = 0;
+    private Object menus = null;
+    private String mobileNo = "";
+    private String area = "sindh";
+    private String accountType = "Current";
 
     public String getArea() {
         return area;
@@ -53,112 +53,112 @@ public class BioMetricVerificationResponseData implements Serializable {
         this.mobileNo = mobileNo;
     }
 
-    public void setUserId(Object userId){
+    public void setUserId(Object userId) {
         this.userId = userId;
     }
 
-    public Object getUserId(){
+    public Object getUserId() {
         return userId;
     }
 
-    public void setEntityId(int entityId){
+    public void setEntityId(int entityId) {
         this.entityId = entityId;
     }
 
-    public int getEntityId(){
+    public int getEntityId() {
         return entityId;
     }
 
-    public void setFullName(String fullName){
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return fullName;
     }
 
-    public void setProfilePicture(Object profilePicture){
+    public void setProfilePicture(Object profilePicture) {
         this.profilePicture = profilePicture;
     }
 
-    public Object getProfilePicture(){
+    public Object getProfilePicture() {
         return profilePicture;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUserTypeId(int userTypeId){
+    public void setUserTypeId(int userTypeId) {
         this.userTypeId = userTypeId;
     }
 
-    public int getUserTypeId(){
+    public int getUserTypeId() {
         return userTypeId;
     }
 
-    public void setHelpDeskUserTypeId(Object helpDeskUserTypeId){
+    public void setHelpDeskUserTypeId(Object helpDeskUserTypeId) {
         this.helpDeskUserTypeId = helpDeskUserTypeId;
     }
 
-    public Object getHelpDeskUserTypeId(){
+    public Object getHelpDeskUserTypeId() {
         return helpDeskUserTypeId;
     }
 
-    public void setStatusId(Object statusId){
+    public void setStatusId(Object statusId) {
         this.statusId = statusId;
     }
 
-    public Object getStatusId(){
+    public Object getStatusId() {
         return statusId;
     }
 
-    public void setAccessToken(String accessToken){
+    public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    public String getAccessToken(){
+    public String getAccessToken() {
         return accessToken;
     }
 
-    public void setExistingCustomer(boolean existingCustomer){
+    public void setExistingCustomer(boolean existingCustomer) {
         this.existingCustomer = existingCustomer;
     }
 
-    public boolean isExistingCustomer(){
+    public boolean isExistingCustomer() {
         return existingCustomer;
     }
 
-    public void setGuestConsumer(boolean guestConsumer){
+    public void setGuestConsumer(boolean guestConsumer) {
         this.guestConsumer = guestConsumer;
     }
 
-    public boolean isGuestConsumer(){
+    public boolean isGuestConsumer() {
         return guestConsumer;
     }
 
-    public void setSessionTimeout(int sessionTimeout){
+    public void setSessionTimeout(int sessionTimeout) {
         this.sessionTimeout = sessionTimeout;
     }
 
-    public int getSessionTimeout(){
+    public int getSessionTimeout() {
         return sessionTimeout;
     }
 
-    public void setMenus(Object menus){
+    public void setMenus(Object menus) {
         this.menus = menus;
     }
 
-    public Object getMenus(){
+    public Object getMenus() {
         return menus;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return
                 "BioMetricVerificationResponseData{" +
                         "userId = '" + userId + '\'' +

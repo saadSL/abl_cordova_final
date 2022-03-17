@@ -1,26 +1,38 @@
 package com.unikrew.faceoff.ABLPlugin.model;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BioMetricVerificationNadraPostData implements Serializable {
     private String rdaCustomerProfileId = "";
+
+    @Override
+    public String toString() {
+        return "BioMetricVerificationNadraPostData{" +
+                "rdaCustomerProfileId='" + rdaCustomerProfileId + '\'' +
+                ", rdaCustomerAccountInfoId='" + rdaCustomerAccountInfoId + '\'' +
+                ", cnic='" + cnic + '\'' +
+                ", fingerprints=" + fingerprints +
+                ", templateType='" + templateType + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", areaName='" + areaName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                '}';
+    }
+
     private String rdaCustomerAccountInfoId = "";
     private String cnic = "";
 
-    public List<JSONObject> getFingerprints() {
+    private List<FingerprintsItem> getFingerprints() {
         return fingerprints;
     }
 
-    public void setFingerprints(List<JSONObject> fingerprints) {
+    public void setFingerprints(List<FingerprintsItem> fingerprints) {
         this.fingerprints = fingerprints;
     }
 
-    /* saad's work for finger prints on line 11 and line 81 and line 18 - 24*/
-    private List<JSONObject> fingerprints = new ArrayList<JSONObject>();
+    private List<FingerprintsItem> fingerprints = new ArrayList<FingerprintsItem>();
     private String templateType = "";
     private String contactNumber = "";
     private String areaName = "";
@@ -83,18 +95,4 @@ public class BioMetricVerificationNadraPostData implements Serializable {
         this.rdaCustomerAccountInfoId = rdaCustomerAccountInfoId;
     }
 
-    @Override
-    public String toString() {
-        return
-                "BioMetricVerificationNadraPostData{" +
-                        "rdaCustomerProfileId = '" + rdaCustomerProfileId + '\'' +
-                        ",rdaCustomerAccountInfoId = '" + rdaCustomerAccountInfoId + '\'' +
-                        ",cnic = '" + cnic + '\'' +
-                        ",fingerprints = '" + fingerprints + '\'' +
-                        ",templateType = '" + templateType + '\'' +
-                        ",contactNumber = '" + contactNumber + '\'' +
-                        ",areaName = '" + areaName + '\'' +
-                        ",accountType = '" + accountType + '\'' +
-                        "}";
-    }
 }

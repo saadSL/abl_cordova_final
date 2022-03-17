@@ -277,7 +277,6 @@ public class OtpVerificationActivity extends AppCompatActivity{
                 clearFields();
             }
         });
-//        startActivity(new Intent(OtpVerificationActivity.this, FingerPrintActivity.class));
     }
 
     private void clearFields() {
