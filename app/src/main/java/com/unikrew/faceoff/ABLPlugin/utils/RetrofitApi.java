@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.interfaces;
+package com.unikrew.faceoff.ABLPlugin.utils;
 
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;

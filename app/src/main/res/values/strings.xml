@@ -7,13 +7,16 @@
     <string name="dummy_txt">Biometric Verification successfully done.</string>
     <string name="OTP_number">03XX-XXXXXXX</string>
     <string name="OTP_heading">Verify OTP</string>
+    <string name="otp_verification">OTP Verification</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="bio_verify">Biometric Verification</string>
+    <string name="enter_otp">Enter OTP:</string>
+    <string name="bio_verification">Biometric Verification</string>
     <string name="next">Next</string>
     <string name="extra">extra</string>
     <string name="OTP_question">Didn\'t receive OTP ?</string>
     <string name="remaining_time">Time Remaining</string>
-    <string name="otp_inst">Please enter the OTP you just received from 9080 on the mobile number you provided at the time of registering your Digital Account</string>
+    <string name="otp_des">Please enter the 6-digit verification code here:</string>
     <string name="otp_insta">Enter <b>OTP</b> received on your provided mobile number</string>
     <string name="please_grant_external_storage_permissions">In order to use this application, please grant External storage permission.</string>
 

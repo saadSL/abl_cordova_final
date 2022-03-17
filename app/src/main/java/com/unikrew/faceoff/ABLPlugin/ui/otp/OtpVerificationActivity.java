@@ -1,10 +1,7 @@
-package com.unikrew.faceoff.ABLPlugin.ui;
+package com.unikrew.faceoff.ABLPlugin.ui.otp;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,20 +16,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
-import com.unikrew.faceoff.ABLPlugin.OTPReciever;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
-import com.unikrew.faceoff.ABLPlugin.model.CnicPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.OtpPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.OtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.ResponseDTO;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.fingerprint.FingerPrintActivity;
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
 
@@ -62,24 +54,63 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
     private TextView mobileNumber;
 
-    private TextView timer;
+    private BioMetricVerificationResponse res;
+    private BioMetricVerificationPostParams bioMetricVerificationPostParams;
 
-    BioMetricVerificationResponse res;
-    BioMetricVerificationPostParams bioMetricVerificationPostParams;
-
-    public static CountDownTimer countDownTimer;
 
     boolean otpStatus = false;
+    private OtpVerificationViewModel otpVerificationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.otp_verification);
-
+        setViewModel();
         bind();
         set();
         textChangeListeners();
-        startTimer(Config.countDownTime);
+        observeData();
+    }
+
+    private void observeData() {
+        otpVerificationViewModel.CnicSuccessLiveData.observe(this, new Observer<BioMetricVerificationResponse>() {
+            @Override
+            public void onChanged(BioMetricVerificationResponse bioMetricVerificationResponse) {
+                showAlert("OTP Request Send");
+            }
+        });
+
+        otpVerificationViewModel.CnicErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                showAlert(s);
+            }
+        });
+
+
+        otpVerificationViewModel.OtpSuccessLiveData.observe(this, new Observer<VerifyOtpBioMetricVerificationResponse>() {
+            @Override
+            public void onChanged(VerifyOtpBioMetricVerificationResponse verifyOtpBioMetricVerificationResponse) {
+                Intent i = new Intent(OtpVerificationActivity.this, FingerPrintActivity.class);
+                i.putExtra(Config.RESPONSE, res);
+                i.putExtra("TOKEN", res.getData().getAccessToken());
+                startActivity(i);
+                clearFields();
+                finish();
+            }
+        });
+
+        otpVerificationViewModel.OtpErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMsg) {
+                showAlert(errorMsg);
+                clearFields();
+            }
+        });
+    }
+
+    private void setViewModel() {
+        otpVerificationViewModel = new ViewModelProvider(this).get(OtpVerificationViewModel.class);
     }
 
     private void textChangeListeners() {
@@ -98,7 +129,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp2.requestFocus();
                 }
             }
@@ -119,7 +150,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp3.requestFocus();
                 }
             }
@@ -140,7 +171,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp4.requestFocus();
                 }
             }
@@ -161,7 +192,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp5.requestFocus();
                 }
             }
@@ -182,7 +213,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp6.requestFocus();
                 }
             }
@@ -209,28 +240,8 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
         mobileNumber = findViewById(R.id.tv_mobileNumber);
 
-        timer = findViewById(R.id.timer);
     }
 
-    private void startTimer(int totalTime) {
-        countDownTimer = new CountDownTimer(totalTime, 1000) {
-            @Override
-            public void onTick(long l) {
-                int minutes = (int) (l / 1000) / 60;
-                int seconds = (int) (l / 1000) % 60;
-                String timeFormat = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-                timer.setText(timeFormat + " "+R.string.remaining_time);
-
-
-            }
-
-            @Override
-            public void onFinish() {
-                showAlert("You OTP Expired");
-                countDownTimer.cancel();
-            }
-        }.start();
-    }
 
     public void OTPVerification(View view) throws InterruptedException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         if (isEmpty(otp1) || isEmpty(otp4) ||
@@ -249,31 +260,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
         verifyOtpBioMetricVerificationPostParams.getData().setOtp(encrypt(otp));
         verifyOtpBioMetricVerificationPostParams.getData().setRdaCustomerProfileId("" + res.getData().getEntityId());
-
-        CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.postOtp(verifyOtpBioMetricVerificationPostParams, res.getData().getAccessToken(), this);
-
-
-        vm.OtpSuccessLiveData.observe(this, new Observer<VerifyOtpBioMetricVerificationResponse>() {
-            @Override
-            public void onChanged(VerifyOtpBioMetricVerificationResponse verifyOtpBioMetricVerificationResponse) {
-                Intent i = new Intent(view.getContext(), FingerPrintActivity.class);
-                i.putExtra(Config.RESPONSE, res);
-                i.putExtra("TOKEN", res.getData().getAccessToken());
-                startActivity(i);
-                countDownTimer.cancel();
-                clearFields();
-                finish();
-            }
-        });
-
-        vm.OtpErrorLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String errorMsg) {
-                showAlert(errorMsg);
-                clearFields();
-            }
-        });
+        otpVerificationViewModel.postOtp(verifyOtpBioMetricVerificationPostParams, res.getData().getAccessToken(), this);
     }
 
     private void clearFields() {
@@ -298,33 +285,10 @@ public class OtpVerificationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        countDownTimer.cancel();
-    }
 
     public void sendOtp(View view) {
-        CnicAvailabilityViewModel viewModel = new CnicAvailabilityViewModel();
         try {
-            viewModel.postCNIC(bioMetricVerificationPostParams, this);
-            countDownTimer.start();
-
-            viewModel.CnicSuccessLiveData.observe(this, new Observer<BioMetricVerificationResponse>() {
-                @Override
-                public void onChanged(BioMetricVerificationResponse bioMetricVerificationResponse) {
-                    showAlert("OTP Request Send");
-                }
-            });
-
-            viewModel.CnicErrorLiveData.observe(this, new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    showAlert(s);
-                }
-            });
-
-
+            otpVerificationViewModel.postCNIC(bioMetricVerificationPostParams, this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui;
+package com.unikrew.faceoff.ABLPlugin.ui.fingerprint;
 
 import static android.os.Build.VERSION_CODES.M;
 
@@ -25,14 +25,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.FingerprintsItem;
-import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.ViewFingerprintActivity;
+
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.fingerprint.Customization.CustomUI;
@@ -44,9 +45,6 @@ import com.unikrew.faceoff.fingerprint.LivenessNotSupportedException;
 import com.unikrew.faceoff.fingerprint.NadraConfig;
 import com.unikrew.faceoff.fingerprint.ResultIPC;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,14 +55,43 @@ public class FingerPrintActivity extends AppCompatActivity {
     private LinearLayout liSuccess;
 
     private String status = "0";
+    private FingerPrintViewModel fingerPrintViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finger_print);
+        setViewModel();
         bindViews();
         setClicks();
         requestExternalStoragePermission();
+        observeData();
+    }
+
+    private void observeData() {
+        fingerPrintViewModel.BioMetricStatusSuccessLiveData.observe(this, new Observer<BioMetricVerificationNadraResponse>() {
+            @Override
+            public void onChanged(BioMetricVerificationNadraResponse bioMetricVerificationNadraResponse) {
+                String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
+                if (code.equals("100")) {
+                    submitFingerPrint();
+                } else {
+                    showAlert(Config.errorType, bioMetricVerificationNadraResponse.getData().getResponseDescription());
+//                                    showAlert(Config.errorType,bioMetricVerificationNadraResponse.getData().getResponseMsg());
+                }
+            }
+        });
+
+        fingerPrintViewModel.BioMetricStatusErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMsg) {
+                showAlert(Config.errorType, errorMsg);
+            }
+        });
+    }
+
+    private void setViewModel() {
+        fingerPrintViewModel = new ViewModelProvider(this).get(FingerPrintViewModel.class);
     }
 
     private void requestExternalStoragePermission() {
@@ -252,29 +279,7 @@ public class FingerPrintActivity extends AppCompatActivity {
         pp.getData().setAccountType(res.getData().getAccountType());
 
         Log.d("finalData", pp.getData().toString());
-
-        CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.updateBioMetricStatus(pp, res.getData().getAccessToken(), FingerPrintActivity.this);
-
-        vm.BioMetricStatusSuccessLiveData.observe(this, new Observer<BioMetricVerificationNadraResponse>() {
-            @Override
-            public void onChanged(BioMetricVerificationNadraResponse bioMetricVerificationNadraResponse) {
-                String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
-                if (code.equals("100")) {
-                    submitFingerPrint();
-                } else {
-                    showAlert(Config.errorType, bioMetricVerificationNadraResponse.getData().getResponseDescription());
-//                                    showAlert(Config.errorType,bioMetricVerificationNadraResponse.getData().getResponseMsg());
-                }
-            }
-        });
-
-        vm.BioMetricStatusErrorLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String errorMsg) {
-                showAlert(Config.errorType, errorMsg);
-            }
-        });
+        fingerPrintViewModel.updateBioMetricStatus(pp, res.getData().getAccessToken(), FingerPrintActivity.this);
     }
 
     private void submitFingerPrint() {

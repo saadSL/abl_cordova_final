@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="@string/verify_otp"
+            android:text="@string/otp_verification"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
@@ -80,8 +80,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="75sp"
-                android:text="@string/otp_inst"
+                android:text="@string/enter_otp"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/heading" />
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
-                android:text="@string/OTP_number"
+                android:text="@string/otp_des"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,10 +110,12 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_mobileNumber">
 
                 <EditText
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:id="@+id/et_otp1"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="1"
@@ -121,77 +124,66 @@
                     android:textAlignment="center" />
 
                 <EditText
+                    android:layout_margin="5dp"
                     android:id="@+id/et_otp2"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:textAlignment="center" />
 
                 <EditText
+                    android:layout_margin="5dp"
                     android:id="@+id/et_otp3"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp4"
                     android:textAlignment="center" />
 
                 <EditText
+                    android:layout_margin="5dp"
                     android:id="@+id/et_otp4"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp5"
                     android:textAlignment="center" />
 
                 <EditText
+                    android:layout_margin="5dp"
                     android:id="@+id/et_otp5"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp6"
                     android:textAlignment="center" />
 
                 <EditText
+                    android:layout_margin="5dp"
                     android:id="@+id/et_otp6"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
-                    android:hint="-"
+                    android:padding="10dp"
+                    android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:textAlignment="center" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15sp"
-                android:text="1:00 Minute"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout" />
-
-            <TextView
-                android:id="@+id/question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50sp"
-                android:text="@string/OTP_question"
-                android:textColor="@color/blue"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timer" />
-
-            <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/linkForOTP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,15 +194,14 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/question" />
+                app:layout_constraintTop_toBottomOf="@id/btn_verify" />
 
             <Button
                 android:id="@+id/btn_verify"
-                android:layout_width="230dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:layout_marginTop="50sp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_corner_bg"
                 android:onClick="OTPVerification"
                 android:padding="10dp"
@@ -219,24 +210,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linkForOTP" />
-
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:layout_marginTop="10sp"
-                android:background="@drawable/transparent_bg"
-                android:onClick="cancelActivity"
-                android:padding="10dp"
-                android:text="Cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_verify" />
+                app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
