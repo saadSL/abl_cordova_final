@@ -49,7 +49,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class OtpVerificationActivity extends AppCompatActivity{
+public class OtpVerificationActivity extends AppCompatActivity {
 
     private EditText otp1;
     private EditText otp2;
@@ -98,7 +98,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp2.requestFocus();
                 }
             }
@@ -119,7 +119,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp3.requestFocus();
                 }
             }
@@ -140,7 +140,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp4.requestFocus();
                 }
             }
@@ -161,7 +161,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp5.requestFocus();
                 }
             }
@@ -182,7 +182,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp6.requestFocus();
                 }
             }
@@ -192,7 +192,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
 
     private void set() {
         res = (BioMetricVerificationResponse) getIntent().getSerializableExtra(Config.RESPONSE);
-        mobileNumber.setText("03XX-XXXX"+res.getData().getMobileNo().substring(res.getData().getMobileNo().length()-3));
+        mobileNumber.setText("03XX-XXXX" + res.getData().getMobileNo().substring(res.getData().getMobileNo().length() - 3));
         bioMetricVerificationPostParams = (BioMetricVerificationPostParams) getIntent().getSerializableExtra(Config.CNIC_ACC);
     }
 
@@ -213,17 +213,14 @@ public class OtpVerificationActivity extends AppCompatActivity{
     }
 
     private void startTimer(int totalTime) {
-        countDownTimer = new CountDownTimer(totalTime,1000) {
+        countDownTimer = new CountDownTimer(totalTime, 1000) {
             @Override
             public void onTick(long l) {
-                int minutes = (int)(l/1000)/60;
-                int seconds = (int)(l/1000)%60;
-                String timeFormat = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
-                if (minutes==0){
-                    timer.setText(timeFormat+" seconds");
-                }else{
-                    timer.setText(timeFormat+" minutes");
-                }
+                int minutes = (int) (l / 1000) / 60;
+                int seconds = (int) (l / 1000) % 60;
+                String timeFormat = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                timer.setText(timeFormat + " "+R.string.remaining_time);
+
 
             }
 
@@ -241,28 +238,28 @@ public class OtpVerificationActivity extends AppCompatActivity{
                 isEmpty(otp3) || isEmpty(otp6)) {
             showAlert("OTP fields empty");
             return;
-        }else if (!isOnline()){
+        } else if (!isOnline()) {
             showAlert("No internet connection !!!");
             return;
         }
 
-        String otp = otp1.getText().toString()+otp2.getText().toString()+otp3.getText().toString()+otp4.getText().toString()+otp5.getText().toString()+otp6.getText().toString();
+        String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
         VerifyOtpBioMetricVerificationPostParams verifyOtpBioMetricVerificationPostParams = new VerifyOtpBioMetricVerificationPostParams();
 
         verifyOtpBioMetricVerificationPostParams.getData().setOtp(encrypt(otp));
-        verifyOtpBioMetricVerificationPostParams.getData().setRdaCustomerProfileId(""+res.getData().getEntityId());
+        verifyOtpBioMetricVerificationPostParams.getData().setRdaCustomerProfileId("" + res.getData().getEntityId());
 
         CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.postOtp(verifyOtpBioMetricVerificationPostParams,res.getData().getAccessToken(),this);
+        vm.postOtp(verifyOtpBioMetricVerificationPostParams, res.getData().getAccessToken(), this);
 
 
         vm.OtpSuccessLiveData.observe(this, new Observer<VerifyOtpBioMetricVerificationResponse>() {
             @Override
             public void onChanged(VerifyOtpBioMetricVerificationResponse verifyOtpBioMetricVerificationResponse) {
-                Intent i = new Intent(view.getContext(),FingerPrintActivity.class);
-                i.putExtra(Config.RESPONSE,res);
-                i.putExtra("TOKEN",res.getData().getAccessToken());
+                Intent i = new Intent(view.getContext(), FingerPrintActivity.class);
+                i.putExtra(Config.RESPONSE, res);
+                i.putExtra("TOKEN", res.getData().getAccessToken());
                 startActivity(i);
                 countDownTimer.cancel();
                 clearFields();
@@ -310,7 +307,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
     public void sendOtp(View view) {
         CnicAvailabilityViewModel viewModel = new CnicAvailabilityViewModel();
         try {
-            viewModel.postCNIC(bioMetricVerificationPostParams,this);
+            viewModel.postCNIC(bioMetricVerificationPostParams, this);
             countDownTimer.start();
 
             viewModel.CnicSuccessLiveData.observe(this, new Observer<BioMetricVerificationResponse>() {
@@ -341,7 +338,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
         showAlert("Sorry, currently the function is not responsive !!!");
     }
 
-    private String encrypt(String value)  {
+    private String encrypt(String value) {
 
         String initVector = "0000000000000000";
         String key = "4dweqdxcerfvc3rw";
@@ -354,7 +351,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
         }
         SecretKeySpec secretKeySpec = null;
         try {
-            secretKeySpec = new SecretKeySpec(key.getBytes("UTF-8"),"AES");
+            secretKeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -368,7 +365,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
         }
 
         try {
-            cipher.init(Cipher.ENCRYPT_MODE,secretKeySpec,ivParameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
         } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {
@@ -389,8 +386,7 @@ public class OtpVerificationActivity extends AppCompatActivity{
     }
 
 
-
-    public void showAlert(String msg){
+    public void showAlert(String msg) {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(OtpVerificationActivity.this);
         builder1.setMessage(msg);
@@ -407,11 +403,12 @@ public class OtpVerificationActivity extends AppCompatActivity{
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             return false;
         }
         return true;
