@@ -19,5 +19,5 @@
     <string name="otp_des">Please enter the 6-digit verification code here:</string>
     <string name="otp_insta">Enter <b>OTP</b> received on your provided mobile number</string>
     <string name="please_grant_external_storage_permissions">In order to use this application, please grant External storage permission.</string>
-
+    <string name="sdk_final">sdk final</string>
 </resources>
