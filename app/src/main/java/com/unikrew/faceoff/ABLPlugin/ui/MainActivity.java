@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ofss.digx.mobile.android.allied.R;
+import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cnicActivity(View view) {
-        Intent i = new Intent(view.getContext(), CnicAvailabilityActivity.class);
+        Intent i = new Intent(view.getContext(), CNIC_Availability.class);
         startActivity(i);
     }
 

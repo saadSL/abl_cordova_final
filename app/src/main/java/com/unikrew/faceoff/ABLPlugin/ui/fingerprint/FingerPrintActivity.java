@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui;
+package com.unikrew.faceoff.ABLPlugin.ui.fingerprint;
 
 import static android.os.Build.VERSION_CODES.M;
 
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,34 +25,73 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.UpdateBioMetricStatusResponse;
+import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationNadraResponse;
+import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.FingerprintsItem;
+import com.unikrew.faceoff.ABLPlugin.ui.ViewFingerprintActivity;
+
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.fingerprint.Customization.CustomUI;
 import com.unikrew.faceoff.fingerprint.FingerprintConfig;
+import com.unikrew.faceoff.fingerprint.FingerprintHelpers.Png;
 import com.unikrew.faceoff.fingerprint.FingerprintResponse;
 import com.unikrew.faceoff.fingerprint.FingerprintScannerActivity;
 import com.unikrew.faceoff.fingerprint.LivenessNotSupportedException;
 import com.unikrew.faceoff.fingerprint.NadraConfig;
 import com.unikrew.faceoff.fingerprint.ResultIPC;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FingerPrintActivity extends AppCompatActivity {
 
-    private Button btSubmit;
+    private Button btSubmit, btCancel;
     private ImageView ivFingerPrint, ivBack;
     private LinearLayout liSuccess;
 
     private String status = "0";
+    private FingerPrintViewModel fingerPrintViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finger_print);
+        setViewModel();
         bindViews();
         setClicks();
         requestExternalStoragePermission();
+        observeData();
+    }
+
+    private void observeData() {
+        fingerPrintViewModel.BioMetricStatusSuccessLiveData.observe(this, new Observer<BioMetricVerificationNadraResponse>() {
+            @Override
+            public void onChanged(BioMetricVerificationNadraResponse bioMetricVerificationNadraResponse) {
+                String code = bioMetricVerificationNadraResponse.getData().getResponseCode();
+                if (code.equals("100")) {
+                    submitFingerPrint();
+                } else {
+                    showAlert(Config.errorType, bioMetricVerificationNadraResponse.getData().getResponseDescription());
+//                                    showAlert(Config.errorType,bioMetricVerificationNadraResponse.getData().getResponseMsg());
+                }
+            }
+        });
+
+        fingerPrintViewModel.BioMetricStatusErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMsg) {
+                showAlert(Config.errorType, errorMsg);
+            }
+        });
+    }
+
+    private void setViewModel() {
+        fingerPrintViewModel = new ViewModelProvider(this).get(FingerPrintViewModel.class);
     }
 
     private void requestExternalStoragePermission() {
@@ -81,6 +121,18 @@ public class FingerPrintActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCnicScreen();
+            }
+        });
+    }
+
+    private void goToCnicScreen() {
+        Intent intent = new Intent(this, CNIC_Availability.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void fingerPrintSuccess() {
@@ -92,6 +144,7 @@ public class FingerPrintActivity extends AppCompatActivity {
     private void bindViews() {
         ivBack = findViewById(R.id.iv_back);
         btSubmit = findViewById(R.id.bt_submit);
+        btCancel = findViewById(R.id.bt_cancel);
         ivFingerPrint = findViewById(R.id.iv_finger_print);
         liSuccess = findViewById(R.id.li_success);
     }
@@ -171,7 +224,6 @@ public class FingerPrintActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,34 +233,10 @@ public class FingerPrintActivity extends AppCompatActivity {
             if (responseCode > 0) {
                 FingerprintResponse fingerprintResponse = ResultIPC.getInstance().getFingerprintResponse(responseCode);
                 if (fingerprintResponse != null) {
-                    // If scanning and NADRA request were successful
-                    if (resultCode == FingerprintResponse.Response.SUCCESS_NADRA.getResponseCode()) {
-                        showNadraResults(responseCode);
-                    }
-
-                    // If scanning and ENROLLMENT request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_ENROLLMENT.getResponseCode()) {
-                        toastMessage("Fingerprint successfully enrolled");
-                    }
-
-                    // If scanning and IDENTIFICATION request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_IDENTIFICATION.getResponseCode()) {
-                        showIdentificationResults(responseCode);
-                    }
-
-                    // If scanning and EXPORT WSQ request were successful
-                    else if (resultCode == FingerprintResponse.Response.SUCCESS_WSQ_EXPORT.getResponseCode()
+                    if (resultCode == FingerprintResponse.Response.SUCCESS_WSQ_EXPORT.getResponseCode()
                             || resultCode == FingerprintResponse.Response.SUCCESS_PNG_EXPORT.getResponseCode()) {
 //                        showFingerprints(responseCode);
-
-                            submitFingerPrintToNetwork();
-//                        if (status){
-//                            submitFingerPrint();
-//                        }else{
-//                            showAlert(0,"Sorry, Finger print not approved by nadra. Please scan again.");
-//                        }
-
-
+                        postFingerPrints(fingerprintResponse);
                     }
 
                     // If unsuccessful, toast error message
@@ -224,37 +252,40 @@ public class FingerPrintActivity extends AppCompatActivity {
         }
     }
 
-    private void submitFingerPrintToNetwork() {
-        UpdateBioMetricStatusPostParams pp = new UpdateBioMetricStatusPostParams();
+    private void postFingerPrints(FingerprintResponse fingerprintResponse) {
+        List<FingerprintsItem> fingerprints = new ArrayList<FingerprintsItem>();
+        BioMetricVerificationNadraPostParams pp = new BioMetricVerificationNadraPostParams();
+        for (Png png : fingerprintResponse.getPngList()) {
 
-        pp.getData().setRdaCustomerProfileId("3003");
-        pp.getData().setRdaCustomerAccountInfoId("3195");
-        pp.getData().setBioMetricVerificationNadraStatus(status);
-        pp.getData().setNadraSessionId("afajhsdkjfhakjsdhfkjweu93845hriefha9we09u9f8u4398h");
+            String binaryBase64ObjectPNG = png.getBinaryBase64ObjectPNG();
+            int indexCode = png.getFingerPositionCode();
 
-        String token = (String) getIntent().getSerializableExtra("TOKEN");
+            FingerprintsItem fingerprintsItem = new FingerprintsItem();
+            fingerprintsItem.setIndex(Long.valueOf(indexCode));
+            fingerprintsItem.setTemplate(binaryBase64ObjectPNG);
+            fingerprints.add(fingerprintsItem);
+        }
 
-        CnicAvailabilityViewModel vm = new CnicAvailabilityViewModel();
-        vm.updateBioMetricStatus(pp,token,this);
 
-        vm.BioMetricStatusSuccessLiveData.observe(this, new Observer<UpdateBioMetricStatusResponse>() {
-            @Override
-            public void onChanged(UpdateBioMetricStatusResponse updateBioMetricStatusResponse) {
-                fingerPrintSuccess();
-            }
-        });
+        BioMetricVerificationResponse res = (BioMetricVerificationResponse) getIntent().getSerializableExtra(Config.RESPONSE);
 
-        vm.BioMetricStatusErrorLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String errorMsg) {
-                if (pp.getData().getBioMetricVerificationNadraStatus().equals("1")){
-                    fingerPrintSuccess();
-                }else{
-                    showAlert(Config.errorType,errorMsg);
-                }
+        pp.getData().setRdaCustomerProfileId(Integer.toString(res.getData().getEntityId()));
+        pp.getData().setRdaCustomerAccountInfoId(Integer.toString(res.getData().getAccountInfoId()));
+        pp.getData().setCnic(res.getData().getUsername());
+        pp.getData().setFingerprints(fingerprints);
+        pp.getData().setTemplateType(Config.templateType);
+        pp.getData().setContactNumber(res.getData().getMobileNo());
+        pp.getData().setAreaName(res.getData().getArea());
+        pp.getData().setAccountType(res.getData().getAccountType());
 
-            }
-        });
+        Log.d("finalData", pp.getData().toString());
+        fingerPrintViewModel.updateBioMetricStatus(pp, res.getData().getAccessToken(), FingerPrintActivity.this);
+    }
+
+    private void submitFingerPrint() {
+        ivFingerPrint.setVisibility(View.GONE);
+        liSuccess.setVisibility(View.VISIBLE);
+        btSubmit.setText("Done");
     }
 
     private void showFingerprints(int responseCode) {
@@ -281,10 +312,10 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
 
-    public void showAlert(int type,String msg){
+    public void showAlert(int type, String msg) {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(FingerPrintActivity.this);
-        if (type == Config.errorType){
+        if (type == Config.errorType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
             spannableStringBuilder.setSpan(
@@ -294,7 +325,7 @@ public class FingerPrintActivity extends AppCompatActivity {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
             builder1.setTitle(spannableStringBuilder);
-        }else if (type==Config.successType){
+        } else if (type == Config.successType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
             spannableStringBuilder.setSpan(
@@ -323,9 +354,9 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     public void changeStatus(View view) {
-        if (status.equals("0")){
+        if (status.equals("0")) {
             status = "1";
-        }else{
+        } else {
             status = "0";
         }
     }

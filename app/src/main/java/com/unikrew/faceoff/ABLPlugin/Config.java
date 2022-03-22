@@ -1,7 +1,7 @@
 package com.unikrew.faceoff;
 
 public class Config {
-    public static final String BASE_URL = "http://192.168.1.5:8080";
+    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
 
     public static String ACCOUNT_NUMBER = "account_number";
 
@@ -10,7 +10,7 @@ public class Config {
     public static final int REQ_SCAN_FINGERPRINT = 22;
     public static final int EXTERNAL_STORAGE_CODE = 11;
 
-
+    public static String templateType = "WSQ";
 
 
     // Permission request codes
