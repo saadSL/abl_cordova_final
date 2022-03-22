@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/nav_toolbar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preferred_banking_method_prompt"
+            android:layout_margin="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_islamic"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10sp"
+                android:padding="10sp"
+                android:background="@drawable/transparent_secondary_bg">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/islamic_pic"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Islamic"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="5sp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read More"
+                    android:textSize="15sp"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_conventional"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10sp"
+                android:padding="10sp"
+                android:background="@drawable/transparent_secondary_bg">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/conventional"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conventional"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="5sp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read More"
+                    android:textSize="15sp"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type_of_account_prompt"
+            android:layout_margin="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/ll_account_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_current"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10sp"
+                android:padding="10sp"
+                android:background="@drawable/transparent_secondary_bg">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/current_acc_pic"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="5sp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read More"
+                    android:textSize="15sp"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_saving"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10sp"
+                android:padding="10sp"
+                android:background="@drawable/transparent_secondary_bg">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/saving_acc_pic"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saving"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="5sp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read More"
+                    android:textSize="15sp"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_next_banking_method"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_corner_bg"
+            android:padding="10dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@drawable/transparent_bg"
+            android:padding="10dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/primary" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

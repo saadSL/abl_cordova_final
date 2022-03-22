@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/account_setup"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible">
+    <include layout="@layout/nav_toolbar"/>
+    <include layout="@layout/tab_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_debit_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Debit Card"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_margin="10sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginLeft="10sp"
+                    android:textColor="@color/red"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_dc_yes_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_debit_card_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Debit Card Type"
+                android:layout_marginTop="15sp"
+                android:layout_marginLeft="10sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/ll_dc_yes_no"/>
+
+            <LinearLayout
+                android:id="@+id/ll_dc_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/debit_card_gold"
+                    android:layout_margin="5sp"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/debit_card_classic"
+                    android:layout_margin="5sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:gravity="center_horizontal">
+                    <CheckBox
+                        android:id="@+id/cb_dc_gold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UPI Pay Pak Gold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:gravity="center_horizontal">
+                    <CheckBox
+                        android:id="@+id/cb_dc_classic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UPI Pay Pak Classic"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_cheque_book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cheque Book"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_margin="10sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginLeft="10sp"
+                    android:textColor="@color/red"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_cheque_yes_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <Button
+                    android:id="@+id/btn_cheque_book_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+
+                <Button
+                    android:id="@+id/btn_cheque_book_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_next_acc_setup"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/rounded_corner_bg"
+                android:padding="10dp"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/bt_cancel_acc_setup"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:background="@drawable/transparent_bg"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/primary" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

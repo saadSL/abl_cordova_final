@@ -1,0 +1,1241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/nav_toolbar"/>
+
+    <include layout="@layout/tab_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Your Details  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp"
+                android:theme="@style/secondary_color">
+
+                <!-- Customer Details -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Details"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginStart="15sp"
+                            android:layout_weight="1"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/save"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginRight="15sp"/>
+                    </LinearLayout>
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_cust_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Customer Name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="customeremail@gmail.com"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile Number"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_mobile_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0092-3XX-XXXXXXXXX"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date Of Birth"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="31/12/2000"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CNIC"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_cnic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="XXXXX-XXXXXXX-X"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CNIC Date Of Issue"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_cnic_issue_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="24/12/2000"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CNIC Date Of Expiry"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <EditText
+                        android:id="@+id/rd_cnic_expiry_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="24/5/2041"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Your Profile  -->
+            <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp">
+
+        <!-- Customer Profile -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Profile"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15sp"
+                    android:layout_marginLeft="15sp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/edit"
+                    android:layout_marginTop="15sp"
+                    android:layout_marginRight="15sp"/>
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Father/Husband Name"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="15sp"/>
+            <TextView
+                android:id="@+id/rd_father_husband_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Father's Name"
+                android:textSize="15sp"
+                android:textColor="@color/lightGrey"
+                android:layout_marginTop="5sp"
+                android:layout_marginLeft="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mother Name"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="15sp"/>
+            <TextView
+                android:id="@+id/rd_mother_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mother's Name"
+                android:textSize="15sp"
+                android:textColor="@color/lightGrey"
+                android:layout_marginTop="5sp"
+                android:layout_marginLeft="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marital Status"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="15sp"/>
+            <TextView
+                android:id="@+id/rd_marital_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Married"
+                android:textSize="15sp"
+                android:textColor="@color/lightGrey"
+                android:layout_marginTop="5sp"
+                android:layout_marginLeft="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Education"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="15sp"/>
+            <TextView
+                android:id="@+id/rd_education"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bachelors"
+                android:textSize="15sp"
+                android:textColor="@color/lightGrey"
+                android:layout_marginTop="5sp"
+                android:layout_marginLeft="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Place Of Birth"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="15sp"/>
+            <TextView
+                android:id="@+id/rd_birth_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Larkana"
+                android:textSize="15sp"
+                android:textColor="@color/lightGrey"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:layout_marginLeft="15sp"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+            <!-- Next Of Kin  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp">
+
+                <!-- Next Of Kin -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Next Of Kin"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/edit"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginRight="15sp"/>
+                    </LinearLayout>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_kin_mobile_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="XXXX-XXXXXXX"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Relationship"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_kin_relationship"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Brother"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nearest Landmark"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_kin_nearest_landmark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="The Palace"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_kin_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="H-00 - St-000 road name,area name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Next Kin Name"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_next_kin_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Next Of Kin's Name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Present Address  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp">
+
+                <!-- Present Address -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Present Address"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/edit"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginRight="15sp"/>
+                    </LinearLayout>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_present_address_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lahore"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postal Code/Zip Code"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_present_address_postal_zip_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1234"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Town/Tehsil"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_present_address_town_tehsil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lahore City"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_present_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="H-00 - St-000 road name,area name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Telephone Number"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_present_address_telephone_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0092-XXXXXXXX"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_present_address_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pakistan"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Permanent Address  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp">
+
+                <!-- Permanent Address -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Permanent Address"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/edit"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginRight="15sp"/>
+                    </LinearLayout>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_permanent_address_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lahore"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postal Code/Zip Code"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_permanent_address_postal_zip_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1234"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Town/Tehsil"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_permanent_address_town_tehsil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lahore City"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_permanent_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="H-00 - St-000 road name,area name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Telephone Number"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_permanent_address_telephone_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0092-XXXXXXXX"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_permanent_address_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pakistan"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <!-- Bussiness/Employeement details -->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="20sp">-->
+
+<!--                &lt;!&ndash; Permanent Address &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Permanent Address"-->
+<!--                        android:textSize="20sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:layout_marginTop="15sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="City"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+
+<!--                        android:id="@+id/rd_permanent_address_city"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Lahore"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Postal Code/Zip Code"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+
+<!--                        android:id="@+id/rd_permanent_address_postal_zip_code"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="1234"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Town/Tehsil"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+
+<!--                        android:id="@+id/rd_permanent_address_town_tehsil"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Lahore City"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Address"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+
+<!--                        android:id="@+id/rd_permanent_address"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="H-00 - St-000 road name,area name"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Telephone Number"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/rd_permanent_address_telephone_num"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="0092-XXXXXXXX"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginBottom="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Country"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:layout_marginTop="10sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/rd_permanent_address_country"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Pakistan"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:layout_marginTop="5sp"-->
+<!--                        android:layout_marginBottom="5sp"-->
+<!--                        android:layout_marginLeft="15sp"/>-->
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+            <!-- Account Details  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp">
+
+                <!-- Account Details -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Account Details"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/edit"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginRight="15sp"/>
+                    </LinearLayout>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Banking Mode"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_account_details_banking_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Conventional"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Branch"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_account_details_branch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Branch 1"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Type"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_account_details_account_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khannum Asaan Current Account"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Purpose"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+
+                        android:id="@+id/rd_account_details_account_purpose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Salary Personal"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anticipated Annual Income"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd__account_details_annual_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="upto 250K"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Modes Of Transaction"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_account_details_transaction_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cash,ATM,Internet Banking,Others"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ATM Card"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_account_details_atm_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UP PayPak Classic"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cheque Book"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_account_details_cheque_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiary Owner Of Account"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp"/>
+                    <TextView
+                        android:id="@+id/rd_account_details_beneficiary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="My Own Name"
+                        android:textSize="15sp"
+                        android:textColor="@color/lightGrey"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginLeft="15sp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Documents  -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp">
+
+                <!-- Documents -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Documents"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginLeft="15sp"/>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rd_cnic_front"
+                        android:padding="30sp"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/rd_cnic_back"
+                            android:padding="30sp"/>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp">
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/primary_color"
+                    android:layout_marginLeft="15sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="I Am Currently not a Citizen or tax resident of any country than pakistan"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/primary_color"
+                    android:layout_marginStart="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I Hereby agree with the terms and conditions and any modification to these, updated from time to time on www.abl.com"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10sp"/>
+            </LinearLayout>
+
+            <include layout="@layout/gen_buttons"/>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
