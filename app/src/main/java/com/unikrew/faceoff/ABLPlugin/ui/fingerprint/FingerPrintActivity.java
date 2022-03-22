@@ -36,6 +36,7 @@ import com.unikrew.faceoff.ABLPlugin.ui.ViewFingerprintActivity;
 
 import com.unikrew.faceoff.Config;
 import com.ofss.digx.mobile.android.allied.R;
+import com.unikrew.faceoff.fingerprint.Customization.CustomDialog;
 import com.unikrew.faceoff.fingerprint.Customization.CustomUI;
 import com.unikrew.faceoff.fingerprint.FingerprintConfig;
 import com.unikrew.faceoff.fingerprint.FingerprintHelpers.Png;
@@ -111,7 +112,6 @@ public class FingerPrintActivity extends AppCompatActivity {
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                submitFingerPrint();
                 launchScanning(null, null, null, null, null, FingerprintConfig.Mode.EXPORT_WSQ);
             }
         });
@@ -153,8 +153,27 @@ public class FingerPrintActivity extends AppCompatActivity {
                                 String cnicNumber, NadraConfig nadraConfig, FingerprintConfig.Mode mode) {
         try {
 
+            int primaryColor = getResources().getColor(R.color.primary);
+            int buttonBackgroundColor = getResources().getColor(R.color.yellow);
+            int dialogTitleColor = getResources().getColor(R.color.blue);
+            int dialogMessageColor = getResources().getColor(R.color.black);
+
             CustomUI customUI = new CustomUI()
-                    .setShowGuidanceScreen(true);
+                    .setShowGuidanceScreen(true)
+                    .setGuidanceScreenAppBarTitle(getString(R.string.guidance_app_bar))
+                    .setAppBarColor(primaryColor)
+                    .setGuidanceScreenInstructionText(getString(R.string.guidance_instruction))
+                    .setGuidanceScreenButtonText(getString(R.string.next))
+                    .setGuidanceScreenButtonColor(buttonBackgroundColor);
+
+
+            CustomDialog customDialog = new CustomDialog()
+                    .setDialogButtonBackgroundColor(buttonBackgroundColor)
+                    .setSuccessDialogTitle(getString(R.string.dialog_success_title))
+                    .setSuccessDialogMessage(getString(R.string.dialog_success_message))
+                    .setDialogTitleColor(dialogTitleColor)
+                    .setDialogMessageColor(dialogMessageColor)
+                    .setDialogButtonBackgroundColor(buttonBackgroundColor);
 
             // Build FingerprintConfig, required by Fingerprint SDK
             // Fingerprint Config is used to customize the UI and fingerprint scanning options
@@ -164,7 +183,8 @@ public class FingerPrintActivity extends AppCompatActivity {
                     .setMode(mode)
                     .setLiveness(true)
                     .setPackPng(true)
-                    .setCustomUI(customUI);
+                    .setCustomUI(customUI)
+                    .setCustomDialog(customDialog);
 
             if (nadraConfig != null) {
                 builder.setNadraConfig(nadraConfig);
