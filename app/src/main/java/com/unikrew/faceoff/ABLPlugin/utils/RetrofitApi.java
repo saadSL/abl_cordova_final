@@ -7,6 +7,7 @@ import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,5 +30,5 @@ public interface RetrofitApi {
     /* Phase 2 API's */
 
     @POST("/RdaConsumer/api/consumer/public/view-apps-generate-otp")
-    Call<> viewAppsGenerateOtp(@Body ViewAppsGenerateOtpPostParams postParams);
+    Call<ViewAppsGenerateOtpResponse> viewAppsGenerateOtp(@Body ViewAppsGenerateOtpPostParams postParams);
 }
