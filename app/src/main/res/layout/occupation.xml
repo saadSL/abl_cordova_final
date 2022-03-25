@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/occupation"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+    <LinearLayout
+        android:id="@+id/ll_personal_occupation"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp">
+            <TextView
+                android:id="@+id/acc_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purpose of account"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*"
+                android:layout_marginTop="10sp"
+                android:layout_toRightOf="@id/acc_purpose"
+                android:textColor="@color/red"/>
+
+            <Button
+                android:id="@+id/btn_payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/acc_purpose"
+                android:background="@drawable/transparent_bg"
+                android:padding="10dp"
+                android:text="Payments"
+                android:textAllCaps="false"
+                android:textColor="@color/primary" />
+            <Button
+                android:id="@+id/btn_savings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/transparent_bg"
+                android:padding="10dp"
+                android:layout_below="@id/btn_payments"
+                android:text="Savings"
+                android:textAllCaps="false"
+                android:textColor="@color/primary" />
+            <Button
+                android:id="@+id/btn_others"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/btn_savings"
+                android:background="@drawable/transparent_bg"
+                android:padding="10dp"
+                android:text="Others"
+                android:textAllCaps="false"
+                android:textColor="@color/primary" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Source of income"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_margin="15sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp">
+
+            <Button
+                android:id="@+id/btn_daily_wager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Daily Wager"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+            <Button
+                android:id="@+id/btn_emp_sal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_toRightOf="@id/btn_daily_wager"
+                android:layout_alignParentTop="true"
+                android:text="Employed / Salaried"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+            <Button
+                android:id="@+id/btn_pensioner_retired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/btn_daily_wager"
+                android:text="Pensioner / Retired"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+
+            <Button
+                android:id="@+id/btn_self_emp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_toRightOf="@id/btn_pensioner_retired"
+                android:layout_below="@id/btn_emp_sal"
+                android:text="Self Employeed"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+            <Button
+                android:id="@+id/btn_self_emp_informal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/btn_pensioner_retired"
+                android:text="Self Employeed (Informal)"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+            <Button
+                android:id="@+id/btn_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_toRightOf="@id/btn_self_emp_informal"
+                android:layout_below="@id/btn_self_emp"
+                android:text="Student"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+
+            <Button
+                android:id="@+id/btn_UnEmployeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/btn_self_emp_informal"
+                android:text="Unemployeed"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_next_occ2"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corner_bg"
+            android:padding="10dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/bt_cancel_occ2"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@drawable/transparent_bg"
+            android:padding="10dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/primary" />
+    </LinearLayout>
+</LinearLayout>

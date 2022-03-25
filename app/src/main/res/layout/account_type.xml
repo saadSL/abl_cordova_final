@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/nav_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferred_account_prompt"
+                android:layout_margin="10sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_gravity="left"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="based on your profile"
+                android:textColor="@color/grey"
+                android:layout_margin="15sp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5sp">
+
+                    <TextView
+                        android:id="@+id/asaan_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_margin="10sp"
+                        android:text="@string/asaan_digital_account"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/cb_asaan_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/primary_color"
+                        android:buttonTint="@color/primary"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginBottom="10sp" />
+
+                    <TextView
+                        android:id="@+id/asaan_digital_account_description"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/asaan_digital_account"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="25sp"
+                        android:text="@string/asaan_digital_account_description"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Read More"
+                        android:textColor="@color/yellow"
+                        android:layout_margin="10sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignTop="@id/asaan_digital_account_description"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5sp">
+
+                    <TextView
+                        android:id="@+id/asaan_remittance_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_margin="10sp"
+                        android:text="@string/asaan_remittance_digital_account"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_asaan_remittance_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10sp"
+                        android:theme="@style/primary_color"
+                        android:buttonTint="@color/primary"/>
+
+                    <TextView
+                        android:id="@+id/asaan_remittance_digital_account_description"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/asaan_remittance_digital_account"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="25sp"
+                        android:text="@string/asaan_remittance_digital_account_description"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Read More"
+                        android:textColor="@color/yellow"
+                        android:layout_margin="10sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignTop="@id/asaan_remittance_digital_account_description"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5sp">
+
+                    <TextView
+                        android:id="@+id/freelancer_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_margin="10sp"
+                        android:text="@string/freelancer_digital_account"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/cb_freelancer_digital_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/primary_color"
+                        android:buttonTint="@color/primary"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginBottom="10sp" />
+
+                    <TextView
+                        android:id="@+id/freelancer_digital_account_description"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/freelancer_digital_account"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="25sp"
+                        android:text="@string/freelancer_digital_account_description"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Read More"
+                        android:textColor="@color/yellow"
+                        android:layout_margin="10sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignTop="@id/freelancer_digital_account_description"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_account_type_next"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/rounded_corner_bg"
+                android:padding="10dp"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btn_account_type_cancel"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:background="@drawable/transparent_bg"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/primary" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
