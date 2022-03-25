@@ -15,6 +15,7 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 
 import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
+import com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class CustomPlugin extends CordovaPlugin {
 
     private void startFlow(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
-        Intent intent = new Intent(context, CNIC_Availability.class);
+        Intent intent = new Intent(context, MobileNumberActivity.class);
         cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, 22);
 

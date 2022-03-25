@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/otp_inst"
+                android:text="@string/enter_otp"
                 android:layout_margin="20sp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"/>
@@ -136,7 +136,7 @@
                 android:id="@+id/linkForOTP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/OTP_link"
+                android:text="@string/resend_otp"
                 android:textColor="@color/purple_700"
                 android:layout_margin="5sp"
                 android:textColorLink="@color/purple_700"
