@@ -3,14 +3,93 @@
     <string name="app_name">abl</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
-    <string name="OTP_link"><a href="#">Click here</a>To Resend OTP</string>
+    <string name="resend_otp"><a href="#">Resend OTP</a></string>
     <string name="dummy_txt">Biometric Verification successfully done.</string>
     <string name="OTP_number">03XX-XXXXXXX</string>
     <string name="OTP_heading">Verify OTP</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="bio_verify">Biometric Verification</string>
+    <string name="enter_otp">Enter OTP:</string>
+    <string name="bio_verification">Biometric Verification</string>
+    <string name="next">Next</string>
     <string name="extra">extra</string>
-    <string name="OTP_question">Did not recieve OTP ?</string>
     <string name="otp_inst">Enter <b>OTP</b> recieved on your provided mobile number</string>
-    <string name="otp_insta">Enter <b>OTP</b> recieved on your provided mobile number</string>
+    <string name="OTP_question">Didn\'t receive OTP ?</string>
+    <string name="remaining_time">Time Remaining</string>
+    <string name="otp_des">Please enter the 6-digit verification code here:</string>
+    <string name="otp_insta">Enter <b>OTP</b> received on your provided mobile number</string>
     <string name="please_grant_external_storage_permissions">In order to use this application, please grant External storage permission.</string>
+    <string name="guidance_app_bar">User Demo</string>
+    <string name="dialog_success_title">Fingers Successfully Scanned</string>
+    <string name="dialog_success_message">Scanning Completed</string>
+    <string name="guidance_instruction">Position your hand with fingers close to each other and adjust it in such a way that you can view all 4 fingers of the hand completely in the frame area, and stay still</string>
+    <string name="faceoff_key">MjAxLDE3Myw5NCw3NSw0OSwyMzAsNjAsMjU0LDE0NSwyNCwxMTgsNzksMTM5LDY2LDIxNSw3OCw3OSwxMSwyMDksMjgsMTUxLDExNCwyMTUsMTQ5LDk3LDE3OCwyOCw4LDE3Miw2MywyMiwxNCwxOTUsMjQsNTIsMTEyLDkxLDE2LDE2OCwxNzEsMTkzLDExNywyNDMsMTQ2LDg5LDE3NiwyNTIsMTMzLDE2OSwyMjUsNDAsMjU0LDE2Miw2NCwxNTIsMTUwLDczLDUxLDUxLDE4NywxODEsOTksOTUsMTM2LDE3NywyNDUsNTYsNjcsMjEwLDE2NCwxMzEsMTksMTgzLDIyMiw3LDM0LDExLDY1LDEzNSwyMzgsMTY0LDE5NCw3MCw2OCwyMDMsNzYsMjEsMTM4LDcwLDIwOSwxMDMsMjQ1LDkzLDE5MCwyMzcsMTYxLDI1NCwzMSw5MCw0NSwxNDgsMTU5LDE2LDY5LDE1NSw2OCwxMDEsMjQ5LDExMSwxMTksNzQsMjE4LDU5LDEyOSwxMywyOCwyNiw3NSw5NiwzOSw4MSwxNjgsMTMzLDE0MSwyMzksNzksMSwyMTIsMTgsMTU4LDE3NCwyMiwyNTMsMjA5LDI0NCwyMTYsNzgsOTIsMTE4LDkwLDE1OSw1MCw3Nyw3MiwyNSwxODYsMTU3LDE4LDIxMCwxMTAsMTc2LDk3LDEzOSwxOTgsMjM4LDc1LDEsMjMyLDEwNSwzMCwxOTMsMjMwLDY0LDE2Niw0NiwzMCwyMTEsMjI1LDE0Nyw2MiwzNiwxNTEsMTM4LDE3NCwxODMsODksMjQ3LDc0LDIxMywxNTUsMjExLDEyLDIxOSw2NCwxOCwxMTIsMTcwLDk4LDIzNiwxODMsMTk0LDEyMiwyMjMsMTM0LDIyOCwyNTIsNDQsNDEsODYsMTc3LDE3LDEwMSwzMywyMTksMTQ2LDEwNCwyMjEsMzIsNzAsMTU1LDc5LDE4NSw5MywxMDMsMjE5LDE4NSwxNCwyMjQsMTIsMTI4LDExOCwxODQsMTkxLDc0LDIxNSwxMjcsMjMzLDk2LDIyMSw0Nyw2NSwyNTEsMzIsMTQ1LDIyMywxOTcsODcsNzksMTMxLDQ4LDQ1LDUxLDE0LDc0LDQ5LDczLDI0OCwxNzUsMTY2LDIzNCw2OSw3MiwxMDQsMTI5LDg3LDExNywxLDAsMSw=</string>
 
+
+<!--  Phase 2 string resources  -->
+    <string name="preferred_banking_method_prompt">Please Select Your Preferred Banking Method</string>
+    <string name="type_of_account_prompt">Please Select Type Of Account</string>
+    <string name="mobile_num_inst">Make sure entered mobile number is registered against your CNIC</string>
+    <string-array name="mobile_network">
+        <item><font fgcolor="#7E7C7C">Select your mobile network</font></item>
+        <item>Zong</item>
+        <item>Ufone</item>
+        <item>Jazz</item>
+        <item>Telenor</item>
+    </string-array>
+    <string-array name="TIN_unavailability_reason">
+        <item><font fgcolor="#7E7C7C">Select Reason Unavailability</font></item>
+        <item>Reason 1</item>
+        <item>Reason 2</item>
+        <item>Reason 3</item>
+        <item>Reason 4</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="branches">
+        <item><font fgcolor="#7E7C7C">List of ABL Branches ...</font></item>
+        <item>Shadman</item>
+        <item>Mall Road</item>
+        <item>Gulshan</item>
+        <item>Fazlia Colony</item>
+    </string-array>
+    <string name="abl_branch_locations">Please Locate Or Select Your Preferred ABL Branch</string>
+    <string name="preferred_account_prompt">Select Your Preferred Account</string>
+    <string name="asaan_digital_account">Asaan Digital Account</string>
+    <string name="asaan_remittance_digital_account">Asaan Remittance Digital Account</string>
+    <string name="freelancer_digital_account">Freelancer Digital Account</string>
+    <string name="asaan_digital_account_description">An everyday account for every pakistani.Allied assan account is tailored to cater the banking needs of unbanked people.</string>
+    <string name="asaan_remittance_digital_account_description">receive foreign remittances with complete peace of mind.</string>
+    <string name="freelancer_digital_account_description">Allied freelancer Digital Account provides benefits of having a bank account while also making freelancing life easier by smoother transaction experience</string>
+    <string name="live_photo"><a href="#"><font fgcolor="#015088">Live Photo</font></a></string>
+    <string name="upload_signature_prompt"><a href="#"><font fgcolor="#015088">Upload Your Signature</font></a></string>
+    <string name="upload_signature_inst">Please Take A Clear Photo Of Your Signature Drawn On A Clean White Paper</string>
+    <string name="rescan_text"><a href="#"><font fgcolor="#015088">Rescan</font></a></string>
+    <string-array name="city">
+        <item><font fgcolor="#7E7C7C">pre-filled cities</font></item>
+        <item>Karachi</item>
+        <item>Lahore</item>
+        <item>Islamabad</item>
+        <item>Peshawar</item>
+    </string-array>
+
+    <string-array name="applicant">
+        <item><font fgcolor="#7E7C7C">1 Additional Applicant</font></item>
+        <item>Applicant 1</item>
+    </string-array>
+
+    <string name="fatca_text">The Foreign Account Tax Compliance Act (FATCA), requires us to generally acquire information regarding foreign assets held by applicants.</string>
+    <string name="cnic_instruction">&#8226; Government of Pakistan Issued CNIC/SNIC \n
+&#8226; Original fullsize, unedited CNIC/SNIC \n
+&#8226; Place CNIC/SNIC against a single coloured background \n
+&#8226; Readable, well-lit, coloured images \n
+&#8226; Scanning a photocopied CNIC/SNIC is not allowed \n
+&#8226; CNIC/SNIC should not be edited or expired \n
+    </string>
+    <string name="mobile_number">Mobile Number <font fgcolor="#FF0000">*</font></string>
+    <string name="mobile_number_question">Have You Ported Your Mobile Network ?</string>
+    <string name="mobile_info_text">To update your mobile network in bank\'s system, please write "MNP" in message and send it to 9225 and 9080. Otherwise, you will not be able to receive One Time Password on your mobile phone.</string>
+    <string name="cnic_text">CNIC <font fgcolor="#FF0000">*</font></string>
+    <string name="mobile_network_text">Mobile Network <font fgcolor="#FF0000">*</font></string>
+    <string name="mobile_number_text">Mobile Number <font fgcolor="#FF0000">*</font></string>
 </resources>

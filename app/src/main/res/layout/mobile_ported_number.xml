@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/gen_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Let's Get Started"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_margin="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_number"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="50sp"
+                android:layout_marginLeft="20sp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Your Mobile Number"
+                android:layout_marginTop="5sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_num_inst"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:textColor="@color/grey"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_number_question"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="30sp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:layout_margin="20sp">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/transparent_bg"
+                    android:layout_weight=".5"/>
+            </LinearLayout>
+
+            <include layout="@layout/gen_buttons"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

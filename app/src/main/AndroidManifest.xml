@@ -78,5 +78,13 @@
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.cnic_upload.CnicUploadActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

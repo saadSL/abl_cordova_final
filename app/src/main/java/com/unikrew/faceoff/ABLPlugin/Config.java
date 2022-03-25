@@ -20,15 +20,29 @@ public class Config {
     // Bundle keys
     public static final String KEY_RESPONSE_CODE = "ResponseCode";
 
-    public static String CNIC_NUMBER = "";
 
 
     public static String CNIC_ACC = "cnic_acc";
 
     public static int errorType = 0;
     public static int successType = 1;
-    public static int ACCOUNT_LENGTH = 2;
-    public static int CNIC_LENGTH = 2;
+    public static int verifiedType = 2;
+    public static int ACCOUNT_LENGTH = 16;
+    public static int CNIC_LENGTH = 13;
 
     public static int countDownTime = 5*60*1000;
+
+
+
+    /* Phase 2 working below */
+
+    public static int mobileNumberLength = 11;
+    public static String CNIC_NUMBER = "cnic_number";
+    public static String MOBILE_NUMBER = "mobile_number";
+    public static String MOBILE_NETWORK = "mobile_network";
+
+    public static final int CAMERA_REQUEST = 1888;
+    public static final int MY_CAMERA_PERMISSION_CODE = 100;
+
+    public static int customerTypeId = 106501;
 }

@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/transparent_secondary_bg"
                 android:layout_marginRight="20sp"
-                android:layout_marginLeft="20sp">
+                android:layout_marginLeft="20sp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/cnic_upload_front"
@@ -84,7 +85,8 @@
                 android:background="@drawable/transparent_secondary_bg"
                 android:layout_marginTop="10sp"
                 android:layout_marginRight="20sp"
-                android:layout_marginLeft="20sp">
+                android:layout_marginLeft="20sp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/cnic_upload_back"

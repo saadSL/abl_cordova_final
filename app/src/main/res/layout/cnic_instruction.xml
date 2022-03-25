@@ -16,11 +16,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/cnic_inst_pic"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:src="@drawable/cnic_inst_text"/>
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="@string/cnic_instruction"/>
 
 </LinearLayout>
