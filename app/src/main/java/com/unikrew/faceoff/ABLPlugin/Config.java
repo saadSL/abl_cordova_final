@@ -1,7 +1,8 @@
 package com.unikrew.faceoff;
 
 public class Config {
-    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
+//    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
+    public static final String BASE_URL = "http://192.168.147.164:8080";
 
     public static String ACCOUNT_NUMBER = "account_number";
 

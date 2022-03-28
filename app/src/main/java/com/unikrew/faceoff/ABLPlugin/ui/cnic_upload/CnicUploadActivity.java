@@ -93,14 +93,16 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         }
     }
 
+    /* View Apps Generate Otp Post Method*/
     private void postData() {
 
         postParams.getViewAppsGenerateOtpPostData().setCustomerTypeId(Config.customerTypeId);
         postParams.getViewAppsGenerateOtpPostData().setIdNumber(getIntent().getStringExtra(Config.CNIC_NUMBER));
         postParams.getViewAppsGenerateOtpPostData().setMobileNo(getIntent().getStringExtra(Config.MOBILE_NUMBER));
-        postParams.getViewAppsGenerateOtpPostData().setMobileNetwork(getIntent().getStringExtra(Config.MOBILE_NETWORK));
-        postParams.getViewAppsGenerateOtpPostData().setPortedMobileNetwork(false);
+//        postParams.getViewAppsGenerateOtpPostData().setMobileNetwork(getIntent().getStringExtra(Config.MOBILE_NETWORK));
+//        postParams.getViewAppsGenerateOtpPostData().setPortedMobileNetwork(false);
 
+        viewModel.postData(postParams);
 
     }
 

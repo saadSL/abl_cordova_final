@@ -34,6 +34,7 @@ public class FingerPrintViewModel extends ViewModel {
     public MutableLiveData<String> BioMetricStatusErrorLiveData = new MutableLiveData<String>();
 
     public void updateBioMetricStatus(BioMetricVerificationNadraPostParams pp, String accessToken, Activity myActivity) {
+
         this.activity = myActivity;
         Call<BioMetricVerificationNadraResponse> callableRes = AblApplication.apiInterface.UpdateBioMetricStatus(pp, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<BioMetricVerificationNadraResponse>() {
