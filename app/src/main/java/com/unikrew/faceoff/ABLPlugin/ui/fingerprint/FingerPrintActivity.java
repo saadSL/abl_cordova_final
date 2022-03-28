@@ -55,7 +55,6 @@ public class FingerPrintActivity extends AppCompatActivity {
     private ImageView ivFingerPrint, ivBack;
     private LinearLayout liSuccess;
 
-    private String status = "0";
     private FingerPrintViewModel fingerPrintViewModel;
     private Boolean isPrintSuccessfull = false;
 
@@ -380,11 +379,4 @@ public class FingerPrintActivity extends AppCompatActivity {
         alert11.show();
     }
 
-    public void changeStatus(View view) {
-        if (status.equals("0")) {
-            status = "1";
-        } else {
-            status = "0";
-        }
-    }
 }
