@@ -57,6 +57,7 @@ public class FingerPrintActivity extends AppCompatActivity {
 
     private String status = "0";
     private FingerPrintViewModel fingerPrintViewModel;
+    private Boolean isPrintSuccessfull = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,12 @@ public class FingerPrintActivity extends AppCompatActivity {
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchScanning(null, null, null, null, null, FingerprintConfig.Mode.EXPORT_WSQ);
+                if (isPrintSuccessfull) {
+                    goToCnicScreen();
+                } else {
+                    launchScanning(null, null, null, null, null, FingerprintConfig.Mode.EXPORT_WSQ);
+                }
+
             }
         });
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -306,6 +312,7 @@ public class FingerPrintActivity extends AppCompatActivity {
         ivFingerPrint.setVisibility(View.GONE);
         liSuccess.setVisibility(View.VISIBLE);
         btSubmit.setText("Done");
+        isPrintSuccessfull = true;
     }
 
     private void showFingerprints(int responseCode) {
