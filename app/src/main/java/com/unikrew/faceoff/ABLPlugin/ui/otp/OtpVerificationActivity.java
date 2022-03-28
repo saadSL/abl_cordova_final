@@ -69,7 +69,17 @@ public class OtpVerificationActivity extends AppCompatActivity {
         bind();
         set();
         textChangeListeners();
+        clicks();
         observeData();
+    }
+
+    private void clicks() {
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpVerification();
+            }
+        });
     }
 
     private void observeData() {
@@ -129,7 +139,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp2.requestFocus();
                 }
             }
@@ -150,7 +160,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp3.requestFocus();
                 }
             }
@@ -171,7 +181,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp4.requestFocus();
                 }
             }
@@ -192,7 +202,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp5.requestFocus();
                 }
             }
@@ -213,8 +223,27 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp6.requestFocus();
+                }
+            }
+        });
+
+        otp6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (otp6.getText().length() > 0) {
+                    otpVerification();
                 }
             }
         });
@@ -223,7 +252,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
     private void set() {
         res = (BioMetricVerificationResponse) getIntent().getSerializableExtra(Config.RESPONSE);
-        mobileNumber.setText("03XX-XXXX" + res.getData().getMobileNo().substring(res.getData().getMobileNo().length() - 3));
+//        mobileNumber.setText("03XX-XXXX" + res.getData().getMobileNo().substring(res.getData().getMobileNo().length() - 3));
         bioMetricVerificationPostParams = (BioMetricVerificationPostParams) getIntent().getSerializableExtra(Config.CNIC_ACC);
     }
 
@@ -243,24 +272,29 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
 
 
-    public void OTPVerification(View view) throws InterruptedException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        if (isEmpty(otp1) || isEmpty(otp4) ||
-                isEmpty(otp2) || isEmpty(otp5) ||
-                isEmpty(otp3) || isEmpty(otp6)) {
-            showAlert("OTP fields empty");
-            return;
-        } else if (!isOnline()) {
-            showAlert("No internet connection !!!");
-            return;
+    public void otpVerification() {
+        try {
+            if (isEmpty(otp1) || isEmpty(otp4) ||
+                    isEmpty(otp2) || isEmpty(otp5) ||
+                    isEmpty(otp3) || isEmpty(otp6)) {
+                showAlert("OTP fields empty");
+                return;
+            } else if (!isOnline()) {
+                showAlert("No internet connection !!!");
+                return;
+            }
+
+            String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
+
+            VerifyOtpBioMetricVerificationPostParams verifyOtpBioMetricVerificationPostParams = new VerifyOtpBioMetricVerificationPostParams();
+
+            verifyOtpBioMetricVerificationPostParams.getData().setOtp(encrypt(otp));
+            verifyOtpBioMetricVerificationPostParams.getData().setRdaCustomerProfileId("" + res.getData().getEntityId());
+
+            otpVerificationViewModel.postOtp(verifyOtpBioMetricVerificationPostParams, res.getData().getAccessToken(), this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
-
-        VerifyOtpBioMetricVerificationPostParams verifyOtpBioMetricVerificationPostParams = new VerifyOtpBioMetricVerificationPostParams();
-
-        verifyOtpBioMetricVerificationPostParams.getData().setOtp(encrypt(otp));
-        verifyOtpBioMetricVerificationPostParams.getData().setRdaCustomerProfileId("" + res.getData().getEntityId());
-        otpVerificationViewModel.postOtp(verifyOtpBioMetricVerificationPostParams, res.getData().getAccessToken(), this);
     }
 
     private void clearFields() {

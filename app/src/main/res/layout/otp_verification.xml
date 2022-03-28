@@ -203,7 +203,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_corner_bg"
-                android:onClick="OTPVerification"
                 android:padding="10dp"
                 android:text="Verify"
                 android:textAllCaps="false"
