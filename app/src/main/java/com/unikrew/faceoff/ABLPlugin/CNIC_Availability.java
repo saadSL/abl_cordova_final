@@ -12,17 +12,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class CNIC_Availability extends AppCompatActivity {
 
@@ -30,14 +36,41 @@ public class CNIC_Availability extends AppCompatActivity {
     private EditText etCnicNumber;
     private CnicAvailabilityViewModel cnicAvailabilityViewModel;
     private BioMetricVerificationPostParams bioMetricVerificationPostParams;
+    private Button btnNext, btCancel;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cnic_availability);
+//        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        String countryCode = tm.getSimCountryIso();
+//        Toast.makeText(this, countryCode, Toast.LENGTH_SHORT).show();
         setViewModel();
         bindViews();
         observeData();
+        clicks();
+    }
+
+    private void clicks() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCustomerDetail();
+            }
+        });
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void observeData() {
@@ -70,6 +103,9 @@ public class CNIC_Availability extends AppCompatActivity {
     private void bindViews() {
         etAccNumber = findViewById(R.id.et_accNumber);
         etCnicNumber = findViewById(R.id.et_cnicNumber);
+        btnNext = findViewById(R.id.btn_Next);
+        btCancel = findViewById(R.id.bt_cancel_cnic);
+        ivBack = findViewById(R.id.iv_back_cnic);
     }
 
     private void setViewModel() {
@@ -77,27 +113,31 @@ public class CNIC_Availability extends AppCompatActivity {
         bioMetricVerificationPostParams = new BioMetricVerificationPostParams();
     }
 
-    public void postCustomerDetail(View view) throws InterruptedException {
+    public void postCustomerDetail() {
 
 
-        if (isEmpty(etAccNumber) ||
-                isEmpty(etCnicNumber)) {
-            showAlert(Config.errorType, "Please fill all * fields");
-            return;
+        try {
+            if (isEmpty(etAccNumber) ||
+                    isEmpty(etCnicNumber)) {
+                showAlert(Config.errorType, "Please fill all * fields");
+                return;
+            }
+            if (etAccNumber.getText().length() < Config.ACCOUNT_LENGTH) {
+                showAlert(Config.errorType, "Account Number Length is not valid");
+                return;
+            } else if (etCnicNumber.getText().length() < Config.CNIC_LENGTH) {
+                showAlert(Config.errorType, "CNIC Length is not valid");
+                return;
+            } else if (!isOnline()) {
+                showAlert(Config.errorType, "No Internet connection!");
+                return;
+            }
+            bioMetricVerificationPostParams.getData().setCnic(etCnicNumber.getText().toString());
+            bioMetricVerificationPostParams.getData().setAccountNo(etAccNumber.getText().toString());
+            cnicAvailabilityViewModel.postCNIC(bioMetricVerificationPostParams, CNIC_Availability.this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        if (etAccNumber.getText().length() < Config.ACCOUNT_LENGTH) {
-            showAlert(Config.errorType, "Account Number Length is not valid");
-            return;
-        } else if (etCnicNumber.getText().length() < Config.CNIC_LENGTH) {
-            showAlert(Config.errorType, "CNIC Length is not valid");
-            return;
-        } else if (!isOnline()) {
-            showAlert(Config.errorType, "No Internet connection!");
-            return;
-        }
-        bioMetricVerificationPostParams.getData().setCnic(etCnicNumber.getText().toString());
-        bioMetricVerificationPostParams.getData().setAccountNo(etAccNumber.getText().toString());
-        cnicAvailabilityViewModel.postCNIC(bioMetricVerificationPostParams, CNIC_Availability.this);
     }
 
     private void clearFields() {

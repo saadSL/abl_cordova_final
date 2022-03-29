@@ -147,9 +147,9 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        ivBack = findViewById(R.id.iv_back);
+        ivBack = findViewById(R.id.iv_back_fingerprint);
         btSubmit = findViewById(R.id.bt_submit);
-        btCancel = findViewById(R.id.bt_cancel);
+        btCancel = findViewById(R.id.bt_cancel_finger);
         ivFingerPrint = findViewById(R.id.iv_finger_print);
         liSuccess = findViewById(R.id.li_success);
     }
@@ -166,7 +166,7 @@ public class FingerPrintActivity extends AppCompatActivity {
             CustomUI customUI = new CustomUI()
                     .setShowGuidanceScreen(true)
                     .setGuidanceScreenAppBarTitle(getString(R.string.guidance_app_bar))
-                    .setAppBarColor(primaryColor)
+                    .setAppBarColor(buttonBackgroundColor)
                     .setGuidanceScreenInstructionText(getString(R.string.guidance_instruction))
                     .setGuidanceScreenButtonText(getString(R.string.next))
                     .setGuidanceScreenButtonColor(buttonBackgroundColor);

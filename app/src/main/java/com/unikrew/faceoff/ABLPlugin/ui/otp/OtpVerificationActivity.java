@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -52,13 +53,13 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
     private Button btnVerify;
 
-    private TextView mobileNumber;
+    private TextView tvResend;
 
     private BioMetricVerificationResponse res;
     private BioMetricVerificationPostParams bioMetricVerificationPostParams;
 
 
-    boolean otpStatus = false;
+    private ImageView ivBack;
     private OtpVerificationViewModel otpVerificationViewModel;
 
     @Override
@@ -78,6 +79,23 @@ public class OtpVerificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 otpVerification();
+            }
+        });
+
+
+        tvResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendOtp();
+
+            }
+        });
+
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -252,7 +270,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
     private void set() {
         res = (BioMetricVerificationResponse) getIntent().getSerializableExtra(Config.RESPONSE);
-//        mobileNumber.setText("03XX-XXXX" + res.getData().getMobileNo().substring(res.getData().getMobileNo().length() - 3));
         bioMetricVerificationPostParams = (BioMetricVerificationPostParams) getIntent().getSerializableExtra(Config.CNIC_ACC);
     }
 
@@ -265,9 +282,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
         otp6 = findViewById(R.id.et_otp6);
 
 
+        ivBack = findViewById(R.id.iv_back_otp);
         btnVerify = findViewById(R.id.btn_verify);
-
-        mobileNumber = findViewById(R.id.tv_mobileNumber);
+        tvResend = findViewById(R.id.tv_resend);
 
     }
 
@@ -313,14 +330,8 @@ public class OtpVerificationActivity extends AppCompatActivity {
         return false;
     }
 
-    public void cancelActivity(View view) {
-        Intent intent = new Intent(this, CNIC_Availability.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
-
-    public void sendOtp(View view) {
+    public void sendOtp() {
         try {
             otpVerificationViewModel.postCNIC(bioMetricVerificationPostParams, this);
         } catch (InterruptedException e) {

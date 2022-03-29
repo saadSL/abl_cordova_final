@@ -27,8 +27,8 @@ public class Config {
 
     public static int errorType = 0;
     public static int successType = 1;
-    public static int ACCOUNT_LENGTH = 2;
-    public static int CNIC_LENGTH = 2;
+    public static int ACCOUNT_LENGTH = 16;
+    public static int CNIC_LENGTH = 13;
 
     public static int countDownTime = 5*60*1000;
 }

@@ -4,42 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/primary"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/yellow"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/iv_back_otp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center_vertical"
-            android:onClick="cancelActivity"
-            android:padding="5dp"
+            android:padding="@dimen/_3sdp"
             android:src="@drawable/ic_back"
             app:tint="@color/white" />
 
         <TextView
+            android:fontFamily="@font/lato_regular"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:padding="5dp"
+            android:padding="@dimen/_3sdp"
             android:text="@string/otp_verification"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/_15sdp" />
 
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
-            android:onClick="messageFunc"
             android:padding="5dp"
             android:src="@drawable/ic_msg"
+            android:visibility="gone"
             app:tint="@color/white" />
 
         <ImageView
@@ -47,9 +48,9 @@
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
-            android:onClick="powerSettingFunc"
             android:padding="5dp"
             android:src="@drawable/ic_logout"
+            android:visibility="gone"
             app:tint="@color/white" />
     </LinearLayout>
 
@@ -59,7 +60,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context="com.unikrew.faceoff.ui.OtpVerificationActivity">
 
             <TextView
@@ -76,10 +77,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:fontFamily="@font/lato_regular"
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75sp"
+                android:layout_marginTop="@dimen/_60sdp"
                 android:text="@string/enter_otp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -88,10 +90,11 @@
                 app:layout_constraintTop_toBottomOf="@id/heading" />
 
             <TextView
+                android:fontFamily="@font/lato_regular"
                 android:id="@+id/tv_mobileNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/otp_des"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +105,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75sp"
+                android:layout_marginTop="@dimen/_60sdp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,101 +113,115 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_mobileNumber">
 
                 <EditText
-                    android:layout_margin="5dp"
-                    android:padding="10dp"
-                    android:background="@drawable/boxshape"
                     android:id="@+id/et_otp1"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/lato_regular"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusForward="@id/et_otp2"
+                    android:padding="@dimen/_8sdp"
+                    android:textStyle="bold"
                     android:singleLine="true"
                     android:textAlignment="center" />
 
                 <EditText
-                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_regular"
                     android:id="@+id/et_otp2"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:padding="@dimen/_8sdp"
                     android:textAlignment="center" />
 
                 <EditText
-                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_regular"
                     android:id="@+id/et_otp3"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp4"
+                    android:padding="@dimen/_8sdp"
                     android:textAlignment="center" />
 
                 <EditText
-                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_regular"
                     android:id="@+id/et_otp4"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp5"
+                    android:padding="@dimen/_8sdp"
                     android:textAlignment="center" />
 
                 <EditText
-                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_regular"
                     android:id="@+id/et_otp5"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
                     android:nextFocusDown="@id/et_otp6"
+                    android:padding="@dimen/_8sdp"
                     android:textAlignment="center" />
 
                 <EditText
-                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_regular"
                     android:id="@+id/et_otp6"
-                    android:layout_width="50sp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:background="@drawable/boxshape"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:padding="@dimen/_8sdp"
                     android:textAlignment="center" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/linkForOTP"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato_regular"
+                android:id="@+id/tv_resend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="sendOtp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:text="@string/resend_otp"
                 android:textColor="@color/blue"
                 android:textColorLink="@color/blue"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_verify" />
 
             <Button
+                android:textStyle="bold"
+                android:fontFamily="@font/lato_regular"
                 android:id="@+id/btn_verify"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:background="@drawable/rounded_corner_bg"
-                android:padding="10dp"
-                android:text="Verify"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/verify"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
