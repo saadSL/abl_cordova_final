@@ -6,24 +6,24 @@ public class ViewAppsGenerateOtpPostData implements Serializable {
     public int customerTypeId;
     public String idNumber;
     public String mobileNo;
-//    public String mobileNetwork;
-//    public Boolean isPortedMobileNetwork;
+    public String mobileNetwork;
+    public Boolean isPortedMobileNetwork;
 
-//    public String getMobileNetwork() {
-//        return mobileNetwork;
-//    }
-//
-//    public void setMobileNetwork(String mobileNetwork) {
-//        this.mobileNetwork = mobileNetwork;
-//    }
-//
-//    public Boolean getPortedMobileNetwork() {
-//        return isPortedMobileNetwork;
-//    }
-//
-//    public void setPortedMobileNetwork(Boolean portedMobileNetwork) {
-//        isPortedMobileNetwork = portedMobileNetwork;
-//    }
+    public String getMobileNetwork() {
+        return mobileNetwork;
+    }
+
+    public void setMobileNetwork(String mobileNetwork) {
+        this.mobileNetwork = mobileNetwork;
+    }
+
+    public Boolean getPortedMobileNetwork() {
+        return isPortedMobileNetwork;
+    }
+
+    public void setPortedMobileNetwork(Boolean portedMobileNetwork) {
+        isPortedMobileNetwork = portedMobileNetwork;
+    }
 
     public int getCustomerTypeId() {
         return customerTypeId;

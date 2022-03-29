@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.ABLPlugin.BaseClass;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.Config;
 
 public class CnicUploadActivity extends BaseClass implements View.OnClickListener{
@@ -48,7 +50,26 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         bind();
         set();
         setViewModel();
+        observeData();
 
+    }
+
+    private void observeData() {
+        viewModel.responseLiveData.observe(this,new Observer<ViewAppsGenerateOtpResponse>() {
+            @Override
+            public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
+                showAlert(Config.successType, "Response recieved successfully !!!");
+
+
+            }
+        });
+
+        viewModel.responseErrorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                showAlert(Config.errorType,s);
+            }
+        });
     }
 
     private void setViewModel() {
@@ -96,9 +117,9 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
     /* View Apps Generate Otp Post Method*/
     private void postData() {
 
-        postParams.getViewAppsGenerateOtpPostData().setCustomerTypeId(Config.customerTypeId);
-        postParams.getViewAppsGenerateOtpPostData().setIdNumber(getIntent().getStringExtra(Config.CNIC_NUMBER));
-        postParams.getViewAppsGenerateOtpPostData().setMobileNo(getIntent().getStringExtra(Config.MOBILE_NUMBER));
+        postParams.getData().setCustomerTypeId(Config.customerTypeId);
+        postParams.getData().setIdNumber(getIntent().getStringExtra(Config.CNIC_NUMBER));
+        postParams.getData().setMobileNo(getIntent().getStringExtra(Config.MOBILE_NUMBER));
 //        postParams.getViewAppsGenerateOtpPostData().setMobileNetwork(getIntent().getStringExtra(Config.MOBILE_NETWORK));
 //        postParams.getViewAppsGenerateOtpPostData().setPortedMobileNetwork(false);
 

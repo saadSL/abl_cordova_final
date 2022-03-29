@@ -21,4 +21,5 @@ public class ViewAppsGenerateOtpResponse implements Serializable {
     public void setMessage(ViewAppsGenerateOtpResponseMessage message) {
         this.message = message;
     }
+
 }

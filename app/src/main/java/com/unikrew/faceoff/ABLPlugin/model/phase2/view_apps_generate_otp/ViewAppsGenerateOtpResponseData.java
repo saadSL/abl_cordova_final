@@ -3,72 +3,72 @@ package com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp;
 import java.io.Serializable;
 
 public class ViewAppsGenerateOtpResponseData implements Serializable {
-    public Object fullName;
-    public Object customerNonResidentInd;
-    public Object emailAddress;
-    public Object accountVariantId;
-    public Object currencyTypeId;
-    public Object accountTypeId;
+    public String fullName;
+    public String customerNonResidentInd;
+    public String emailAddress;
+    public String accountVariantId;
+    public String currencyTypeId;
+    public String accountTypeId;
     public String customerInstructions;
     public long customerOtpExpiration;
-    public Object idTypeId;
+    public String idTypeId;
     public String idNumber;
-    public Object nationalityTypeId;
-    public Object natureOfAccountId;
+    public String nationalityTypeId;
+    public String natureOfAccountId;
     public int otpExpiryMinutes;
-    public Object nationalities;
+    public String nationalities;
     public String otpCounter;
-    public Object isPrimary;
-    public Object customerTypeId;
-    public Object mobileNo;
-    public Object dateOfBirth;
-    public Object primary;
+    public String isPrimary;
+    public String customerTypeId;
+    public String mobileNo;
+    public String dateOfBirth;
+    public String primary;
 
-    public Object getFullName() {
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(Object fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public Object getCustomerNonResidentInd() {
+    public String getCustomerNonResidentInd() {
         return customerNonResidentInd;
     }
 
-    public void setCustomerNonResidentInd(Object customerNonResidentInd) {
+    public void setCustomerNonResidentInd(String customerNonResidentInd) {
         this.customerNonResidentInd = customerNonResidentInd;
     }
 
-    public Object getEmailAddress() {
+    public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(Object emailAddress) {
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    public Object getAccountVariantId() {
+    public String getAccountVariantId() {
         return accountVariantId;
     }
 
-    public void setAccountVariantId(Object accountVariantId) {
+    public void setAccountVariantId(String accountVariantId) {
         this.accountVariantId = accountVariantId;
     }
 
-    public Object getCurrencyTypeId() {
+    public String getCurrencyTypeId() {
         return currencyTypeId;
     }
 
-    public void setCurrencyTypeId(Object currencyTypeId) {
+    public void setCurrencyTypeId(String currencyTypeId) {
         this.currencyTypeId = currencyTypeId;
     }
 
-    public Object getAccountTypeId() {
+    public String getAccountTypeId() {
         return accountTypeId;
     }
 
-    public void setAccountTypeId(Object accountTypeId) {
+    public void setAccountTypeId(String accountTypeId) {
         this.accountTypeId = accountTypeId;
     }
 
@@ -88,11 +88,11 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.customerOtpExpiration = customerOtpExpiration;
     }
 
-    public Object getIdTypeId() {
+    public String getIdTypeId() {
         return idTypeId;
     }
 
-    public void setIdTypeId(Object idTypeId) {
+    public void setIdTypeId(String idTypeId) {
         this.idTypeId = idTypeId;
     }
 
@@ -104,19 +104,19 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.idNumber = idNumber;
     }
 
-    public Object getNationalityTypeId() {
+    public String getNationalityTypeId() {
         return nationalityTypeId;
     }
 
-    public void setNationalityTypeId(Object nationalityTypeId) {
+    public void setNationalityTypeId(String nationalityTypeId) {
         this.nationalityTypeId = nationalityTypeId;
     }
 
-    public Object getNatureOfAccountId() {
+    public String getNatureOfAccountId() {
         return natureOfAccountId;
     }
 
-    public void setNatureOfAccountId(Object natureOfAccountId) {
+    public void setNatureOfAccountId(String natureOfAccountId) {
         this.natureOfAccountId = natureOfAccountId;
     }
 
@@ -128,11 +128,11 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.otpExpiryMinutes = otpExpiryMinutes;
     }
 
-    public Object getNationalities() {
+    public String getNationalities() {
         return nationalities;
     }
 
-    public void setNationalities(Object nationalities) {
+    public void setNationalities(String nationalities) {
         this.nationalities = nationalities;
     }
 
@@ -144,43 +144,43 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.otpCounter = otpCounter;
     }
 
-    public Object getIsPrimary() {
+    public String getIsPrimary() {
         return isPrimary;
     }
 
-    public void setIsPrimary(Object isPrimary) {
+    public void setIsPrimary(String isPrimary) {
         this.isPrimary = isPrimary;
     }
 
-    public Object getCustomerTypeId() {
+    public String getCustomerTypeId() {
         return customerTypeId;
     }
 
-    public void setCustomerTypeId(Object customerTypeId) {
+    public void setCustomerTypeId(String customerTypeId) {
         this.customerTypeId = customerTypeId;
     }
 
-    public Object getMobileNo() {
+    public String getMobileNo() {
         return mobileNo;
     }
 
-    public void setMobileNo(Object mobileNo) {
+    public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
 
-    public Object getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Object dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Object getPrimary() {
+    public String getPrimary() {
         return primary;
     }
 
-    public void setPrimary(Object primary) {
+    public void setPrimary(String primary) {
         this.primary = primary;
     }
 }
