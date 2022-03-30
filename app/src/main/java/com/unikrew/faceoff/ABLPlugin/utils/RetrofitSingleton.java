@@ -33,8 +33,9 @@ public class RetrofitSingleton {
                     .setLenient()
                     .create();
             OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-            builder.readTimeout(10, TimeUnit.SECONDS);
-            builder.connectTimeout(5, TimeUnit.SECONDS);
+            builder.readTimeout(100, TimeUnit.SECONDS);
+            builder.connectTimeout(120, TimeUnit.SECONDS);
+            builder.writeTimeout(120, TimeUnit.SECONDS);
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
                 interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -55,7 +56,7 @@ public class RetrofitSingleton {
     private static OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
@@ -76,10 +77,10 @@ public class RetrofitSingleton {
             final SSLContext sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             // Create an ssl socket factory with our all-trusting manager
-            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            final SSLSocketFactory delegate = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory);
+            builder.sslSocketFactory(delegate, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
