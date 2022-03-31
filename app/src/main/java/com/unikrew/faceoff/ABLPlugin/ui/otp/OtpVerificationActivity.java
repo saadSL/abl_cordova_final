@@ -157,7 +157,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==1){
                     otp2.requestFocus();
                 }
             }
@@ -178,7 +178,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==0){
+                    otp1.requestFocus();
+                }else {
                     otp3.requestFocus();
                 }
             }
@@ -199,7 +201,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==0){
+                    otp2.requestFocus();
+                }else {
                     otp4.requestFocus();
                 }
             }
@@ -220,7 +224,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==0){
+                    otp3.requestFocus();
+                }else {
                     otp5.requestFocus();
                 }
             }
@@ -241,12 +247,13 @@ public class OtpVerificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1) {
+                if (text.length()==0){
+                    otp4.requestFocus();
+                }else {
                     otp6.requestFocus();
                 }
             }
         });
-
         otp6.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -260,7 +267,11 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (otp6.getText().length() > 0) {
+                String text = editable.toString();
+
+                if (text.length() == 0) {
+                    otp5.requestFocus();
+                }else {
                     otpVerification();
                 }
             }
