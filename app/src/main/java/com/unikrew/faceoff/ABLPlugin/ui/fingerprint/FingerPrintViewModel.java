@@ -5,9 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.ofss.digx.mobile.android.allied.R;
@@ -19,6 +16,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +42,7 @@ public class FingerPrintViewModel extends ViewModel {
                 if (response.code() == 200) {
                     BioMetricStatusSuccessLiveData.postValue(response.body());
                     loader.dismiss();
-                } else if (response.code() == 403) {
+                } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         String msg = jObjError.getJSONObject("message").getString("description");
