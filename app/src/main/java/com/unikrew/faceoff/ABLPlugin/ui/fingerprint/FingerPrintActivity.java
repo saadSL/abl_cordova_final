@@ -342,7 +342,7 @@ public class FingerPrintActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(FingerPrintActivity.this);
         if (type == Config.errorType) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
             spannableStringBuilder.setSpan(
                     foregroundColorSpan,
@@ -352,7 +352,7 @@ public class FingerPrintActivity extends AppCompatActivity {
             );
             builder1.setTitle(spannableStringBuilder);
         } else if (type == Config.successType) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
             spannableStringBuilder.setSpan(
                     foregroundColorSpan,
