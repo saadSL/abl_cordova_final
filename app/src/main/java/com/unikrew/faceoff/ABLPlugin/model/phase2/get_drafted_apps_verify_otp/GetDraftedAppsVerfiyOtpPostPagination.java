@@ -1,6 +1,8 @@
 package com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp;
 
-public class GetDraftedAppsVerfiyOtpPostPagination {
+import java.io.Serializable;
+
+public class GetDraftedAppsVerfiyOtpPostPagination implements Serializable {
     public int page;
     public int size;
     public Object totalPages;

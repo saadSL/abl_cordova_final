@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,10 +20,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
-import com.unikrew.faceoff.ABLPlugin.BaseClass;
+import com.unikrew.faceoff.ABLPlugin.base.BaseClass;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostAttachment;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.otp_phase2.OtpVerification;
 import com.unikrew.faceoff.Config;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class CnicUploadActivity extends BaseClass implements View.OnClickListener{
 
@@ -32,11 +38,16 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
     private Button btnCnicUploadNext;
     private Button btnCnicUploadCancel;
 
+
+
+    public ArrayList<ViewAppsGenerateOtpPostAttachment> attachments = new ArrayList<ViewAppsGenerateOtpPostAttachment>();
+
+
     private ViewAppsGenerateOtpPostParams postParams;
     private CnicUploadViewModel viewModel;
 
-    Bitmap cnicFrontPic;
-    Bitmap cnicBackPic;
+    String cnicFrontPic = "";
+    String cnicBackPic = "";
 
     /* The purpose of below variables are just for placement of pictures in correct position. */
     Boolean frontPic = false;
@@ -58,9 +69,12 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         viewModel.responseLiveData.observe(this,new Observer<ViewAppsGenerateOtpResponse>() {
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
-                showAlert(Config.successType, "Response recieved successfully !!!");
+                Intent intent = new Intent(CnicUploadActivity.this, OtpVerification.class);
 
+                intent.putExtra(Config.MOBILE_NUMBER,getIntent().getStringExtra(Config.MOBILE_NUMBER));
+                intent.putExtra(Config.CNIC_NUMBER,viewAppsGenerateOtpResponse.getData().getIdNumber());
 
+                startActivity(intent);
             }
         });
 
@@ -109,7 +123,7 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
                 postData();
                 break;
             case R.id.btn_cancel:
-                showAlert(Config.successType,"Cancel Clicked");
+                finish();
                 break;
         }
     }
@@ -117,14 +131,41 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
     /* View Apps Generate Otp Post Method*/
     private void postData() {
 
+        if (cnicFrontPic.equals("")){
+            showAlert(Config.errorType,"Please Upload Cnic Front Pic !!!");
+            return;
+        }else if (cnicBackPic.equals("")){
+            showAlert(Config.errorType,"Please Upload Cnic Back Pic !!!");
+            return;
+        }else{
+            setAttachmentObject();
+            setPostParams();
+            viewModel.viewAppsGenerateOtpPostData( postParams,this );
+        }
+    }
+
+    private void setAttachmentObject() {
+        /* For CNIC Front Picture */
+        ViewAppsGenerateOtpPostAttachment viewAppsGenerateOtpPostAttachment1 = new ViewAppsGenerateOtpPostAttachment();
+        viewAppsGenerateOtpPostAttachment1.setFileName(Config.CNIC_FRONT_FILE_NAME);
+        viewAppsGenerateOtpPostAttachment1.setBase64Content(cnicFrontPic);
+        viewAppsGenerateOtpPostAttachment1.setAttachmentTypeId(Config.attachmentTypeIdFront);
+        attachments.add(viewAppsGenerateOtpPostAttachment1);
+
+        /* For CNIC Back Picture */
+        ViewAppsGenerateOtpPostAttachment viewAppsGenerateOtpPostAttachment2 = new ViewAppsGenerateOtpPostAttachment();
+        viewAppsGenerateOtpPostAttachment2.setFileName(Config.CNIC_BACK_FILE_NAME);
+        viewAppsGenerateOtpPostAttachment2.setBase64Content(cnicBackPic);
+        viewAppsGenerateOtpPostAttachment2.setAttachmentTypeId(Config.attachmentTypeIdBack);
+        attachments.add(viewAppsGenerateOtpPostAttachment2);
+    }
+
+    private void setPostParams() {
         postParams.getData().setCustomerTypeId(Config.customerTypeId);
-        postParams.getData().setIdNumber(getIntent().getStringExtra(Config.CNIC_NUMBER));
-        postParams.getData().setMobileNo(getIntent().getStringExtra(Config.MOBILE_NUMBER));
-//        postParams.getViewAppsGenerateOtpPostData().setMobileNetwork(getIntent().getStringExtra(Config.MOBILE_NETWORK));
-//        postParams.getViewAppsGenerateOtpPostData().setPortedMobileNetwork(false);
-
-        viewModel.postData(postParams);
-
+        postParams.getData().setMobileNo( getIntent().getStringExtra(Config.MOBILE_NUMBER) );
+        postParams.getData().setGenerateOtp( true );
+        postParams.getData().setPortedMobileNetwork( getIntent().getBooleanExtra(Config.PORTED_MOBILE_NETWORK,false) );
+        postParams.getData().setAttachments(attachments);
     }
 
 
@@ -167,28 +208,39 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Config.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            if (cnicFrontPic == null && frontPic){
-                cnicFrontPic = (Bitmap) data.getExtras().get("data");
-                imgCnicFront.setImageBitmap(cnicFrontPic);
+            Bitmap image = null;
+            if (image == null && frontPic){
 
+                image = (Bitmap) data.getExtras().get("data");
+                imgCnicFront.setImageBitmap(image);
                 showCnicImageResource(
                         findViewById(R.id.img_rescan_cnic_front),
                         findViewById(R.id.tv_rescan_cnic_front),
                         findViewById(R.id.tick_cnic_front)
                 );
+               cnicFrontPic = convertToBase64(image);
 
-            }else if (cnicBackPic == null && backPic){
-                cnicBackPic = (Bitmap) data.getExtras().get("data");
-                imgCnicBack.setImageBitmap(cnicBackPic);
+            }else if (image == null && backPic){
+                image  = (Bitmap) data.getExtras().get("data");
+                imgCnicBack.setImageBitmap(image);
 
                 showCnicImageResource(
                         findViewById(R.id.img_rescan_cnic_back),
                         findViewById(R.id.tv_rescan_cnic_back),
                         findViewById(R.id.tick_cnic_back)
                 );
+
+                cnicBackPic = convertToBase64(image);
             }
 
         }
+    }
+
+    private String convertToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     private void showCnicImageResource(View viewById, View viewById1, View viewById2) {

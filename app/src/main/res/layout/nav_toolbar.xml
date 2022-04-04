@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/primary"
         android:orientation="horizontal">
 
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:padding="5dp"
+            android:padding="@dimen/_5sdp"
             android:text="OTP Verification"
             android:textColor="@color/white"
             android:textSize="20dp" />
@@ -38,7 +38,8 @@
             android:layout_margin="8dp"
             android:padding="5dp"
             android:src="@drawable/ic_msg"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="35dp"
@@ -47,7 +48,8 @@
             android:layout_margin="8dp"
             android:padding="5dp"
             android:src="@drawable/ic_power_setting"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

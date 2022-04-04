@@ -1,6 +1,8 @@
 package com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp;
 
-public class GetDraftedAppsVerfiyOtpPostData {
+import java.io.Serializable;
+
+public class GetDraftedAppsVerfiyOtpPostData implements Serializable {
     public int customerTypeId;
     public String idNumber;
     public String mobileNo;

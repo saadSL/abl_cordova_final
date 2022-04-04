@@ -4,7 +4,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/gen_toolbar" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,109 +15,190 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Let's get started"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_margin="15sp"/>
-
-            <TextView
-                android:id="@+id/tv_mobile_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15sp"
-                android:text="@string/mobile_number_text"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_mobile_num"
+            <LinearLayout
+                android:id="@+id/ll_mobile_num"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="11"
-                android:hint="Enter your mobile number"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15sp"
-                android:textSize="12sp"
-                android:text="@string/mobile_num_inst"/>
+                <include layout="@layout/gen_toolbar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:text="Let's get started"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_mobile_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:text="@string/mobile_number_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_mobile_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:hint="Enter your mobile number"
+                    android:inputType="number"
+                    android:maxLength="11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="@string/mobile_num_inst"
+                    android:textSize="@dimen/_10sdp" />
+
+                <!-- Ported Mobile Network Switch  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_weight=".5"
+                        android:text="@string/mobile_number_question"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/ported_mobile_network_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_weight=".5"
+                        android:theme="@style/SCBSwitch" />
+                </LinearLayout>
+
+                <!-- CNIC Layout -->
+                <LinearLayout
+                    android:id="@+id/ll_cnic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:text="CNIC"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_cnicNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:hint="Enter your cnic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="Enter your cnic"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15sp"
-                android:layout_marginTop="15sp"
-                android:text="@string/cnic_text"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                <include layout="@layout/gen_buttons" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/cnic_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="13"
-                android:hint="Enter your CNIC number"
-                android:layout_marginTop="5sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/ll_cnic_upload"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
+<!--                <include layout="@layout/cnic_upload_before"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mobile_network_text"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_margin="15sp"/>
-
-
-            <Spinner
-                android:id="@+id/mobile_network"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10sp"
-                android:entries="@array/mobile_network"
-                android:backgroundTint="@color/yellow"/>
-
-
-            <include layout="@layout/gen_buttons"/>
-
-<!--            <Button-->
-<!--                android:id="@+id/btn_mobile_num_next"-->
-<!--                android:layout_width="230dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_marginTop="150dp"-->
-<!--                android:background="@drawable/rounded_corner_bg"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="Next"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:textColor="@color/white" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/bt_cancel"-->
-<!--                android:layout_width="230dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_margin="10dp"-->
-<!--                android:background="@drawable/transparent_bg"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="Cancel"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:textColor="@color/primary" />-->
+<!--            </LinearLayout>-->
 
     </LinearLayout>
 
     </ScrollView>
 
 </LinearLayout>
+
+
+
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="15sp"-->
+    <!--                android:layout_marginTop="15sp"-->
+    <!--                android:text="@string/cnic_text"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textStyle="bold" />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/cnic_num"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:inputType="number"-->
+    <!--                android:maxLength="13"-->
+    <!--                android:hint="Enter your CNIC number"-->
+    <!--                android:layout_marginTop="5sp"-->
+    <!--                android:layout_marginLeft="15sp"-->
+    <!--                android:layout_marginRight="15sp"/>-->
+
+
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/mobile_network_text"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:layout_margin="15sp"/>-->
+
+
+    <!--            <Spinner-->
+    <!--                android:id="@+id/mobile_network"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="10sp"-->
+    <!--                android:backgroundTint="@color/yellow"-->
+    <!--                android:entries="@array/mobile_network"/>-->
+
+
+
+    <!--            <Button-->
+    <!--                android:id="@+id/btn_mobile_num_next"-->
+    <!--                android:layout_width="230dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="center_horizontal"-->
+    <!--                android:layout_marginTop="150dp"-->
+    <!--                android:background="@drawable/rounded_corner_bg"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:text="Next"-->
+    <!--                android:textAllCaps="false"-->
+    <!--                android:textColor="@color/white" />-->
+
+    <!--            <Button-->
+    <!--                android:id="@+id/bt_cancel"-->
+    <!--                android:layout_width="230dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="center_horizontal"-->
+    <!--                android:layout_margin="10dp"-->
+    <!--                android:background="@drawable/transparent_bg"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:text="Cancel"-->
+    <!--                android:textAllCaps="false"-->
+    <!--                android:textColor="@color/primary" />-->

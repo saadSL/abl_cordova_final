@@ -2,7 +2,7 @@ package com.unikrew.faceoff;
 
 public class Config {
 //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
-    public static final String BASE_URL = "http://192.168.147.164:8080";
+    public static final String BASE_URL = "http://10.100.102.124:8080";
 
     public static String ACCOUNT_NUMBER = "account_number";
 
@@ -40,10 +40,30 @@ public class Config {
     public static int mobileNumberLength = 11;
     public static String CNIC_NUMBER = "cnic_number";
     public static String MOBILE_NUMBER = "mobile_number";
-    public static String MOBILE_NETWORK = "mobile_network";
+    public static String PORTED_MOBILE_NETWORK = "ported_mobile_network";
 
     public static final int CAMERA_REQUEST = 1888;
     public static final int MY_CAMERA_PERMISSION_CODE = 100;
 
+    /* Code for new user. */
     public static int customerTypeId = 106501;
+
+    /* Code for getting mobile network. */
+    public static int codeTypeId = 1145;
+
+    /* Algorithm for encryption */
+    public static String algorithm = "AES";
+
+
+    /* Pagination variables below */
+    public static int PAGE_NUMBER = 1;
+    public static int PAGE_SIZE = 10;
+    
+    
+    /* Attachment variables */
+    public static String CNIC_FRONT_FILE_NAME = "CNIC FRONT";
+    public static String CNIC_BACK_FILE_NAME = "CNIC BACK";
+    public static int attachmentTypeIdFront = 1043001;
+    public static int attachmentTypeIdBack = 1043002;
+
 }

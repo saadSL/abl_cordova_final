@@ -1,37 +1,15 @@
 package com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ViewAppsGenerateOtpPostData implements Serializable {
     public int customerTypeId;
-    public String idNumber;
     public String mobileNo;
-    public String mobileNetwork;
-    public Boolean isPortedMobileNetwork;
-
-    public String getMobileNetwork() {
-        return mobileNetwork;
-    }
-
-    public void setMobileNetwork(String mobileNetwork) {
-        this.mobileNetwork = mobileNetwork;
-    }
-
-    public Boolean getPortedMobileNetwork() {
-        return isPortedMobileNetwork;
-    }
-
-    public void setPortedMobileNetwork(Boolean portedMobileNetwork) {
-        isPortedMobileNetwork = portedMobileNetwork;
-    }
-
-    public int getCustomerTypeId() {
-        return customerTypeId;
-    }
-
-    public void setCustomerTypeId(int customerTypeId) {
-        this.customerTypeId = customerTypeId;
-    }
+    public String idNumber;
+    public boolean generateOtp;
+    public boolean isPortedMobileNetwork;
+    public ArrayList<ViewAppsGenerateOtpPostAttachment> attachments;
 
     public String getIdNumber() {
         return idNumber;
@@ -41,11 +19,45 @@ public class ViewAppsGenerateOtpPostData implements Serializable {
         this.idNumber = idNumber;
     }
 
+    public boolean isPortedMobileNetwork() {
+        return isPortedMobileNetwork;
+    }
+
+    public void setPortedMobileNetwork(boolean portedMobileNetwork) {
+        isPortedMobileNetwork = portedMobileNetwork;
+    }
+
+
+
+    public int getCustomerTypeId() {
+        return customerTypeId;
+    }
+
+    public void setCustomerTypeId(int customerTypeId) {
+        this.customerTypeId = customerTypeId;
+    }
+
     public String getMobileNo() {
         return mobileNo;
     }
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public boolean isGenerateOtp() {
+        return generateOtp;
+    }
+
+    public void setGenerateOtp(boolean generateOtp) {
+        this.generateOtp = generateOtp;
+    }
+
+    public ArrayList<ViewAppsGenerateOtpPostAttachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(ArrayList<ViewAppsGenerateOtpPostAttachment> attachments) {
+        this.attachments = attachments;
     }
 }

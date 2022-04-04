@@ -80,10 +80,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.cnic_upload.CnicUploadActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.otp_phase2.OtpVerification"
+            android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

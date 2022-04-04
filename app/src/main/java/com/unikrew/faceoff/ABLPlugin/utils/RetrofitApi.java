@@ -6,6 +6,10 @@ import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network.MobileNetworkPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
@@ -29,6 +33,13 @@ public interface RetrofitApi {
 
     /* Phase 2 API's */
 
+    //Getting mobile networks
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<MobileNetworkResponse> getMobileNetworks(@Body MobileNetworkPostParams mobileNetworkPostParams);
+
     @POST("/RdaConsumer/api/consumer/public/view-apps-generate-otp")
     Call<ViewAppsGenerateOtpResponse> viewAppsGenerateOtp(@Body ViewAppsGenerateOtpPostParams postParams);
+
+    @POST("/RdaConsumer/api/consumer/public/get-drafted-apps-verify-otp")
+    Call<GetDraftedAppsVerifyOtpResponse> getDraftedAppsVerifyOtp(@Body GetDraftedAppsVerfiyOtpPostParams postParams);
 }

@@ -1,11 +1,11 @@
-package com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp;
+package com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp;
 
 import java.io.Serializable;
 
-public class ViewAppsGenerateOtpResponseMessage implements Serializable {
-
+public class GetDraftedAppsVerifyOtpResponseMessage implements Serializable {
     public String status;
     public String description;
+    public String errorDetail;
 
     public String getStatus() {
         return status;
@@ -21,5 +21,13 @@ public class ViewAppsGenerateOtpResponseMessage implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getErrorDetail() {
+        return errorDetail;
+    }
+
+    public void setErrorDetail(String errorDetail) {
+        this.errorDetail = errorDetail;
     }
 }

@@ -1,9 +1,8 @@
-package com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp;
+package com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network;
 
 import java.io.Serializable;
 
-public class ViewAppsGenerateOtpResponseMessage implements Serializable {
-
+public class MobileNetworkResponseMessage implements Serializable {
     public String status;
     public String description;
 
