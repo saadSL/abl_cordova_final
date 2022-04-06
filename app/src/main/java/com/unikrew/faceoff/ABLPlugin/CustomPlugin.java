@@ -5,23 +5,14 @@ import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.widget.Toast;
 
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
-import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
-import com.unikrew.faceoff.ABLPlugin.ui.cnic_upload.CnicUploadActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.otp_phase2.OtpVerification;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 
 /**
  * This class echoes a string called from JavaScript.

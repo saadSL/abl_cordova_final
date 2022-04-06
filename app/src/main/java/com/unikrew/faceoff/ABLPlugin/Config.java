@@ -44,6 +44,7 @@ public class Config {
 
     public static final int CAMERA_REQUEST = 1888;
     public static final int MY_CAMERA_PERMISSION_CODE = 100;
+    public static final int LOCATION_PERMISSION_CODE = 44;
 
     /* Code for new user. */
     public static int customerTypeId = 106501;

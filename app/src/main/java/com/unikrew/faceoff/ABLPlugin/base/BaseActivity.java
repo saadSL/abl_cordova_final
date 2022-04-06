@@ -1,0 +1,241 @@
+package com.unikrew.faceoff.ABLPlugin.base;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+
+import com.ofss.digx.mobile.android.allied.R;
+import com.unikrew.faceoff.Config;
+
+public class BaseActivity extends AppCompatActivity {
+
+    public MutableLiveData<Boolean> otp6LiveData = new MutableLiveData<Boolean>();
+    public AlertDialog loader;
+
+
+    public  boolean wifiAvailable(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            return false;
+        }
+        return true;
+    }
+
+
+    public  Boolean isEmpty(EditText et) {
+        if (et.getText().toString().equals("")){
+            return true;
+        }
+        return false;
+    }
+
+
+    public void showAlert(int type, String msg){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+
+        if (type == Config.errorType){
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
+            spannableStringBuilder.setSpan(
+                    foregroundColorSpan,
+                    0,
+                    "ERROR".length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            builder1.setTitle(spannableStringBuilder);
+        }else if (type == Config.successType){
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("SUCCESS");
+            spannableStringBuilder.setSpan(
+                    foregroundColorSpan,
+                    0,
+                    "SUCCESS".length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            builder1.setTitle(spannableStringBuilder);
+
+        }else if (type == Config.verifiedType) {
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
+            spannableStringBuilder.setSpan(
+                    foregroundColorSpan,
+                    0,
+                    "VERIFIED".length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            builder1.setTitle(spannableStringBuilder);
+        }
+
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+
+    public void setAutoFocusForOtp(EditText otp1,EditText otp2,EditText otp3,EditText otp4,EditText otp5,EditText otp6) {
+        otp1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length()==1){
+                    otp2.requestFocus();
+                }
+            }
+        });
+        otp2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length()==1){
+                    otp3.requestFocus();
+                }
+            }
+        });
+        otp3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length()==1){
+                    otp4.requestFocus();
+                }
+            }
+        });
+        otp4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length()==1){
+                    otp5.requestFocus();
+                }
+            }
+        });
+        otp5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length()==1){
+                    otp6.requestFocus();
+                }
+            }
+        });
+        otp6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+                if (text.length() == 1){
+                    otp6LiveData.postValue(true);
+                }
+            }
+        });
+    }
+
+    /* Will be implemented after consulting waqas bhai */
+    public void setTimer() {
+
+    }
+
+
+    public void showLoading(Activity activity) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+        builder1.setView(View.inflate(activity, R.layout.loader, null));
+        builder1.setCancelable(false);
+        loader = builder1.create();
+        loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+
+
+}

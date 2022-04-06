@@ -6,12 +6,12 @@ import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network.MobileNetworkPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network.MobileNetworkResponse;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -42,4 +42,7 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/public/get-drafted-apps-verify-otp")
     Call<GetDraftedAppsVerifyOtpResponse> getDraftedAppsVerifyOtp(@Body GetDraftedAppsVerfiyOtpPostParams postParams);
+
+    @POST("/RdaConsumer/api/common/public/lookup/city/branch")
+    Call<BranchesModel> getBranches(@Body GetBranchPostModel postParams);
 }

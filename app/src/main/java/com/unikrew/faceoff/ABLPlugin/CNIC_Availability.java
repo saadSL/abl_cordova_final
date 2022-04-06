@@ -2,7 +2,7 @@ package com.unikrew.faceoff.ABLPlugin;
 
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.otp.OtpVerificationActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.nadra_sdk.otp.OtpVerificationActivity;
 import com.unikrew.faceoff.Config;
 
 import com.ofss.digx.mobile.android.allied.R;

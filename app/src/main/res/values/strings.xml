@@ -25,7 +25,10 @@
     <string name="dialog_success_message">Scanning Completed</string>
     <string name="guidance_instruction">Position your hand with fingers close to each other and adjust it in such a way that you can view all 4 fingers of the hand completely in the frame area, and stay still</string>
     <string name="faceoff_key">MjAxLDE3Myw5NCw3NSw0OSwyMzAsNjAsMjU0LDE0NSwyNCwxMTgsNzksMTM5LDY2LDIxNSw3OCw3OSwxMSwyMDksMjgsMTUxLDExNCwyMTUsMTQ5LDk3LDE3OCwyOCw4LDE3Miw2MywyMiwxNCwxOTUsMjQsNTIsMTEyLDkxLDE2LDE2OCwxNzEsMTkzLDExNywyNDMsMTQ2LDg5LDE3NiwyNTIsMTMzLDE2OSwyMjUsNDAsMjU0LDE2Miw2NCwxNTIsMTUwLDczLDUxLDUxLDE4NywxODEsOTksOTUsMTM2LDE3NywyNDUsNTYsNjcsMjEwLDE2NCwxMzEsMTksMTgzLDIyMiw3LDM0LDExLDY1LDEzNSwyMzgsMTY0LDE5NCw3MCw2OCwyMDMsNzYsMjEsMTM4LDcwLDIwOSwxMDMsMjQ1LDkzLDE5MCwyMzcsMTYxLDI1NCwzMSw5MCw0NSwxNDgsMTU5LDE2LDY5LDE1NSw2OCwxMDEsMjQ5LDExMSwxMTksNzQsMjE4LDU5LDEyOSwxMywyOCwyNiw3NSw5NiwzOSw4MSwxNjgsMTMzLDE0MSwyMzksNzksMSwyMTIsMTgsMTU4LDE3NCwyMiwyNTMsMjA5LDI0NCwyMTYsNzgsOTIsMTE4LDkwLDE1OSw1MCw3Nyw3MiwyNSwxODYsMTU3LDE4LDIxMCwxMTAsMTc2LDk3LDEzOSwxOTgsMjM4LDc1LDEsMjMyLDEwNSwzMCwxOTMsMjMwLDY0LDE2Niw0NiwzMCwyMTEsMjI1LDE0Nyw2MiwzNiwxNTEsMTM4LDE3NCwxODMsODksMjQ3LDc0LDIxMywxNTUsMjExLDEyLDIxOSw2NCwxOCwxMTIsMTcwLDk4LDIzNiwxODMsMTk0LDEyMiwyMjMsMTM0LDIyOCwyNTIsNDQsNDEsODYsMTc3LDE3LDEwMSwzMywyMTksMTQ2LDEwNCwyMjEsMzIsNzAsMTU1LDc5LDE4NSw5MywxMDMsMjE5LDE4NSwxNCwyMjQsMTIsMTI4LDExOCwxODQsMTkxLDc0LDIxNSwxMjcsMjMzLDk2LDIyMSw0Nyw2NSwyNTEsMzIsMTQ1LDIyMywxOTcsODcsNzksMTMxLDQ4LDQ1LDUxLDE0LDc0LDQ5LDczLDI0OCwxNzUsMTY2LDIzNCw2OSw3MiwxMDQsMTI5LDg3LDExNywxLDAsMSw=</string>
-    -  Phase 2 string resources  -->
+    - Phase 2 string resources -->
+    <string name="cnic_placeholder">Enter your cnic</string>
+    <string name="cnic_cap">CNIC</string>
+    <string name="get_started">Let\'s get started</string>
     <string name="preferred_banking_method_prompt">Please Select Your Preferred Banking Method</string>
     <string name="type_of_account_prompt">Please Select Type Of Account</string>
     <string name="mobile_num_inst">Make sure entered mobile number is registered against your CNIC</string>
@@ -91,4 +94,5 @@
     <string name="mobile_network_text">Mobile Network <font fgcolor="#FF0000">*</font></string>
     <string name="mobile_number_text">Mobile Number <font fgcolor="#FF0000">*</font></string>
     <string name="portedmobile_network_question">Have you ported your mobile network?</string>
+    <string name="google_map_key">AIzaSyBAgs4bPWgrbGgE3nrX_kjNAn0vDI_MEOY</string>
 </resources>

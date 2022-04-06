@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    android:orientation="vertical">
 
 
     <ScrollView
@@ -27,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Let's get started"
+                    android:text="@string/get_started"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold" />
@@ -96,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_10sdp"
-                        android:text="CNIC"
+                        android:text="@string/cnic_cap"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -107,36 +106,37 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:hint="Enter your cnic" />
+                        android:hint="@string/cnic_placeholder" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="Enter your cnic"
+                        android:text="@string/cnic_placeholder"
                         android:textSize="@dimen/_10sdp" />
                 </LinearLayout>
 
 
-                <include layout="@layout/gen_buttons" />
+                <include
+                    android:id="@+id/btn_container"
+                    layout="@layout/gen_buttons" />
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/ll_cnic_upload"-->
-<!--                android:visibility="gone"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/ll_cnic_upload"-->
+            <!--                android:visibility="gone"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent">-->
 
-<!--                <include layout="@layout/cnic_upload_before"/>-->
+            <!--                <include layout="@layout/cnic_upload_before"/>-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
-    </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 
 </LinearLayout>
-
 
 
     <!--            <TextView-->
@@ -176,7 +176,6 @@
     <!--                android:layout_margin="10sp"-->
     <!--                android:backgroundTint="@color/yellow"-->
     <!--                android:entries="@array/mobile_network"/>-->
-
 
 
     <!--            <Button-->

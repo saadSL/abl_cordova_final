@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.ABLPlugin.CNIC_Availability;
-import com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity;
 
 public class MainActivity extends AppCompatActivity {
 
