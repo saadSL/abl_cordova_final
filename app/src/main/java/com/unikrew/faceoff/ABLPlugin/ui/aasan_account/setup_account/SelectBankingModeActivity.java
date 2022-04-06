@@ -154,7 +154,7 @@ public class SelectBankingModeActivity extends BaseActivity {
     }
 
     private void getBranchesFromNetwork(double latitude, double longitude) {
-        showLoading(this);
+        showLoading();
         getBranchPostModel = new GetBranchPostModel();
         getBranchPostModel.getData().setBranchName("");
         getBranchPostModel.getData().setCategoryType("C");

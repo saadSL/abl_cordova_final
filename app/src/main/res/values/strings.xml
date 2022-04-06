@@ -95,4 +95,5 @@
     <string name="mobile_number_text">Mobile Number <font fgcolor="#FF0000">*</font></string>
     <string name="portedmobile_network_question">Have you ported your mobile network?</string>
     <string name="google_map_key">AIzaSyBAgs4bPWgrbGgE3nrX_kjNAn0vDI_MEOY</string>
+    <string name="change_number"><u>Change Number</u></string>
 </resources>

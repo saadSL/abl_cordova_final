@@ -4,22 +4,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GetDraftedAppsVerifyOtpResponseData implements Serializable {
-    public ArrayList<Object> appList;
-    public Object accessToken;
+    public ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList;
+    public String accessToken;
 
-    public ArrayList<Object> getAppList() {
+    public ArrayList<GetDraftedAppsVerifyOtpResponseAppList> getAppList() {
         return appList;
     }
 
-    public void setAppList(ArrayList<Object> appList) {
+    public void setAppList(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList) {
         this.appList = appList;
     }
 
-    public Object getAccessToken() {
+    public String getAccessToken() {
         return accessToken;
     }
 
-    public void setAccessToken(Object accessToken) {
+    public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 }

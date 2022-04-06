@@ -13,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp">
+            android:layout_gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -138,7 +137,15 @@
                 android:textColor="@color/purple_700"
                 android:textStyle="bold"
                 android:visibility="gone"/>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_number"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/_12sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/_10sdp"/>
             <Button
                 android:id="@+id/btn_verify_otp"
                 android:layout_width="wrap_content"

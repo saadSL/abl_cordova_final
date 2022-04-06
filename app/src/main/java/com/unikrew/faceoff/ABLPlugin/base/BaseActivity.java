@@ -222,19 +222,15 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
-    /* Will be implemented after consulting waqas bhai */
-    public void setTimer() {
-
-    }
-
-
-    public void showLoading(Activity activity) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-        builder1.setView(View.inflate(activity, R.layout.loader, null));
+    public void showLoading() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setView(View.inflate(this, R.layout.loader, null));
         builder1.setCancelable(false);
         loader = builder1.create();
         loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
+
 
 
 

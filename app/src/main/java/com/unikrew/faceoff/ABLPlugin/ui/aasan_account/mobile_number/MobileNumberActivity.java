@@ -52,27 +52,30 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         viewModel.responseLiveData.observe(this, new Observer<ViewAppsGenerateOtpResponse>() {
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
-                if (viewAppsGenerateOtpResponse.getData().isAlreadyExist()) {
-                    if (postParams.getData().isGenerateOtp()) {
-                        openOtpActivity();
-                    } else {
+                if ( viewAppsGenerateOtpResponse.getData().isAlreadyExist() ){
+                    if (generateOtp){
+                        openOtpVerificationActivity();
+                    }else{
                         showCnic(viewAppsGenerateOtpResponse);
                     }
-                } else {
+                }else{
                     openCnicUploadActivity();
                 }
+                loader.dismiss();
             }
         });
 
         viewModel.errorLiveData.observe(this, new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                showAlert(Config.errorType, s);
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType,errMsg);
+                loader.dismiss();
             }
         });
+
     }
 
-    private void openOtpActivity() {
+    private void openOtpVerificationActivity() {
         Intent intent = new Intent(this, OtpVerification.class);
 
         intent.putExtra(Config.MOBILE_NUMBER, binding.etMobileNum.getText().toString());
@@ -120,7 +123,14 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_next:
-                viewAppsGenerateOtpPostData();
+                if (!validateMobileNumActivity()){
+                    return;
+                }else{
+                    setPostParams();
+                    viewModel.viewAppsGenerateOtpPostData(postParams);
+                    showLoading();
+                    loader.show();
+                }
                 break;
             case R.id.btn_cancel:
                 finish();
@@ -129,42 +139,49 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void viewAppsGenerateOtpPostData() {
-        if (!verifyMobileNum()) {
-            return;
-        } else {
-            setPostParams();
-        }
+
     }
 
     private void setPostParams() {
-        postParams.getData().setCustomerTypeId(Config.customerTypeId);
+        postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         postParams.getData().setMobileNo(binding.etMobileNum.getText().toString());
         postParams.getData().setGenerateOtp(generateOtp);
-        postParams.getData().setIdNumber(binding.etCnicNumber.getText().toString());
-        postParams.getData().setPortedMobileNetwork(isPortedMobileNetwork);
-        viewModel.viewAppsGenerateOtpPostData(postParams, this);
+
+        if ( generateOtp ){
+            postParams.getData().setIdNumber(binding.etCnicNumber.getText().toString());
+            postParams.getData().setPortedMobileNetwork(isPortedMobileNetwork);
+        }
+
     }
 
-    private Boolean verifyMobileNum() {
-        if (isEmpty(binding.etMobileNum)) {
+    private Boolean validateMobileNumActivity() {
+        if ( isEmpty( binding.etMobileNum ) ){
 
-            showAlert(Config.errorType, "Mobile Number Is Empty !!!");
+            showAlert(Config.errorType,"Mobile Number Is Empty !!!");
             return false;
 
-        } else if (binding.etMobileNum.getText().toString().length() < Config.mobileNumberLength) {
+        }else if( binding.etMobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH){
 
-            showAlert(Config.errorType, "Mobile Number Length Not Valid");
+            showAlert(Config.errorType,"Mobile Number Length Not Valid !!!");
             return false;
 
-        } else if (!wifiAvailable(this)) {
+        }else if( generateOtp && isEmpty(binding.etCnicNumber) ){
 
-            showAlert(Config.errorType, "Network Is Not Available");
+            showAlert(Config.errorType,"CNIC Number Is Empty !!!");
             return false;
 
-        } else {
+        }else if ( generateOtp && binding.etCnicNumber.getText().toString().length() < Config.CNIC_LENGTH ){
 
+            showAlert(Config.errorType,"CNIC Number Length Not Valid !!!");
+            return false;
+
+        }else if ( !wifiAvailable(this) ){
+
+            showAlert(Config.errorType,"Network Is Not Available !!!");
+            return false;
+
+        }else{
             return true;
-
         }
     }
 

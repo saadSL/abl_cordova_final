@@ -18,7 +18,7 @@ public class OtpVerificationViewModel extends BaseViewModel {
     public MutableLiveData<GetDraftedAppsVerifyOtpResponse> otpVerificationResponseLiveData = new MutableLiveData<GetDraftedAppsVerifyOtpResponse>();
     public MutableLiveData<String> otpVerificationErrorLiveData = new MutableLiveData<String>();
 
-    public void getDraftedAppsVerifyOtp(GetDraftedAppsVerfiyOtpPostParams postParams, Activity activity){
+    public void getDraftedAppsVerifyOtp(GetDraftedAppsVerfiyOtpPostParams postParams){
         Call<GetDraftedAppsVerifyOtpResponse> callableRes = AblApplication.apiInterface.getDraftedAppsVerifyOtp(postParams);
 
         callableRes.enqueue(new Callback<GetDraftedAppsVerifyOtpResponse>() {
@@ -29,16 +29,12 @@ public class OtpVerificationViewModel extends BaseViewModel {
                 }else{
                     otpVerificationErrorLiveData.postValue(getErrorDetail(response));
                 }
-                loader.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetDraftedAppsVerifyOtpResponse> call, Throwable t) {
                 otpVerificationErrorLiveData.postValue(t.getMessage());
-                loader.dismiss();
             }
         });
-        showLoading(activity);
-        loader.show();
     }
 }

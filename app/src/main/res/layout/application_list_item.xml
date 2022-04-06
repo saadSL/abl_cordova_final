@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/_10sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Full Name (CNIC Data)"
+            android:textSize="@dimen/_9sdp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name_label"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="Kashif Mehmood"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_accountType_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Type"
+            android:textSize="@dimen/_9sdp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/name"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/accountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_accountType_label"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="ADRA (Single)"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_accountCurrency_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Currency"
+            android:textSize="@dimen/_9sdp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/accountType"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/accountCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_accountCurrency_label"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="PKR"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/btn_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

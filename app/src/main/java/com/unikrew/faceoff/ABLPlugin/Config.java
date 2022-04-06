@@ -37,7 +37,7 @@ public class Config {
 
     /* Phase 2 working below */
 
-    public static int mobileNumberLength = 11;
+    public static int MOBILE_NUMBER_LENGTH = 11;
     public static String CNIC_NUMBER = "cnic_number";
     public static String MOBILE_NUMBER = "mobile_number";
     public static String PORTED_MOBILE_NETWORK = "ported_mobile_network";
@@ -47,13 +47,11 @@ public class Config {
     public static final int LOCATION_PERMISSION_CODE = 44;
 
     /* Code for new user. */
-    public static int customerTypeId = 106501;
+    public static int CUSTOMER_TYPE_ID = 106501;
 
-    /* Code for getting mobile network. */
-    public static int codeTypeId = 1145;
 
     /* Algorithm for encryption */
-    public static String algorithm = "AES";
+    public static String ALGO = "AES";
 
 
     /* Pagination variables below */
@@ -61,10 +59,24 @@ public class Config {
     public static int PAGE_SIZE = 10;
     
     
-    /* Attachment variables */
+    /* Attachment variables for view-Apps-Generate-Otp */
     public static String CNIC_FRONT_FILE_NAME = "CNIC FRONT";
     public static String CNIC_BACK_FILE_NAME = "CNIC BACK";
-    public static int attachmentTypeIdFront = 1043001;
-    public static int attachmentTypeIdBack = 1043002;
+    public static int ATTACHMENT_TYPE_ID_FRONT = 1043001;
+    public static int ATTACHMENT_TYPE_ID_BACK = 1043002;
+
+
+    /* Account Application variables */
+    public static String APP_LIST = "app_list";
+    public static String ACCESS_TOKEN = "access_token";
+
+    public static int otpLength = 6;
 
 }
+
+
+
+
+/* Dumps */
+//    /* Code for getting mobile network. */
+//    public static int codeTypeId = 1145;
