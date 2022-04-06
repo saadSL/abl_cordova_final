@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -42,6 +43,9 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     private EditText otp4;
     private EditText otp5;
     private EditText otp6;
+
+    private TextView otpLink;
+
     private ImageView btnBack;
     private Button btnVerify;
 
@@ -111,6 +115,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
 
     private void set() {
+        otpLink.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnVerify.setOnClickListener(this);
     }
@@ -125,6 +130,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         otp5 = findViewById(R.id.et_otp5);
         otp6 = findViewById(R.id.et_otp6);
 
+        otpLink = findViewById(R.id.linkForOTP);
 
         btnVerify = findViewById(R.id.btn_verify_otp);
         btnBack = findViewById(R.id.iv_back);
@@ -136,10 +142,17 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
             case R.id.btn_verify_otp:
                 postOtp();
                 break;
+            case R.id.linkForOTP:
+                reSendOtp();
+                break;
             case R.id.iv_back:
                 finish();
                 break;
         }
+    }
+
+    private void reSendOtp() {
+
     }
 
     private void postOtp() {
