@@ -15,17 +15,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
-import com.unikrew.faceoff.ABLPlugin.base.BaseClass;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostAttachment;
+import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.cnic_upload.CnicUploadActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.otp_phase2.OtpVerification;
 import com.unikrew.faceoff.Config;
 
-import java.util.ArrayList;
-
-public class MobileNumberActivity extends BaseClass implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class MobileNumberActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     /* variables  */
     private EditText mobileNum;
@@ -62,19 +59,29 @@ public class MobileNumberActivity extends BaseClass implements View.OnClickListe
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
                 if ( viewAppsGenerateOtpResponse.getData().isAlreadyExist() ){
-                    if (postParams.getData().isGenerateOtp()){
-                        openOtpActivity();
+                    if (generateOtp){
+                        openOtpVerificationActivity();
                     }else{
                         showCnic(viewAppsGenerateOtpResponse);
                     }
                 }else{
                     openCnicUploadActivity();
                 }
+                loader.dismiss();
             }
         });
+
+        viewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType,errMsg);
+                loader.dismiss();
+            }
+        });
+
     }
 
-    private void openOtpActivity() {
+    private void openOtpVerificationActivity() {
         Intent intent = new Intent(this, OtpVerification.class);
 
         intent.putExtra(Config.MOBILE_NUMBER,mobileNum.getText().toString());
@@ -131,7 +138,14 @@ public class MobileNumberActivity extends BaseClass implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_next:
-                viewAppsGenerateOtpPostData();
+                if (!validateMobileNumActivity()){
+                    return;
+                }else{
+                    setPostParams();
+                    viewModel.viewAppsGenerateOtpPostData(postParams);
+                    showLoading();
+                    loader.show();
+                }
                 break;
             case R.id.btn_cancel:
                 finish();
@@ -140,44 +154,49 @@ public class MobileNumberActivity extends BaseClass implements View.OnClickListe
     }
 
     private void viewAppsGenerateOtpPostData() {
-        if (!verifyMobileNum()){
-            return;
-        }else{
-            setPostParams();
-            viewModel.viewAppsGenerateOtpPostData(postParams,this);
-        }
+
     }
 
     private void setPostParams() {
-        postParams.getData().setCustomerTypeId(Config.customerTypeId);
+        postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         postParams.getData().setMobileNo(mobileNum.getText().toString());
         postParams.getData().setGenerateOtp(generateOtp);
-        postParams.getData().setIdNumber(cnicNumber.getText().toString());
-        postParams.getData().setPortedMobileNetwork(isPortedMobileNetwork);
+
+        if ( generateOtp ){
+            postParams.getData().setIdNumber(cnicNumber.getText().toString());
+            postParams.getData().setPortedMobileNetwork(isPortedMobileNetwork);
+        }
+
     }
 
-    private Boolean verifyMobileNum() {
+    private Boolean validateMobileNumActivity() {
         if ( isEmpty( mobileNum ) ){
 
             showAlert(Config.errorType,"Mobile Number Is Empty !!!");
             return false;
 
-        }else if( mobileNum.getText().toString().length() < Config.mobileNumberLength){
+        }else if( mobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH){
 
-            showAlert(Config.errorType,"Mobile Number Length Not Valid");
+            showAlert(Config.errorType,"Mobile Number Length Not Valid !!!");
             return false;
 
-        }
+        }else if( generateOtp && isEmpty(cnicNumber) ){
 
-        else if ( !wifiAvailable(this) ){
+            showAlert(Config.errorType,"CNIC Number Is Empty !!!");
+            return false;
 
-            showAlert(Config.errorType,"Network Is Not Available");
+        }else if ( generateOtp && cnicNumber.getText().toString().length() < Config.CNIC_LENGTH ){
+
+            showAlert(Config.errorType,"CNIC Number Length Not Valid !!!");
+            return false;
+
+        }else if ( !wifiAvailable(this) ){
+
+            showAlert(Config.errorType,"Network Is Not Available !!!");
             return false;
 
         }else{
-
             return true;
-
         }
     }
 

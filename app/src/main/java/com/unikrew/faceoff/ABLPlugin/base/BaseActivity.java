@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -21,10 +22,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.Config;
 
-public class BaseClass extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
 
     public MutableLiveData<Boolean> otp6LiveData = new MutableLiveData<Boolean>();
 
+    public AlertDialog loader;
 
 
     public  boolean wifiAvailable(Context context) {
@@ -221,11 +223,13 @@ public class BaseClass extends AppCompatActivity {
         });
     }
 
-    /* Will be implemented after consulting waqas bhai */
-    public void setTimer() {
-
+    public void showLoading() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setView(View.inflate(this, R.layout.loader, null));
+        builder1.setCancelable(false);
+        loader = builder1.create();
+        loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
-
 
 
 }

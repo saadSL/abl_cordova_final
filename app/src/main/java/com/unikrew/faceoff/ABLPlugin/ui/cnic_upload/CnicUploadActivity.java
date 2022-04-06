@@ -20,7 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
-import com.unikrew.faceoff.ABLPlugin.base.BaseClass;
+import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostAttachment;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.phase2.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
@@ -30,7 +30,7 @@ import com.unikrew.faceoff.Config;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class CnicUploadActivity extends BaseClass implements View.OnClickListener{
+public class CnicUploadActivity extends BaseActivity implements View.OnClickListener{
 
     /* variables */
     private ImageView imgCnicFront;
@@ -69,21 +69,27 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         viewModel.responseLiveData.observe(this,new Observer<ViewAppsGenerateOtpResponse>() {
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
-                Intent intent = new Intent(CnicUploadActivity.this, OtpVerification.class);
-
-                intent.putExtra(Config.MOBILE_NUMBER,getIntent().getStringExtra(Config.MOBILE_NUMBER));
-                intent.putExtra(Config.CNIC_NUMBER,viewAppsGenerateOtpResponse.getData().getIdNumber());
-
-                startActivity(intent);
+                openOtpVerificationActivity(viewAppsGenerateOtpResponse);
+                loader.dismiss();
             }
         });
 
         viewModel.responseErrorLiveData.observe(this, new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                showAlert(Config.errorType,s);
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType,errMsg);
+                loader.dismiss();
             }
         });
+    }
+
+    private void openOtpVerificationActivity(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
+        Intent intent = new Intent(CnicUploadActivity.this, OtpVerification.class);
+
+        intent.putExtra(Config.MOBILE_NUMBER,getIntent().getStringExtra(Config.MOBILE_NUMBER));
+        intent.putExtra(Config.CNIC_NUMBER,viewAppsGenerateOtpResponse.getData().getIdNumber());
+
+        startActivity(intent);
     }
 
     private void setViewModel() {
@@ -121,6 +127,7 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
                 break;
             case R.id.btn_next:
                 postData();
+
                 break;
             case R.id.btn_cancel:
                 finish();
@@ -140,28 +147,31 @@ public class CnicUploadActivity extends BaseClass implements View.OnClickListene
         }else{
             setAttachmentObject();
             setPostParams();
-            viewModel.viewAppsGenerateOtpPostData( postParams,this );
+            viewModel.viewAppsGenerateOtpPostData(postParams);
+            showLoading();
+            loader.show();
         }
     }
 
     private void setAttachmentObject() {
+
         /* For CNIC Front Picture */
         ViewAppsGenerateOtpPostAttachment viewAppsGenerateOtpPostAttachment1 = new ViewAppsGenerateOtpPostAttachment();
         viewAppsGenerateOtpPostAttachment1.setFileName(Config.CNIC_FRONT_FILE_NAME);
         viewAppsGenerateOtpPostAttachment1.setBase64Content(cnicFrontPic);
-        viewAppsGenerateOtpPostAttachment1.setAttachmentTypeId(Config.attachmentTypeIdFront);
+        viewAppsGenerateOtpPostAttachment1.setAttachmentTypeId(Config.ATTACHMENT_TYPE_ID_FRONT);
         attachments.add(viewAppsGenerateOtpPostAttachment1);
 
         /* For CNIC Back Picture */
         ViewAppsGenerateOtpPostAttachment viewAppsGenerateOtpPostAttachment2 = new ViewAppsGenerateOtpPostAttachment();
         viewAppsGenerateOtpPostAttachment2.setFileName(Config.CNIC_BACK_FILE_NAME);
         viewAppsGenerateOtpPostAttachment2.setBase64Content(cnicBackPic);
-        viewAppsGenerateOtpPostAttachment2.setAttachmentTypeId(Config.attachmentTypeIdBack);
+        viewAppsGenerateOtpPostAttachment2.setAttachmentTypeId(Config.ATTACHMENT_TYPE_ID_BACK);
         attachments.add(viewAppsGenerateOtpPostAttachment2);
     }
 
     private void setPostParams() {
-        postParams.getData().setCustomerTypeId(Config.customerTypeId);
+        postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         postParams.getData().setMobileNo( getIntent().getStringExtra(Config.MOBILE_NUMBER) );
         postParams.getData().setGenerateOtp( true );
         postParams.getData().setPortedMobileNetwork( getIntent().getBooleanExtra(Config.PORTED_MOBILE_NETWORK,false) );

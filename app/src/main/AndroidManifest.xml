@@ -93,5 +93,10 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.account_application.AccountApplicationActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

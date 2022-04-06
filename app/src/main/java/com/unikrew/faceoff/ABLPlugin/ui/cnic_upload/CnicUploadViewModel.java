@@ -18,7 +18,7 @@ public class CnicUploadViewModel extends BaseViewModel {
     public MutableLiveData<ViewAppsGenerateOtpResponse> responseLiveData = new MutableLiveData<ViewAppsGenerateOtpResponse>();
     public MutableLiveData<String> responseErrorLiveData = new MutableLiveData<String>();
 
-    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams, Activity activity){
+    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams){
 
         try {
             Call<ViewAppsGenerateOtpResponse> callableRes = AblApplication.apiInterface.viewAppsGenerateOtp(postParams);
@@ -30,19 +30,15 @@ public class CnicUploadViewModel extends BaseViewModel {
                     }else{
                         responseErrorLiveData.postValue( getErrorDetail(response) );
                     }
-                    loader.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<ViewAppsGenerateOtpResponse> call, Throwable t) {
                     responseErrorLiveData.postValue( t.getMessage() );
-                    loader.dismiss();
                 }
             });
         }catch (Exception e){
             e.printStackTrace();
         }
-        showLoading(activity);
-        loader.show();
     }
 }

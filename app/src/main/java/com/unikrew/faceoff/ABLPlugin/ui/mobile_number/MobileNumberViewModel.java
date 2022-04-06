@@ -51,7 +51,7 @@ public class MobileNumberViewModel extends BaseViewModel {
     public MutableLiveData<ViewAppsGenerateOtpResponse> responseLiveData = new MutableLiveData<ViewAppsGenerateOtpResponse>();
     public MutableLiveData<String> errorLiveData = new MutableLiveData<String>();
 
-    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams,Activity activity){
+    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams){
 
         Call<ViewAppsGenerateOtpResponse> res = AblApplication.apiInterface.viewAppsGenerateOtp(postParams);
         res.enqueue(new Callback<ViewAppsGenerateOtpResponse>() {
@@ -62,17 +62,13 @@ public class MobileNumberViewModel extends BaseViewModel {
                 }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
-                loader.dismiss();
             }
 
             @Override
             public void onFailure(Call<ViewAppsGenerateOtpResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
-                loader.dismiss();
             }
         });
-        showLoading(activity);
-        loader.show();
     }
 
 }

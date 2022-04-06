@@ -21,7 +21,6 @@ import retrofit2.Response;
 
 public class BaseViewModel extends ViewModel {
 
-    public AlertDialog loader;
 
 
     public String getErrorDetail(Response response) {
@@ -44,14 +43,5 @@ public class BaseViewModel extends ViewModel {
             e.printStackTrace();
         }
         return errorMsg;
-    }
-
-
-    public void showLoading(Activity activity) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-        builder1.setView(View.inflate(activity, R.layout.loader, null));
-        builder1.setCancelable(false);
-        loader = builder1.create();
-        loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 }
