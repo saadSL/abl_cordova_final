@@ -1,16 +1,15 @@
 package com.unikrew.faceoff.ABLPlugin.base;
 
 import android.app.Activity;
-import android.app.Application;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.ofss.digx.mobile.android.allied.R;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.mobile_network.MobileNetworkResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +20,7 @@ import retrofit2.Response;
 
 public class BaseViewModel extends ViewModel {
 
+    public MutableLiveData<String> errorLiveData = new MutableLiveData<String>();
 
 
     public String getErrorDetail(Response response) {

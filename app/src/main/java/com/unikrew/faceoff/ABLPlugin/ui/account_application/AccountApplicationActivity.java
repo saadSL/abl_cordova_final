@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.phase2.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 
 public class AccountApplicationActivity extends BaseActivity {

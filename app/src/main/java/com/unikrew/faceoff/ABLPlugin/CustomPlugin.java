@@ -11,7 +11,8 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
-import com.unikrew.faceoff.ABLPlugin.ui.mobile_number.MobileNumberActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
+
 
 /**
  * This class echoes a string called from JavaScript.

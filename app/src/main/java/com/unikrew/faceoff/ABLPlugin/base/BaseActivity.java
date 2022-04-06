@@ -25,7 +25,6 @@ import com.unikrew.faceoff.Config;
 public class BaseActivity extends AppCompatActivity {
 
     public MutableLiveData<Boolean> otp6LiveData = new MutableLiveData<Boolean>();
-
     public AlertDialog loader;
 
 
@@ -230,6 +229,9 @@ public class BaseActivity extends AppCompatActivity {
         loader = builder1.create();
         loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
+
+
 
 
 }
