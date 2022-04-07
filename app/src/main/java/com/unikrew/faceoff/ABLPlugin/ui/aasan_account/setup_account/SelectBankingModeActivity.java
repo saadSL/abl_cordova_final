@@ -2,6 +2,8 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -22,25 +24,73 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectBankingModeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.SuggestBranchListItemModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.Config;
 
-public class SelectBankingModeActivity extends BaseActivity {
-    private ActivitySelectBankingModeBinding binding;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SelectBankingModeActivity extends BaseActivity implements OnMapReadyCallback {
+    private ActivitySelectBankingModeBinding bankingModeBinding;
     private GetBranchPostModel getBranchPostModel;
     private FusedLocationProviderClient mFusedLocationClient;
     private SelectBankingModeViewModel selectBankingModeViewModel;
+    private GoogleMap mMap;
+    private List<SuggestBranchListItemModel> suggestBranchListItemModelArrayList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
-        getLatLng();
+//        getLatLng();
+        setObservers();
+    }
+
+    private void setMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    private void setObservers() {
+        selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
+            @Override
+            public void onChanged(BranchesModel branchesModel) {
+                Log.d("branchesResponse", "onChanged: " + branchesModel);
+                dismissLoading();
+                setMap();
+                setMarkersOnMap(branchesModel);
+            }
+        });
+
+        selectBankingModeViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType, errMsg);
+                dismissLoading();
+            }
+        });
+
+    }
+
+    private void setMarkersOnMap(BranchesModel branchesModel) {
+        suggestBranchListItemModelArrayList = branchesModel.getData().getSuggestBranchList();
     }
 
     private void setViewModel() {
@@ -75,7 +125,7 @@ public class SelectBankingModeActivity extends BaseActivity {
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            getBranchesFromNetwork(location.getLatitude(), location.getLongitude());
+                            getBranchesFromNetwork(30.18817, 71.4358);
                             Log.d("latAndLng", "onComplete latitude is: " + location.getLatitude() + " longitude is " + location.getLongitude());
                         }
                     }
@@ -112,6 +162,7 @@ public class SelectBankingModeActivity extends BaseActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
+            getBranchesFromNetwork(30.18817, 71.4358);
             Log.d("latAndLng", "latitude is: " + mLastLocation.getLatitude() + " longitude is " + mLastLocation.getLongitude());
         }
     };
@@ -165,7 +216,33 @@ public class SelectBankingModeActivity extends BaseActivity {
     }
 
     private void setBinding() {
-        binding = ActivitySelectBankingModeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        bankingModeBinding = ActivitySelectBankingModeBinding.inflate(getLayoutInflater());
+        setContentView(bankingModeBinding.getRoot());
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        // inside on map ready method
+        // we will be displaying all our markers.
+        // for adding markers we are running for loop and
+        // inside that we are drawing marker on our map.
+
+        if (suggestBranchListItemModelArrayList.size() > 0) {
+            for (int i = 0; i < suggestBranchListItemModelArrayList.size(); i++) {
+
+                LatLng latLng = new LatLng(suggestBranchListItemModelArrayList.get(i).getLatitude(),suggestBranchListItemModelArrayList.get(i).getLongitude());
+
+                // below line is use to add marker to each location of our array list.
+                mMap.addMarker(new MarkerOptions().position(latLng).title(suggestBranchListItemModelArrayList.get(i).getBranchName()));
+
+                // below lin is use to zoom our camera on map.
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(25.0f));
+
+                // below line is use to move our camera to the specific location.
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            }
+        }
+
     }
 }

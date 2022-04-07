@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -15,6 +16,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -28,29 +30,43 @@ public class BaseActivity extends AppCompatActivity {
     public AlertDialog loader;
 
 
-    public  boolean wifiAvailable(Context context) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setLoader();
+    }
+
+    private void setLoader() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setView(View.inflate(this, R.layout.loader, null));
+        builder1.setCancelable(false);
+        loader = builder1.create();
+        loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    public boolean wifiAvailable(Context context) {
         ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             return false;
         }
         return true;
     }
 
 
-    public  Boolean isEmpty(EditText et) {
-        if (et.getText().toString().equals("")){
+    public Boolean isEmpty(EditText et) {
+        if (et.getText().toString().equals("")) {
             return true;
         }
         return false;
     }
 
 
-    public void showAlert(int type, String msg){
+    public void showAlert(int type, String msg) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
 
-        if (type == Config.errorType){
+        if (type == Config.errorType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
             spannableStringBuilder.setSpan(
@@ -60,7 +76,7 @@ public class BaseActivity extends AppCompatActivity {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
             builder1.setTitle(spannableStringBuilder);
-        }else if (type == Config.successType){
+        } else if (type == Config.successType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("SUCCESS");
             spannableStringBuilder.setSpan(
@@ -71,7 +87,7 @@ public class BaseActivity extends AppCompatActivity {
             );
             builder1.setTitle(spannableStringBuilder);
 
-        }else if (type == Config.verifiedType) {
+        } else if (type == Config.verifiedType) {
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
             spannableStringBuilder.setSpan(
@@ -99,7 +115,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void setAutoFocusForOtp(EditText otp1,EditText otp2,EditText otp3,EditText otp4,EditText otp5,EditText otp6) {
+    public void setAutoFocusForOtp(EditText otp1, EditText otp2, EditText otp3, EditText otp4, EditText otp5, EditText otp6) {
         otp1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -115,7 +131,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp2.requestFocus();
                 }
             }
@@ -135,7 +151,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp3.requestFocus();
                 }
             }
@@ -155,7 +171,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp4.requestFocus();
                 }
             }
@@ -175,7 +191,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp5.requestFocus();
                 }
             }
@@ -195,7 +211,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length()==1){
+                if (text.length() == 1) {
                     otp6.requestFocus();
                 }
             }
@@ -215,7 +231,7 @@ public class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
 
-                if (text.length() == 1){
+                if (text.length() == 1) {
                     otp6LiveData.postValue(true);
                 }
             }
@@ -223,15 +239,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showLoading() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setView(View.inflate(this, R.layout.loader, null));
-        builder1.setCancelable(false);
-        loader = builder1.create();
-        loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loader.show();
     }
 
 
-
+    public void dismissLoading() {
+        loader.dismiss();
+    }
 
 
 }

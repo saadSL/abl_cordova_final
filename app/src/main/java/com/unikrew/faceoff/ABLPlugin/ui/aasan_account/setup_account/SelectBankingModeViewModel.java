@@ -23,7 +23,7 @@ public class SelectBankingModeViewModel extends BaseViewModel {
             public void onResponse(Call<BranchesModel> call, Response<BranchesModel> response) {
                 if (response.code() == 200) {
                     branchesLiveData.postValue(response.body());
-                } else if (response.code() == 403) {
+                } else {
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }

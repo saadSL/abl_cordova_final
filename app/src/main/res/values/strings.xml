@@ -29,7 +29,7 @@
     <string name="cnic_placeholder">Enter your cnic</string>
     <string name="cnic_cap">CNIC</string>
     <string name="get_started">Let\'s get started</string>
-    <string name="preferred_banking_method_prompt">Please Select Your Preferred Banking Method</string>
+    <string name="preferred_banking_method_prompt">Your Preferred Banking Mode</string>
     <string name="type_of_account_prompt">Please Select Type Of Account</string>
     <string name="mobile_num_inst">Make sure entered mobile number is registered against your CNIC</string>
     <string-array name="mobile_network">
@@ -96,4 +96,8 @@
     <string name="portedmobile_network_question">Have you ported your mobile network?</string>
     <string name="google_map_key">AIzaSyBAgs4bPWgrbGgE3nrX_kjNAn0vDI_MEOY</string>
     <string name="change_number"><u>Change Number</u></string>
+    <string name="choose_branch">Choose Your Branch</string>
+    <string name="choose_suggested_branch">Below are suggested branches based on your current location</string>
+    <string name="islamic">Islamic</string>
+    <string name="conventional">Conventional</string>
 </resources>

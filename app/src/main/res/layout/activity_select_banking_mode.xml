@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_color"
     android:orientation="vertical">
 
     <include layout="@layout/nav_toolbar" />
@@ -19,69 +20,78 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="20sp"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:text="@string/preferred_banking_method_prompt"
                 android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_conventional"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10sp"
-                    android:background="@drawable/transparent_secondary_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rounded_corner_white"
+                    android:backgroundTint="@color/white"
                     android:orientation="vertical"
-                    android:padding="10sp">
+                    android:padding="@dimen/_20sdp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
                         android:src="@drawable/conventional" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5sp"
-                        android:text="Conventional"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/conventional"
                         android:textColor="@color/yellow"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/_15sdp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_islamic"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10sp"
-                    android:background="@drawable/transparent_secondary_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+
+                    android:background="@drawable/rounded_corner_white"
                     android:orientation="vertical"
-                    android:padding="10sp">
+                    android:padding="@dimen/_20sdp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
                         android:src="@drawable/islamic_pic" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5sp"
-                        android:text="Islamic"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/islamic"
                         android:textColor="@color/yellow"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/_15sdp" />
 
 
                 </LinearLayout>
@@ -89,18 +99,51 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="@dimen/_15sdp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:background="@color/white">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/rounded_corner_white"
+                android:orientation="vertical">
 
-                <fragment
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/choose_branch"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/choose_suggested_branch"
+                    android:textColor="@color/black" />
+
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MapsActivity" />
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
             </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spinner_all_branches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                android:spinnerMode="dialog" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,7 +168,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10sp"
-                    android:background="@drawable/transparent_secondary_bg"
+                    android:background="@drawable/rounded_corner_white"
                     android:orientation="vertical"
                     android:padding="10sp">
 
@@ -160,7 +203,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10sp"
-                    android:background="@drawable/transparent_secondary_bg"
+                    android:background="@drawable/rounded_corner_white"
                     android:orientation="vertical"
                     android:padding="10sp">
 
