@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ViewAppsGenerateOtpResponseData implements Serializable {
     public Object fullName;
     public Object customerNonResidentInd;
-    public Object rdaCustomerProfileId;
+    public int rdaCustomerProfileId;
     public Object emailAddress;
     public Object accountVariantId;
     public Object currencyTypeId;
@@ -45,11 +45,11 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.customerNonResidentInd = customerNonResidentInd;
     }
 
-    public Object getRdaCustomerProfileId() {
+    public int getRdaCustomerProfileId() {
         return rdaCustomerProfileId;
     }
 
-    public void setRdaCustomerProfileId(Object rdaCustomerProfileId) {
+    public void setRdaCustomerProfileId(int rdaCustomerProfileId) {
         this.rdaCustomerProfileId = rdaCustomerProfileId;
     }
 

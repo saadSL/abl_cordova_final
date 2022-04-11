@@ -13,7 +13,9 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -44,8 +46,8 @@ public class BaseActivity extends AppCompatActivity {
         loader.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    public boolean wifiAvailable(Context context) {
-        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+    public boolean wifiAvailable() {
+        ConnectivityManager conMgr = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
@@ -242,6 +244,24 @@ public class BaseActivity extends AppCompatActivity {
         loader.show();
     }
 
+    public void showMobileInfoDialogue() {
+        AlertDialog alert;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogueView = inflater.inflate(R.layout.mobile_info_dialogue, null);
+        builder.setView(dialogueView);
+        builder.setCancelable(true);
+        Button btnDone = (Button) dialogueView.findViewById(R.id.btn_done_mobile_info);
+        alert = builder.create();
+        alert.show();
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+    }
 
     public void dismissLoading() {
         loader.dismiss();

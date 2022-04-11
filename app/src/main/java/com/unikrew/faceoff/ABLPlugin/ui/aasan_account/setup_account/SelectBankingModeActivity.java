@@ -63,6 +63,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
+        setLayout();
         getLatLng();
         setObservers();
         clicks();
@@ -185,6 +186,10 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     private void setMarkersOnMap(BranchesModel branchesModel) {
         suggestBranchListItemModelArrayList = branchesModel.getData().getSuggestBranchList();
+    }
+
+    private void setLayout() {
+        binding.navToolbar.headingToolbar.setText("Setup Account");
     }
 
     private void setViewModel() {

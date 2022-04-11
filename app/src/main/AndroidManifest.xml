@@ -56,7 +56,6 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="@string/launcher_name">
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -100,11 +99,16 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.unikrew.faceoff.ABLPlugin.ui.account_application.AccountApplicationActivity"
+
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application.AccountApplicationActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-    </application>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.change_mobile_number.ChangeMobileNumberActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+    </application>
 </manifest>

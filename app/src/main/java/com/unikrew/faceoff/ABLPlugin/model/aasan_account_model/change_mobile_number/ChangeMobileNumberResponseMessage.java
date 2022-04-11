@@ -1,10 +1,12 @@
-package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network;
+package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number;
 
 import java.io.Serializable;
 
-public class MobileNetworkResponseMessage implements Serializable {
+public class ChangeMobileNumberResponseMessage implements Serializable {
     public String status;
     public String description;
+    public String errorDetail;
+
 
     public String getStatus() {
         return status;
@@ -20,5 +22,13 @@ public class MobileNetworkResponseMessage implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getErrorDetail() {
+        return errorDetail;
+    }
+
+    public void setErrorDetail(String errorDetail) {
+        this.errorDetail = errorDetail;
     }
 }

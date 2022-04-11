@@ -54,13 +54,16 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/create_app_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
                     android:background="@color/primary"/>
             </LinearLayout>
 
-            <include layout="@layout/gen_buttons"/>
+            <include
+                android:id="@+id/gen_btn"
+                layout="@layout/gen_buttons"/>
 </LinearLayout>
 </ScrollView>
 </LinearLayout>
