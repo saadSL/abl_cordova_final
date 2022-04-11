@@ -1,7 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.otp_phase2;
 
-import android.app.Activity;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;

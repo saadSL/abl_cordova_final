@@ -10,6 +10,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.Bran
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
@@ -33,10 +35,6 @@ public interface RetrofitApi {
 
     /* Phase 2 API's */
 
-    //Getting mobile networks
-//    @POST("/RdaConsumer/api/common/public/lookup/code")
-//    Call<MobileNetworkResponse> getMobileNetworks(@Body MobileNetworkPostParams mobileNetworkPostParams);
-
     @POST("/RdaConsumer/api/consumer/public/view-apps-generate-otp")
     Call<ViewAppsGenerateOtpResponse> viewAppsGenerateOtp(@Body ViewAppsGenerateOtpPostParams postParams);
 
@@ -45,4 +43,7 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/common/public/lookup/city/branch")
     Call<BranchesModel> getBranches(@Body GetBranchPostModel postParams);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<MobileNetworkResponse> getPurposeOfAccount(@Body MobileNetworkPostParams mobileNetworkPostParams);
 }

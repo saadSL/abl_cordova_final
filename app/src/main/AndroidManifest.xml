@@ -36,8 +36,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:theme="@style/AppTheme.NoActionBar"
-            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity"
             android:exported="false" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -52,6 +56,7 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="@string/launcher_name">
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -95,11 +100,11 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.account_application.AccountApplicationActivity"
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.account_application.AccountApplicationActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
+
 </manifest>

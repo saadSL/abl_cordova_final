@@ -1,7 +1,7 @@
 package com.unikrew.faceoff;
 
 public class Config {
-//    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
+    //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
     public static final String BASE_URL = "http://10.100.102.124:8080";
 
     public static String ACCOUNT_NUMBER = "account_number";
@@ -10,6 +10,10 @@ public class Config {
     // Activity request codes
     public static final int REQ_SCAN_FINGERPRINT = 22;
     public static final int EXTERNAL_STORAGE_CODE = 11;
+    public static final int CONVENTIONAL_BANKING = 114201;
+    public static final int ISLAMIC_BANKING = 114202;
+    public static final int CURRENT_ACCOUNT = 114301;
+    public static final int SAVINGS_ACCOUNT = 114302;
 
     public static String templateType = "WSQ";
 
@@ -22,7 +26,6 @@ public class Config {
     public static final String KEY_RESPONSE_CODE = "ResponseCode";
 
 
-
     public static String CNIC_ACC = "cnic_acc";
 
     public static int errorType = 0;
@@ -31,7 +34,7 @@ public class Config {
     public static int ACCOUNT_LENGTH = 16;
     public static int CNIC_LENGTH = 13;
 
-    public static int countDownTime = 5*60*1000;
+    public static int countDownTime = 5 * 60 * 1000;
 
 
 
@@ -57,8 +60,8 @@ public class Config {
     /* Pagination variables below */
     public static int PAGE_NUMBER = 1;
     public static int PAGE_SIZE = 10;
-    
-    
+
+
     /* Attachment variables for view-Apps-Generate-Otp */
     public static String CNIC_FRONT_FILE_NAME = "CNIC FRONT";
     public static String CNIC_BACK_FILE_NAME = "CNIC BACK";
