@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui.account_application;
+package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +14,17 @@ import java.util.ArrayList;
 
 public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountApplicationViewHolder> {
 
-    ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList;
+    ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList = new ArrayList<GetDraftedAppsVerifyOtpResponseAppList>(0);
+    private AccountApplicationInterface accAppInterface;
 
-    public AccountApplicationAdapter(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList) {
+    public AccountApplicationAdapter(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList, AccountApplicationInterface activity) {
         this.appList = appList;
+        accAppInterface = activity;
+    }
+
+    public void setList(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> list){
+        appList = list;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -30,17 +37,28 @@ public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountAppli
     @Override
     public void onBindViewHolder(@NonNull AccountApplicationViewHolder holder, int position) {
         holder.tvName.setText(this.appList.get(position).getFullName());
+
         if (this.appList.get(position).getAccountType() != null){
             holder.tvAccountType.setText(this.appList.get(position).getAccountType().toString());
         }else{
-            holder.tvAccountType.setText("No Account Type");
+            holder.tvAccountType.setText("---");
         }
 
         if (this.appList.get(position).getCurrencyType() != null){
             holder.tvAccountCurrency.setText(this.appList.get(position).getCurrencyType());
         }else{
-            holder.tvAccountCurrency.setText("No Currency Type");
+            holder.tvAccountCurrency.setText("---");
         }
+
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                accAppInterface.deleteAppListAt(appList.get(position));
+                appList.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override

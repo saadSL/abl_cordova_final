@@ -8,6 +8,12 @@ import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostPar
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
@@ -45,4 +51,13 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/common/public/lookup/city/branch")
     Call<BranchesModel> getBranches(@Body GetBranchPostModel postParams);
+
+    @POST("/RdaConsumer/api/consumer/consumer-account-detail")
+    Call<GetConsumerAccountDetailsResponse> getConsumerAccDetails(@Body GetConsumerAccountDetailsPostParams postParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/public/update-account")
+    Call<DeleteDraftedApplicationResponse> deleteDraftedApplication(@Body DeleteDraftedApplicationPostParams postParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/public/change-mobile-no")
+    Call<ChangeMobileNumberResponse> changeMobileNumber(@Body ChangeMobileNumberPostParams postParams);
 }

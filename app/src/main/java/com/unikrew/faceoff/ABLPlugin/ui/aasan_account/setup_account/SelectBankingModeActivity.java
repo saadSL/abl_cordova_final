@@ -40,7 +40,12 @@ public class SelectBankingModeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
+        setLayout();
         getLatLng();
+    }
+
+    private void setLayout() {
+        binding.navToolbar.headingToolbar.setText("Setup Account");
     }
 
     private void setViewModel() {

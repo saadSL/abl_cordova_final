@@ -2,7 +2,7 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_nu
 
 import java.io.Serializable;
 
-public class ChangeMobileNumberPostData implements Serializable {
+public class ChangeMobileNumberResponseData implements Serializable {
     public String mobileNo;
     public int rdaCustomerProfileId;
 

@@ -59,7 +59,7 @@ public class CnicUploadActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.cnic_upload_before);
 
         bind();
-        set();
+        setListeners();
         setViewModel();
         observeData();
 
@@ -83,11 +83,10 @@ public class CnicUploadActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void openOtpVerificationActivity(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
-        Intent intent = new Intent(CnicUploadActivity.this, OtpVerification.class);
+    private void openOtpVerificationActivity(ViewAppsGenerateOtpResponse response) {
+        Intent intent = new Intent(this, OtpVerification.class);
 
-        intent.putExtra(Config.MOBILE_NUMBER,getIntent().getStringExtra(Config.MOBILE_NUMBER));
-        intent.putExtra(Config.CNIC_NUMBER,viewAppsGenerateOtpResponse.getData().getIdNumber());
+        intent.putExtra(Config.RESPONSE,response);
 
         startActivity(intent);
     }
@@ -104,7 +103,7 @@ public class CnicUploadActivity extends BaseActivity implements View.OnClickList
         btnCnicUploadCancel = findViewById(R.id.btn_cancel);
     }
 
-    private void set(){
+    private void setListeners(){
         imgCnicFront.setOnClickListener(this);
         imgCnicBack.setOnClickListener(this);
         btnCnicUploadNext.setOnClickListener(this);

@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui.account_application;
+package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 
 import android.view.View;
 import android.widget.ImageView;
