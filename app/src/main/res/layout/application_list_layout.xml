@@ -15,6 +15,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:fontFamily="@font/lato_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Resume Application"
@@ -24,6 +25,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:fontFamily="@font/lato_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select And Continue"
@@ -45,6 +47,7 @@
                 android:layout_margin="@dimen/_10sdp">
 
                 <TextView
+                    android:fontFamily="@font/lato_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

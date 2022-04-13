@@ -11,6 +11,7 @@ public class GetConsumerAccountDetailsResponseAttachment implements Serializable
     public String path;
     public Object rdaCustomerAccInfoId;
 
+
     public int getAppAttachmentId() {
         return appAttachmentId;
     }

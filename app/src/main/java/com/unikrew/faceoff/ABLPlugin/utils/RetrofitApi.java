@@ -39,7 +39,7 @@ public interface RetrofitApi {
     Call<BioMetricVerificationNadraResponse> UpdateBioMetricStatus(@Body BioMetricVerificationNadraPostParams pp, @Header("Authorization") String accessToken);
 
 
-    /* Phase 2 API's */
+    /* Asaan Account API's */
 
     @POST("/RdaConsumer/api/consumer/public/view-apps-generate-otp")
     Call<ViewAppsGenerateOtpResponse> viewAppsGenerateOtp(@Body ViewAppsGenerateOtpPostParams postParams);

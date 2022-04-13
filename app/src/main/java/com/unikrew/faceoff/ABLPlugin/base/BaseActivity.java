@@ -69,7 +69,7 @@ public class BaseActivity extends AppCompatActivity {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
 
         if (type == Config.errorType) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("ERROR");
             spannableStringBuilder.setSpan(
                     foregroundColorSpan,
@@ -79,7 +79,7 @@ public class BaseActivity extends AppCompatActivity {
             );
             builder1.setTitle(spannableStringBuilder);
         } else if (type == Config.successType) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("SUCCESS");
             spannableStringBuilder.setSpan(
                     foregroundColorSpan,

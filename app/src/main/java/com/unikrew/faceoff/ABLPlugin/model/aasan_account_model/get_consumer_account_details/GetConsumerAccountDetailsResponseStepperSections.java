@@ -4,16 +4,15 @@ import java.io.Serializable;
 
 public class GetConsumerAccountDetailsResponseStepperSections implements Serializable {
 
+
     public boolean SETUP_ACCOUNT_BANKING_MODE;
     public boolean SETUP_ACCOUNT_TYPE;
     public boolean SETUP_ACCOUNT_INCOME;
-    public boolean PERSONAL_DETAIL_TAX;
     public boolean PERSONAL_DETAIL_NAMES;
     public boolean PERSONAL_DETAIL_ADDRESS;
     public boolean PERSONAL_DETAIL_EMPLOYMENT;
     public boolean TRANSACTIONAL_DETAIL;
     public boolean DOCUMENT_UPLOADER;
-    public boolean PERSONAL_DETAIL_REMITTERS;
 
 
     public boolean isSETUP_ACCOUNT_BANKING_MODE() {
@@ -38,14 +37,6 @@ public class GetConsumerAccountDetailsResponseStepperSections implements Seriali
 
     public void setSETUP_ACCOUNT_INCOME(boolean SETUP_ACCOUNT_INCOME) {
         this.SETUP_ACCOUNT_INCOME = SETUP_ACCOUNT_INCOME;
-    }
-
-    public boolean isPERSONAL_DETAIL_TAX() {
-        return PERSONAL_DETAIL_TAX;
-    }
-
-    public void setPERSONAL_DETAIL_TAX(boolean PERSONAL_DETAIL_TAX) {
-        this.PERSONAL_DETAIL_TAX = PERSONAL_DETAIL_TAX;
     }
 
     public boolean isPERSONAL_DETAIL_NAMES() {
@@ -86,13 +77,5 @@ public class GetConsumerAccountDetailsResponseStepperSections implements Seriali
 
     public void setDOCUMENT_UPLOADER(boolean DOCUMENT_UPLOADER) {
         this.DOCUMENT_UPLOADER = DOCUMENT_UPLOADER;
-    }
-
-    public boolean isPERSONAL_DETAIL_REMITTERS() {
-        return PERSONAL_DETAIL_REMITTERS;
-    }
-
-    public void setPERSONAL_DETAIL_REMITTERS(boolean PERSONAL_DETAIL_REMITTERS) {
-        this.PERSONAL_DETAIL_REMITTERS = PERSONAL_DETAIL_REMITTERS;
     }
 }

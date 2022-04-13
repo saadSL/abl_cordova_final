@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
@@ -17,6 +18,7 @@ public class AccountApplicationViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imgDelete;
 
+    CardView cardView;
     public AccountApplicationViewHolder(@NonNull View itemView) {
         super(itemView);
         bind(itemView);
@@ -27,7 +29,8 @@ public class AccountApplicationViewHolder extends RecyclerView.ViewHolder {
        tvAccountType = itemView.findViewById(R.id.accountType);
        tvAccountCurrency = itemView.findViewById(R.id.accountCurrency);
 
-       imgDelete = itemView.findViewById(R.id.btn_del);
+        imgDelete = itemView.findViewById(R.id.btn_del);
+        cardView = itemView.findViewById(R.id.card_view);
     }
 
 
