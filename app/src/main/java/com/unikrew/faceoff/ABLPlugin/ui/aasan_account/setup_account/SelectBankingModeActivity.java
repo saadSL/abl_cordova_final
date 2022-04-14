@@ -143,8 +143,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        consumerListItemVerifyOtp.setMobileNo("03232343000");
-        consumerListItemVerifyOtp.setIdNumber("32344312312224");
+        consumerListItemVerifyOtp.setMobileNo("03232343001");
+        consumerListItemVerifyOtp.setIdNumber("32344312312227");
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
