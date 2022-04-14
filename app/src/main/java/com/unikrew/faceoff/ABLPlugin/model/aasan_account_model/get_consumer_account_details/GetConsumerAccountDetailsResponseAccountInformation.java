@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class GetConsumerAccountDetailsResponseAccountInformation implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerId;
-    public int purposeOfAccountId;
-    public String purposeOfAccount;
-    public int physicalCardInd;
+    public Object purposeOfAccountId;
+    public Object purposeOfAccount;
+    public Object physicalCardInd;
     public Object operatingInstId;
     public Object noOfChequeBookLeavesId;
     public Object nameOnPhysicalATM;
@@ -23,10 +23,10 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public Object antiAnnualSalary;
     public int noOfJointApplicatns;
     public Object rdaCustomerJointAccountId;
-    public int natureOfAccountId;
-    public String natureOfAccount;
-    public int accountVariantId;
-    public String accountVariant;
+    public Object natureOfAccountId;
+    public Object natureOfAccount;
+    public Object accountVariantId;
+    public Object accountVariant;
     public Object currencyTypeId;
     public Object currencyType;
     public Object accountTypeId;
@@ -34,7 +34,7 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public Object atmTypeId;
     public Object atmType;
     public Object cunstomerTypeId;
-    public int transAlertInd;
+    public Object transAlertInd;
     public Object activationType;
     public Object alertActivation;
     public Object packageType;
@@ -54,11 +54,12 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public String bankingMode;
     public Object transactionalAlertId;
     public Object transactionalAlert;
-    public int customerAccountTypeId;
-    public String customerAccountType;
-    public int proofOfIncomeInd;
+    public Object customerAccountTypeId;
+    public Object customerAccountType;
+    public Object proofOfIncomeInd;
     public Object averageMonthlySalary;
     public Object pdaRemitterDetailList;
+    public int channelId;
 
     public int getRdaCustomerAccInfoId() {
         return rdaCustomerAccInfoId;
@@ -76,27 +77,27 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.rdaCustomerId = rdaCustomerId;
     }
 
-    public int getPurposeOfAccountId() {
+    public Object getPurposeOfAccountId() {
         return purposeOfAccountId;
     }
 
-    public void setPurposeOfAccountId(int purposeOfAccountId) {
+    public void setPurposeOfAccountId(Object purposeOfAccountId) {
         this.purposeOfAccountId = purposeOfAccountId;
     }
 
-    public String getPurposeOfAccount() {
+    public Object getPurposeOfAccount() {
         return purposeOfAccount;
     }
 
-    public void setPurposeOfAccount(String purposeOfAccount) {
+    public void setPurposeOfAccount(Object purposeOfAccount) {
         this.purposeOfAccount = purposeOfAccount;
     }
 
-    public int getPhysicalCardInd() {
+    public Object getPhysicalCardInd() {
         return physicalCardInd;
     }
 
-    public void setPhysicalCardInd(int physicalCardInd) {
+    public void setPhysicalCardInd(Object physicalCardInd) {
         this.physicalCardInd = physicalCardInd;
     }
 
@@ -212,35 +213,35 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.rdaCustomerJointAccountId = rdaCustomerJointAccountId;
     }
 
-    public int getNatureOfAccountId() {
+    public Object getNatureOfAccountId() {
         return natureOfAccountId;
     }
 
-    public void setNatureOfAccountId(int natureOfAccountId) {
+    public void setNatureOfAccountId(Object natureOfAccountId) {
         this.natureOfAccountId = natureOfAccountId;
     }
 
-    public String getNatureOfAccount() {
+    public Object getNatureOfAccount() {
         return natureOfAccount;
     }
 
-    public void setNatureOfAccount(String natureOfAccount) {
+    public void setNatureOfAccount(Object natureOfAccount) {
         this.natureOfAccount = natureOfAccount;
     }
 
-    public int getAccountVariantId() {
+    public Object getAccountVariantId() {
         return accountVariantId;
     }
 
-    public void setAccountVariantId(int accountVariantId) {
+    public void setAccountVariantId(Object accountVariantId) {
         this.accountVariantId = accountVariantId;
     }
 
-    public String getAccountVariant() {
+    public Object getAccountVariant() {
         return accountVariant;
     }
 
-    public void setAccountVariant(String accountVariant) {
+    public void setAccountVariant(Object accountVariant) {
         this.accountVariant = accountVariant;
     }
 
@@ -300,11 +301,11 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.cunstomerTypeId = cunstomerTypeId;
     }
 
-    public int getTransAlertInd() {
+    public Object getTransAlertInd() {
         return transAlertInd;
     }
 
-    public void setTransAlertInd(int transAlertInd) {
+    public void setTransAlertInd(Object transAlertInd) {
         this.transAlertInd = transAlertInd;
     }
 
@@ -460,27 +461,27 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.transactionalAlert = transactionalAlert;
     }
 
-    public int getCustomerAccountTypeId() {
+    public Object getCustomerAccountTypeId() {
         return customerAccountTypeId;
     }
 
-    public void setCustomerAccountTypeId(int customerAccountTypeId) {
+    public void setCustomerAccountTypeId(Object customerAccountTypeId) {
         this.customerAccountTypeId = customerAccountTypeId;
     }
 
-    public String getCustomerAccountType() {
+    public Object getCustomerAccountType() {
         return customerAccountType;
     }
 
-    public void setCustomerAccountType(String customerAccountType) {
+    public void setCustomerAccountType(Object customerAccountType) {
         this.customerAccountType = customerAccountType;
     }
 
-    public int getProofOfIncomeInd() {
+    public Object getProofOfIncomeInd() {
         return proofOfIncomeInd;
     }
 
-    public void setProofOfIncomeInd(int proofOfIncomeInd) {
+    public void setProofOfIncomeInd(Object proofOfIncomeInd) {
         this.proofOfIncomeInd = proofOfIncomeInd;
     }
 
@@ -498,5 +499,13 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
 
     public void setPdaRemitterDetailList(Object pdaRemitterDetailList) {
         this.pdaRemitterDetailList = pdaRemitterDetailList;
+    }
+
+    public int getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
     }
 }

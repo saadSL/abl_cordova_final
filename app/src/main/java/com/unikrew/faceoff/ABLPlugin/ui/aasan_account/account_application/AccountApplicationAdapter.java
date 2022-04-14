@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 
 public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountApplicationViewHolder> {
 
-    ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList = new ArrayList<GetDraftedAppsVerifyOtpResponseAppList>(0);
+    private ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList;
     private AccountApplicationInterface accAppInterface;
+    private Context context;
 
-    public AccountApplicationAdapter(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList, AccountApplicationInterface activity) {
+    public AccountApplicationAdapter(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> appList, AccountApplicationInterface accountApplicationInterface, Context context) {
         this.appList = appList;
-        accAppInterface = activity;
+        accAppInterface = accountApplicationInterface;
+        this.context = context;
     }
 
     public void setList(ArrayList<GetDraftedAppsVerifyOtpResponseAppList> list){
@@ -38,10 +41,17 @@ public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountAppli
     public void onBindViewHolder(@NonNull AccountApplicationViewHolder holder, int position) {
         holder.tvName.setText(this.appList.get(position).getFullName());
 
+        if (this.appList.get(position).getSelected()){
+            holder.cardView.setBackground(context.getDrawable(R.drawable.rounded_corner_selected));
+        }else{
+            holder.cardView.setBackground(context.getDrawable(R.drawable.rounded_corner_white));
+        }
+
+
         if (this.appList.get(position).getAccountType() != null){
             holder.tvAccountType.setText(this.appList.get(position).getAccountType().toString());
         }else{
-            holder.tvAccountType.setText("---");
+            holder.tvAccountType.setText(""+this.appList.get(position).getRdaCustomerAccInfoId());
         }
 
         if (this.appList.get(position).getCurrencyType() != null){
@@ -54,11 +64,19 @@ public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountAppli
             @Override
             public void onClick(View view) {
 
-                accAppInterface.deleteAppListAt(appList.get(position));
-                appList.remove(position);
-                notifyItemRemoved(position);
+                accAppInterface.deleteAppListAt(appList.get(position),position);
+//                appList.remove(position);
             }
         });
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accAppInterface.setSelectionAt(position);
+                notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override

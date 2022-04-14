@@ -57,7 +57,7 @@
                     android:padding="5sp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_camera"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/tv_rescan_cnic_front"
                     android:layout_width="wrap_content"

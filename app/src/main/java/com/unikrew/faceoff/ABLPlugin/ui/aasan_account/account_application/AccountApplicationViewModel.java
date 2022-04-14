@@ -24,12 +24,17 @@ public class AccountApplicationViewModel extends BaseViewModel {
 
     public void getConsumerAccDetails(GetConsumerAccountDetailsPostParams postParams,String accessToken){
 
-        Call<GetConsumerAccountDetailsResponse> callableRes = AblApplication.apiInterface.getConsumerAccDetails(postParams,accessToken);
+        Call<GetConsumerAccountDetailsResponse> callableRes = AblApplication.apiInterface.getConsumerAccDetails(postParams,"Bearer "+accessToken);
         callableRes.enqueue(new Callback<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onResponse(Call<GetConsumerAccountDetailsResponse> call, Response<GetConsumerAccountDetailsResponse> response) {
                 if (response.code() == 200){
-                    consumerAccountDetailsSuccessLiveData.postValue(response.body());
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        consumerAccountDetailsSuccessLiveData.postValue(response.body());
+                    }else{
+                        consumerAccountDetailsErrorLiveData.postValue(response.body().getMessage().getDescription());
+                    }
+
                 }else{
                     consumerAccountDetailsErrorLiveData.postValue( getErrorDetail(response) );
                 }
@@ -45,7 +50,7 @@ public class AccountApplicationViewModel extends BaseViewModel {
 
     public void deleteDraftedApplication(DeleteDraftedApplicationPostParams postParams,String accessToken){
 
-        Call<DeleteDraftedApplicationResponse> callableRes = AblApplication.apiInterface.deleteDraftedApplication(postParams,accessToken);
+        Call<DeleteDraftedApplicationResponse> callableRes = AblApplication.apiInterface.deleteDraftedApplication(postParams,"Bearer "+accessToken);
         callableRes.enqueue(new Callback<DeleteDraftedApplicationResponse>() {
             @Override
             public void onResponse(Call<DeleteDraftedApplicationResponse> call, Response<DeleteDraftedApplicationResponse> response) {

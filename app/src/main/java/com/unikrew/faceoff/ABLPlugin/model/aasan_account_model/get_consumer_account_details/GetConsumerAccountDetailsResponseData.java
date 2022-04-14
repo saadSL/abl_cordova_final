@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class GetConsumerAccountDetailsResponseData implements Serializable {
     public ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList;
     public int noOfJointApplicatns;
+    public Object channelId;
     public int sessionTimeout;
     public ArrayList<Object> pdaRemitterDetailList;
 
@@ -23,6 +24,14 @@ public class GetConsumerAccountDetailsResponseData implements Serializable {
 
     public void setNoOfJointApplicatns(int noOfJointApplicatns) {
         this.noOfJointApplicatns = noOfJointApplicatns;
+    }
+
+    public Object getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Object channelId) {
+        this.channelId = channelId;
     }
 
     public int getSessionTimeout() {

@@ -47,7 +47,7 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public String idNumber;
     public int statusId;
     public Object nationalityTypeId;
-    public int natureOfAccountId;
+    public Object natureOfAccountId;
     public GetConsumerAccountDetailsResponseStepperSections stepperSections;
     public ArrayList<GetConsumerAccountDetailsResponseAddress> addresses;
     public GetConsumerAccountDetailsResponseAccountInformation accountInformation;
@@ -415,11 +415,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.nationalityTypeId = nationalityTypeId;
     }
 
-    public int getNatureOfAccountId() {
+    public Object getNatureOfAccountId() {
         return natureOfAccountId;
     }
 
-    public void setNatureOfAccountId(int natureOfAccountId) {
+    public void setNatureOfAccountId(Object natureOfAccountId) {
         this.natureOfAccountId = natureOfAccountId;
     }
 

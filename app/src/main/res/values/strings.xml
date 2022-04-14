@@ -122,6 +122,7 @@
     <string name="conventional">Conventional</string>
     <string name="select_yourself">or Select Yourself</string>
     <string name="choose_prefered_branch">Choose preferred branch</string>
+    <string name="choose_occupation">Choose Occupation</string>
     <string name="choose_purpose">Choose purpose of account</string>
     <string name="banking_method">Banking Method</string>
     <string name="savings">Savings</string>
@@ -140,4 +141,5 @@
     <string name="step_3">Step 3</string>
     <string name="step_4">Step 4</string>
     <string name="account"> Account</string>
+    <string name="mention_salary">Please mention your average monthly salary/ income in Pakistani Rupee (PKR)</string>
 </resources>

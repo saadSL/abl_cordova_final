@@ -45,6 +45,7 @@ public class GetDraftedAppsVerifyOtpResponseAppList implements Serializable {
     public Object emailAddress;
     public int customerAccountTypeId;
     public String customerAccountType;
+    public Boolean isSelected = false;
 
 
     public int getRdaCustomerAccInfoId() {
@@ -381,5 +382,13 @@ public class GetDraftedAppsVerifyOtpResponseAppList implements Serializable {
 
     public void setCustomerAccountType(String customerAccountType) {
         this.customerAccountType = customerAccountType;
+    }
+
+    public Boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
     }
 }
