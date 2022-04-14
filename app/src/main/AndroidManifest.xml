@@ -110,5 +110,10 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

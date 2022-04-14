@@ -3,8 +3,6 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,7 +10,6 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,11 +25,10 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
-
-import java.util.ArrayList;
 
 public class AccountApplicationActivity extends BaseActivity implements AccountApplicationInterface, View.OnClickListener {
     GetDraftedAppsVerifyOtpResponse res;
@@ -63,39 +59,44 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
                 if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
 
-                    openActivity(SelectBankingModeActivity.class);
+                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
 
-                    showAlert(Config.successType, "Opening Account Type ");
-//                    openActivity(SelectAccountTypeActivity.class);
+                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Account Income ");
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Personal Details Names ");
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Personal Address ");
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
 
-                    showAlert(Config.successType, "Opening Personal Employment ");
+                    openActivity(EmploymentDetailsActivity.class,getConsumerAccountDetailsResponse);
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL() ){
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Transaction Detail ");
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER() ){
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Document Uploader ");
 
                 }else {
 
+//                    openActivity(SelectBankingModeActivity.class);
                     showAlert(Config.successType, "Opening Summary Details ");
 
                 }
@@ -128,8 +129,10 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         });
     }
 
-    private void openActivity(final Class<? extends Activity> activityToOpen) {
-        startActivity(new Intent(this,activityToOpen));
+    private void openActivity(final Class<? extends Activity> activityToOpen, GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
+        Intent intent = new Intent(this,activityToOpen);
+        intent.putExtra(Config.RESPONSE,getConsumerAccountDetailsResponse);
+        startActivity(intent);
     }
 
     private void getConsumerAccountDetails() {

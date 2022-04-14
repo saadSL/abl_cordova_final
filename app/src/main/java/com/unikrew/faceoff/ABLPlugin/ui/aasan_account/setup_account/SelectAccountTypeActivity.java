@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectAccountTypeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkResponseData;
@@ -34,6 +35,8 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void clicks() {
+        GetConsumerAccountDetailsResponse res = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        showAlert(Config.successType,res.getData().getConsumerList().get(0).getMobileNo()+" "+res.getData().getConsumerList().get(0).getIdNumber());
     }
 
     private void setObservers() {

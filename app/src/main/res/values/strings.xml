@@ -102,10 +102,12 @@
     <string name="conventional">Conventional</string>
     <string name="select_yourself">or Select Yourself</string>
     <string name="choose_prefered_branch">Choose preferred branch</string>
+    <string name="choose_occupation">Choose Occupation</string>
     <string name="banking_method">Banking Method</string>
     <string name="savings">Savings</string>
     <string name="current">Current</string>
     <string name="select_account_type">Select Account Type</string>
     <string name="account_type">Account Type</string>
     <string name="purpose_of_account">Purpose of Account</string>
+    <string name="mention_salary">Please mention your average monthly salary/ income in Pakistani Rupee (PKR)</string>
 </resources>
