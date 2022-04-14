@@ -1,10 +1,10 @@
-package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network;
+package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type;
 
 import java.io.Serializable;
 
 public class MobileNetworkResponseData implements Serializable {
     public String description;
-    public String id;
+    public int id;
     public String name;
 
     public String getDescription() {
@@ -15,11 +15,11 @@ public class MobileNetworkResponseData implements Serializable {
         this.description = description;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

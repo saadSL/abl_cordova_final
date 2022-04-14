@@ -16,8 +16,12 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.mobile_network.MobileNetworkResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
@@ -61,4 +65,10 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<MobileNetworkResponse> getPurposeOfAccount(@Body MobileNetworkPostParams mobileNetworkPostParams);
+
+    @POST("/RdaConsumer/api/consumer/register-verify-otp")
+    Call<RegisterVerifyOtpResponse> registerVerifyOtp(@Body RegisterVerifyOtp registerVerifyOtp);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
+    Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams,@Header("Authorization") String accessToken);
 }

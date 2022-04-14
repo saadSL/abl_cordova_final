@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/li_top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:background="@color/primary"
@@ -23,10 +24,10 @@
             app:tint="@color/white" />
 
         <TextView
-            android:fontFamily="@font/lato_regular"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/lato_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_3sdp"
             android:text="@string/banking_method"
@@ -36,21 +37,162 @@
     </LinearLayout>
 
     <ScrollView
+        android:layout_marginBottom="@dimen/_50sdp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/li_top_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/worksans_regular"
+                    android:text="@string/setup"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/account"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/orange" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/worksans_regular"
+                        android:gravity="center"
+                        android:text="@string/step_1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_margin="@dimen/_3sdp"
+                        android:background="@color/blue"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/worksans_regular"
+                        android:gravity="center"
+                        android:text="@string/step_2"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_margin="@dimen/_3sdp"
+                        android:background="@color/light_gray"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/worksans_regular"
+                        android:gravity="center"
+                        android:text="@string/step_3"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_margin="@dimen/_3sdp"
+                        android:background="@color/light_gray"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/worksans_regular"
+                        android:gravity="center"
+                        android:text="@string/step_4"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_margin="@dimen/_3sdp"
+                        android:background="@color/light_gray"
+                        android:gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView
-               android:fontFamily="@font/lato_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/lato_bold"
                 android:text="@string/preferred_banking_method_prompt"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
@@ -81,11 +223,11 @@
                         android:src="@drawable/conventional" />
 
                     <TextView
-                       android:fontFamily="@font/lato_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/lato_bold"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/conventional"
                         android:textColor="@color/yellow"
@@ -111,11 +253,11 @@
                         android:src="@drawable/islamic_pic" />
 
                     <TextView
-                        android:fontFamily="@font/lato_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/lato_bold"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/islamic"
                         android:textColor="@color/yellow"
@@ -136,24 +278,24 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:fontFamily="@font/lato_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="@font/lato_bold"
                     android:text="@string/choose_branch"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:fontFamily="@font/lato_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="@font/lato_regular"
                     android:text="@string/choose_suggested_branch"
                     android:textColor="@color/black" />
 
@@ -169,62 +311,51 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="@dimen/_15sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
                 android:background="@drawable/rounded_corner_white"
                 android:orientation="vertical">
 
                 <TextView
-                    android:fontFamily="@font/lato_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="@font/lato_bold"
                     android:text="@string/select_yourself"
                     android:textColor="@color/black" />
+
                 <Spinner
 
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/spinner_background"
-                    android:prompt="@string/choose_prefered_branch"
-                    android:layout_margin="@dimen/_8sdp"
                     android:id="@+id/spinner_all_branches"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/spinner_background"
+                    android:padding="@dimen/_5sdp"
+                    android:prompt="@string/choose_prefered_branch"
                     android:spinnerMode="dialog" />
             </LinearLayout>
 
 
-            <Button
-                android:textStyle="bold"
-                android:fontFamily="@font/lato_regular"
-                android:layout_width="@dimen/_200sdp"
+            <include
+                android:id="@+id/layout_btn"
+                layout="@layout/layout_button_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/rounded_corner_bg"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:id="@+id/btn_next_banking_method" />
-
-            <Button
-                android:id="@+id/bt_cancel_banking_method"
-                android:textStyle="bold"
-                android:fontFamily="@font/lato_regular"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/transparent_bg"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/primary" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <include
+        android:id="@+id/layout_chat"
+        layout="@layout/layout_abl_chat_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true" />
+</RelativeLayout>

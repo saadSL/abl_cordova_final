@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/bt_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_weight="1"
+        android:background="@drawable/transparent_bg"
+        android:fontFamily="@font/lato_regular"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/back"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_weight="1"
+        android:background="@drawable/button_blue_shape"
+        android:fontFamily="@font/lato_regular"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

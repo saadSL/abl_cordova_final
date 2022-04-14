@@ -13,8 +13,11 @@
     <string name="enter_otp">Enter OTP:</string>
     <string name="bio_verification">Biometric Verification</string>
     <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="select_preferred_error">Please select your Preferred Account Type to continue</string>
     <string name="extra">extra</string>
-    <string name="otp_inst">Enter <b>OTP</b> recieved on your provided mobile number</string>
+    <string name="otp_inst">Enter <b>OTP</b> received on your provided mobile number</string>
     <string name="OTP_question">Didn\'t receive OTP ?</string>
     <string name="remaining_time">Time Remaining</string>
     <string name="otp_des">Please enter the 6-digit verification code here:</string>
@@ -57,10 +60,21 @@
     <string name="abl_branch_locations">Please Locate Or Select Your Preferred ABL Branch</string>
     <string name="preferred_account_prompt">Select Your Preferred Account</string>
     <string name="asaan_digital_account">Asaan Digital Account</string>
+    <string name="asaan_digital_1">&#8226;Maximum credit balance limit PKR 1,000,000</string>
+    <string name="asaan_digital_2">&#8226;Maximum Debit balance limit PKR 1,000,000</string>
+    <string name="asaan_digital_3">&#8226;Currency PKR </string>
+
     <string name="asaan_remittance_digital_account">Asaan Remittance Digital Account</string>
+    <string name="asaan_remittance_digital_1">&#8226;Maximum credit balance limit PKR 3,000,000</string>
+    <string name="asaan_remittance_digital_2">&#8226;Fund transfer limit of PKR 500,000 per day</string>
+    <string name="asaan_remittance_digital_3">&#8226;No commercial remittance</string>
+    <string name="asaan_remittance_digital_4">&#8226;Currency PKR</string>
+    <string name="asaan_remittance_digital_5">&#8226;Cash withdrawal limit PKR 500,000 per day</string>
+
+
     <string name="freelancer_digital_account">Freelancer Digital Account</string>
     <string name="asaan_digital_account_description">An everyday account for every pakistani.Allied assan account is tailored to cater the banking needs of unbanked people.</string>
-    <string name="asaan_remittance_digital_account_description">receive foreign remittances with complete peace of mind.</string>
+    <string name="asaan_remittance_digital_account_description">Receive foreign remittances with complete peace of mind.</string>
     <string name="freelancer_digital_account_description">Allied freelancer Digital Account provides benefits of having a bank account while also making freelancing life easier by smoother transaction experience</string>
     <string name="live_photo"><a href="#"><font fgcolor="#015088">Live Photo</font></a></string>
     <string name="upload_signature_prompt"><a href="#"><font fgcolor="#015088">Upload Your Signature</font></a></string>
@@ -87,6 +101,12 @@
 &#8226; Scanning a photocopied CNIC/SNIC is not allowed \n
 &#8226; CNIC/SNIC should not be edited or expired \n
     </string>
+
+    <string name="father_name">Father/Husband Name</string>
+    <string name="full_name">Full Name</string>
+    <string name="full_name_ext"> (As per NADRA Record)</string>
+
+
     <string name="mobile_number">Mobile Number <font fgcolor="#FF0000">*</font></string>
     <string name="mobile_number_question">Have You Ported Your Mobile Network ?</string>
     <string name="mobile_info_text">To update your mobile network in bank\'s system, please write "MNP" in message and send it to 9225 and 9080. Otherwise, you will not be able to receive One Time Password on your mobile phone.</string>
@@ -102,10 +122,22 @@
     <string name="conventional">Conventional</string>
     <string name="select_yourself">or Select Yourself</string>
     <string name="choose_prefered_branch">Choose preferred branch</string>
+    <string name="choose_purpose">Choose purpose of account</string>
     <string name="banking_method">Banking Method</string>
     <string name="savings">Savings</string>
     <string name="current">Current</string>
     <string name="select_account_type">Select Account Type</string>
+    <string name="select_account_type_error_msg">Please select your desired Account Type</string>
+    <string name="select_purpose_error_msg">Please select Purpose of Account</string>
     <string name="account_type">Account Type</string>
     <string name="purpose_of_account">Purpose of Account</string>
+    <string name="select_your_account">Select Your Account</string>
+    <string name="your">Your</string>
+    <string name="details">Details</string>
+    <string name="setup">Setup</string>
+    <string name="step_1">Step 1</string>
+    <string name="step_2">Step 2</string>
+    <string name="step_3">Step 3</string>
+    <string name="step_4">Step 4</string>
+    <string name="account"> Account</string>
 </resources>

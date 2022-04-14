@@ -36,7 +36,9 @@ public class Config {
 
     public static int countDownTime = 5 * 60 * 1000;
 
-
+    public static int ASAAN_DIGITAL_ACCOUNT = 108243;
+    public static int REMITTANCE_ACCOUNT = 108244;
+    public static int FREELANCE_ACCOUNT = 108245;
 
     /* Phase 2 working below */
 

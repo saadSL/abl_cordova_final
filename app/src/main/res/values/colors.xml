@@ -9,11 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FFA500</color>
     <color name="blue">#0000FF</color>
+    <color name="custom_blue">#102A83</color>
     <color name="yellow">#F9893B</color>
     <color name="primary">#015088</color>
     <color name="green">#219653</color>
     <color name="grey">#434343</color>
     <color name="red">#FF0000</color>
     <color name="lightGrey">#7E7C7C</color>
-    <color name="background_color">#E5E5E5</color>
+    <color name="background_color">#F5F3F2</color>
 </resources>

@@ -43,6 +43,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.Bran
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.SuggestBranchListItemModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemVerifyOtp;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private SelectBankingModeViewModel selectBankingModeViewModel;
     private GoogleMap mMap;
     private List<SuggestBranchListItemModel> suggestBranchListItemModelArrayList = new ArrayList();
-    private int BANKING_MODE = 0;
+    private int BANKING_MODE_ID = 0;
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
 
@@ -63,7 +66,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
-        getLatLng();
+//        getLatLng();
+        getBranchesFromNetwork(30.18817, 71.4358);
         setObservers();
         clicks();
     }
@@ -90,14 +94,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                 finish();
             }
         });
-        bankingModeBinding.btCancelBankingMethod.setOnClickListener(new View.OnClickListener() {
+        bankingModeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        bankingModeBinding.btnNextBankingMethod.setOnClickListener(new View.OnClickListener() {
+        bankingModeBinding.layoutBtn.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkValidations();
@@ -108,24 +112,46 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private void selectIslamicBanking() {
         bankingModeBinding.llConventional.setBackground(getDrawable(R.drawable.rounded_corner_white));
         bankingModeBinding.llIslamic.setBackground(getDrawable(R.drawable.rounded_corner_selected));
-        BANKING_MODE = Config.ISLAMIC_BANKING;
+        BANKING_MODE_ID = Config.ISLAMIC_BANKING;
     }
 
     private void selectConventionalBanking() {
         bankingModeBinding.llConventional.setBackground(getDrawable(R.drawable.rounded_corner_selected));
         bankingModeBinding.llIslamic.setBackground(getDrawable(R.drawable.rounded_corner_white));
-        BANKING_MODE = Config.CONVENTIONAL_BANKING;
+        BANKING_MODE_ID = Config.CONVENTIONAL_BANKING;
     }
 
     private void checkValidations() {
-        if (BANKING_MODE == 0) {
+        if (BANKING_MODE_ID == 0) {
             showAlert(Config.errorType, "Please select a banking method to continue.");
         } else if (selectedBranchTitle.equals("")) {
             showAlert(Config.errorType, "Please select a branch from suggested branches on the map or select any other branch from the drop down.");
         } else {
             Log.d("selectedBranchTitle", "your selected branch is: " + selectedBranchTitle);
-            showAlert(Config.successType, "You can proceed.");
+            postBankingModeToNetwork();
         }
+    }
+
+    private void postBankingModeToNetwork() {
+        showLoading();
+        selectBankingModeViewModel.postBankingMethod(getPostParams());
+    }
+
+    private RegisterVerifyOtp getPostParams() {
+        ConsumerListItemVerifyOtp consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+        consumerListItemVerifyOtp.setPrimary(true);
+        consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
+        consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
+        consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+        consumerListItemVerifyOtp.setMobileNo("03232343000");
+        consumerListItemVerifyOtp.setIdNumber("32344312312224");
+
+        RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
+        registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
+        registerVerifyOtp.getData().setNoOfJointApplicatns(0);
+
+        Log.d("registerVerifyOtp", registerVerifyOtp.toString());
+        return registerVerifyOtp;
     }
 
 
@@ -136,6 +162,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     }
 
     private void setObservers() {
+        selectBankingModeViewModel.registerOtpLiveData.observe(this, new Observer<RegisterVerifyOtpResponse>() {
+            @Override
+            public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
+                Log.d("branchesResponse", "onChanged: " + registerVerifyOtpResponse);
+                dismissLoading();
+                goToSelectAccont(registerVerifyOtpResponse);
+            }
+        });
         selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
             @Override
             public void onChanged(BranchesModel branchesModel) {
@@ -155,6 +189,12 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             }
         });
 
+    }
+
+    private void goToSelectAccont(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
+        Intent intent = new Intent(SelectBankingModeActivity.this, SelectAccountTypeActivity.class);
+        intent.putExtra("registerVerifyOtpResponse", registerVerifyOtpResponse);
+        startActivity(intent);
     }
 
     private void setSpinner(BranchesModel branchesModel) {
