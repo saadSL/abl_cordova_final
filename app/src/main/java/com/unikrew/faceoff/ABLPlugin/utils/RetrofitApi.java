@@ -55,10 +55,10 @@ public interface RetrofitApi {
     Call<BranchesModel> getBranches(@Body GetBranchPostModel postParams);
 
     @POST("/RdaConsumer/api/consumer/consumer-account-detail")
-    Call<GetConsumerAccountDetailsResponse> getConsumerAccDetails(@Body GetConsumerAccountDetailsPostParams postParams,@Header("Authorization") String accessToken);
+    Call<GetConsumerAccountDetailsResponse> getConsumerAccDetails(@Body GetConsumerAccountDetailsPostParams postParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/public/update-account")
-    Call<DeleteDraftedApplicationResponse> deleteDraftedApplication(@Body DeleteDraftedApplicationPostParams postParams,@Header("Authorization") String accessToken);
+    Call<DeleteDraftedApplicationResponse> deleteDraftedApplication(@Body DeleteDraftedApplicationPostParams postParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/public/change-mobile-no")
     Call<ChangeMobileNumberResponse> changeMobileNumber(@Body ChangeMobileNumberPostParams postParams);
@@ -70,5 +70,8 @@ public interface RetrofitApi {
     Call<RegisterVerifyOtpResponse> registerVerifyOtp(@Body RegisterVerifyOtp registerVerifyOtp);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
-    Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams,@Header("Authorization") String accessToken);
+    Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams, @Header("Authorization") String accessToken);
+
+//    @POST("/RdaConsumer/api/consumer/register-consumer-address")
+//    Call<BranchesModel> getAddress(GetBranchPostModel getBranchPostModel);
 }

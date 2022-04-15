@@ -61,6 +61,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
 
+    public static RegisterVerifyOtpResponse globalRegisterVerifyOtp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +129,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         } else if (selectedBranchTitle.equals("")) {
             showAlert(Config.errorType, "Please select a branch from suggested branches on the map or select any other branch from the drop down.");
         } else {
-            Log.d("selectedBranchTitle", "your selected branch is: " + selectedBranchTitle);
             postBankingModeToNetwork();
         }
     }
@@ -143,8 +144,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        consumerListItemVerifyOtp.setMobileNo("03232343001");
-        consumerListItemVerifyOtp.setIdNumber("32344312312227");
+        consumerListItemVerifyOtp.setMobileNo("0241222092343001");
+        consumerListItemVerifyOtp.setIdNumber("2521033122227");
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
@@ -168,6 +169,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                 Log.d("branchesResponse", "onChanged: " + registerVerifyOtpResponse);
                 dismissLoading();
                 goToSelectAccont(registerVerifyOtpResponse);
+                globalRegisterVerifyOtp = registerVerifyOtpResponse;
             }
         });
         selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {

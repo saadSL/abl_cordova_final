@@ -187,7 +187,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     private void getPurposeOfAccount() {
         showLoading();
         MobileNetworkPostParams mobileNetworkPostParams = new MobileNetworkPostParams();
-        mobileNetworkPostParams.getData().codeTypeId = 1081;
+        mobileNetworkPostParams.getData().codeTypeId = Config.ACCOUNT_PURPOSE_CODE;
         selectAccountTypeViewModel.getPurposeOfAccount(mobileNetworkPostParams);
     }
 
@@ -202,9 +202,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, accountTypeBinding.spinnerAllPurposes.getSelectedItemPosition() + " selected", Toast.LENGTH_SHORT).show();
         selectedPurposeOfAccount = accountTypeBinding.spinnerAllPurposes.getSelectedItem().toString();
-
     }
 
     @Override

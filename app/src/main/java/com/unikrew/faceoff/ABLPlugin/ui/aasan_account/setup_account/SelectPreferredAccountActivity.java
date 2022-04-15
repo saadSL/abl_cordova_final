@@ -1,9 +1,10 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponseData;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
 import com.unikrew.faceoff.Config;
 
 
@@ -41,7 +43,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
             public void onChanged(AccountTypeResponse accountTypeResponse) {
                 Log.d("accountTypeResponse", "onChanged: " + accountTypeResponse.toString());
                 dismissLoading();
-                showAlert(Config.successType,accountTypeResponse.getMessage().getDescription());
+                goToPersonalDetails();
             }
         });
 
@@ -52,6 +54,11 @@ public class SelectPreferredAccountActivity extends BaseActivity {
                 dismissLoading();
             }
         });
+    }
+
+    private void goToPersonalDetails() {
+        Intent intent = new Intent(this, PersonalDetailsOneActivity.class);
+        startActivity(intent);
     }
 
     private void setViewModel() {

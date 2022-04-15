@@ -1,5 +1,7 @@
 package com.unikrew.faceoff;
 
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+
 public class Config {
     //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
     public static final String BASE_URL = "http://10.100.102.124:8080";
@@ -74,8 +76,15 @@ public class Config {
     /* Account Application variables */
     public static String APP_LIST = "app_list";
     public static String ACCESS_TOKEN = "access_token";
+    public static String MOTHER_NAME_SUGGESTION = "mother_name_suggestion";
+    public static String PLACE_OF_BIRTH_SUGGESTION = "place_of_birth_suggestion";
 
     public static int otpLength = 6;
+
+    public static int ACCOUNT_PURPOSE_CODE =1081;
+    public static int OCCUPATION_CODE =1014;
+    public static int PROFESSION_CODE =1016;
+
 
 }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
->
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/li_top_bar"
@@ -39,7 +39,7 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +52,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/li_top_bar"
             android:orientation="vertical">
 
             <LinearLayout
@@ -66,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:fontFamily="@font/worksans_regular"
-                    android:text="@string/setup"
+                    android:text="@string/your"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20sdp" />
 
@@ -76,7 +77,7 @@
                     android:layout_gravity="start"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:fontFamily="@font/worksans_semibold"
-                    android:text="@string/account"
+                    android:text="@string/details"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20sdp" />
             </LinearLayout>
@@ -140,7 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_3sdp"
                         android:layout_margin="@dimen/_3sdp"
-                        android:background="@color/light_gray"
+                        android:background="@color/blue"
                         android:gravity="center" />
                 </LinearLayout>
 
@@ -193,127 +194,89 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:fontFamily="@font/worksans_medium"
-                android:text="@string/preferred_banking_method_prompt"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/ll_conventional"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_white"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/conventional" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/worksans_medium"
-                        android:padding="@dimen/_3sdp"
-                        android:text="@string/conventional"
-                        android:textColor="@color/yellow"
-                        android:textSize="@dimen/_12sdp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_islamic"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_weight="1"
-
-                    android:background="@drawable/rounded_corner_white"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/islamic_pic" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/worksans_medium"
-                        android:padding="@dimen/_3sdp"
-                        android:text="@string/islamic"
-                        android:textColor="@color/yellow"
-                        android:textSize="@dimen/_12sdp" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_margin="@dimen/_15sdp"
                 android:background="@drawable/rounded_corner_white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:fontFamily="@font/worksans_semibold"
-                    android:text="@string/choose_branch"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:fontFamily="@font/worksans_regular"
-                    android:text="@string/choose_suggested_branch"
-                    android:textColor="@color/black" />
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150sdp"
-                    android:layout_margin="@dimen/_8sdp"
-                    tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:text="@string/full_name"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:fontFamily="@font/worksans_regular"
+                        android:text="@string/full_name_ext"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/full_name"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:text="@string/father_name"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:fontFamily="@font/worksans_regular"
+                        android:text="@string/full_name_ext"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_father_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/father_name"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -326,26 +289,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
                     android:fontFamily="@font/worksans_semibold"
-                    android:text="@string/select_yourself"
+                    android:text="@string/mother_name"
                     android:textColor="@color/black" />
 
-                <Spinner
-
-                    android:id="@+id/spinner_all_branches"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_mother_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/spinner_background"
-                    android:padding="@dimen/_5sdp"
-                    android:prompt="@string/choose_prefered_branch"
-                    android:spinnerMode="dialog" />
-            </LinearLayout>
+                    android:layout_gravity="center_horizontal" />
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/place_of_birth"
+                    android:textColor="@color/black" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
 
             <include
 
@@ -355,9 +328,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_100sdp" />
-        </LinearLayout>
-    </ScrollView>
 
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
     <include
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -366,5 +339,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-         />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -102,11 +102,17 @@
 &#8226; CNIC/SNIC should not be edited or expired \n
     </string>
 
+    <string name="residence_phone">Enter residence phone number</string>
+    <string name="landline_number">Landline Number</string>
+    <string name="landline_placeholder">0XXXXXXXXXX</string>
+    <string name="email_placeholder">Please enter your email</string>
+    <string name="email">Email</string>
+    <string name="optional">(Optional)</string>
     <string name="father_name">Father/Husband Name</string>
     <string name="full_name">Full Name</string>
     <string name="full_name_ext"> (As per NADRA Record)</string>
-
-
+    <string name="mother_name">Mother\'s Name</string>
+    <string name="place_of_birth">Place of birth</string>
     <string name="mobile_number">Mobile Number <font fgcolor="#FF0000">*</font></string>
     <string name="mobile_number_question">Have You Ported Your Mobile Network ?</string>
     <string name="mobile_info_text">To update your mobile network in bank\'s system, please write "MNP" in message and send it to 9225 and 9080. Otherwise, you will not be able to receive One Time Password on your mobile phone.</string>
@@ -118,12 +124,17 @@
     <string name="change_number"><u>Change Number</u></string>
     <string name="choose_branch">Choose Your Branch</string>
     <string name="choose_suggested_branch">Below are suggested branches based on your current location</string>
+    <string name="live_chat">Allied Live Chat</string>
     <string name="islamic">Islamic</string>
     <string name="conventional">Conventional</string>
     <string name="select_yourself">or Select Yourself</string>
     <string name="choose_prefered_branch">Choose preferred branch</string>
-    <string name="choose_occupation">Choose Occupation</string>
+    <string name="choose_profession">Choose your Profession</string>
+    <string name="choose_occupation">Choose your Occupation</string>
     <string name="choose_purpose">Choose purpose of account</string>
+    <string name="text_fields_error">Please fill the mandatory text fields to continue</string>
+    <string name="mother_name_error">Please select your Mother\'s Name</string>
+    <string name="birth_place_error">"Please select your Birth Place"</string>
     <string name="banking_method">Banking Method</string>
     <string name="savings">Savings</string>
     <string name="current">Current</string>
@@ -134,6 +145,17 @@
     <string name="purpose_of_account">Purpose of Account</string>
     <string name="select_your_account">Select Your Account</string>
     <string name="your">Your</string>
+    <string name="employment_details">Employment Details</string>
+    <string name="current_mailing_address">Current/Mailing Address for Correspondence</string>
+    <string name="town_tehsil">Town / Tehsil</string>
+    <string name="country">Country</string>
+    <string name="salary_caption">Please mention your average monthly salary/ income in Pakistani Rupee (PKR)</string>
+    <string name="salary_placeholder">Enter Salary/Income Here</string>
+    <string name="city">City</string>
+    <string name="occupation">Occupation</string>
+    <string name="profession">Profession</string>
+    <string name="address">Address</string>
+    <string name="landmark">Nearest Landmark</string>
     <string name="details">Details</string>
     <string name="setup">Setup</string>
     <string name="step_1">Step 1</string>

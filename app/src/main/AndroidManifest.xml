@@ -35,7 +35,15 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.PersonalDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -64,6 +72,7 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="@string/launcher_name">
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -117,11 +126,11 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity"
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
+
 </manifest>

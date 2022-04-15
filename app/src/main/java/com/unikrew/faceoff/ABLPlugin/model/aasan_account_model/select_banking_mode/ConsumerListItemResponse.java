@@ -17,7 +17,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object idTypeId;
 	private Object placeOfIssue;
 	private Object mobileNetworkId;
-	private Object emailAddress;
+	private String  emailAddress;
 	private Object educationId;
 	private Object occupationId;
 	private Object customerNonResidentInd;
@@ -56,7 +56,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object referrerCp;
 	private boolean isPrimary;
 	private boolean existingCustomerInd;
-	private Object fatherHusbandName;
+	private String fatherHusbandName;
 	private Object nationalityTypeId;
 	private Object kinName;
 	private Object genderId;
@@ -123,7 +123,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return mobileNetworkId;
 	}
 
-	public Object getEmailAddress(){
+	public String getEmailAddress(){
 		return emailAddress;
 	}
 
@@ -279,7 +279,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return existingCustomerInd;
 	}
 
-	public Object getFatherHusbandName(){
+	public String getFatherHusbandName(){
 		return fatherHusbandName;
 	}
 
