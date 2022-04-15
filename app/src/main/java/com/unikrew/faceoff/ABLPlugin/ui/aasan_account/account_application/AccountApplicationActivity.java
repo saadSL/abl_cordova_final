@@ -26,7 +26,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
 
@@ -36,7 +35,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     private ApplicationListLayoutBinding layoutBinding;
     ApplicationListItemBinding itemBinding;
-    private GetConsumerAccountDetailsPostParams consumerAccDetailspostParams;
+    private GetConsumerAccountDetailsPostParams consumerAccDetailsPostParams;
     private DeleteDraftedApplicationPostParams deleteDraftedAppPostParams;
     private AccountApplicationViewModel viewModel;
 
@@ -57,30 +56,31 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
-
-                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
-
-                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Account Income ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Details Names ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Address ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
+//                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
+//
+//                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
+//
+//                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
+//
+////                    openActivity(SelectBankingModeActivity.class);
+//                    showAlert(Config.successType, "Opening Account Income ");
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
+//
+////                    openActivity(SelectBankingModeActivity.class);
+//                    showAlert(Config.successType, "Opening Personal Details Names ");
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
+//
+////                    openActivity(SelectBankingModeActivity.class);
+//                    showAlert(Config.successType, "Opening Personal Address ");
+//
+//                }else
+                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
 
                     openActivity(EmploymentDetailsActivity.class,getConsumerAccountDetailsResponse);
 
@@ -139,7 +139,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         if (selectedAppList != null){
             setConsumerAccDetailsPostParams();
             viewModel.getConsumerAccDetails(
-                    consumerAccDetailspostParams,
+                    consumerAccDetailsPostParams,
                     res.getData().getAccessToken());
             showLoading();
             loader.show();
@@ -151,20 +151,20 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     }
 
     private void setConsumerAccDetailsPostParams() {
-        consumerAccDetailspostParams.getData().setRdaCustomerProfileId(
-                res.getData().getAppList().get(0).getRdaCustomerProfileId()
+        consumerAccDetailsPostParams.getData().setRdaCustomerProfileId(
+                selectedAppList.getRdaCustomerProfileId()
         );
-        consumerAccDetailspostParams.getData().setRdaCustomerAccInfoId(
-                res.getData().getAppList().get(0).getRdaCustomerAccInfoId()
+        consumerAccDetailsPostParams.getData().setRdaCustomerAccInfoId(
+                selectedAppList.getRdaCustomerAccInfoId()
         );
-        consumerAccDetailspostParams.getData().setCustomerTypeId(
-                res.getData().getAppList().get(0).getCustomerTypeId()
+        consumerAccDetailsPostParams.getData().setCustomerTypeId(
+                selectedAppList.getCustomerTypeId()
         );
     }
 
     private void set() {
-        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.APP_LIST);
-        consumerAccDetailspostParams = new GetConsumerAccountDetailsPostParams();
+        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        consumerAccDetailsPostParams = new GetConsumerAccountDetailsPostParams();
         deleteDraftedAppPostParams = new DeleteDraftedApplicationPostParams();
 
         viewModel = new ViewModelProvider(this).get(AccountApplicationViewModel.class);

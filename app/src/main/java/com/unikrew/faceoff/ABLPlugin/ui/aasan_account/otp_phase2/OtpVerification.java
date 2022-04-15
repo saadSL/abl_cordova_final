@@ -105,7 +105,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     }
 
     private void openAccountApplication(GetDraftedAppsVerifyOtpResponse getDraftedAppsVerifyOtpResponse) {
-        Intent intent = new Intent(this, EmploymentDetailsActivity.class);
+        Intent intent = new Intent(this, AccountApplicationActivity.class);
 
         intent.putExtra( Config.RESPONSE,getDraftedAppsVerifyOtpResponse );
 
