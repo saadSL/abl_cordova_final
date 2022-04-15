@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.EmploymentDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
@@ -48,7 +49,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
     private RegisterEmployeeDetailsPostConsumerList registerEmployeeDetailsPostConsumerList;
-    private GetDraftedAppsVerifyOtpResponse res;
+    private GetConsumerAccountDetailsResponse res;
     private ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList;
 
     private SaveKycPostParams saveKycPostParams;
@@ -134,15 +135,15 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     private void saveKyc() {
         setKycPostParams();
-        employmentDetailsViewModel.saveKyc(saveKycPostParams,res.getData().getAccessToken());
+//        employmentDetailsViewModel.saveKyc(saveKycPostParams,res.getData().getAccessToken());
         showLoading();
         loader.show();
     }
 
     private void setKycPostParams() {
         SaveKycPostData saveKycPostData = new SaveKycPostData();
-        saveKycPostData.setRdaCustomerAccInfoId(res.getData().getAppList().get(0).getRdaCustomerAccInfoId());
-        saveKycPostData.setRdaCustomerProfileId(res.getData().getAppList().get(0).getRdaCustomerProfileId());
+        saveKycPostData.setRdaCustomerAccInfoId(res.getData().getConsumerList().get(0).);
+//        saveKycPostData.setRdaCustomerProfileId(res.getData());
         saveKycPostData.setAverageMonthlySalary(Integer.parseInt(employmentDetailsBinding.etSalary.getText().toString()));
         saveKycPostParams.getData().add(saveKycPostData);
     }
@@ -249,7 +250,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         registerEmployeeDetailsPostParams = new RegisterEmployeeDetailsPostParams();
         registerEmployeeDetailsPostConsumerList = new RegisterEmployeeDetailsPostConsumerList();
         consumerList = new ArrayList<>();
-        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        res = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.RESPONSE);
         saveKycPostParams = new SaveKycPostParams();
     }
 

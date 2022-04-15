@@ -36,7 +36,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     private ApplicationListLayoutBinding layoutBinding;
     ApplicationListItemBinding itemBinding;
-    private GetConsumerAccountDetailsPostParams consumerAccDetailspostParams;
+    private GetConsumerAccountDetailsPostParams consumerAccDetailsPostParams;
     private DeleteDraftedApplicationPostParams deleteDraftedAppPostParams;
     private AccountApplicationViewModel viewModel;
 
@@ -139,7 +139,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         if (selectedAppList != null){
             setConsumerAccDetailsPostParams();
             viewModel.getConsumerAccDetails(
-                    consumerAccDetailspostParams,
+                    consumerAccDetailsPostParams,
                     res.getData().getAccessToken());
             showLoading();
             loader.show();
@@ -151,20 +151,20 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     }
 
     private void setConsumerAccDetailsPostParams() {
-        consumerAccDetailspostParams.getData().setRdaCustomerProfileId(
-                res.getData().getAppList().get(0).getRdaCustomerProfileId()
+        consumerAccDetailsPostParams.getData().setRdaCustomerProfileId(
+                selectedAppList.getRdaCustomerProfileId()
         );
-        consumerAccDetailspostParams.getData().setRdaCustomerAccInfoId(
-                res.getData().getAppList().get(0).getRdaCustomerAccInfoId()
+        consumerAccDetailsPostParams.getData().setRdaCustomerAccInfoId(
+                selectedAppList.getRdaCustomerAccInfoId()
         );
-        consumerAccDetailspostParams.getData().setCustomerTypeId(
-                res.getData().getAppList().get(0).getCustomerTypeId()
+        consumerAccDetailsPostParams.getData().setCustomerTypeId(
+                selectedAppList.getCustomerTypeId()
         );
     }
 
     private void set() {
-        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.APP_LIST);
-        consumerAccDetailspostParams = new GetConsumerAccountDetailsPostParams();
+        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        consumerAccDetailsPostParams = new GetConsumerAccountDetailsPostParams();
         deleteDraftedAppPostParams = new DeleteDraftedApplicationPostParams();
 
         viewModel = new ViewModelProvider(this).get(AccountApplicationViewModel.class);
