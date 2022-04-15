@@ -142,7 +142,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     private void setKycPostParams() {
         SaveKycPostData saveKycPostData = new SaveKycPostData();
-        saveKycPostData.setRdaCustomerAccInfoId(res.getData().getConsumerList().get(0).);
+//        saveKycPostData.setRdaCustomerAccInfoId(res.getData().getConsumerList().get(0).);
 //        saveKycPostData.setRdaCustomerProfileId(res.getData());
         saveKycPostData.setAverageMonthlySalary(Integer.parseInt(employmentDetailsBinding.etSalary.getText().toString()));
         saveKycPostParams.getData().add(saveKycPostData);
@@ -332,7 +332,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         }else{
             setConsumerList();
             setRegisterEmployeeDetailsPostParams();
-            employmentDetailsViewModel.registerEmpDetails(registerEmployeeDetailsPostParams,res.getData().getAccessToken());
+//            employmentDetailsViewModel.registerEmpDetails(registerEmployeeDetailsPostParams,res.getData().getAccessToken());
             showLoading();
             loader.show();
         }
@@ -343,8 +343,8 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     }
 
     private void setConsumerList() {
-        registerEmployeeDetailsPostConsumerList.setRdaCustomerProfileId(res.getData().getAppList().get(0).getRdaCustomerProfileId());
-        registerEmployeeDetailsPostConsumerList.setRdaCustomerAccInfoId(res.getData().getAppList().get(0).getRdaCustomerAccInfoId());
+//        registerEmployeeDetailsPostConsumerList.setRdaCustomerProfileId(res.getData().getAppList().get(0).getRdaCustomerProfileId());
+//        registerEmployeeDetailsPostConsumerList.setRdaCustomerAccInfoId(res.getData().getAppList().get(0).getRdaCustomerAccInfoId());
         registerEmployeeDetailsPostConsumerList.setOccupationId(selectedOccupation.getId());
         registerEmployeeDetailsPostConsumerList.setProfessionId(selectedProfession.getId());
         registerEmployeeDetailsPostConsumerList.setPrimary(true);
