@@ -3,6 +3,7 @@ package com.unikrew.faceoff.ABLPlugin.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -30,12 +31,27 @@ public class BaseActivity extends AppCompatActivity {
 
     public MutableLiveData<Boolean> otp6LiveData = new MutableLiveData<Boolean>();
     public AlertDialog loader;
-
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLoader();
+        setSharedPref();
+    }
+
+    private void setSharedPref() {
+        editor = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE).edit();
+    }
+
+    protected void saveStringInPref(String key, String value){
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    protected String getStringFromPref(String key){
+        SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
+        return prefs.getString(key,"");
     }
 
     private void setLoader() {

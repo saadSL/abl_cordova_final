@@ -10,7 +10,7 @@ public class AddressesItemResponse implements Serializable {
     private Object addressTypeForeignInd;
     private Object postalCode;
     private Object mobileNo;
-    private Object countryId;
+    private Integer countryId;
     private int rdaCustomerId;
     private Object countryCodeMobile;
     private Object phone;
@@ -46,7 +46,7 @@ public class AddressesItemResponse implements Serializable {
         return mobileNo;
     }
 
-    public Object getCountryId() {
+    public Integer getCountryId() {
         return countryId;
     }
 

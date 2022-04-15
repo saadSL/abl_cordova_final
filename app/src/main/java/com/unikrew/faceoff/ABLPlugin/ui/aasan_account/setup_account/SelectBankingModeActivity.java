@@ -89,13 +89,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             }
         });
 
-
-        bankingModeBinding.ivBackBankingMethod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         bankingModeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

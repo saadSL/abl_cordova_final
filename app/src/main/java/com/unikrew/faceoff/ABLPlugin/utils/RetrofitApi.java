@@ -18,6 +18,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
@@ -82,8 +84,8 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams, @Header("Authorization") String accessToken);
 
-//    @POST("/RdaConsumer/api/consumer/register-consumer-address")
-//    Call<BranchesModel> getAddress(GetBranchPostModel getBranchPostModel);
+    @POST("/RdaConsumer/api/consumer/register-consumer-address")
+    Call<UserAddressResponseModel> postUserAddress(PostUserAddressModel postUserAddressModel, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<OccupationResponse> getOccupation(@Body OccupationPostParams postParams);
@@ -95,7 +97,7 @@ public interface RetrofitApi {
     Call<RegisterEmploymentDetailsResponse> registerEmpDetails(@Body RegisterEmployeeDetailsPostParams postParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
-    Call<SetupTransactionResponse> setupTransactionDetails(@Body SetupTransactionPostParams postParams,@Header("Authorization") String accessToken);
+    Call<SetupTransactionResponse> setupTransactionDetails(@Body SetupTransactionPostParams postParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/save-kyc")
     Call<SaveKycResponse> saveMonthlySalary(@Body SaveKycPostParams saveKycPostParams, @Header("Authorization") String accessToken);

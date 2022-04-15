@@ -52,12 +52,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void clicks() {
-        accountTypeBinding.ivBackAccountType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         accountTypeBinding.llSavings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +91,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
 
     private void postAccountType() {
         showLoading();
-        selectAccountTypeViewModel.postAccountType(getAccountTypeParams(),registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccessToken());
+        selectAccountTypeViewModel.postAccountType(getAccountTypeParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
     private AccountTypePostParams getAccountTypeParams() {

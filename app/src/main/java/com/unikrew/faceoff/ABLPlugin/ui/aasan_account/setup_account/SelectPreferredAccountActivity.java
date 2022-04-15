@@ -89,12 +89,6 @@ public class SelectPreferredAccountActivity extends BaseActivity {
                 selectFreeLance();
             }
         });
-        preferredAccountBinding.ivBackPreferred.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         preferredAccountBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,18 +98,22 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         preferredAccountBinding.layoutBtn.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (preferredAccountBinding.cbAsaanDigitalAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked() || preferredAccountBinding.cbAsaanRemittanceDigitalAccount.isChecked()) {
-                    postPreferredAccount();
-                } else {
-                    showAlert(Config.errorType, getString(R.string.select_preferred_error));
-                }
+                checkValidations();
             }
         });
     }
 
+    private void checkValidations() {
+        if (preferredAccountBinding.cbAsaanDigitalAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked() || preferredAccountBinding.cbAsaanRemittanceDigitalAccount.isChecked()) {
+            postPreferredAccount();
+        } else {
+            showAlert(Config.errorType, getString(R.string.select_preferred_error));
+        }
+    }
+
     private void postPreferredAccount() {
         showLoading();
-        selectAccountTypeViewModel.postAccountType(getAccountTypeParams(),accessToken);
+        selectAccountTypeViewModel.postAccountType(getAccountTypeParams(),  getStringFromPref(Config.ACCESS_TOKEN));
     }
 
     private AccountTypePostParams getAccountTypeParams() {

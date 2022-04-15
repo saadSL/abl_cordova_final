@@ -3,12 +3,36 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employe
 import java.io.Serializable;
 
 public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
-    public int rdaCustomerProfileId;
-    public int rdaCustomerAccInfoId;
-    public int occupationId;
-    public int professionId;
-    public boolean isPrimary;
-    public String salary;
+    private int rdaCustomerProfileId;
+    private int rdaCustomerAccInfoId;
+    private int occupationId;
+    private int professionId;
+    private boolean isPrimary;
+    private String salary;
+    private String fullName;
+    private String fatherHusbandName;
+    private String motherMaidenName;
+    private String emailAddress;
+
+    public String getLandlineNumber() {
+        return landlineNumber;
+    }
+
+    public void setLandlineNumber(String landlineNumber) {
+        this.landlineNumber = landlineNumber;
+    }
+
+    private String landlineNumber;
+
+    public String getPlaceofBirth() {
+        return placeofBirth;
+    }
+
+    public void setPlaceofBirth(String placeofBirth) {
+        this.placeofBirth = placeofBirth;
+    }
+
+    private String placeofBirth;
 
     public int getRdaCustomerProfileId() {
         return rdaCustomerProfileId;
@@ -56,5 +80,37 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
 
     public void setSalary(String salary) {
         this.salary = salary;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getFatherHusbandName() {
+        return fatherHusbandName;
+    }
+
+    public void setFatherHusbandName(String fatherHusbandName) {
+        this.fatherHusbandName = fatherHusbandName;
+    }
+
+    public String getMotherMaidenName() {
+        return motherMaidenName;
+    }
+
+    public void setMotherMaidenName(String motherMaidenName) {
+        this.motherMaidenName = motherMaidenName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

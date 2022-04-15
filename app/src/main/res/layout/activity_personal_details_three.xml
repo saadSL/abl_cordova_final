@@ -7,37 +7,15 @@
     android:background="@color/background_color"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/li_top_bar"
+
+    <include
+        android:id="@+id/layout_logo"
+        layout="@layout/layout_logo_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="@color/primary"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_back_banking_method"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_gravity="center_vertical"
-            android:padding="@dimen/_3sdp"
-            android:src="@drawable/ic_back"
-            app:tint="@color/white" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/lato_regular"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_3sdp"
-            android:text="@string/banking_method"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
@@ -47,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/li_top_bar">
+        app:layout_constraintTop_toBottomOf="@+id/layout_logo">
 
         <LinearLayout
             android:layout_width="match_parent"

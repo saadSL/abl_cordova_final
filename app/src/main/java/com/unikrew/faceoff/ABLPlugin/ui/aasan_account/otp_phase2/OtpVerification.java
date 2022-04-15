@@ -82,6 +82,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
             public void onChanged(GetDraftedAppsVerifyOtpResponse getDraftedAppsVerifyOtpResponse) {
                 if (getDraftedAppsVerifyOtpResponse.getData().getAppList().size() > 0){
                     openAccountApplication(getDraftedAppsVerifyOtpResponse);
+                    saveStringInPref(Config.ACCESS_TOKEN,getDraftedAppsVerifyOtpResponse.getData().accessToken);
                 }else{
                     setupAccount();
                 }

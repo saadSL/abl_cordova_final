@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RegisterEmployeeDetailsPostData implements Serializable {
-    public ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList;
+    public ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList = new ArrayList<>();
 
     public ArrayList<RegisterEmployeeDetailsPostConsumerList> getConsumerList() {
         return consumerList;

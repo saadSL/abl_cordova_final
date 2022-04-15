@@ -8,6 +8,7 @@ public class Config {
 
     public static String ACCOUNT_NUMBER = "account_number";
 
+    public static String ASAAN_ACCOUNT_PREF = "asaanAccountPref";
     public static String RESPONSE = "response";
     // Activity request codes
     public static final int REQ_SCAN_FINGERPRINT = 22;
@@ -16,6 +17,7 @@ public class Config {
     public static final int ISLAMIC_BANKING = 114202;
     public static final int CURRENT_ACCOUNT = 114301;
     public static final int SAVINGS_ACCOUNT = 114302;
+    public static final int ADDRESS_TYPE_ID = 106901;
 
     public static String templateType = "WSQ";
 

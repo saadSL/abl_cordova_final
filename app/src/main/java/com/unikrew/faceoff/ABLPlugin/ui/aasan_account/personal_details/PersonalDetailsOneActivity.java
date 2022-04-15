@@ -1,5 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
@@ -10,6 +12,10 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsOneBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.SelectionModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
 ;import java.util.ArrayList;
@@ -20,18 +26,47 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
 
     private ActivityPersonalDetailsOneBinding personalDetailsBinding;
     private SuggestionsAdapter motherNameAdapter, placeOfBirthAdapter;
-    List<SelectionModel> _motherNameSuggestions = new ArrayList<>();
-    List<SelectionModel> _placeOfBirthSuggestions = new ArrayList<>();
-
+    private final List<SelectionModel> _motherNameSuggestions = new ArrayList<>();
+    private final List<SelectionModel> _placeOfBirthSuggestions = new ArrayList<>();
+    private PersonalDetailsViewModel personalDetailsViewModel;
+    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
+    private String selectedMotherName, selectedPlaceOfBirth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
         setData();
+        setViewModel();
         setMotherNameRecycler();
         setPlaceOfBirthRecycler();
         clicks();
+        setObservers();
+    }
+
+    private void setObservers() {
+        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(this, new Observer<RegisterEmploymentDetailsResponse>() {
+            @Override
+            public void onChanged(RegisterEmploymentDetailsResponse registerEmploymentDetailsResponse) {
+                dismissLoading();
+                goToPersonalDetailsTwo();
+            }
+        });
+
+
+        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                dismissLoading();
+                showAlert(Config.errorType, errMsg);
+            }
+        });
+    }
+
+
+    private void setViewModel() {
+        registerEmployeeDetailsPostParams = new RegisterEmployeeDetailsPostParams();
+        personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
     }
 
     private void clicks() {
@@ -57,13 +92,35 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             showAlert(Config.errorType, getString(R.string.mother_name_error));
         } else if (!isBirthPlaceSelected()) {
             showAlert(Config.errorType, getString(R.string.birth_place_error));
-        }else {
-            goToPersonalDetailsTwo();
+        } else {
+            postPersonalDetailsOne();
         }
     }
 
+    private void postPersonalDetailsOne() {
+        personalDetailsViewModel.postPersonalDetails(getParams(), getStringFromPref(Config.ACCESS_TOKEN));
+    }
+
+    private RegisterEmployeeDetailsPostParams getParams() {
+        RegisterEmployeeDetailsPostConsumerList consumerListItem = new RegisterEmployeeDetailsPostConsumerList();
+        consumerListItem.setRdaCustomerAccInfoId(222);
+        consumerListItem.setRdaCustomerProfileId(222);
+        consumerListItem.setFullName(personalDetailsBinding.etFullName.getText().toString());
+        consumerListItem.setFatherHusbandName(personalDetailsBinding.etFatherName.getText().toString());
+        consumerListItem.setMotherMaidenName(selectedMotherName);
+        consumerListItem.setPlaceofBirth(selectedPlaceOfBirth);
+        consumerListItem.setPrimary(true);
+
+        RegisterEmployeeDetailsPostData registerEmployeeDetailsPostData = new RegisterEmployeeDetailsPostData();
+        registerEmployeeDetailsPostData.consumerList.add(consumerListItem);
+
+        registerEmployeeDetailsPostParams.setData(registerEmployeeDetailsPostData);
+        return registerEmployeeDetailsPostParams;
+    }
+
     private void goToPersonalDetailsTwo() {
-        Intent intent = new Intent(this,PersonalDetailsTwoActivity.class);
+        Intent intent = new Intent(this, PersonalDetailsTwoActivity.class);
+        intent.putExtra("registerEmployeeDetailsPostParams",registerEmployeeDetailsPostParams);
         startActivity(intent);
     }
 
@@ -71,6 +128,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     private boolean isMotherNameSelected() {
         for (int i = 0; i < _motherNameSuggestions.size(); i++) {
             if (_motherNameSuggestions.get(i).getSelected()) {
+                selectedMotherName = _motherNameSuggestions.get(i).getTitle();
                 return true;
             }
         }
@@ -80,6 +138,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     private boolean isBirthPlaceSelected() {
         for (int i = 0; i < _placeOfBirthSuggestions.size(); i++) {
             if (_placeOfBirthSuggestions.get(i).getSelected()) {
+                selectedPlaceOfBirth = _placeOfBirthSuggestions.get(i).getTitle();
                 return true;
             }
         }
