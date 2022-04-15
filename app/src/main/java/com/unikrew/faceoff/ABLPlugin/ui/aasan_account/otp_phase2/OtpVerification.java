@@ -17,6 +17,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application.AccountApplicationActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.change_mobile_number.ChangeMobileNumberActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
 
@@ -104,10 +105,9 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     }
 
     private void openAccountApplication(GetDraftedAppsVerifyOtpResponse getDraftedAppsVerifyOtpResponse) {
-        Intent intent = new Intent(this, AccountApplicationActivity.class);
+        Intent intent = new Intent(this, EmploymentDetailsActivity.class);
 
-        intent.putExtra( Config.APP_LIST,getDraftedAppsVerifyOtpResponse );
-        intent.putExtra(Config.ACCESS_TOKEN,getDraftedAppsVerifyOtpResponse.getData().getAccessToken());
+        intent.putExtra( Config.RESPONSE,getDraftedAppsVerifyOtpResponse );
 
         startActivity(intent);
     }

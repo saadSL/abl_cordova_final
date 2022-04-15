@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_debit_card"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/black"
+                        android:layout_weight=".5"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bi_info"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                    <Switch
+                        android:id="@+id/debit_card_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_weight=".5"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_classic_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:layout_weight=".5"
+                        android:background="@drawable/transparent_secondary_bg"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:src="@drawable/classic_debit_card" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/worksans_semibold"
+                            android:text="@string/upi_pay_pak_classic"
+                            android:textColor="@color/yellow" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Domestic and International use" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Daily Transaction Limit 50,000/- on ATM" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Daily Transaction Limit 50,000/- on POS" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 ATM Fund Tranfer" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 ATM Bill Payment" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_vdc_card"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:background="@drawable/transparent_secondary_bg"
+                        android:layout_margin="@dimen/_2sdp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/vdc_card"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vdc_classic"
+                            android:textColor="@color/yellow"
+                            android:fontFamily="@font/worksans_semibold"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Domestic and International use"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Daily Transaction Limit 50,000/- on ATM"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 Daily Transaction Limit 50,000/- on POS"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 ATM Fund Tranfer"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/worksans_regular"
+                            android:text="\u2022 ATM Bill Payment"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cheque_book_required"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"
+                    android:layout_weight=".5"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bi_info"
+                    android:layout_marginTop="@dimen/_10sdp"/>
+
+                <Switch
+                    android:id="@+id/cheque_book_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:theme="@style/SCBSwitch"
+                    android:layout_weight=".5"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transactional_alerts"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/black"
+                        android:layout_weight=".5"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bi_info"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                    <Switch
+                        android:id="@+id/transactional_alert_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_weight=".5"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_regular"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:text="@string/where_to_send_transaction_alerts"/>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btn_sms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sms"
+                        android:enabled="false"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:background="@drawable/rounded_corner_selected"/>
+                    <Button
+                        android:id="@+id/btn_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:enabled="false"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:background="@drawable/rounded_corner_selected"/>
+                </LinearLayout>
+            </LinearLayout>
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include
+                android:id="@+id/layout_chat"
+                layout="@layout/layout_abl_chat_container"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

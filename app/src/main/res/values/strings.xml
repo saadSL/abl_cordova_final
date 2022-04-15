@@ -164,4 +164,17 @@
     <string name="step_4">Step 4</string>
     <string name="account"> Account</string>
     <string name="mention_salary">Please mention your average monthly salary/ income in Pakistani Rupee (PKR)</string>
+    <string name="choose_debit_card">Choose Your Debit Card</string>
+    <string name="upi_pay_pak_classic">UPI Pay Pak Classic</string>
+    <string name="vdc_classic">VDC Classic</string>
+    <string name="upi_pay_pak_classic_description">.Domestic and International use \n\n
+        .Daily Transaction Limit 50,000/- on ATM\n Daily Transaction Limit 50,000/- on POS ATM Fund Tranfer ATM Bill Payment></string>
+    <string name="domestic_international_use"><![CDATA[Domestic & International use]]></string>
+    <string name="cheque_book_required">Cheque Book Required</string>
+    <string name="transactional_alerts">Transactional Alerts</string>
+    <string name="where_to_send_transaction_alerts">Where do you want bank to send account transaction alerts.</string>
+    <string name="sms">SMS</string>
+    <string name="email">EMAIL</string>
+
+
 </resources>
