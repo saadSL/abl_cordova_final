@@ -16,6 +16,7 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumber
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 
 
 /**
@@ -37,7 +38,7 @@ public class CustomPlugin extends CordovaPlugin {
 
     private void startFlow(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
-        Intent intent = new Intent(context, SelectBankingModeActivity.class);
+        Intent intent = new Intent(context, MobileNumberActivity.class);
         cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, 22);
 

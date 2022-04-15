@@ -77,6 +77,14 @@ public class Config {
 
     public static int otpLength = 6;
 
+    public static int codeTypeIdForOccupation = 1014;
+    public static int codeTypeIdForProfession = 1016;
+
+    public static int TRANSACTION_ALERT_SMS = 114401;
+    public static int TRANSACTION_ALERT_EMAIL = 114402;
+    public static int UPI = 108613;
+    public static int VDC = 108614;
+
 }
 
 

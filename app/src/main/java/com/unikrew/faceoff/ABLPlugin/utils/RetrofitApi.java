@@ -16,12 +16,22 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
@@ -71,4 +81,19 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<OccupationResponse> getOccupation(@Body OccupationPostParams postParams);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<ProfessionResponse> getProfession(@Body ProfessionPostParams postParams);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<RegisterEmploymentDetailsResponse> registerEmpDetails(@Body RegisterEmployeeDetailsPostParams postParams, @Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
+    Call<SetupTransactionResponse> setupTransactionDetails(@Body SetupTransactionPostParams postParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/save-kyc")
+    Call<SaveKycResponse> saveMonthlySalary(@Body SaveKycPostParams saveKycPostParams, @Header("Authorization") String accessToken);
 }
