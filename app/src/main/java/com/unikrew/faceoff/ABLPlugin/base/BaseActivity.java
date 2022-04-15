@@ -90,7 +90,7 @@ public class BaseActivity extends AppCompatActivity {
             builder1.setTitle(spannableStringBuilder);
 
         } else if (type == Config.verifiedType) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("VERIFIED");
             spannableStringBuilder.setSpan(
                     foregroundColorSpan,
