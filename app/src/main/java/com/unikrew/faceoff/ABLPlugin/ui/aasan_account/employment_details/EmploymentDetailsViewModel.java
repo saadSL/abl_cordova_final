@@ -8,7 +8,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.Occupa
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
@@ -76,7 +76,7 @@ public class EmploymentDetailsViewModel extends BaseViewModel {
         });
     }
 
-    public void registerEmpDetails(RegisterEmployeeDetailsPostParams postParams,String accessToken){
+    public void registerEmpDetails(RegisterEmploymentDetailsPostParams postParams, String accessToken){
         Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams,"Bearer "+accessToken);
         callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
             @Override

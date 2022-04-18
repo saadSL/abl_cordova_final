@@ -68,7 +68,8 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         accountTypeBinding.layoutBtn.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postRegisterConsumerAccountInfo();
+                getIntent().getSerializableExtra(Config.RESPONSE);
+//                postRegisterConsumerAccountInfo();
             }
         });
         accountTypeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {

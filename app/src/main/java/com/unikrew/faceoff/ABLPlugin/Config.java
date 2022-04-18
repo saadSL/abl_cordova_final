@@ -10,6 +10,7 @@ public class Config {
 
     public static String ASAAN_ACCOUNT_PREF = "asaanAccountPref";
     public static String RESPONSE = "response";
+    public static String CONSUMER_ACC_DETAILS = "consumer_acc_details";
     // Activity request codes
     public static final int REQ_SCAN_FINGERPRINT = 22;
     public static final int EXTERNAL_STORAGE_CODE = 11;
@@ -96,6 +97,14 @@ public class Config {
     public static int UPI = 108613;
     public static int VDC = 108614;
 
+    public static int SINGLE = 102101;
+    public static int JOINT = 102102;
+    public static int MINOR = 102103;
+
+    public static int CNIC_BACK_TYPE_ID = 1043002;
+    public static int CNIC_FRONT_TYPE_ID = 1043001;
+    public static int SIGNATURE_TYPE_ID = 1043008;
+    public static int LIVE_PHOTO = 1043005;
 }
 
 

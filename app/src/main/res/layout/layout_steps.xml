@@ -3,43 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/steps_heading1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:fontFamily="@font/worksans_regular"
-            android:text="@string/setup"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp" />
-
-        <TextView
-            android:id="@+id/steps_heading2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/worksans_semibold"
-            android:text="@string/account"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@color/orange" />
+    <include
+        android:id="@+id/screen_header"
+        layout="@layout/screen_header"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,6 +31,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <View
+                android:id="@+id/step1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
                 android:layout_margin="@dimen/_3sdp"
@@ -88,6 +56,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <View
+                android:id="@+id/step2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
                 android:layout_margin="@dimen/_3sdp"
@@ -112,6 +81,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <View
+                android:id="@+id/step3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
                 android:layout_margin="@dimen/_3sdp"
@@ -136,6 +106,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <View
+                android:id="@+id/step4"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
                 android:layout_margin="@dimen/_3sdp"

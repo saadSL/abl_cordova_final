@@ -12,9 +12,9 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsOneBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.SelectionModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
@@ -29,7 +29,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     private final List<SelectionModel> _motherNameSuggestions = new ArrayList<>();
     private final List<SelectionModel> _placeOfBirthSuggestions = new ArrayList<>();
     private PersonalDetailsViewModel personalDetailsViewModel;
-    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
+    private RegisterEmploymentDetailsPostParams registerEmploymentDetailsPostParams;
     private String selectedMotherName, selectedPlaceOfBirth;
 
     @Override
@@ -65,7 +65,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
 
 
     private void setViewModel() {
-        registerEmployeeDetailsPostParams = new RegisterEmployeeDetailsPostParams();
+        registerEmploymentDetailsPostParams = new RegisterEmploymentDetailsPostParams();
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
     }
 
@@ -101,8 +101,8 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         personalDetailsViewModel.postPersonalDetails(getParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
-    private RegisterEmployeeDetailsPostParams getParams() {
-        RegisterEmployeeDetailsPostConsumerList consumerListItem = new RegisterEmployeeDetailsPostConsumerList();
+    private RegisterEmploymentDetailsPostParams getParams() {
+        RegisterEmploymentDetailsPostConsumerList consumerListItem = new RegisterEmploymentDetailsPostConsumerList();
         consumerListItem.setRdaCustomerAccInfoId(222);
         consumerListItem.setRdaCustomerProfileId(222);
         consumerListItem.setFullName(personalDetailsBinding.etFullName.getText().toString());
@@ -114,13 +114,13 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         RegisterEmployeeDetailsPostData registerEmployeeDetailsPostData = new RegisterEmployeeDetailsPostData();
         registerEmployeeDetailsPostData.consumerList.add(consumerListItem);
 
-        registerEmployeeDetailsPostParams.setData(registerEmployeeDetailsPostData);
-        return registerEmployeeDetailsPostParams;
+        registerEmploymentDetailsPostParams.setData(registerEmployeeDetailsPostData);
+        return registerEmploymentDetailsPostParams;
     }
 
     private void goToPersonalDetailsTwo() {
         Intent intent = new Intent(this, PersonalDetailsTwoActivity.class);
-        intent.putExtra("registerEmployeeDetailsPostParams",registerEmployeeDetailsPostParams);
+        intent.putExtra("registerEmployeeDetailsPostParams", registerEmploymentDetailsPostParams);
         startActivity(intent);
     }
 

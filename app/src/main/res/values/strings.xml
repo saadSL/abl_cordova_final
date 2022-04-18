@@ -3,7 +3,7 @@
     <string name="app_name">abl</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
-    <string name="resend_otp"><a href="#">Resend OTP</a></string>
+    <string name="resend_otp"><a href="#">DID NOT RECIEVE OTP - RESEND</a></string>
     <string name="dummy_txt">Biometric Verification successfully done.</string>
     <string name="OTP_number">03XX-XXXXXXX</string>
     <string name="OTP_heading">Verify OTP</string>
@@ -18,9 +18,11 @@
     <string name="select_preferred_error">Please select your Preferred Account Type to continue</string>
     <string name="extra">extra</string>
     <string name="otp_inst">Enter <b>OTP</b> received on your provided mobile number</string>
+    <string name="otp_inst2">A One Time Password (OTP) has been sent at your mobile number (03XX-XXXXXXX)</string>
     <string name="OTP_question">Didn\'t receive OTP ?</string>
     <string name="remaining_time">Time Remaining</string>
     <string name="otp_des">Please enter the 6-digit verification code here:</string>
+    <string name="otp_des2">Please enter to proceed further</string>
     <string name="otp_insta">Enter <b>OTP</b> received on your provided mobile number</string>
     <string name="please_grant_external_storage_permissions">In order to use this application, please grant External storage permission.</string>
     <string name="guidance_app_bar">User Demo</string>
@@ -174,6 +176,18 @@
     <string name="transactional_alerts">Transactional Alerts</string>
     <string name="where_to_send_transaction_alerts">Where do you want bank to send account transaction alerts.</string>
     <string name="sms">SMS</string>
+    <string name="take_live_picture">Take Your Live Picture</string>
+    <string name="live_pic_click_here"><a href="#"><font  fgcolor="#102A83">Click Here</font></a></string>
+    <string name="scan_again"><a href="#"><font  fgcolor="#102A83">Scan Again</font></a></string>
+    <string name="take_live_sig_pic">Upload Picture Of Your Signature</string>
+    <string name="take_pic_on_white_paper">Take the picture of your signature on white paper</string>
+    <string name="select_nature_of_account">Select the Nature of Account</string>
+    <string name="minor">Minor</string>
+    <string name="single">Single</string>
+    <string name="joint">Joint</string>
+    <string name="scan_your_cnic_front">Scan Your Cnic Front</string>
+    <string name="im_not_a_robot">I\'m Not A Robot</string>
+    <string name="dont_have_original_cnic">"If you don’t have your original CNIC with you at present, you can open myWallet account.  If you wish to continue <a href="#">Click here</a> "</string>
 
 
 </resources>

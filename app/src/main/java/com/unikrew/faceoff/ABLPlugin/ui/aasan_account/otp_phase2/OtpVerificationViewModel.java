@@ -6,6 +6,8 @@ import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +34,31 @@ public class OtpVerificationViewModel extends BaseViewModel {
             @Override
             public void onFailure(Call<GetDraftedAppsVerifyOtpResponse> call, Throwable t) {
                 otpVerificationErrorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+
+
+    public MutableLiveData<ViewAppsGenerateOtpResponse> reSendOtpSuccessLiveData = new MutableLiveData<ViewAppsGenerateOtpResponse>();
+    public MutableLiveData<String> reSendOtpErrorLiveData = new MutableLiveData<String>();
+
+    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams){
+
+        Call<ViewAppsGenerateOtpResponse> res = AblApplication.apiInterface.viewAppsGenerateOtp(postParams);
+        res.enqueue(new Callback<ViewAppsGenerateOtpResponse>() {
+            @Override
+            public void onResponse(Call<ViewAppsGenerateOtpResponse> call, Response<ViewAppsGenerateOtpResponse> response) {
+                if (response.code() == 200){
+                    reSendOtpSuccessLiveData.postValue(response.body());
+                }else{
+                    reSendOtpErrorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewAppsGenerateOtpResponse> call, Throwable t) {
+                reSendOtpErrorLiveData.postValue(t.getMessage());
             }
         });
     }

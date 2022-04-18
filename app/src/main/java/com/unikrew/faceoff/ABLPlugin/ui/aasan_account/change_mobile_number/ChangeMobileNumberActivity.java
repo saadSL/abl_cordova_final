@@ -29,9 +29,16 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setLayout();
         setListner();
         setViewModel();
         observe();
+    }
+
+    private void setLayout() {
+        binding.screenHeader.stepsHeading1.setText("Change");
+        binding.screenHeader.stepsHeading2.setText("Number");
+        binding.btnContainer.btBack.setVisibility(View.GONE);
     }
 
     private void observe() {
@@ -60,7 +67,7 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
 
     private void setListner() {
         binding.btnContainer.btnNext.setOnClickListener(this);
-        binding.btnContainer.btnCancel.setOnClickListener(this);
+        binding.btnContainer.btBack.setOnClickListener(this);
         binding.portedMobileNetworkSwitch.setOnCheckedChangeListener(this);
     }
 
@@ -77,9 +84,6 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
                     setChangeMobileNumberPostParams();
                     changeMobileNumber();
                 }
-                break;
-            case R.id.btn_cancel:
-                finish();
                 break;
         }
     }
@@ -98,7 +102,6 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
     private void changeMobileNumber() {
         viewModel.changeMobileNumber(postParams);
         showLoading();
-        loader.show();
     }
 
     private void setChangeMobileNumberPostParams() {

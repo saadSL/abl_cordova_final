@@ -27,21 +27,28 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private Boolean isPortedMobileNetwork = false;
     private Boolean generateOtp = false;
 
-    private MobileNumberAvailabilityBinding binding;
+    private MobileNumberAvailabilityBinding mobileNumberAvailabilityBinding;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setLayout();
         setListeners();
         setViewModel();
         observeData();
     }
 
+    private void setLayout() {
+        mobileNumberAvailabilityBinding.screenHeader.stepsHeading1.setText("Let's");
+        mobileNumberAvailabilityBinding.screenHeader.stepsHeading2.setText("Get Started");
+        mobileNumberAvailabilityBinding.btnContainer.btBack.setVisibility(View.GONE);
+    }
+
     private void setBinding() {
-        binding = MobileNumberAvailabilityBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mobileNumberAvailabilityBinding = MobileNumberAvailabilityBinding.inflate(getLayoutInflater());
+        setContentView(mobileNumberAvailabilityBinding.getRoot());
     }
 
 
@@ -82,19 +89,21 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     /* The method below will work when mobile number is not registered with cnic. */
     private void openCnicUploadActivity() {
-        Intent intent = new Intent(this, CnicUploadActivity.class);
-
-        intent.putExtra(Config.MOBILE_NUMBER, binding.etMobileNum.getText().toString());
-        intent.putExtra(Config.PORTED_MOBILE_NETWORK, isPortedMobileNetwork);
-
-        startActivity(intent);
+        mobileNumberAvailabilityBinding.llCnicUploadFront.setVisibility(View.VISIBLE);
+        mobileNumberAvailabilityBinding.llCnicUploadBack.setVisibility(View.VISIBLE);
+//        Intent intent = new Intent(this, CnicUploadActivity.class);
+//
+//        intent.putExtra(Config.MOBILE_NUMBER, mobileNumberAvailabilityBinding.etMobileNum.getText().toString());
+//        intent.putExtra(Config.PORTED_MOBILE_NETWORK, isPortedMobileNetwork);
+//
+//        startActivity(intent);
     }
 
     /* The method below will work when mobile number is already registered with cnic. */
     private void showCnic(ViewAppsGenerateOtpResponse response) {
-        binding.llCnic.setVisibility(View.VISIBLE);
+        mobileNumberAvailabilityBinding.llCnic.setVisibility(View.VISIBLE);
 
-        binding.etCnicNumber.setText(response.getData().getIdNumber().toString());
+        mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber().toString());
         generateOtp = true;
 
     }
@@ -108,10 +117,11 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private void setListeners() {
         /* Mobile Number Availability */
-      binding.portedMobileNetworkSwitch.setOnCheckedChangeListener(this);
-
-        binding.btnContainer.btnNext.setOnClickListener(this);
-        binding.btnContainer.btnCancel.setOnClickListener(this);
+        mobileNumberAvailabilityBinding.portedMobileNetworkSwitch.setOnCheckedChangeListener(this);
+        mobileNumberAvailabilityBinding.btnContainer.btnNext.setOnClickListener(this);
+        mobileNumberAvailabilityBinding.btnContainer.btBack.setOnClickListener(this);
+        mobileNumberAvailabilityBinding.llCnicUploadFront.setOnClickListener(this);
+        mobileNumberAvailabilityBinding.llCnicUploadBack.setOnClickListener(this);
     }
 
 
@@ -129,44 +139,59 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_cancel:
                 finish();
                 break;
+            case R.id.ll_cnic_upload_front:
+                getCnicFrontImage();
+                break;
+            case R.id.ll_cnic_upload_back:
+                getCnicBackImage();
+                break;
         }
+    }
+
+    private void getCnicBackImage() {
+        mobileNumberAvailabilityBinding.imgCnicBackSmall.setVisibility(View.VISIBLE);
+        mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.VISIBLE);
+    }
+
+    private void getCnicFrontImage() {
+        mobileNumberAvailabilityBinding.imgCnicFrontSmall.setVisibility(View.VISIBLE);
+        mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
     }
 
     private void viewAppsGenerateOtpPostData() {
         viewModel.viewAppsGenerateOtpPostData(postParams);
         showLoading();
-        loader.show();
     }
 
     private void setPostParams() {
         postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        postParams.getData().setMobileNo(binding.etMobileNum.getText().toString());
+        postParams.getData().setMobileNo(mobileNumberAvailabilityBinding.etMobileNum.getText().toString());
         postParams.getData().setGenerateOtp(generateOtp);
 
         if ( generateOtp ){
-            postParams.getData().setIdNumber(binding.etCnicNumber.getText().toString());
+            postParams.getData().setIdNumber(mobileNumberAvailabilityBinding.etCnicNumber.getText().toString());
             postParams.getData().setPortedMobileNetwork(isPortedMobileNetwork);
         }
 
     }
 
     private Boolean validateMobileNumActivity() {
-        if ( isEmpty( binding.etMobileNum ) ){
+        if ( isEmpty( mobileNumberAvailabilityBinding.etMobileNum ) ){
 
             showAlert(Config.errorType,"Mobile Number Is Empty !!!");
             return false;
 
-        }else if( binding.etMobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH){
+        }else if( mobileNumberAvailabilityBinding.etMobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH){
 
             showAlert(Config.errorType,"Mobile Number Length Not Valid !!!");
             return false;
 
-        }else if( generateOtp && isEmpty(binding.etCnicNumber) ){
+        }else if( generateOtp && isEmpty(mobileNumberAvailabilityBinding.etCnicNumber) ){
 
             showAlert(Config.errorType,"CNIC Number Is Empty !!!");
             return false;
 
-        }else if ( generateOtp && binding.etCnicNumber.getText().toString().length() < Config.CNIC_LENGTH ){
+        }else if ( generateOtp && mobileNumberAvailabilityBinding.etCnicNumber.getText().toString().length() < Config.CNIC_LENGTH ){
 
             showAlert(Config.errorType,"CNIC Number Length Not Valid !!!");
             return false;
@@ -191,5 +216,11 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         } else {
             isPortedMobileNetwork = false;
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setLayout();
     }
 }

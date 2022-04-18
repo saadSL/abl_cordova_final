@@ -26,8 +26,13 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 public class AccountApplicationActivity extends BaseActivity implements AccountApplicationInterface, View.OnClickListener {
@@ -48,51 +53,55 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setLayout();
         set();
         initializeAdapter();
         observe();
+    }
+
+    private void setLayout() {
+        layoutBinding.screenHeader.stepsHeading1.setText("Resume");
+        layoutBinding.screenHeader.stepsHeading2.setText("Application");
     }
 
     private void observe() {
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
-
-                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
-
-                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Account Income ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Details Names ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Address ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
+//                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
+//
+//                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
+//
+//                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
+//
+//                    openActivity(SelectPreferredAccountActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
+//
+//                    openActivity(PersonalDetailsOneActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
+//
+//                    openActivity(PersonalDetailsTwoActivity.class,getConsumerAccountDetailsResponse);
+//
+//
+//                }else
+                    if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
 
                     openActivity(EmploymentDetailsActivity.class,getConsumerAccountDetailsResponse);
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL() ){
 
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Transaction Detail ");
+                    openActivity(SelectCardActivity.class,getConsumerAccountDetailsResponse);
+
 
                 }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER() ){
 
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Document Uploader ");
+                    openActivity(UploadDocumentActivity.class,getConsumerAccountDetailsResponse);
 
                 }else {
 
@@ -131,7 +140,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     private void openActivity(final Class<? extends Activity> activityToOpen, GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
         Intent intent = new Intent(this,activityToOpen);
-        intent.putExtra(Config.RESPONSE,getConsumerAccountDetailsResponse);
+        intent.putExtra(Config.CONSUMER_ACC_DETAILS,getConsumerAccountDetailsResponse);
         startActivity(intent);
     }
 
@@ -140,9 +149,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             setConsumerAccDetailsPostParams();
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
-                    res.getData().getAccessToken());
+                    getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
-            loader.show();
         }else{
             showAlert(Config.errorType,"No application selected !!!");
         }
@@ -169,10 +177,9 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
         viewModel = new ViewModelProvider(this).get(AccountApplicationViewModel.class);
 
-        layoutBinding.genBtn.btnNext.setOnClickListener(this);
+        layoutBinding.btnContainer.btnNext.setOnClickListener(this);
         layoutBinding.createAppFab.setOnClickListener(this);
-        layoutBinding.genBtn.btnNext.setOnClickListener(this);
-        layoutBinding.genBtn.btnCancel.setOnClickListener(this);
+        layoutBinding.btnContainer.btBack.setOnClickListener(this);
     }
 
     private void setBinding() {
@@ -216,7 +223,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     res.getData().getAppList().remove(position);
                     adapter.setList(res.getData().getAppList());
                     showLoading();
-                    loader.show();
                 }
             });
 
@@ -235,7 +241,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             res.getData().getAppList().remove(position);
             adapter.setList(res.getData().getAppList());
             showLoading();
-            loader.show();
         }
 
     }
@@ -271,14 +276,21 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             case R.id.create_app_fab:
                 openSetupAccountActivity();
                 break;
-            case R.id.btn_cancel:
+            case R.id.bt_back:
                 finish();
                 break;
         }
     }
 
     private void openSetupAccountActivity() {
+
         Intent intent = new Intent(this, SelectBankingModeActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setLayout();
     }
 }

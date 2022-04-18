@@ -72,6 +72,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         getBranchesFromNetwork(30.18817, 71.4358);
         setObservers();
         clicks();
+        loader.dismiss();
     }
 
     private void clicks() {
@@ -137,8 +138,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        consumerListItemVerifyOtp.setMobileNo("0241222092343001");
-        consumerListItemVerifyOtp.setIdNumber("2521033122227");
+        consumerListItemVerifyOtp.setMobileNo("66666666666");
+        consumerListItemVerifyOtp.setIdNumber("7359329075944");
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);

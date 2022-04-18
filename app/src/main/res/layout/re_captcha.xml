@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/_10sdp"
+    android:padding="@dimen/_10sdp"
+    android:layout_width="match_parent"
+    android:background="@drawable/transparent_secondary_bg"
+    android:layout_height="wrap_content">
+    <CheckBox
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/im_not_a_robot"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/recaptcha"
+        android:layout_marginEnd="@dimen/_10sdp"/>
+</LinearLayout>

@@ -2,13 +2,12 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employe
 
 import java.io.Serializable;
 
-public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
+public class RegisterEmploymentDetailsPostConsumerList implements Serializable {
     private int rdaCustomerProfileId;
     private int rdaCustomerAccInfoId;
     private int occupationId;
     private int professionId;
     private boolean isPrimary;
-    private String salary;
     private String fullName;
     private String fatherHusbandName;
     private String motherMaidenName;
@@ -72,14 +71,6 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
 
     public void setPrimary(boolean primary) {
         isPrimary = primary;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
     }
 
     public String getFullName() {

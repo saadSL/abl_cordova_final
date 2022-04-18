@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,9 +14,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.use
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AddressesItemResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
@@ -27,7 +26,7 @@ import com.unikrew.faceoff.Config;
 public class PersonalDetailsTwoActivity extends BaseActivity {
 
     private ActivityPersonalDetailsTwoBinding personalDetailsTwoBinding;
-    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
+    private RegisterEmploymentDetailsPostParams registerEmploymentDetailsPostParams;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private AddressesItemResponse addressesItemResponse;
 
@@ -96,7 +95,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void getIntentData() {
-        registerEmployeeDetailsPostParams = (RegisterEmployeeDetailsPostParams) getIntent().getSerializableExtra("registerEmployeeDetailsPostParams");
+        registerEmploymentDetailsPostParams = (RegisterEmploymentDetailsPostParams) getIntent().getSerializableExtra("registerEmployeeDetailsPostParams");
     }
 
     private void clicks() {
@@ -127,9 +126,9 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         personalDetailsViewModel.postPersonalDetails(getParams(),  getStringFromPref(Config.ACCESS_TOKEN));
     }
 
-    private RegisterEmployeeDetailsPostParams getParams() {
-        RegisterEmployeeDetailsPostData data = registerEmployeeDetailsPostParams.getData();
-        RegisterEmployeeDetailsPostConsumerList consumerListItem = registerEmployeeDetailsPostParams.getData().getConsumerList().get(0);
+    private RegisterEmploymentDetailsPostParams getParams() {
+        RegisterEmployeeDetailsPostData data = registerEmploymentDetailsPostParams.getData();
+        RegisterEmploymentDetailsPostConsumerList consumerListItem = registerEmploymentDetailsPostParams.getData().getConsumerList().get(0);
         if (!isEmpty(personalDetailsTwoBinding.etEmail)) {
             consumerListItem.setEmailAddress(personalDetailsTwoBinding.etEmail.getText().toString());
         }
@@ -138,13 +137,13 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         }
 
         data.consumerList.add(consumerListItem);
-        registerEmployeeDetailsPostParams.setData(data);
-        return registerEmployeeDetailsPostParams;
+        registerEmploymentDetailsPostParams.setData(data);
+        return registerEmploymentDetailsPostParams;
     }
 
     private void goToPersonalDetailsThree() {
         Intent intent = new Intent(this, PersonalDetailsThreeActivity.class);
-        intent.putExtra("registerEmployeeDetailsPostParams", registerEmployeeDetailsPostParams);
+        intent.putExtra("registerEmployeeDetailsPostParams", registerEmploymentDetailsPostParams);
         startActivity(intent);
     }
 

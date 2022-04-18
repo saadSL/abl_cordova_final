@@ -1,12 +1,12 @@
-package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction;
+package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SetupTransactionResponseData implements Serializable {
+public class SaveNatureOfAccountResponseData implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerId;
-    public Object purposeOfAccountId;
+    public int purposeOfAccountId;
     public Object purposeOfAccount;
     public Object physicalCardInd;
     public Object operatingInstId;
@@ -23,17 +23,17 @@ public class SetupTransactionResponseData implements Serializable {
     public Object antiAnnualSalary;
     public int noOfJointApplicatns;
     public Object rdaCustomerJointAccountId;
-    public Object natureOfAccountId;
+    public int natureOfAccountId;
     public Object natureOfAccount;
-    public Object accountVariantId;
+    public int accountVariantId;
     public Object accountVariant;
-    public Object currencyTypeId;
+    public int currencyTypeId;
     public Object currencyType;
     public Object accountTypeId;
     public int accountStatusId;
     public int atmTypeId;
     public Object atmType;
-    public int cunstomerTypeId;
+    public Object cunstomerTypeId;
     public int transAlertInd;
     public Object activationType;
     public Object alertActivation;
@@ -54,12 +54,12 @@ public class SetupTransactionResponseData implements Serializable {
     public Object bankingMode;
     public int transactionalAlertId;
     public Object transactionalAlert;
-    public Object customerAccountTypeId;
+    public int customerAccountTypeId;
     public Object customerAccountType;
-    public Object proofOfIncomeInd;
+    public int proofOfIncomeInd;
     public Object averageMonthlySalary;
     public Object pdaRemitterDetailList;
-    public int channelId;
+    public Object channelId;
 
     public int getRdaCustomerAccInfoId() {
         return rdaCustomerAccInfoId;
@@ -77,11 +77,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.rdaCustomerId = rdaCustomerId;
     }
 
-    public Object getPurposeOfAccountId() {
+    public int getPurposeOfAccountId() {
         return purposeOfAccountId;
     }
 
-    public void setPurposeOfAccountId(Object purposeOfAccountId) {
+    public void setPurposeOfAccountId(int purposeOfAccountId) {
         this.purposeOfAccountId = purposeOfAccountId;
     }
 
@@ -213,11 +213,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.rdaCustomerJointAccountId = rdaCustomerJointAccountId;
     }
 
-    public Object getNatureOfAccountId() {
+    public int getNatureOfAccountId() {
         return natureOfAccountId;
     }
 
-    public void setNatureOfAccountId(Object natureOfAccountId) {
+    public void setNatureOfAccountId(int natureOfAccountId) {
         this.natureOfAccountId = natureOfAccountId;
     }
 
@@ -229,11 +229,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.natureOfAccount = natureOfAccount;
     }
 
-    public Object getAccountVariantId() {
+    public int getAccountVariantId() {
         return accountVariantId;
     }
 
-    public void setAccountVariantId(Object accountVariantId) {
+    public void setAccountVariantId(int accountVariantId) {
         this.accountVariantId = accountVariantId;
     }
 
@@ -245,11 +245,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.accountVariant = accountVariant;
     }
 
-    public Object getCurrencyTypeId() {
+    public int getCurrencyTypeId() {
         return currencyTypeId;
     }
 
-    public void setCurrencyTypeId(Object currencyTypeId) {
+    public void setCurrencyTypeId(int currencyTypeId) {
         this.currencyTypeId = currencyTypeId;
     }
 
@@ -293,11 +293,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.atmType = atmType;
     }
 
-    public int getCunstomerTypeId() {
+    public Object getCunstomerTypeId() {
         return cunstomerTypeId;
     }
 
-    public void setCunstomerTypeId(int cunstomerTypeId) {
+    public void setCunstomerTypeId(Object cunstomerTypeId) {
         this.cunstomerTypeId = cunstomerTypeId;
     }
 
@@ -461,11 +461,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.transactionalAlert = transactionalAlert;
     }
 
-    public Object getCustomerAccountTypeId() {
+    public int getCustomerAccountTypeId() {
         return customerAccountTypeId;
     }
 
-    public void setCustomerAccountTypeId(Object customerAccountTypeId) {
+    public void setCustomerAccountTypeId(int customerAccountTypeId) {
         this.customerAccountTypeId = customerAccountTypeId;
     }
 
@@ -477,11 +477,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.customerAccountType = customerAccountType;
     }
 
-    public Object getProofOfIncomeInd() {
+    public int getProofOfIncomeInd() {
         return proofOfIncomeInd;
     }
 
-    public void setProofOfIncomeInd(Object proofOfIncomeInd) {
+    public void setProofOfIncomeInd(int proofOfIncomeInd) {
         this.proofOfIncomeInd = proofOfIncomeInd;
     }
 
@@ -501,11 +501,11 @@ public class SetupTransactionResponseData implements Serializable {
         this.pdaRemitterDetailList = pdaRemitterDetailList;
     }
 
-    public int getChannelId() {
+    public Object getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(int channelId) {
+    public void setChannelId(Object channelId) {
         this.channelId = channelId;
     }
 }
