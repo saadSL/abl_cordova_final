@@ -4,7 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/gen_toolbar"/>
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <include
+        android:id="@+id/screen_header"
+        layout="@layout/screen_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,16 +19,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:fontFamily="@font/lato_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resume Application"
-                android:layout_margin="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
 
             <TextView
                 android:fontFamily="@font/lato_bold"
@@ -37,7 +33,8 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"/>
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/rounded_corner_white"/>
 
             <LinearLayout
                 android:layout_gravity="right"
@@ -61,12 +58,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    android:background="@color/primary"/>
+                    android:background="@color/yellow"/>
             </LinearLayout>
 
             <include
-                android:id="@+id/gen_btn"
-                layout="@layout/gen_buttons"/>
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include
+                android:id="@+id/abl_chat"
+                layout="@layout/layout_abl_chat_container"/>
+
 </LinearLayout>
 </ScrollView>
 </LinearLayout>

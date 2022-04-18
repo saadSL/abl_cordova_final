@@ -8,7 +8,6 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
     private Integer occupationId = null;
     private Integer professionId = null;
     private boolean isPrimary;
-    private String salary;
     private String fullName;
     private String fatherHusbandName;
     private String motherMaidenName;
@@ -72,14 +71,6 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
 
     public void setPrimary(boolean primary) {
         isPrimary = primary;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
     }
 
     public String getFullName() {

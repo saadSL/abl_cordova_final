@@ -147,7 +147,6 @@ public class CnicUploadActivity extends BaseActivity implements View.OnClickList
             setPostParams();
             viewModel.viewAppsGenerateOtpPostData(postParams);
             showLoading();
-            loader.show();
         }
     }
 

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/logo_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/steps">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll_live_pic"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/transparent_secondary_bg"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tv_live_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/take_live_picture"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"/>
+
+            <TextView
+                android:id="@+id/tv_live_pic_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/live_pic_click_here"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/custom_blue"
+                android:textSize="@dimen/_10sdp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/img_live_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/scan_again_live_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scan_again"
+                android:textColor="@color/custom_blue"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_live_sig"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/transparent_secondary_bg"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tv_live_sig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/take_live_sig_pic"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"/>
+
+            <TextView
+                android:id="@+id/tv_live_sig_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/live_pic_click_here"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/custom_blue"
+                android:textSize="@dimen/_10sdp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/img_live_sig"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:src="@drawable/debit_card_gold"/>
+
+            <TextView
+                android:id="@+id/scan_again_live_sig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scan_again"
+                android:textColor="@color/custom_blue"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_pic_on_white_paper"
+            android:textColor="#000000"
+            android:fontFamily="@font/worksans_regular"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/rounded_corner_white">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_nature_of_account"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="#1D1C1D"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bi_info"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/rb_single"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/single"
+                    android:theme="@style/SCBSwitch"/>
+
+                <RadioButton
+                    android:id="@+id/rb_joint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/joint"
+                    android:theme="@style/SCBSwitch"/>
+
+                <RadioButton
+                    android:id="@+id/rb_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minor"
+                    android:theme="@style/SCBSwitch"/>
+        </RadioGroup>
+
+        </LinearLayout>
+        <include
+            android:id="@+id/btn_container"
+            layout="@layout/layout_button_container"/>
+
+        <include
+            android:id="@+id/abl_chat"
+            layout="@layout/layout_abl_chat_container" />
+    </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

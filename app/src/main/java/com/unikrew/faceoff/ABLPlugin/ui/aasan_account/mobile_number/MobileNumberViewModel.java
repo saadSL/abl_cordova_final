@@ -15,36 +15,6 @@ import retrofit2.Response;
 
 public class MobileNumberViewModel extends BaseViewModel {
 
-//    MutableLiveData<MobileNetworkResponse> mobileNetworkResponse = new MutableLiveData<MobileNetworkResponse>();
-//    MutableLiveData<String> mobileNetworkErrorLiveData = new MutableLiveData<String>();
-//
-//    public void postDataForMobileNetwork(MobileNetworkPostParams postParams,Activity activity){
-//        try{
-//            Call<MobileNetworkResponse> callableRes = AblApplication.apiInterface.getMobileNetworks(postParams);
-//            callableRes.enqueue(new Callback<MobileNetworkResponse>() {
-//                @Override
-//                public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
-//                    if (response.code() == 200){
-//                        mobileNetworkResponse.postValue(response.body());
-//                    }else {
-//                        mobileNetworkErrorLiveData.postValue("Mobile Network Error \n"+getErrorDetail(response));
-//                    }
-//                    loader.dismiss();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<MobileNetworkResponse> call, Throwable t) {
-//                    mobileNetworkErrorLiveData.postValue(t.getMessage());
-//                    loader.dismiss();
-//                }
-//            });
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        showLoading(activity);
-//        loader.show();
-//    }
-
     public MutableLiveData<ViewAppsGenerateOtpResponse> responseLiveData = new MutableLiveData<ViewAppsGenerateOtpResponse>();
     public MutableLiveData<String> errorLiveData = new MutableLiveData<String>();
 

@@ -18,15 +18,14 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.EmploymentDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponseData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostConsumerList;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
@@ -47,12 +46,14 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     private OccupationResponseData selectedOccupation;
     private ProfessionResponseData selectedProfession;
 
-    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
-    private RegisterEmployeeDetailsPostConsumerList registerEmployeeDetailsPostConsumerList;
-    private GetConsumerAccountDetailsResponse res;
-    private ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList;
+    private RegisterEmploymentDetailsPostParams registerEmploymentDetailsPostParams;
+    private RegisterEmploymentDetailsPostConsumerList registerEmploymentDetailsPostConsumerList;
+    private GetConsumerAccountDetailsResponse consumerAccountDetailsResponse;
+    private ArrayList<RegisterEmploymentDetailsPostConsumerList> consumerList;
 
     private SaveKycPostParams saveKycPostParams;
+
+    private RegisterEmploymentDetailsResponse nextScreenResponse;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         employmentDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(this, new Observer<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onChanged(RegisterEmploymentDetailsResponse registerEmploymentDetailsResponse) {
+                nextScreenResponse = registerEmploymentDetailsResponse;
                 saveKyc();
                 loader.dismiss();
             }
@@ -119,7 +121,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         employmentDetailsViewModel.saveKycResponseMutableLiveData.observe(this, new Observer<SaveKycResponse>() {
             @Override
             public void onChanged(SaveKycResponse saveKycResponse) {
-                openTransactionSelectionActivity();
+                openCardSelectionActivity();
                 loader.dismiss();
             }
         });
@@ -135,22 +137,21 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     private void saveKyc() {
         setKycPostParams();
-//        employmentDetailsViewModel.saveKyc(saveKycPostParams,res.getData().getAccessToken());
+        employmentDetailsViewModel.saveKyc(saveKycPostParams,getStringFromPref(Config.ACCESS_TOKEN));
         showLoading();
-        loader.show();
     }
 
     private void setKycPostParams() {
         SaveKycPostData saveKycPostData = new SaveKycPostData();
-//        saveKycPostData.setRdaCustomerAccInfoId(res.getData().getConsumerList().get(0).);
-//        saveKycPostData.setRdaCustomerProfileId(res.getData());
+        saveKycPostData.setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        saveKycPostData.setRdaCustomerProfileId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
         saveKycPostData.setAverageMonthlySalary(Integer.parseInt(employmentDetailsBinding.etSalary.getText().toString()));
         saveKycPostParams.getData().add(saveKycPostData);
     }
 
-    private void openTransactionSelectionActivity() {
+    private void openCardSelectionActivity() {
         Intent intent = new Intent(this, SelectCardActivity.class);
-        intent.putExtra(Config.RESPONSE,res);
+        intent.putExtra(Config.RESPONSE,nextScreenResponse);
         startActivity(intent);
     }
 
@@ -247,10 +248,10 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         employmentDetailsViewModel = new ViewModelProvider(this).get(EmploymentDetailsViewModel.class);
         occupationPostParams = new OccupationPostParams();
         professionPostParams = new ProfessionPostParams();
-        registerEmployeeDetailsPostParams = new RegisterEmployeeDetailsPostParams();
-        registerEmployeeDetailsPostConsumerList = new RegisterEmployeeDetailsPostConsumerList();
+        registerEmploymentDetailsPostParams = new RegisterEmploymentDetailsPostParams();
+        registerEmploymentDetailsPostConsumerList = new RegisterEmploymentDetailsPostConsumerList();
         consumerList = new ArrayList<>();
-        res = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        consumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.CONSUMER_ACC_DETAILS);
         saveKycPostParams = new SaveKycPostParams();
     }
 
@@ -258,7 +259,6 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         setProfessionPostParams();
         employmentDetailsViewModel.postProfessionData(professionPostParams);
         showLoading();
-        loader.show();
     }
 
     private void setProfessionPostParams() {
@@ -273,12 +273,13 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         setOccupationPostParams();
         employmentDetailsViewModel.postOccupationData(occupationPostParams);
         showLoading();
-        loader.show();
     }
 
     private void setLayout() {
-        employmentDetailsBinding.steps.stepsHeading1.setText("Your");
-        employmentDetailsBinding.steps.stepsHeading2.setText("Details");
+        employmentDetailsBinding.steps.screenHeader.stepsHeading1.setText("Your");
+        employmentDetailsBinding.steps.screenHeader.stepsHeading2.setText("Details");
+        employmentDetailsBinding.steps.step1.setBackground(this.getDrawable(R.color.custom_blue));
+        employmentDetailsBinding.steps.step2.setBackground(this.getDrawable(R.color.custom_blue));
     }
 
     private void setBinding() {
@@ -332,24 +333,28 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         }else{
             setConsumerList();
             setRegisterEmployeeDetailsPostParams();
-//            employmentDetailsViewModel.registerEmpDetails(registerEmployeeDetailsPostParams,res.getData().getAccessToken());
+            employmentDetailsViewModel.registerEmpDetails(registerEmploymentDetailsPostParams,getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
-            loader.show();
         }
     }
 
     private void setRegisterEmployeeDetailsPostParams() {
-        registerEmployeeDetailsPostParams.getData().setConsumerList(consumerList);
+        registerEmploymentDetailsPostParams.getData().setConsumerList(consumerList);
     }
 
     private void setConsumerList() {
-//        registerEmployeeDetailsPostConsumerList.setRdaCustomerProfileId(res.getData().getAppList().get(0).getRdaCustomerProfileId());
-//        registerEmployeeDetailsPostConsumerList.setRdaCustomerAccInfoId(res.getData().getAppList().get(0).getRdaCustomerAccInfoId());
-        registerEmployeeDetailsPostConsumerList.setOccupationId(selectedOccupation.getId());
-        registerEmployeeDetailsPostConsumerList.setProfessionId(selectedProfession.getId());
-        registerEmployeeDetailsPostConsumerList.setPrimary(true);
-        registerEmployeeDetailsPostConsumerList.setSalary(employmentDetailsBinding.etSalary.getText().toString());
+        registerEmploymentDetailsPostConsumerList.setRdaCustomerProfileId( Integer.parseInt( getStringFromPref( Config.PROFILE_ID ) ) );
+        registerEmploymentDetailsPostConsumerList.setRdaCustomerAccInfoId( Integer.parseInt( getStringFromPref( Config.ACCOUNT_INFO_ID ) ));
+        registerEmploymentDetailsPostConsumerList.setOccupationId(selectedOccupation.getId());
+        registerEmploymentDetailsPostConsumerList.setProfessionId(selectedProfession.getId());
+        registerEmploymentDetailsPostConsumerList.setPrimary(consumerAccountDetailsResponse.getData().getConsumerList().get(0).isPrimary());
 
-        consumerList.add(registerEmployeeDetailsPostConsumerList);
+        consumerList.add(registerEmploymentDetailsPostConsumerList);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setLayout();
     }
 }

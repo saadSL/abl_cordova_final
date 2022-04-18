@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
+import com.ofss.digx.mobile.android.allied.databinding.ApplicationListItemBinding;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListLayoutBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationPostParams;
@@ -29,6 +30,9 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalD
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 public class AccountApplicationActivity extends BaseActivity implements AccountApplicationInterface, View.OnClickListener {
@@ -36,6 +40,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     AccountApplicationAdapter adapter;
 
     private ApplicationListLayoutBinding layoutBinding;
+    ApplicationListItemBinding itemBinding;
     private GetConsumerAccountDetailsPostParams consumerAccDetailsPostParams;
     private DeleteDraftedApplicationPostParams deleteDraftedAppPostParams;
     private AccountApplicationViewModel viewModel;
@@ -48,9 +53,15 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setLayout();
         set();
         initializeAdapter();
         observe();
+    }
+
+    private void setLayout() {
+        layoutBinding.screenHeader.stepsHeading1.setText("Resume");
+        layoutBinding.screenHeader.stepsHeading2.setText("Application");
     }
 
     private void observe() {
@@ -119,19 +130,21 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     private void openActivity(final Class<? extends Activity> activityToOpen, GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
         Intent intent = new Intent(this, activityToOpen);
         intent.putExtra(Config.RESPONSE, getConsumerAccountDetailsResponse);
+        intent.putExtra(Config.CONSUMER_ACC_DETAILS,getConsumerAccountDetailsResponse);
         startActivity(intent);
     }
 
     private void getConsumerAccountDetails() {
         if (selectedAppList != null) {
             setConsumerAccDetailsPostParams();
+            saveStringInPref(Config.PROFILE_ID, String.valueOf(selectedAppList.getRdaCustomerProfileId()));
+            saveStringInPref(Config.ACCOUNT_INFO_ID, String.valueOf(selectedAppList.getRdaCustomerAccInfoId()));
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
-                    res.getData().getAccessToken());
+                    getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
-            loader.show();
-        } else {
-            showAlert(Config.errorType, "No application selected !!!");
+        }else{
+            showAlert(Config.errorType,"No application selected !!!");
         }
 
 
@@ -156,10 +169,9 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
         viewModel = new ViewModelProvider(this).get(AccountApplicationViewModel.class);
 
-        layoutBinding.genBtn.btnNext.setOnClickListener(this);
+        layoutBinding.btnContainer.btnNext.setOnClickListener(this);
         layoutBinding.createAppFab.setOnClickListener(this);
-        layoutBinding.genBtn.btnNext.setOnClickListener(this);
-        layoutBinding.genBtn.btnCancel.setOnClickListener(this);
+        layoutBinding.btnContainer.btBack.setOnClickListener(this);
     }
 
     private void setBinding() {
@@ -203,7 +215,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     res.getData().getAppList().remove(position);
                     adapter.setList(res.getData().getAppList());
                     showLoading();
-                    loader.show();
                 }
             });
 
@@ -222,7 +233,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             res.getData().getAppList().remove(position);
             adapter.setList(res.getData().getAppList());
             showLoading();
-            loader.show();
         }
 
     }
@@ -258,14 +268,21 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             case R.id.create_app_fab:
                 openSetupAccountActivity();
                 break;
-            case R.id.btn_cancel:
+            case R.id.bt_back:
                 finish();
                 break;
         }
     }
 
     private void openSetupAccountActivity() {
+
         Intent intent = new Intent(this, SelectBankingModeActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setLayout();
     }
 }

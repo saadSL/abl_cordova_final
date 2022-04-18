@@ -20,8 +20,8 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
     public Object nationalities;
     public Object otpCounter;
     public Object isPrimary;
-    public Object customerTypeId;
-    public Object mobileNo;
+    public int customerTypeId;
+    public String mobileNo;
     public Object dateOfBirth;
     public Object mobileNetworkId;
     public Object portedMobileNetwork;
@@ -165,19 +165,19 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.isPrimary = isPrimary;
     }
 
-    public Object getCustomerTypeId() {
+    public int getCustomerTypeId() {
         return customerTypeId;
     }
 
-    public void setCustomerTypeId(Object customerTypeId) {
+    public void setCustomerTypeId(int customerTypeId) {
         this.customerTypeId = customerTypeId;
     }
 
-    public Object getMobileNo() {
+    public String getMobileNo() {
         return mobileNo;
     }
 
-    public void setMobileNo(Object mobileNo) {
+    public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
 

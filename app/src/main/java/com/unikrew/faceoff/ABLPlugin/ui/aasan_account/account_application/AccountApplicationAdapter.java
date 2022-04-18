@@ -51,7 +51,7 @@ public class AccountApplicationAdapter extends RecyclerView.Adapter<AccountAppli
         if (this.appList.get(position).getAccountType() != null){
             holder.tvAccountType.setText(this.appList.get(position).getAccountType().toString());
         }else{
-            holder.tvAccountType.setText(""+this.appList.get(position).getRdaCustomerAccInfoId());
+            holder.tvAccountType.setText("---");
         }
 
         if (this.appList.get(position).getCurrencyType() != null){

@@ -3,9 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <include
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
+    <include
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/logo_toolbar"
+        android:id="@+id/screen_header"
+        layout="@layout/screen_header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
     <ScrollView
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/screen_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,26 +39,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include layout="@layout/gen_toolbar" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="Change Number"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_mobile_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     android:text="@string/mobile_number_text"
+                    android:fontFamily="@font/worksans_semibold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <EditText
                     android:id="@+id/et_mobile_num"
@@ -55,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:fontFamily="@font/worksans_regular"
                     android:text="@string/mobile_num_inst"
                     android:textSize="@dimen/_10sdp" />
 
@@ -71,6 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_10sdp"
                         android:layout_weight=".5"
+                        android:fontFamily="@font/worksans_regular"
                         android:text="@string/mobile_number_question"
                         android:textStyle="bold" />
 
@@ -85,10 +95,21 @@
 
                 <include
                     android:id="@+id/btn_container"
-                    layout="@layout/gen_buttons" />
+                    layout="@layout/layout_button_container"
+                    android:layout_marginTop="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
             </LinearLayout>
+            <include
+                android:layout_margin="@dimen/_10sdp"
+                android:id="@+id/abl_chat"
+                layout="@layout/layout_abl_chat_container"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
     </ScrollView>
+
 
 </LinearLayout>
