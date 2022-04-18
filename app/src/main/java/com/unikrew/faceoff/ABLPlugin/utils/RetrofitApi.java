@@ -85,7 +85,7 @@ public interface RetrofitApi {
     Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-address")
-    Call<UserAddressResponseModel> postUserAddress(PostUserAddressModel postUserAddressModel, @Header("Authorization") String accessToken);
+    Call<UserAddressResponseModel> postUserAddress(@Body PostUserAddressModel postUserAddressModel, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<OccupationResponse> getOccupation(@Body OccupationPostParams postParams);

@@ -24,8 +24,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.Config;
+
+import java.io.Serializable;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -49,9 +52,24 @@ public class BaseActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    protected String getStringFromPref(String key){
+
+    protected void saveSerializableInPref(String key, Serializable value){
+        Gson gson = new Gson();
+        String json = gson.toJson(value);
+        editor.putString(key, json);
+        editor.apply();
+    }
+
+    protected Serializable getSerializableFromPref(String key,Serializable className){
         SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
-        return prefs.getString(key,"");
+        Gson gson = new Gson();
+        String json = prefs.getString(key, "");
+        return gson.fromJson(json, className.getClass());
+    }
+
+    protected String getStringFromPref(String key) {
+        SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
+        return prefs.getString(key, "");
     }
 
     private void setLoader() {

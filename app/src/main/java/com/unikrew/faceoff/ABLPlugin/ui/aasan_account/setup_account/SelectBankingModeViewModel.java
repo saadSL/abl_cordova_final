@@ -25,9 +25,13 @@ public class SelectBankingModeViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<BranchesModel>() {
             @Override
             public void onResponse(Call<BranchesModel> call, Response<BranchesModel> response) {
-                if (response.code() == 200) {
-                    branchesLiveData.postValue(response.body());
-                } else {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        branchesLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }

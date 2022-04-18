@@ -3,10 +3,10 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employe
 import java.io.Serializable;
 
 public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
-    private int rdaCustomerProfileId;
-    private int rdaCustomerAccInfoId;
-    private int occupationId;
-    private int professionId;
+    private Integer rdaCustomerProfileId = null;
+    private Integer rdaCustomerAccInfoId = null;
+    private Integer occupationId = null;
+    private Integer professionId = null;
     private boolean isPrimary;
     private String salary;
     private String fullName;

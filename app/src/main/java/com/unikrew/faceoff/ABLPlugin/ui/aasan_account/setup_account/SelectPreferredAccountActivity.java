@@ -23,7 +23,6 @@ public class SelectPreferredAccountActivity extends BaseActivity {
 
     private ActivitySelectPreferredAccountBinding preferredAccountBinding;
     private AccountTypeResponse accountTypeResponse;
-    private String accessToken;
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
     private Integer ACCOUNT_VARIANT_ID;
 
@@ -58,6 +57,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
 
     private void goToPersonalDetails() {
         Intent intent = new Intent(this, PersonalDetailsOneActivity.class);
+        intent.putExtra(Config.IS_RESUMED,false);
         startActivity(intent);
     }
 
@@ -67,7 +67,6 @@ public class SelectPreferredAccountActivity extends BaseActivity {
 
     private void getDataFromIntent() {
         accountTypeResponse = (AccountTypeResponse) getIntent().getSerializableExtra("accountTypeResponse");
-        accessToken = (String) getIntent().getStringExtra("accessToken");
     }
 
     private void clicks() {

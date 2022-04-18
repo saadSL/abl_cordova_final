@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
-import com.ofss.digx.mobile.android.allied.databinding.ApplicationListItemBinding;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListLayoutBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationPostParams;
@@ -26,6 +25,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.Config;
@@ -35,7 +36,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     AccountApplicationAdapter adapter;
 
     private ApplicationListLayoutBinding layoutBinding;
-    ApplicationListItemBinding itemBinding;
     private GetConsumerAccountDetailsPostParams consumerAccDetailsPostParams;
     private DeleteDraftedApplicationPostParams deleteDraftedAppPostParams;
     private AccountApplicationViewModel viewModel;
@@ -57,48 +57,35 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
+                saveSerializableInPref("getConsumerAccountDetailsResponse",getConsumerAccountDetailsResponse);
 
-                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
-
-                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
+                if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
+                    openActivity(SelectBankingModeActivity.class, getConsumerAccountDetailsResponse);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
+                    Intent intent = new Intent(AccountApplicationActivity.this, SelectAccountTypeActivity.class);
+                    intent.putExtra(Config.IS_RESUMED, true);
+                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
+                    startActivity(intent);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
                     showAlert(Config.successType, "Opening Account Income ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Details Names ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
-                    showAlert(Config.successType, "Opening Personal Address ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
-
-                    openActivity(EmploymentDetailsActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
+                    Intent intent = new Intent(AccountApplicationActivity.this, PersonalDetailsOneActivity.class);
+                    intent.putExtra(Config.IS_RESUMED, true);
+                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
+                    startActivity(intent);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
+                    Intent intent = new Intent(AccountApplicationActivity.this, PersonalDetailsTwoActivity.class);
+                    intent.putExtra(Config.IS_RESUMED, true);
+                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
+                    startActivity(intent);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
+                    openActivity(EmploymentDetailsActivity.class, getConsumerAccountDetailsResponse);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL()) {
                     showAlert(Config.successType, "Opening Transaction Detail ");
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER() ){
-
-//                    openActivity(SelectBankingModeActivity.class);
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER()) {
                     showAlert(Config.successType, "Opening Document Uploader ");
-
-                }else {
-
-//                    openActivity(SelectBankingModeActivity.class);
+                } else {
                     showAlert(Config.successType, "Opening Summary Details ");
-
                 }
 
                 loader.dismiss();
@@ -107,7 +94,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 loader.dismiss();
             }
         });
@@ -115,7 +102,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.deleteDraftedAppSuccessLiveData.observe(this, new Observer<DeleteDraftedApplicationResponse>() {
             @Override
             public void onChanged(DeleteDraftedApplicationResponse deleteDraftedApplicationResponse) {
-                showAlert(Config.successType,deleteDraftedApplicationResponse.getMessage().getDescription());
+                showAlert(Config.successType, deleteDraftedApplicationResponse.getMessage().getDescription());
                 loader.dismiss();
             }
         });
@@ -123,28 +110,28 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.deleteDraftedAppErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 loader.dismiss();
             }
         });
     }
 
     private void openActivity(final Class<? extends Activity> activityToOpen, GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-        Intent intent = new Intent(this,activityToOpen);
-        intent.putExtra(Config.RESPONSE,getConsumerAccountDetailsResponse);
+        Intent intent = new Intent(this, activityToOpen);
+        intent.putExtra(Config.RESPONSE, getConsumerAccountDetailsResponse);
         startActivity(intent);
     }
 
     private void getConsumerAccountDetails() {
-        if (selectedAppList != null){
+        if (selectedAppList != null) {
             setConsumerAccDetailsPostParams();
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
                     res.getData().getAccessToken());
             showLoading();
             loader.show();
-        }else{
-            showAlert(Config.errorType,"No application selected !!!");
+        } else {
+            showAlert(Config.errorType, "No application selected !!!");
         }
 
 
@@ -182,16 +169,16 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     private void initializeAdapter() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        adapter = new AccountApplicationAdapter(res.getData().getAppList(),this,this);
+        adapter = new AccountApplicationAdapter(res.getData().getAppList(), this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void deleteAppListAt(GetDraftedAppsVerifyOtpResponseAppList getDraftedAppsVerifyOtpResponseAppList,int position) {
+    public void deleteAppListAt(GetDraftedAppsVerifyOtpResponseAppList getDraftedAppsVerifyOtpResponseAppList, int position) {
 
-        if ( !deletePrompt ){
-            View checkBoxView = View.inflate(this,R.layout.delete_dialogue,null);
+        if (!deletePrompt) {
+            View checkBoxView = View.inflate(this, R.layout.delete_dialogue, null);
             CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.del_cb);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -212,7 +199,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     setDeletePostParams(getDraftedAppsVerifyOtpResponseAppList);
                     viewModel.deleteDraftedApplication(
                             deleteDraftedAppPostParams,
-                            res.getData().getAccessToken() );
+                            res.getData().getAccessToken());
                     res.getData().getAppList().remove(position);
                     adapter.setList(res.getData().getAppList());
                     showLoading();
@@ -226,12 +213,12 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     dialogInterface.cancel();
                 }
             });
-           deleteDialogue.show();
-        }else{
+            deleteDialogue.show();
+        } else {
             setDeletePostParams(getDraftedAppsVerifyOtpResponseAppList);
             viewModel.deleteDraftedApplication(
                     deleteDraftedAppPostParams,
-                    res.getData().getAccessToken() );
+                    res.getData().getAccessToken());
             res.getData().getAppList().remove(position);
             adapter.setList(res.getData().getAppList());
             showLoading();
@@ -242,8 +229,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     @Override
     public void setSelectionAt(int position) {
-        if ( res.getData().getAppList().size() >= 0){
-            for (int i = 0 ; i < res.getData().getAppList().size(); i++ ){
+        if (res.getData().getAppList().size() >= 0) {
+            for (int i = 0; i < res.getData().getAppList().size(); i++) {
                 res.getData().getAppList().get(i).setSelected(false);
             }
             res.getData().getAppList().get(position).setSelected(true);
@@ -264,7 +251,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
                 getConsumerAccountDetails();
                 break;

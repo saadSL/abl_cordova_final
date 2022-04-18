@@ -25,9 +25,13 @@ public class SelectAccountTypeViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<MobileNetworkResponse>() {
             @Override
             public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
-                if (response.code() == 200) {
-                    purposeOfAccountLiveData.postValue(response.body());
-                } else {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        purposeOfAccountLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
@@ -45,9 +49,13 @@ public class SelectAccountTypeViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<AccountTypeResponse>() {
             @Override
             public void onResponse(Call<AccountTypeResponse> call, Response<AccountTypeResponse> response) {
-                if (response.code() == 200) {
-                    accountTypeResponseLiveData.postValue(response.body());
-                } else {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        accountTypeResponseLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }

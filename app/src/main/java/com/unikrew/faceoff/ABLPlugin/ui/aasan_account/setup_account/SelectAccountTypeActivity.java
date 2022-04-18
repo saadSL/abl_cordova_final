@@ -9,18 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectAccountTypeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 
@@ -33,8 +33,10 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
     private int CUSTOMER_ACCOUNT_TYPE_ID = 0;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
     private String selectedPurposeOfAccount = "";
     private ArrayList<MobileNetworkResponseData> purposeArray;
+    private Boolean IS_RESUMED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,17 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void getDataFromIntent() {
-        registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getIntent().getSerializableExtra("registerVerifyOtpResponse");
+
+        IS_RESUMED = getIntent().getBooleanExtra(Config.IS_RESUMED, false);
+        //flow for drafted application
+        if (IS_RESUMED) {
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra("getConsumerAccountDetailsResponse");
+        }
+        //flow for new application
+        else {
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getIntent().getSerializableExtra("registerVerifyOtpResponse");
+        }
+
     }
 
     private void clicks() {
@@ -68,7 +80,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         accountTypeBinding.layoutBtn.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postRegisterConsumerAccountInfo();
+                checkValidations();
             }
         });
         accountTypeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +91,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         });
     }
 
-    private void postRegisterConsumerAccountInfo() {
+    private void checkValidations() {
         if (CUSTOMER_ACCOUNT_TYPE_ID == 0) {
             showAlert(Config.errorType, getString(R.string.select_account_type_error_msg));
         } else if (selectedPurposeOfAccount.equals("")) {
@@ -95,14 +107,23 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private AccountTypePostParams getAccountTypeParams() {
-        AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-
         AccountTypePostParams accountTypePostParams = new AccountTypePostParams();
-        accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-        accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
-        accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
+        if (IS_RESUMED) {
+            //flow for drafted application
+            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
+            accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
+            accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
+        } else {
+            //flow for new application
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
+            accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
+            accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
+        }
         accountTypePostParams.getData().setCustomerAccountTypeId(CUSTOMER_ACCOUNT_TYPE_ID);
-        accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
         accountTypePostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         accountTypePostParams.getData().setPurposeOfAccountId(purposeArray.get(accountTypeBinding.spinnerAllPurposes.getSelectedItemPosition()).getId());
 
@@ -149,9 +170,8 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void moveToPreferredAccount(AccountTypeResponse accountTypeResponse) {
-        Intent intent = new Intent(SelectAccountTypeActivity.this,SelectPreferredAccountActivity.class);
-        intent.putExtra("accountTypeResponse",accountTypeResponse);
-        intent.putExtra("accessToken",registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccessToken());
+        Intent intent = new Intent(SelectAccountTypeActivity.this, SelectPreferredAccountActivity.class);
+        intent.putExtra("accountTypeResponse", accountTypeResponse);
         startActivity(intent);
     }
 

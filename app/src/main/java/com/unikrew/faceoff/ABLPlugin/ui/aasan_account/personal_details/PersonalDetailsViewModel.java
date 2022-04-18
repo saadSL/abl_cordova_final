@@ -8,6 +8,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.use
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 
@@ -21,8 +23,10 @@ public class PersonalDetailsViewModel extends BaseViewModel {
     public MutableLiveData<MobileNetworkResponse> occupationLiveData = new MutableLiveData<>();
     public MutableLiveData<MobileNetworkResponse> professionLiveData = new MutableLiveData<>();
 
-   public MutableLiveData<RegisterEmploymentDetailsResponse> registerEmploymentDetailsResponseMutableLiveData = new MutableLiveData<RegisterEmploymentDetailsResponse>();
-   public MutableLiveData<UserAddressResponseModel> userAddressMutableLiveData = new MutableLiveData<UserAddressResponseModel>();
+    public MutableLiveData<RegisterEmploymentDetailsResponse> registerEmploymentDetailsResponseMutableLiveData = new MutableLiveData<RegisterEmploymentDetailsResponse>();
+    public MutableLiveData<UserAddressResponseModel> userAddressMutableLiveData = new MutableLiveData<UserAddressResponseModel>();
+
+    public MutableLiveData<SaveKycResponse> saveKycResponseMutableLiveData = new MutableLiveData<SaveKycResponse>();
 
     public void getOccupation(MobileNetworkPostParams mobileNetworkPostParams) {
 
@@ -30,9 +34,13 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<MobileNetworkResponse>() {
             @Override
             public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
-                if (response.code() == 200) {
-                    occupationLiveData.postValue(response.body());
-                } else {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        occupationLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
@@ -51,9 +59,13 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<MobileNetworkResponse>() {
             @Override
             public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
-                if (response.code() == 200) {
-                    professionLiveData.postValue(response.body());
-                } else {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        professionLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
@@ -67,12 +79,12 @@ public class PersonalDetailsViewModel extends BaseViewModel {
     }
 
 
-    public void postPersonalDetails(RegisterEmployeeDetailsPostParams postParams, String accessToken){
-        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams,"Bearer "+accessToken);
+    public void postPersonalDetails(RegisterEmployeeDetailsPostParams postParams, String accessToken) {
+        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {
-                if (response.code()==200){
+                if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         registerEmploymentDetailsResponseMutableLiveData.postValue(response.body());
                     }else{
@@ -95,19 +107,43 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<UserAddressResponseModel>() {
             @Override
             public void onResponse(Call<UserAddressResponseModel> call, Response<UserAddressResponseModel> response) {
-                if (response.code() == 200) {
-                    if (response.body().getMessage().getStatus().equals("200")) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
                         userAddressMutableLiveData.postValue(response.body());
-                    } else {
+                    }else{
                         errorLiveData.postValue(getErrorDetail(response));
                     }
-                } else {
+                }else{
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
 
             @Override
             public void onFailure(Call<UserAddressResponseModel> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+
+    public void saveKyc(SaveKycPostParams saveKycPostParams, String accessToken) {
+        Call<SaveKycResponse> callableRes = AblApplication.apiInterface.saveMonthlySalary(saveKycPostParams, "Bearer " + accessToken);
+        callableRes.enqueue(new Callback<SaveKycResponse>() {
+            @Override
+            public void onResponse(Call<SaveKycResponse> call, Response<SaveKycResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        saveKycResponseMutableLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SaveKycResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
             }
         });

@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,6 +10,7 @@ import android.view.View;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsTwoBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressDataItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
@@ -30,6 +30,8 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private AddressesItemResponse addressesItemResponse;
+    private Boolean IS_RESUMED;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +80,16 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         PostUserAddressDataItem userAddressDataItem = new PostUserAddressDataItem();
         PostUserAddressListItem addressListItem = new PostUserAddressListItem();
         addressListItem.setAddressTypeId(Config.ADDRESS_TYPE_ID);
-        addressListItem.setRdaCustomerId(addressesItemResponse.getRdaCustomerId());
+        if (IS_RESUMED) {
+            addressListItem.setRdaCustomerId(getConsumerAccountDetailsResponse.getData().consumerList.get(0).getRdaCustomerProfileId());
+        } else {
+            addressListItem.setRdaCustomerId(registerEmployeeDetailsPostParams.getData().consumerList.get(0).getRdaCustomerProfileId());
+        }
+
         addressListItem.setNearestLandMark(personalDetailsTwoBinding.etLandmark.getText().toString());
         addressListItem.setCustomerAddress(personalDetailsTwoBinding.etAddress.getText().toString());
         addressListItem.setCity(personalDetailsTwoBinding.etCity.getText().toString());
-        addressListItem.setCountryId(addressesItemResponse.getCountryId());
+        addressListItem.setCountryId(157);
 
         userAddressDataItem.getAddressesList().add(addressListItem);
         userAddressDataItem.setPrimary(true);
@@ -96,7 +103,13 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void getIntentData() {
-        registerEmployeeDetailsPostParams = (RegisterEmployeeDetailsPostParams) getIntent().getSerializableExtra("registerEmployeeDetailsPostParams");
+        IS_RESUMED = getIntent().getBooleanExtra(Config.IS_RESUMED, false);
+        if (IS_RESUMED) {
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra("getConsumerAccountDetailsResponse");
+        } else {
+            registerEmployeeDetailsPostParams = (RegisterEmployeeDetailsPostParams) getIntent().getSerializableExtra("registerEmployeeDetailsPostParams");
+        }
+
     }
 
     private void clicks() {
@@ -124,12 +137,32 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void postDetailsTwo() {
-        personalDetailsViewModel.postPersonalDetails(getParams(),  getStringFromPref(Config.ACCESS_TOKEN));
+        personalDetailsViewModel.postPersonalDetails(getParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
     private RegisterEmployeeDetailsPostParams getParams() {
-        RegisterEmployeeDetailsPostData data = registerEmployeeDetailsPostParams.getData();
-        RegisterEmployeeDetailsPostConsumerList consumerListItem = registerEmployeeDetailsPostParams.getData().getConsumerList().get(0);
+
+        RegisterEmployeeDetailsPostData data;
+        RegisterEmployeeDetailsPostConsumerList consumerListItem;
+        if (IS_RESUMED) {
+            //flow for resumed application
+            data = new RegisterEmployeeDetailsPostData();
+            consumerListItem = new RegisterEmployeeDetailsPostConsumerList();
+            //binding previously saved data, So nulls don't get posted with new request
+            consumerListItem.setRdaCustomerAccInfoId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().rdaCustomerAccInfoId);
+            consumerListItem.setRdaCustomerProfileId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
+            consumerListItem.setFullName(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getFullName());
+            consumerListItem.setFatherHusbandName(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getFatherHusbandName());
+            consumerListItem.setMotherMaidenName(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getMotherMaidenName());
+            consumerListItem.setPlaceofBirth(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCityOfBirth());
+            consumerListItem.setPrimary(true);
+
+        } else {
+            //for new application
+            data = registerEmployeeDetailsPostParams.getData();
+            consumerListItem = registerEmployeeDetailsPostParams.getData().getConsumerList().get(0);
+        }
+
         if (!isEmpty(personalDetailsTwoBinding.etEmail)) {
             consumerListItem.setEmailAddress(personalDetailsTwoBinding.etEmail.getText().toString());
         }
@@ -137,7 +170,13 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
             consumerListItem.setLandlineNumber(personalDetailsTwoBinding.etLandline.getText().toString());
         }
 
-        data.consumerList.add(consumerListItem);
+
+        if (IS_RESUMED) {
+            data.consumerList.add(consumerListItem);
+        } else {
+            data.consumerList.set(0, consumerListItem);
+        }
+
         registerEmployeeDetailsPostParams.setData(data);
         return registerEmployeeDetailsPostParams;
     }
@@ -149,26 +188,34 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void setData() {
-        addressesItemResponse = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getAddresses().get(0);
-        if (addressesItemResponse.getCustomerAddress() != null && !addressesItemResponse.getCustomerAddress().equals("")) {
-            personalDetailsTwoBinding.etAddress.setText(addressesItemResponse.getCustomerAddress());
+        if (IS_RESUMED) {
+            //address flow for resumed application
+
+
+        } else {
+            //address flow for new application
         }
 
-        if (addressesItemResponse.getNearestLandMark() != null && !addressesItemResponse.getNearestLandMark().equals("")) {
-            personalDetailsTwoBinding.etLandmark.setText(addressesItemResponse.getNearestLandMark());
-        }
-
-        if (addressesItemResponse.getCity() != null && !addressesItemResponse.getCity().equals("")) {
-            personalDetailsTwoBinding.etCity.setText(addressesItemResponse.getCity());
-        }
-
-        if (addressesItemResponse.getCustomerTown() != null && !addressesItemResponse.getCustomerTown().equals("")) {
-            personalDetailsTwoBinding.etTown.setText(addressesItemResponse.getCustomerTown());
-        }
-
-        if (addressesItemResponse.getCountry() != null && !addressesItemResponse.getCountry().equals("")) {
-            personalDetailsTwoBinding.etCountry.setText(addressesItemResponse.getCountry());
-        }
+//        addressesItemResponse = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getAddresses().get(0);
+//        if (addressesItemResponse.getCustomerAddress() != null && !addressesItemResponse.getCustomerAddress().equals("")) {
+//            personalDetailsTwoBinding.etAddress.setText(addressesItemResponse.getCustomerAddress());
+//        }
+//
+//        if (addressesItemResponse.getNearestLandMark() != null && !addressesItemResponse.getNearestLandMark().equals("")) {
+//            personalDetailsTwoBinding.etLandmark.setText(addressesItemResponse.getNearestLandMark());
+//        }
+//
+//        if (addressesItemResponse.getCity() != null && !addressesItemResponse.getCity().equals("")) {
+//            personalDetailsTwoBinding.etCity.setText(addressesItemResponse.getCity());
+//        }
+//
+//        if (addressesItemResponse.getCustomerTown() != null && !addressesItemResponse.getCustomerTown().equals("")) {
+//            personalDetailsTwoBinding.etTown.setText(addressesItemResponse.getCustomerTown());
+//        }
+//
+//        if (addressesItemResponse.getCountry() != null && !addressesItemResponse.getCountry().equals("")) {
+//            personalDetailsTwoBinding.etCountry.setText(addressesItemResponse.getCountry());
+//        }
 
     }
 

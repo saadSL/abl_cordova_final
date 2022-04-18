@@ -12,7 +12,7 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public String fullName;
     public String mobileNo;
     public Object mobileNoCountryCodeId;
-    public Object fatherHusbandName;
+    public String fatherHusbandName;
     public String motherMaidenName;
     public Object countryOfResidenceId;
     public Object genderId;
@@ -135,11 +135,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.mobileNoCountryCodeId = mobileNoCountryCodeId;
     }
 
-    public Object getFatherHusbandName() {
+    public String getFatherHusbandName() {
         return fatherHusbandName;
     }
 
-    public void setFatherHusbandName(Object fatherHusbandName) {
+    public void setFatherHusbandName(String fatherHusbandName) {
         this.fatherHusbandName = fatherHusbandName;
     }
 

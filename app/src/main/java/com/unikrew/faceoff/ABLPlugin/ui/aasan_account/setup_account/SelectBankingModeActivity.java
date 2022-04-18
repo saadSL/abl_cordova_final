@@ -137,8 +137,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        consumerListItemVerifyOtp.setMobileNo("0241222092343001");
-        consumerListItemVerifyOtp.setIdNumber("2521033122227");
+        consumerListItemVerifyOtp.setMobileNo("03137707374");
+        consumerListItemVerifyOtp.setIdNumber("3320148553779");
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
@@ -163,6 +163,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                 dismissLoading();
                 goToSelectAccont(registerVerifyOtpResponse);
                 globalRegisterVerifyOtp = registerVerifyOtpResponse;
+                saveSerializableInPref("registerVerifyOtpResponse",registerVerifyOtpResponse);
+                saveStringInPref(Config.ACCESS_TOKEN,registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccessToken());
             }
         });
         selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
@@ -189,6 +191,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private void goToSelectAccont(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
         Intent intent = new Intent(SelectBankingModeActivity.this, SelectAccountTypeActivity.class);
         intent.putExtra("registerVerifyOtpResponse", registerVerifyOtpResponse);
+        intent.putExtra(Config.IS_RESUMED,false);
         startActivity(intent);
     }
 

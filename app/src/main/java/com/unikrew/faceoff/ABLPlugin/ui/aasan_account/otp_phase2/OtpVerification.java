@@ -46,7 +46,6 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.open_account_otp_verification);
         setBinding();
         setListeners();
         setViewModel();
