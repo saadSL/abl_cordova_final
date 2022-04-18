@@ -343,11 +343,11 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     }
 
     private void setConsumerList() {
-        registerEmploymentDetailsPostConsumerList.setRdaCustomerProfileId(consumerAccountDetailsResponse.getData().consumerList.get(0).getRdaCustomerProfileId());
-        registerEmploymentDetailsPostConsumerList.setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        registerEmploymentDetailsPostConsumerList.setRdaCustomerProfileId( Integer.parseInt( getStringFromPref( Config.PROFILE_ID ) ) );
+        registerEmploymentDetailsPostConsumerList.setRdaCustomerAccInfoId( Integer.parseInt( getStringFromPref( Config.ACCOUNT_INFO_ID ) ));
         registerEmploymentDetailsPostConsumerList.setOccupationId(selectedOccupation.getId());
         registerEmploymentDetailsPostConsumerList.setProfessionId(selectedProfession.getId());
-        registerEmploymentDetailsPostConsumerList.setPrimary(true);
+        registerEmploymentDetailsPostConsumerList.setPrimary(consumerAccountDetailsResponse.getData().getConsumerList().get(0).isPrimary());
 
         consumerList.add(registerEmploymentDetailsPostConsumerList);
     }

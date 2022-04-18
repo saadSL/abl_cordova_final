@@ -164,8 +164,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private void setTransactionDetailsPostParams() {
         if (response != null){
 
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(response.getData().getConsumerList().get(0).getRdaCustomerAccInfoId());
-            setupTransactionPostParams.getData().setRdaCustomerId(response.getData().getConsumerList().get(0).getRdaCustomerProfileId());
+            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(Integer.parseInt(getStringFromPref(Config.ACCOUNT_INFO_ID)));
+            setupTransactionPostParams.getData().setRdaCustomerId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             setupTransactionPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
             setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
             setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);
@@ -174,8 +174,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
         }else if (consumerAccountDetailsResponse != null){
 
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            setupTransactionPostParams.getData().setRdaCustomerId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerId());
+            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(Integer.parseInt(getStringFromPref(Config.ACCOUNT_INFO_ID)));
+            setupTransactionPostParams.getData().setRdaCustomerId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             setupTransactionPostParams.getData().setCustomerTypeId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
             setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
             setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);

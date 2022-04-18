@@ -267,7 +267,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return Base64.encodeToString(byteArray, Base64.URL_SAFE | Base64.NO_WRAP);
     }
 
     private void uploadDocuments() {
@@ -293,7 +293,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void setAttachmentPostParams() {
         if (savingForPic){
             attachmentPostParams.getData().setAttachmentTypeId(Config.LIVE_PHOTO);
-            attachmentPostParams.getData().setEntityId(443);
+            attachmentPostParams.getData().setEntityId(0);
             attachmentPostParams.getData().setFileName("PHOTO");
             attachmentPostParams.getData().setMimeType("");
             attachmentPostParams.getData().setPath("");

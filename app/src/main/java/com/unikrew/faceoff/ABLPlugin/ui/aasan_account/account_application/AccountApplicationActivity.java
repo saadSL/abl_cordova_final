@@ -68,28 +68,29 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
-
-                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
-
-                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
-
-                    openActivity(SelectPreferredAccountActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
-
-                    openActivity(PersonalDetailsOneActivity.class,getConsumerAccountDetailsResponse);
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
-
-                    openActivity(PersonalDetailsTwoActivity.class,getConsumerAccountDetailsResponse);
-
-
-                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
+//                if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE() ){
+//
+//                    openActivity(SelectBankingModeActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE() ){
+//
+//                    openActivity(SelectAccountTypeActivity.class, getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME() ){
+//
+//                    openActivity(SelectPreferredAccountActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES() ){
+//
+//                    openActivity(PersonalDetailsOneActivity.class,getConsumerAccountDetailsResponse);
+//
+//                }else if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS() ){
+//
+//                    openActivity(PersonalDetailsTwoActivity.class,getConsumerAccountDetailsResponse);
+//
+//
+//                }else
+                    if ( !getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT() ){
 
                     openActivity(EmploymentDetailsActivity.class,getConsumerAccountDetailsResponse);
 
@@ -146,6 +147,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     private void getConsumerAccountDetails() {
         if (selectedAppList != null){
             setConsumerAccDetailsPostParams();
+            saveStringInPref(Config.PROFILE_ID, String.valueOf(selectedAppList.getRdaCustomerProfileId()));
+            saveStringInPref(Config.ACCOUNT_INFO_ID, String.valueOf(selectedAppList.getRdaCustomerAccInfoId()));
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN));
