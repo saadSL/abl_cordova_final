@@ -2,7 +2,7 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employe
 
 import java.io.Serializable;
 
-public class RegisterEmploymentDetailsPostParams implements Serializable {
+public class RegisterEmployeeDetailsPostParams implements Serializable {
     public RegisterEmployeeDetailsPostData data = new RegisterEmployeeDetailsPostData();
 
     public RegisterEmployeeDetailsPostData getData() {

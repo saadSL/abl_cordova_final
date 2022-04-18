@@ -77,26 +77,26 @@ public class EmploymentDetailsViewModel extends BaseViewModel {
     }
 
     public void registerEmpDetails(RegisterEmploymentDetailsPostParams postParams, String accessToken){
-        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams,"Bearer "+accessToken);
-        callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
-            @Override
-            public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {
-                if (response.code()==200){
-                    if (response.body().getMessage().getStatus().equals("200")){
-                        registerEmploymentDetailsResponseMutableLiveData.postValue(response.body());
-                    }else{
-                        registerEmployeeDetailsErrorLiveData.postValue(getErrorDetail(response));
-                    }
-                }else{
-                    registerEmployeeDetailsErrorLiveData.postValue(getErrorDetail(response));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RegisterEmploymentDetailsResponse> call, Throwable t) {
-                registerEmployeeDetailsErrorLiveData.postValue(t.getMessage());
-            }
-        });
+//        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams,"Bearer "+accessToken);
+//        callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
+//            @Override
+//            public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {
+//                if (response.code()==200){
+//                    if (response.body().getMessage().getStatus().equals("200")){
+//                        registerEmploymentDetailsResponseMutableLiveData.postValue(response.body());
+//                    }else{
+//                        registerEmployeeDetailsErrorLiveData.postValue(getErrorDetail(response));
+//                    }
+//                }else{
+//                    registerEmployeeDetailsErrorLiveData.postValue(getErrorDetail(response));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RegisterEmploymentDetailsResponse> call, Throwable t) {
+//                registerEmployeeDetailsErrorLiveData.postValue(t.getMessage());
+//            }
+//        });
     }
 
     public void saveKyc(SaveKycPostParams saveKycPostParams, String accessToken) {

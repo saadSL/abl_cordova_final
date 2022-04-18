@@ -2,7 +2,7 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employe
 
 import java.io.Serializable;
 
-public class RegisterEmploymentDetailsResponseConsumerList implements Serializable {
+public class RegisterEmployeeDetailsResponseConsumerList implements Serializable {
     public int rdaCustomerProfileId;
     public Object primaryRdaCustomerProfileId;
     public int rdaCustomerAccInfoId;

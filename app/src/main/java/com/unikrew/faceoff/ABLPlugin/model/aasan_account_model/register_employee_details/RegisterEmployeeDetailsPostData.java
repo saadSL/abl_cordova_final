@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RegisterEmployeeDetailsPostData implements Serializable {
-    public ArrayList<RegisterEmploymentDetailsPostConsumerList> consumerList = new ArrayList<>();
+    public ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList = new ArrayList<>();
 
-    public ArrayList<RegisterEmploymentDetailsPostConsumerList> getConsumerList() {
+    public ArrayList<RegisterEmployeeDetailsPostConsumerList> getConsumerList() {
         return consumerList;
     }
 
-    public void setConsumerList(ArrayList<RegisterEmploymentDetailsPostConsumerList> consumerList) {
+    public void setConsumerList(ArrayList<RegisterEmployeeDetailsPostConsumerList> consumerList) {
         this.consumerList = consumerList;
     }
 }

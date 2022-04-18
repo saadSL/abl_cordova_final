@@ -339,7 +339,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     }
 
     private void setRegisterEmployeeDetailsPostParams() {
-        registerEmploymentDetailsPostParams.getData().setConsumerList(consumerList);
+//        registerEmploymentDetailsPostParams.getData().setConsumerList(consumerList);
     }
 
     private void setConsumerList() {
