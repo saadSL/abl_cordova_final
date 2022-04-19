@@ -71,30 +71,37 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                 saveSerializableInPref("getConsumerAccountDetailsResponse",getConsumerAccountDetailsResponse);
 
                 if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
-                    openActivity(SelectBankingModeActivity.class, getConsumerAccountDetailsResponse);
+
+                    openActivity(SelectBankingModeActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
-                    Intent intent = new Intent(AccountApplicationActivity.this, SelectAccountTypeActivity.class);
-                    intent.putExtra(Config.IS_RESUMED, true);
-                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
-                    startActivity(intent);
+
+                    openActivity(SelectAccountTypeActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
-                    showAlert(Config.successType, "Opening Account Income ");
+
+                    openActivity(SelectPreferredAccountActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
-                    Intent intent = new Intent(AccountApplicationActivity.this, PersonalDetailsOneActivity.class);
-                    intent.putExtra(Config.IS_RESUMED, true);
-                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
-                    startActivity(intent);
+
+                    openActivity(PersonalDetailsOneActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
-                    Intent intent = new Intent(AccountApplicationActivity.this, PersonalDetailsTwoActivity.class);
-                    intent.putExtra(Config.IS_RESUMED, true);
-                    intent.putExtra("getConsumerAccountDetailsResponse", getConsumerAccountDetailsResponse);
-                    startActivity(intent);
+
+                    openActivity(PersonalDetailsTwoActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
-                    openActivity(EmploymentDetailsActivity.class, getConsumerAccountDetailsResponse);
+
+                    openActivity(EmploymentDetailsActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL()) {
-                    showAlert(Config.successType, "Opening Transaction Detail ");
+
+                    openActivity(SelectCardActivity.class);
+
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER()) {
-                    showAlert(Config.successType, "Opening Document Uploader ");
+
+                    openActivity(UploadDocumentActivity.class);
+
                 } else {
                     showAlert(Config.successType, "Opening Summary Details ");
                 }
@@ -127,10 +134,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         });
     }
 
-    private void openActivity(final Class<? extends Activity> activityToOpen, GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
+    private void openActivity(final Class<? extends Activity> activityToOpen) {
         Intent intent = new Intent(this, activityToOpen);
-        intent.putExtra(Config.RESPONSE, getConsumerAccountDetailsResponse);
-        intent.putExtra(Config.CONSUMER_ACC_DETAILS,getConsumerAccountDetailsResponse);
         startActivity(intent);
     }
 
