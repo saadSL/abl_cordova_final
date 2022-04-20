@@ -7,14 +7,14 @@ public class GetConsumerAccountDetailsResponseAddress implements Serializable {
     public int rdaCustomerId;
     public Object postalCode;
     public Object phone;
-    public Object nearestLandMark;
+    public String nearestLandMark;
     public Object mobileNo;
-    public Object customerTown;
-    public Object customerAddress;
+    public String customerTown;
+    public String customerAddress;
     public Object countryCodeMobile;
-    public Object city;
-    public Object countryId;
-    public Object country;
+    public String city;
+    public Integer countryId;
+    public String country;
     public Object addressTypeForeignInd;
     public int addressTypeId;
 
@@ -50,11 +50,11 @@ public class GetConsumerAccountDetailsResponseAddress implements Serializable {
         this.phone = phone;
     }
 
-    public Object getNearestLandMark() {
+    public String getNearestLandMark() {
         return nearestLandMark;
     }
 
-    public void setNearestLandMark(Object nearestLandMark) {
+    public void setNearestLandMark(String nearestLandMark) {
         this.nearestLandMark = nearestLandMark;
     }
 
@@ -66,19 +66,19 @@ public class GetConsumerAccountDetailsResponseAddress implements Serializable {
         this.mobileNo = mobileNo;
     }
 
-    public Object getCustomerTown() {
+    public String getCustomerTown() {
         return customerTown;
     }
 
-    public void setCustomerTown(Object customerTown) {
+    public void setCustomerTown(String customerTown) {
         this.customerTown = customerTown;
     }
 
-    public Object getCustomerAddress() {
+    public String getCustomerAddress() {
         return customerAddress;
     }
 
-    public void setCustomerAddress(Object customerAddress) {
+    public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
     }
 
@@ -90,27 +90,27 @@ public class GetConsumerAccountDetailsResponseAddress implements Serializable {
         this.countryCodeMobile = countryCodeMobile;
     }
 
-    public Object getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(Object city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public Object getCountryId() {
+    public Integer getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Object countryId) {
+    public void setCountryId(Integer countryId) {
         this.countryId = countryId;
     }
 
-    public Object getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Object country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 

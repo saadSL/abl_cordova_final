@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GetConsumerAccountDetailsResponseAccountInformation implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerId;
-    public Object purposeOfAccountId;
+    public Integer purposeOfAccountId;
     public Object purposeOfAccount;
     public Object physicalCardInd;
     public Object operatingInstId;
@@ -33,7 +33,7 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public int accountStatusId;
     public Object atmTypeId;
     public Object atmType;
-    public Object cunstomerTypeId;
+    public Integer cunstomerTypeId;
     public Object transAlertInd;
     public Object activationType;
     public Object alertActivation;
@@ -54,7 +54,7 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public String bankingMode;
     public Object transactionalAlertId;
     public Object transactionalAlert;
-    public Object customerAccountTypeId;
+    public Integer customerAccountTypeId;
     public Object customerAccountType;
     public Object proofOfIncomeInd;
     public Object averageMonthlySalary;
@@ -77,11 +77,11 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.rdaCustomerId = rdaCustomerId;
     }
 
-    public Object getPurposeOfAccountId() {
+    public Integer getPurposeOfAccountId() {
         return purposeOfAccountId;
     }
 
-    public void setPurposeOfAccountId(Object purposeOfAccountId) {
+    public void setPurposeOfAccountId(Integer purposeOfAccountId) {
         this.purposeOfAccountId = purposeOfAccountId;
     }
 
@@ -293,11 +293,11 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         this.atmType = atmType;
     }
 
-    public Object getCunstomerTypeId() {
+    public Integer getCunstomerTypeId() {
         return cunstomerTypeId;
     }
 
-    public void setCunstomerTypeId(Object cunstomerTypeId) {
+    public void setCunstomerTypeId(Integer cunstomerTypeId) {
         this.cunstomerTypeId = cunstomerTypeId;
     }
 
@@ -457,15 +457,15 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
         return transactionalAlert;
     }
 
-    public void setTransactionalAlert(Object transactionalAlert) {
+    public void setTransactionalAlert(Integer transactionalAlert) {
         this.transactionalAlert = transactionalAlert;
     }
 
-    public Object getCustomerAccountTypeId() {
+    public Integer getCustomerAccountTypeId() {
         return customerAccountTypeId;
     }
 
-    public void setCustomerAccountTypeId(Object customerAccountTypeId) {
+    public void setCustomerAccountTypeId(Integer customerAccountTypeId) {
         this.customerAccountTypeId = customerAccountTypeId;
     }
 

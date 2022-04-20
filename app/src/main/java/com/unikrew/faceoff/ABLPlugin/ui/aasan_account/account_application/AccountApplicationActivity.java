@@ -27,6 +27,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
@@ -68,7 +69,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                saveSerializableInPref("getConsumerAccountDetailsResponse",getConsumerAccountDetailsResponse);
+                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE,getConsumerAccountDetailsResponse);
 
                 if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
 
@@ -92,7 +93,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
 
-                    openActivity(EmploymentDetailsActivity.class);
+                    openActivity(PersonalDetailsThreeActivity.class);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL()) {
 

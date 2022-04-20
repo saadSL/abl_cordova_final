@@ -13,7 +13,10 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
@@ -22,17 +25,18 @@ import com.unikrew.faceoff.Config;
 public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     LayoutSetupTransactionBinding layoutSetupTransactionBinding;
 
-    SetupTransactionPostParams setupTransactionPostParams;
-    SelectCardViewModel selectCardViewModel;
+    private SetupTransactionPostParams setupTransactionPostParams;
+    private SelectCardViewModel selectCardViewModel;
 
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
     private int atmTypeId = 0;
     private int transactionAlertInd = 1;
     private int chequeBookReqInd = 1;
     private int transactionAlertId = 0;
+    private Boolean IS_RESUMED;
 
-    private GetConsumerAccountDetailsResponse consumerAccountDetailsResponse;
-    private RegisterEmploymentDetailsResponse response;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +44,24 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         setLayout();
         setViewModel();
         setClicks();
+        getSharedPrefData();
         checkLayouts();
         observe();
+
+    }
+
+    private void getSharedPrefData() {
+
+        //flow for new application
+        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
+            IS_RESUMED = false;
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        }
+        //flow for drafted application
+        else {
+            IS_RESUMED = true;
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+        }
 
     }
 
@@ -65,7 +85,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         selectCardViewModel.setupTransactionErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 loader.dismiss();
             }
         });
@@ -73,23 +93,23 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private void openUploadDocumentActivity(SetupTransactionResponse setupTransactionResponse) {
         Intent intent = new Intent(this, UploadDocumentActivity.class);
-        intent.putExtra(Config.RESPONSE,setupTransactionResponse);
+        intent.putExtra(Config.RESPONSE, setupTransactionResponse);
         startActivity(intent);
     }
 
     private void checkLayouts() {
-        if (layoutSetupTransactionBinding.debitCardSwitch.isChecked()){
+        if (layoutSetupTransactionBinding.debitCardSwitch.isChecked()) {
             layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
             layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
-        }else{
+        } else {
             layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
             layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
         }
 
-        if (layoutSetupTransactionBinding.transactionalAlertSwitch.isChecked()){
+        if (layoutSetupTransactionBinding.transactionalAlertSwitch.isChecked()) {
             layoutSetupTransactionBinding.btnSms.setEnabled(true);
             layoutSetupTransactionBinding.btnEmail.setEnabled(true);
-        }else{
+        } else {
             layoutSetupTransactionBinding.btnSms.setEnabled(false);
             layoutSetupTransactionBinding.btnEmail.setEnabled(false);
         }
@@ -100,8 +120,6 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private void setViewModel() {
         selectCardViewModel = new ViewModelProvider(this).get(SelectCardViewModel.class);
         setupTransactionPostParams = new SetupTransactionPostParams();
-        response = (RegisterEmploymentDetailsResponse) getIntent().getSerializableExtra(Config.RESPONSE);
-        consumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.CONSUMER_ACC_DETAILS);
     }
 
     private void setClicks() {
@@ -122,31 +140,31 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        switch (compoundButton.getId()){
+        switch (compoundButton.getId()) {
             case R.id.debit_card_switch:
-                if (!isChecked){
+                if (!isChecked) {
                     layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
                     layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
-                }else{
+                } else {
                     layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
                     layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
                 }
                 break;
             case R.id.transactional_alert_switch:
-                if (!isChecked){
+                if (!isChecked) {
                     transactionAlertInd = 0;
                     layoutSetupTransactionBinding.btnSms.setEnabled(false);
                     layoutSetupTransactionBinding.btnEmail.setEnabled(false);
-                }else{
+                } else {
                     transactionAlertInd = 1;
                     layoutSetupTransactionBinding.btnSms.setEnabled(true);
                     layoutSetupTransactionBinding.btnEmail.setEnabled(true);
                 }
                 break;
             case R.id.cheque_book_switch:
-                if (!isChecked){
+                if (!isChecked) {
                     chequeBookReqInd = 0;
-                }else{
+                } else {
                     chequeBookReqInd = 1;
                 }
                 break;
@@ -156,38 +174,33 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private void registerTransactionDetails() {
         setTransactionDetailsPostParams();
-        selectCardViewModel.registerTransactionDetails(setupTransactionPostParams,getStringFromPref(Config.ACCESS_TOKEN));
+        selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
         showLoading();
     }
 
     private void setTransactionDetailsPostParams() {
-        if (response != null){
-
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(Integer.parseInt(getStringFromPref(Config.ACCOUNT_INFO_ID)));
-            setupTransactionPostParams.getData().setRdaCustomerId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
-            setupTransactionPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-            setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
-            setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);
-            setupTransactionPostParams.getData().setChequeBookReqInd(chequeBookReqInd);
-            setupTransactionPostParams.getData().setTransactionalAlertId(transactionAlertId);
-
-        }else if (consumerAccountDetailsResponse != null){
-
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(Integer.parseInt(getStringFromPref(Config.ACCOUNT_INFO_ID)));
-            setupTransactionPostParams.getData().setRdaCustomerId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
-            setupTransactionPostParams.getData().setCustomerTypeId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
-            setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);
-            setupTransactionPostParams.getData().setChequeBookReqInd(chequeBookReqInd);
-            setupTransactionPostParams.getData().setTransactionalAlertId(transactionAlertId);
-
+        if (IS_RESUMED) {
+            //flow for drafted application
+            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            setupTransactionPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
+        } else {
+            //flow for new application
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            setupTransactionPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
         }
+        setupTransactionPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+        setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
+        setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);
+        setupTransactionPostParams.getData().setChequeBookReqInd(chequeBookReqInd);
+        setupTransactionPostParams.getData().setTransactionalAlertId(transactionAlertId);
 
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_sms:
                 transactionAlertId = Config.TRANSACTION_ALERT_SMS;
                 layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
@@ -209,10 +222,10 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
                 break;
             case R.id.btn_next:
-                if (atmTypeId == Config.UPI || atmTypeId == Config.VDC){
+                if (atmTypeId == Config.UPI || atmTypeId == Config.VDC) {
                     registerTransactionDetails();
-                }else{
-                    showAlert(Config.errorType,"Please select any one card !!!");
+                } else {
+                    showAlert(Config.errorType, "Please select any one card !!!");
                 }
 
                 break;

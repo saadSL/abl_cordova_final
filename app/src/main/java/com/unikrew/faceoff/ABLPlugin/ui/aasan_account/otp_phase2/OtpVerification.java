@@ -134,6 +134,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         intent.putExtra( Config.RESPONSE,getDraftedAppsVerifyOtpResponse );
 
         startActivity(intent);
+        this.finish();
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectAccountTypeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
@@ -43,22 +44,23 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
-        getDataFromIntent();
+        getSharedPrefData();
         getPurposeOfAccount();
         setObservers();
         clicks();
     }
 
-    private void getDataFromIntent() {
+    private void getSharedPrefData() {
 
-        IS_RESUMED = getIntent().getBooleanExtra(Config.IS_RESUMED, false);
-        //flow for drafted application
-        if (IS_RESUMED) {
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra("getConsumerAccountDetailsResponse");
-        }
         //flow for new application
+        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
+            IS_RESUMED = false;
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        }
+        //flow for drafted application
         else {
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getIntent().getSerializableExtra("registerVerifyOtpResponse");
+            IS_RESUMED = true;
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
         }
 
     }
@@ -171,7 +173,6 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
 
     private void moveToPreferredAccount(AccountTypeResponse accountTypeResponse) {
         Intent intent = new Intent(SelectAccountTypeActivity.this, SelectPreferredAccountActivity.class);
-        intent.putExtra("accountTypeResponse", accountTypeResponse);
         startActivity(intent);
     }
 

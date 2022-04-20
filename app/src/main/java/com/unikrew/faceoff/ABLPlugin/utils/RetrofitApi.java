@@ -20,6 +20,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
@@ -98,7 +101,13 @@ public interface RetrofitApi {
     Call<ProfessionResponse> getProfession(@Body ProfessionPostParams postParams);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
-    Call<RegisterEmploymentDetailsResponse> registerEmpDetails(@Body RegisterEmployeeDetailsPostParams postParams, @Header("Authorization") String accessToken);
+    Call<RegisterEmploymentDetailsResponse> postPersonalDetailsOne(@Body PersonalDetailsOnePostModel postParams, @Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<RegisterEmploymentDetailsResponse> postPersonalDetailsTwo(@Body PersonalDetailsTwoPostModel postParams, @Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<RegisterEmploymentDetailsResponse> postPersonalDetailsThree(@Body PersonalDetailsThreePostModel postParams, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<SetupTransactionResponse> setupTransactionDetails(@Body SetupTransactionPostParams postParams, @Header("Authorization") String accessToken);

@@ -145,7 +145,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         SaveKycPostData saveKycPostData = new SaveKycPostData();
         saveKycPostData.setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
         saveKycPostData.setRdaCustomerProfileId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
-        saveKycPostData.setAverageMonthlySalary(Integer.parseInt(employmentDetailsBinding.etSalary.getText().toString()));
+//        saveKycPostData.setAverageMonthlySalary(Integer.parseInt(employmentDetailsBinding.etSalary.getText().toString()));
         saveKycPostParams.getData().add(saveKycPostData);
     }
 

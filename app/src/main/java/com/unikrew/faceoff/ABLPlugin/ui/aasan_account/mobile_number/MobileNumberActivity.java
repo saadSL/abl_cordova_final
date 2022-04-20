@@ -110,11 +110,15 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void openOtpVerificationActivity(ViewAppsGenerateOtpResponse response) {
+        saveInLocal();
         Intent intent = new Intent(this, OtpVerification.class);
-
         intent.putExtra(Config.RESPONSE,response);
-
         startActivity(intent);
+    }
+
+    private void saveInLocal() {
+        saveStringInPref(Config.CNIC_NUMBER,mobileNumberAvailabilityBinding.etCnicNumber.getText().toString());
+        saveStringInPref(Config.MOBILE_NUMBER,mobileNumberAvailabilityBinding.etMobileNum.getText().toString());
     }
 
     /* The method below will work when mobile number is not registered with cnic. */

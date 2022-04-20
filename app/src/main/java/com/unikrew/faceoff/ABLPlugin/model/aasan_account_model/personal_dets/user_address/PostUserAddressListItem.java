@@ -7,6 +7,16 @@ public class PostUserAddressListItem implements Serializable {
 	private String customerAddress;
 	private String nearestLandMark;
 	private String city;
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	private String country;
 	private int addressTypeId;
 	private int countryId;
 

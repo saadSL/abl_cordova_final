@@ -5,14 +5,10 @@ import java.io.Serializable;
 public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
     private Integer rdaCustomerProfileId = null;
     private Integer rdaCustomerAccInfoId = null;
-    private Integer occupationId = null;
-    private Integer professionId = null;
     private boolean isPrimary;
-    private String salary;
     private String fullName;
     private String fatherHusbandName;
     private String motherMaidenName;
-    private String emailAddress;
 
     public String getLandlineNumber() {
         return landlineNumber;
@@ -50,21 +46,6 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
         this.rdaCustomerAccInfoId = rdaCustomerAccInfoId;
     }
 
-    public int getOccupationId() {
-        return occupationId;
-    }
-
-    public void setOccupationId(int occupationId) {
-        this.occupationId = occupationId;
-    }
-
-    public int getProfessionId() {
-        return professionId;
-    }
-
-    public void setProfessionId(int professionId) {
-        this.professionId = professionId;
-    }
 
     public boolean isPrimary() {
         return isPrimary;
@@ -74,13 +55,6 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
         isPrimary = primary;
     }
 
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
 
     public String getFullName() {
         return fullName;
@@ -106,11 +80,4 @@ public class RegisterEmployeeDetailsPostConsumerList implements Serializable {
         this.motherMaidenName = motherMaidenName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
 }

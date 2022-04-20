@@ -24,10 +24,13 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.UploadDocumentsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.Config;
 
@@ -41,13 +44,13 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private String liveSigString = "";
     private int natureOfAccountId = 0;
 
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
-    private GetConsumerAccountDetailsResponse consumerAccountDetailsResponse;
-    private SetupTransactionResponse response;
     private SaveAttachmentPostParams attachmentPostParams;
     private UploadDocumentViewModel uploadDocumentViewModel;
     private SaveNatureOfAccountPostParams natureOfAccountPostParams;
-
+    private Boolean IS_RESUMED;
 
 
     private Boolean savingForPic = true;
@@ -60,8 +63,24 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         setBinding();
         setLayout();
         setClicks();
+        getSharedPrefData();
         setViewModel();
         observe();
+    }
+
+    private void getSharedPrefData() {
+
+        //flow for new application
+        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
+            IS_RESUMED = false;
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        }
+        //flow for drafted application
+        else {
+            IS_RESUMED = true;
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+        }
+
     }
 
     private void setLayout() {
@@ -77,11 +96,11 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentViewModel.saveAttachmentResponseMutableLiveData.observe(this, new Observer<SaveAttachmentResponse>() {
             @Override
             public void onChanged(SaveAttachmentResponse saveAttachmentResponse) {
-                if (savingForPic){
+                if (savingForPic) {
                     savingForPic = false;
                     savingForSig = true;
                     uploadDocuments();
-                }else if (savingForSig){
+                } else if (savingForSig) {
                     savingForSig = false;
                     saveNatureOfAccount();
                 }
@@ -91,7 +110,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentViewModel.saveAttachmentErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
             }
         });
 
@@ -106,43 +125,44 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentViewModel.saveNatureOfAccountErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
             }
         });
     }
 
     private void openReviewDetailsActivity() {
-        showAlert(Config.successType,"Opening Review Details !!!");
+        showAlert(Config.successType, "Opening Review Details !!!");
     }
 
     private void saveNatureOfAccount() {
         setNatureOfAccountPostParams();
-        uploadDocumentViewModel.saveNatureOfAccount(natureOfAccountPostParams,getStringFromPref(Config.ACCESS_TOKEN));
+        uploadDocumentViewModel.saveNatureOfAccount(natureOfAccountPostParams, getStringFromPref(Config.ACCESS_TOKEN));
     }
 
     private void setNatureOfAccountPostParams() {
-        if (response!=null){
+        if (IS_RESUMED) {
+            //flow for drafted application
+            //flow for drafted application
+            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
+            natureOfAccountPostParams.getData().setCustomerTypeId(accountInformation.getCunstomerTypeId());
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
 
-            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(response.getData().getRdaCustomerAccInfoId());
-            natureOfAccountPostParams.getData().setRdaCustomerId(response.getData().getRdaCustomerId());
-            natureOfAccountPostParams.getData().setCustomerTypeId(response.getData().getCunstomerTypeId());
-            natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(response.getData().getNoOfJointApplicatns());
-
-        }else if (consumerAccountDetailsResponse!=null){
-
-            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            natureOfAccountPostParams.getData().setRdaCustomerId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerId());
-            natureOfAccountPostParams.getData().setCustomerTypeId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(consumerAccountDetailsResponse.getData().getNoOfJointApplicatns());
+        } else {
+            //flow for new application
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
+            natureOfAccountPostParams.getData().setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
 
         }
+        natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
     }
 
     private void setViewModel() {
-        consumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra(Config.CONSUMER_ACC_DETAILS);
-        response = (SetupTransactionResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+
         uploadDocumentViewModel = new ViewModelProvider(this).get(UploadDocumentViewModel.class);
         attachmentPostParams = new SaveAttachmentPostParams();
         natureOfAccountPostParams = new SaveNatureOfAccountPostParams();
@@ -165,7 +185,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
                 uploadDocuments();
                 break;
@@ -185,14 +205,11 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void getPicFromCamera(){
+    private void getPicFromCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Config.MY_CAMERA_PERMISSION_CODE);
-            }
-            else
-            {
+            } else {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
             }
@@ -200,19 +217,14 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == Config.MY_CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == Config.MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
@@ -224,7 +236,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
         if (requestCode == Config.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap image = null;
-            if (image == null && livePic){
+            if (image == null && livePic) {
 
                 image = (Bitmap) data.getExtras().get("data");
                 uploadDocumentsBinding.imgLivePic.setImageBitmap(image);
@@ -237,8 +249,8 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
                 livePicString = convertToBase64(image);
 
-            }else if (image == null && sigPic){
-                image  = (Bitmap) data.getExtras().get("data");
+            } else if (image == null && sigPic) {
+                image = (Bitmap) data.getExtras().get("data");
                 uploadDocumentsBinding.imgLiveSig.setImageBitmap(image);
 
                 hideResources(uploadDocumentsBinding.tvLiveSig,
@@ -266,21 +278,21 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private String convertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.URL_SAFE | Base64.NO_WRAP);
     }
 
     private void uploadDocuments() {
-        if (livePicString.equals("")){
-            showAlert(Config.errorType,"Please Upload Your Live Picture !!!");
+        if (livePicString.equals("")) {
+            showAlert(Config.errorType, "Please Upload Your Live Picture !!!");
             return;
-        }else if (liveSigString.equals("")){
-            showAlert(Config.errorType,"Please Upload Your Signature Picture !!!");
+        } else if (liveSigString.equals("")) {
+            showAlert(Config.errorType, "Please Upload Your Signature Picture !!!");
             return;
-        }else if (natureOfAccountId == 0){
-            showAlert(Config.errorType,"Please Select Nature Of Account !!!");
+        } else if (natureOfAccountId == 0) {
+            showAlert(Config.errorType, "Please Select Nature Of Account !!!");
             return;
-        }else{
+        } else {
             setAttachmentPostParams();
             uploadDocumentViewModel.saveAttachment(
                     attachmentPostParams,
@@ -291,7 +303,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void setAttachmentPostParams() {
-        if (savingForPic){
+        if (savingForPic) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.LIVE_PHOTO);
             attachmentPostParams.getData().setEntityId(0);
             attachmentPostParams.getData().setFileName("PHOTO");
@@ -299,7 +311,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             attachmentPostParams.getData().setPath("");
             attachmentPostParams.getData().setBase64Content(livePicString);
 
-        }else if (savingForSig){
+        } else if (savingForSig) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.SIGNATURE_TYPE_ID);
             attachmentPostParams.getData().setEntityId(443);
             attachmentPostParams.getData().setFileName("SIGNATURE");
@@ -308,33 +320,32 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             attachmentPostParams.getData().setBase64Content(liveSigString);
         }
 
-        if (response!=null){
-            attachmentPostParams.getData().setRdaCustomerAccInfoId(response.getData().getRdaCustomerAccInfoId());
-        }else if (consumerAccountDetailsResponse != null){
-            attachmentPostParams.getData().setRdaCustomerAccInfoId(consumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        if (IS_RESUMED) {
+            attachmentPostParams.getData().setRdaCustomerAccInfoId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().rdaCustomerAccInfoId);
+        } else {
+            attachmentPostParams.getData().setRdaCustomerAccInfoId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
         }
-
     }
 
     private void setUploadDocumentPostParams() {
-        
+
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        switch (compoundButton.getId()){
+        switch (compoundButton.getId()) {
             case R.id.rb_single:
-                if (isChecked){
+                if (isChecked) {
                     natureOfAccountId = Config.SINGLE;
                 }
                 break;
             case R.id.rb_joint:
-                if (isChecked){
+                if (isChecked) {
                     natureOfAccountId = Config.JOINT;
                 }
                 break;
             case R.id.rb_minor:
-                if (isChecked){
+                if (isChecked) {
                     natureOfAccountId = Config.MINOR;
                 }
                 break;

@@ -8,7 +8,7 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public Object accessToken;
     public Object customerTitleId;
     public Object customerTitle;
-    public Object emailAddress;
+    public String emailAddress;
     public String fullName;
     public String mobileNo;
     public Object mobileNoCountryCodeId;
@@ -103,11 +103,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.customerTitle = customerTitle;
     }
 
-    public Object getEmailAddress() {
+    public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(Object emailAddress) {
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 

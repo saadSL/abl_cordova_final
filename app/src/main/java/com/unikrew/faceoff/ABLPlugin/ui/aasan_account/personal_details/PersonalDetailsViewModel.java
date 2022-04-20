@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
@@ -79,8 +82,55 @@ public class PersonalDetailsViewModel extends BaseViewModel {
     }
 
 
-    public void postPersonalDetails(RegisterEmployeeDetailsPostParams postParams, String accessToken) {
-        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.registerEmpDetails(postParams, "Bearer " + accessToken);
+    public void postPersonalDetailsOne(PersonalDetailsOnePostModel postParams, String accessToken) {
+        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.postPersonalDetailsOne(postParams, "Bearer " + accessToken);
+        callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
+            @Override
+            public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        registerEmploymentDetailsResponseMutableLiveData.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterEmploymentDetailsResponse> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+    public void postPersonalDetailsTwo(PersonalDetailsTwoPostModel postParams, String accessToken) {
+        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.postPersonalDetailsTwo(postParams, "Bearer " + accessToken);
+        callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
+            @Override
+            public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().getMessage().getStatus().equals("200")) {
+                        registerEmploymentDetailsResponseMutableLiveData.postValue(response.body());
+                    } else {
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                } else {
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterEmploymentDetailsResponse> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+
+    public void postPersonalDetailsThree(PersonalDetailsThreePostModel postParams, String accessToken) {
+        Call<RegisterEmploymentDetailsResponse> callableRes = AblApplication.apiInterface.postPersonalDetailsThree(postParams, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onResponse(Call<RegisterEmploymentDetailsResponse> call, Response<RegisterEmploymentDetailsResponse> response) {

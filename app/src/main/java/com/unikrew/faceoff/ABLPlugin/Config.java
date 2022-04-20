@@ -9,6 +9,10 @@ public class Config {
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
 
     public static String ACCOUNT_NUMBER = "account_number";
+    //for resume application
+    public static String GET_CONSUMER_RESPONSE = "getConsumerAccountDetailsResponse";
+    //for new application
+    public static String REG_OTP_RESPONSE = "registerVerifyOtpResponse";
 
     public static String ASAAN_ACCOUNT_PREF = "asaanAccountPref";
     public static String RESPONSE = "response";

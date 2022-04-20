@@ -14,11 +14,12 @@ import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.SelectionModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOneConsumerListItemModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOneDataModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 ;import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +32,16 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     private final List<SelectionModel> _motherNameSuggestions = new ArrayList<>();
     private final List<SelectionModel> _placeOfBirthSuggestions = new ArrayList<>();
     private PersonalDetailsViewModel personalDetailsViewModel;
-    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
     private String selectedMotherName, selectedPlaceOfBirth;
     private Boolean IS_RESUMED;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
-        getIntentData();
+        getSharedPrefData();
         setData();
         setViewModel();
         setMotherNameRecycler();
@@ -49,13 +50,19 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         setObservers();
     }
 
-    private void getIntentData() {
-        IS_RESUMED = getIntent().getBooleanExtra(Config.IS_RESUMED, false);
-        if (IS_RESUMED) {
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getIntent().getSerializableExtra("getConsumerAccountDetailsResponse");
-        } else {
+    private void getSharedPrefData() {
 
+        //flow for new application
+        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
+            IS_RESUMED = false;
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
         }
+        //flow for drafted application
+        else {
+            IS_RESUMED = true;
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+        }
+
     }
 
     private void setObservers() {
@@ -79,7 +86,6 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
 
 
     private void setViewModel() {
-        registerEmployeeDetailsPostParams = new RegisterEmployeeDetailsPostParams();
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
     }
 
@@ -112,11 +118,13 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     }
 
     private void postPersonalDetailsOne() {
-        personalDetailsViewModel.postPersonalDetails(getParams(), getStringFromPref(Config.ACCESS_TOKEN));
+        showLoading();
+        personalDetailsViewModel.postPersonalDetailsOne(getParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
-    private RegisterEmployeeDetailsPostParams getParams() {
-        RegisterEmployeeDetailsPostConsumerList consumerListItem = new RegisterEmployeeDetailsPostConsumerList();
+    private PersonalDetailsOnePostModel getParams() {
+        PersonalDetailsOnePostModel personalDetailsOnePostModel = new PersonalDetailsOnePostModel();
+        PersonalDetailsOneConsumerListItemModel consumerListItem = new PersonalDetailsOneConsumerListItemModel();
 
         if (IS_RESUMED) {
             //flow for resumed application
@@ -126,8 +134,10 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
         } else {
             //flow for new application
-            consumerListItem.setRdaCustomerAccInfoId(SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            consumerListItem.setRdaCustomerProfileId(SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getRdaCustomerProfileId());
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
+            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
         }
 
         consumerListItem.setFullName(personalDetailsBinding.etFullName.getText().toString());
@@ -135,17 +145,15 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         consumerListItem.setMotherMaidenName(selectedMotherName);
         consumerListItem.setPlaceofBirth(selectedPlaceOfBirth);
         consumerListItem.setPrimary(true);
-        RegisterEmployeeDetailsPostData registerEmployeeDetailsPostData = new RegisterEmployeeDetailsPostData();
-        registerEmployeeDetailsPostData.consumerList.add(consumerListItem);
+        PersonalDetailsOneDataModel detailsOneDataModel = new PersonalDetailsOneDataModel();
+        detailsOneDataModel.getConsumerList().add(consumerListItem);
 
-        registerEmployeeDetailsPostParams.setData(registerEmployeeDetailsPostData);
-        return registerEmployeeDetailsPostParams;
+        personalDetailsOnePostModel.setData(detailsOneDataModel);
+        return personalDetailsOnePostModel;
     }
 
     private void goToPersonalDetailsTwo() {
         Intent intent = new Intent(this, PersonalDetailsTwoActivity.class);
-        intent.putExtra("registerEmployeeDetailsPostParams", registerEmployeeDetailsPostParams);
-        intent.putExtra(Config.IS_RESUMED,false);
         startActivity(intent);
     }
 
@@ -179,8 +187,8 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             fatherHusbandName = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getFatherHusbandName();
         } else {
             //flow for new application
-            fullName = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getFullName();
-            fatherHusbandName = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getFatherHusbandName();
+            fullName = registerVerifyOtpResponse.getData().getConsumerList().get(0).getFullName();
+            fatherHusbandName = registerVerifyOtpResponse.getData().getConsumerList().get(0).getFatherHusbandName();
         }
         if (fullName != null) {
             personalDetailsBinding.etFullName.setText(fullName);
@@ -199,7 +207,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             placeOfBirthSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getSuggestPlaceOfBirth();
         } else {
             //flow for new application
-            placeOfBirthSuggestions = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getSuggestPlaceOfBirth();
+            placeOfBirthSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(0).getSuggestPlaceOfBirth();
         }
 
         for (int i = 0; i < placeOfBirthSuggestions.size(); i++) {
@@ -221,7 +229,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             motherNameSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getSuggestMotherNames();
         } else {
             //flow for new application
-            motherNameSuggestions = SelectBankingModeActivity.globalRegisterVerifyOtp.getData().getConsumerList().get(0).getSuggestMotherNames();
+            motherNameSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(0).getSuggestMotherNames();
         }
 
         for (int i = 0; i < motherNameSuggestions.size(); i++) {

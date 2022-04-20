@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SaveKycPostData implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerProfileId;
-    public int averageMonthlySalary;
+    public Long averageMonthlySalary;
 
     public int getRdaCustomerAccInfoId() {
         return rdaCustomerAccInfoId;
@@ -23,11 +23,11 @@ public class SaveKycPostData implements Serializable {
         this.rdaCustomerProfileId = rdaCustomerProfileId;
     }
 
-    public int getAverageMonthlySalary() {
+    public Long getAverageMonthlySalary() {
         return averageMonthlySalary;
     }
 
-    public void setAverageMonthlySalary(int averageMonthlySalary) {
+    public void setAverageMonthlySalary(Long averageMonthlySalary) {
         this.averageMonthlySalary = averageMonthlySalary;
     }
 }

@@ -47,11 +47,11 @@ public class AccountInformationResponse implements Serializable {
 	private List<Object> modeOfMajorTransId;
 	private Object esoaInd;
 	private Object physicalCardInd;
-	private Object customerAccountTypeId;
+	private Integer customerAccountTypeId;
 	private Object currencyTypeId;
 	private int bankingModeId;
 	private Object internetBankingInd;
-	private Object purposeOfAccountId;
+	private Integer purposeOfAccountId;
 	private Object referredBy;
 	private Object beneficialOwnerAccount;
 	private Object rdaCustomerJointAccountId;
@@ -233,7 +233,7 @@ public class AccountInformationResponse implements Serializable {
 		return physicalCardInd;
 	}
 
-	public Object getCustomerAccountTypeId(){
+	public Integer getCustomerAccountTypeId(){
 		return customerAccountTypeId;
 	}
 
@@ -249,7 +249,7 @@ public class AccountInformationResponse implements Serializable {
 		return internetBankingInd;
 	}
 
-	public Object getPurposeOfAccountId(){
+	public Integer getPurposeOfAccountId(){
 		return purposeOfAccountId;
 	}
 

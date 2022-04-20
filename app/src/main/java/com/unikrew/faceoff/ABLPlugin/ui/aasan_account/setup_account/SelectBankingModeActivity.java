@@ -1,6 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,9 +61,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private int BANKING_MODE_ID = 0;
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
-
-    public static RegisterVerifyOtpResponse globalRegisterVerifyOtp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,14 +103,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     }
 
     private void selectIslamicBanking() {
-        bankingModeBinding.llConventional.setBackground(getDrawable(R.drawable.rounded_corner_white));
-        bankingModeBinding.llIslamic.setBackground(getDrawable(R.drawable.rounded_corner_selected));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
         BANKING_MODE_ID = Config.ISLAMIC_BANKING;
     }
 
     private void selectConventionalBanking() {
-        bankingModeBinding.llConventional.setBackground(getDrawable(R.drawable.rounded_corner_selected));
-        bankingModeBinding.llIslamic.setBackground(getDrawable(R.drawable.rounded_corner_white));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
         BANKING_MODE_ID = Config.CONVENTIONAL_BANKING;
     }
 
@@ -137,8 +135,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        consumerListItemVerifyOtp.setMobileNo("66666666666");
-        consumerListItemVerifyOtp.setIdNumber("7359329075944");
+        consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
+        consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
@@ -161,10 +159,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
                 Log.d("branchesResponse", "onChanged: " + registerVerifyOtpResponse);
                 dismissLoading();
-                goToSelectAccont(registerVerifyOtpResponse);
-                globalRegisterVerifyOtp = registerVerifyOtpResponse;
+                goToSelectAccont();
                 saveSerializableInPref("registerVerifyOtpResponse",registerVerifyOtpResponse);
-                saveStringInPref(Config.ACCESS_TOKEN,registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccessToken());
             }
         });
         selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
@@ -188,10 +184,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     }
 
-    private void goToSelectAccont(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
+    private void goToSelectAccont() {
         Intent intent = new Intent(SelectBankingModeActivity.this, SelectAccountTypeActivity.class);
-        intent.putExtra("registerVerifyOtpResponse", registerVerifyOtpResponse);
-        intent.putExtra(Config.IS_RESUMED,false);
         startActivity(intent);
     }
 
