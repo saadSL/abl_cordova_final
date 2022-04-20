@@ -68,29 +68,30 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                saveSerializableInPref("getConsumerAccountDetailsResponse",getConsumerAccountDetailsResponse);
+                saveSerializableInPref(Config.CONSUMER_ACC_DETAILS,getConsumerAccountDetailsResponse);
 
-                if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
-
-                    openActivity(SelectBankingModeActivity.class);
-
-                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
-
-                    openActivity(SelectAccountTypeActivity.class);
-
-                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
-
-                    openActivity(SelectPreferredAccountActivity.class);
-
-                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
-
-                    openActivity(PersonalDetailsOneActivity.class);
-
-                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
-
-                    openActivity(PersonalDetailsTwoActivity.class);
-
-                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
+//                if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
+//
+//                    openActivity(SelectBankingModeActivity.class);
+//
+//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
+//
+//                    openActivity(SelectAccountTypeActivity.class);
+//
+//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
+//
+//                    openActivity(SelectPreferredAccountActivity.class);
+//
+//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
+//
+//                    openActivity(PersonalDetailsOneActivity.class);
+//
+//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
+//
+//                    openActivity(PersonalDetailsTwoActivity.class);
+//
+//                } else
+                    if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
 
                     openActivity(EmploymentDetailsActivity.class);
 

@@ -29,7 +29,14 @@
         <item name="colorAccent">@color/black</item>
     </style>
 
+    <style name="grey_color">
+        <item name="colorAccent">@color/grey</item>
+    </style>
 
+    <style name="yellow_color">
+        <item name="colorAccent">@color/yellow</item>
+        <item name="colorControlNormal">@color/yellow</item>
+    </style>
 
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->
@@ -43,4 +50,6 @@
         <item name="android:colorForeground">#42221f1f
         </item>
     </style>
+
+
 </resources>
