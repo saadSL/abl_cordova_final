@@ -119,6 +119,6 @@ public interface RetrofitApi {
     Call<SaveAttachmentResponse> saveAttachment(@Body SaveAttachmentPostParams postParams,@Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
-    Call<SaveNatureOfAccountResponse> saveNatureOfAccount(SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
+    Call<SaveNatureOfAccountResponse> saveNatureOfAccount(@Body SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
 
 }

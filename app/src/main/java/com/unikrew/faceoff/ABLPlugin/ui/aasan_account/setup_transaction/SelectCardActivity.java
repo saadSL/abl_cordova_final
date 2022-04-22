@@ -129,6 +129,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         layoutSetupTransactionBinding.btnSms.setOnClickListener(this);
         layoutSetupTransactionBinding.btnEmail.setOnClickListener(this);
         layoutSetupTransactionBinding.btnContainer.btnNext.setOnClickListener(this);
+        layoutSetupTransactionBinding.btnContainer.btBack.setOnClickListener(this);
         layoutSetupTransactionBinding.llClassicCard.setOnClickListener(this);
         layoutSetupTransactionBinding.llVdcCard.setOnClickListener(this);
     }
@@ -227,7 +228,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 } else {
                     showAlert(Config.errorType, "Please select any one card !!!");
                 }
-
+                break;
+            case R.id.bt_back:
+                finish();
                 break;
         }
     }

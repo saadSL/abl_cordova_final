@@ -8,6 +8,7 @@
         android:id="@+id/del_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/SCBSwitch"
         android:text="Don't Ask Again"
         android:layout_marginLeft="@dimen/_10sdp"/>
 
