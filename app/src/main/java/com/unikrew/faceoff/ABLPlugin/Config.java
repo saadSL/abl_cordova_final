@@ -13,6 +13,7 @@ public class Config {
     public static String GET_CONSUMER_RESPONSE = "getConsumerAccountDetailsResponse";
     //for new application
     public static String REG_OTP_RESPONSE = "registerVerifyOtpResponse";
+    public static int COUNTRY_ID = 157;
 
     public static String ASAAN_ACCOUNT_PREF = "asaanAccountPref";
     public static String RESPONSE = "response";

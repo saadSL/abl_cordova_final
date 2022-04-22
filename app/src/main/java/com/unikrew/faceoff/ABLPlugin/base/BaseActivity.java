@@ -60,11 +60,11 @@ public class BaseActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    protected Serializable getSerializableFromPref(String key,Class<? extends Serializable> className){
+    protected Serializable getSerializableFromPref(String key,Serializable className){
         SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString(key, "");
-        return gson.fromJson(json, className);
+        return gson.fromJson(json, className.getClass());
     }
 
     protected String getStringFromPref(String key) {

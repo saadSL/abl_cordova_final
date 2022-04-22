@@ -97,7 +97,8 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         addressListItem.setNearestLandMark(personalDetailsTwoBinding.etLandmark.getText().toString());
         addressListItem.setCustomerAddress(personalDetailsTwoBinding.etAddress.getText().toString());
         addressListItem.setCity(personalDetailsTwoBinding.etCity.getText().toString());
-        addressListItem.setCountryId(157);
+        addressListItem.setCustomerTown(personalDetailsTwoBinding.etTown.getText().toString());
+        addressListItem.setCountryId(Config.COUNTRY_ID);
 
         userAddressDataItem.getAddressesList().add(addressListItem);
         userAddressDataItem.setPrimary(true);

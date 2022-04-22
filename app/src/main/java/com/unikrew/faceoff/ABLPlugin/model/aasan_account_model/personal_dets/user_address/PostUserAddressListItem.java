@@ -6,7 +6,17 @@ public class PostUserAddressListItem implements Serializable {
 	private int rdaCustomerId;
 	private String customerAddress;
 	private String nearestLandMark;
+
+	public String getCustomerTown() {
+		return customerTown;
+	}
+
+	public void setCustomerTown(String customerTown) {
+		this.customerTown = customerTown;
+	}
+
 	private String city;
+	private String customerTown;
 
 	public String getCountry() {
 		return country;
