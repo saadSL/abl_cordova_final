@@ -63,6 +63,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     private void setLayout() {
         layoutBinding.screenHeader.stepsHeading1.setText("Resume");
         layoutBinding.screenHeader.stepsHeading2.setText("Application");
+        set();
+        initializeAdapter();
     }
 
     private void observe() {

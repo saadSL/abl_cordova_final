@@ -146,7 +146,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
-            natureOfAccountPostParams.getData().setCustomerTypeId(accountInformation.getCunstomerTypeId());
+            natureOfAccountPostParams.getData().setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
             natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
 
         } else {
@@ -279,7 +279,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.URL_SAFE | Base64.NO_WRAP);
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
 
     private void uploadDocuments() {

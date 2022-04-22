@@ -186,6 +186,7 @@
     <string name="single">Single</string>
     <string name="joint">Joint</string>
     <string name="scan_your_cnic_front">Scan Your Cnic Front</string>
+    <string name="scan_your_cnic_back">Scan Your Cnic Back</string>
     <string name="im_not_a_robot">I\'m Not A Robot</string>
     <string name="dont_have_original_cnic">"If you don’t have your original CNIC with you at present, you can open myWallet account.  If you wish to continue <a href="#">Click here</a> "</string>
     <string name="summary">Summary</string>

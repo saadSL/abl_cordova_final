@@ -178,7 +178,7 @@
                             android:fontFamily="@font/worksans_regular"
                             android:textColor="@color/black"
                             android:layout_marginStart="@dimen/_10sdp"
-                            android:text="@string/scan_your_cnic_front"/>
+                            android:text="@string/scan_your_cnic_back"/>
 
                         <ImageView
                             android:visibility="gone"

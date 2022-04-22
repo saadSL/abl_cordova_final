@@ -51,6 +51,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     Boolean alreadyExist = false;
     public ArrayList<ViewAppsGenerateOtpPostAttachment> attachments = new ArrayList<ViewAppsGenerateOtpPostAttachment>();
     private MobileNumberAvailabilityBinding mobileNumberAvailabilityBinding;
+    private boolean returnedFromNextScreen = false;
 
 
     @Override
@@ -67,6 +68,20 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         mobileNumberAvailabilityBinding.screenHeader.stepsHeading1.setText("Let's");
         mobileNumberAvailabilityBinding.screenHeader.stepsHeading2.setText("Get Started");
         mobileNumberAvailabilityBinding.btnContainer.btBack.setVisibility(View.GONE);
+        if (returnedFromNextScreen){
+            mobileNumberAvailabilityBinding.llCnic.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.llCnicUploadFront.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.llCnicUploadBack.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.imgCnicFrontSmall.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.imgCnicFrontSmall.setImageBitmap(null);
+            mobileNumberAvailabilityBinding.imgCnicBackSmall.setVisibility(View.GONE);
+            mobileNumberAvailabilityBinding.imgCnicBackSmall.setImageBitmap(null);
+            generateOtp = false;
+            returnedFromNextScreen = false;
+        }
+
     }
 
     private void setBinding() {
@@ -83,12 +98,14 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
                 if ( alreadyExist ){
                     if (generateOtp){
+                        returnedFromNextScreen = true;
                         openOtpVerificationActivity(viewAppsGenerateOtpResponse);
                     }else{
                         showCnic(viewAppsGenerateOtpResponse);
                     }
                 }else{
                     if (generateOtp){
+                        returnedFromNextScreen = true;
                         openOtpVerificationActivity(viewAppsGenerateOtpResponse);
                     }else {
                         openCnicUploadActivity();
@@ -176,25 +193,25 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_cnic_upload_front:
                 frontPic = true;
                 backPic = false;
+                getCnicFrontImage();
                 hideCnicImageResources(
                         mobileNumberAvailabilityBinding.llCnicBack,
                         mobileNumberAvailabilityBinding.imgCnicBackSmall
                 );
-                getCnicFrontImage();
                 break;
             case R.id.ll_cnic_upload_back:
                 backPic = true;
                 frontPic = false;
+                getCnicBackImage();
                 hideCnicImageResources(
                         mobileNumberAvailabilityBinding.llCnicFront,
                         mobileNumberAvailabilityBinding.imgCnicFrontSmall
                 );
-                getCnicBackImage();
                 break;
         }
     }
 
-    private void hideCnicImageResources(LinearLayout layout,ImageView img) {
+    private void  hideCnicImageResources(LinearLayout layout,ImageView img) {
         layout.setVisibility(View.GONE);
         img.setVisibility(View.VISIBLE);
         img.setImageBitmap(image);
@@ -272,6 +289,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
                 showCnicImageResource(
                     mobileNumberAvailabilityBinding.llCnicFront
                 );
+                mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
                 cnicFrontPic = convertToBase64(image);
 
             }else if (image == null && backPic){
@@ -293,9 +311,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private String convertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
 
     private void viewAppsGenerateOtpPostData() {
