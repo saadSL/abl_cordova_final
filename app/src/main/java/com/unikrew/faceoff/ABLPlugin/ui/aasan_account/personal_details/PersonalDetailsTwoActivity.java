@@ -49,6 +49,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         setData();
         clicks();
         setObserver();
+        setLogoLayout(personalDetailsTwoBinding.layoutLogo.tvDate);
     }
 
     private void setObserver() {

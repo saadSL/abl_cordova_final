@@ -40,6 +40,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         getSharedPrefData();
         setViewModel();
         setObservers();
+        setLogoLayout(preferredAccountBinding.layoutLogo.tvDate);
     }
 
     private void setObservers() {
@@ -139,7 +140,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
             accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
-            accountTypePostParams.getData().setCustomerAccountTypeId(accountInformation.getCustomerAccountTypeId());
+            accountTypePostParams.getData().setCustomerAccountTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
             accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
             accountTypePostParams.getData().setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
         } else {

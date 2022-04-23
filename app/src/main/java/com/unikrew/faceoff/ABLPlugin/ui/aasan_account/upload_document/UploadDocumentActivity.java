@@ -32,6 +32,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.S
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
@@ -66,6 +67,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         getSharedPrefData();
         setViewModel();
         observe();
+        setLogoLayout(uploadDocumentsBinding.logoToolbar.tvDate);
     }
 
     private void getSharedPrefData() {
@@ -131,7 +133,8 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void openReviewDetailsActivity() {
-        showAlert(Config.successType, "Opening Review Details !!!");
+        Intent intent = new Intent(this, ReviewDocumentActivity.class);
+        startActivity(intent);
     }
 
     private void saveNatureOfAccount() {

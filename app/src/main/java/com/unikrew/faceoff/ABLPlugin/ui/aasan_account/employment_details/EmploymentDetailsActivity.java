@@ -65,6 +65,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         getOccupation();
         getProfession();
         observe();
+        setLogoLayout(employmentDetailsBinding.layoutLogo.tvDate);
     }
 
     private void observe() {

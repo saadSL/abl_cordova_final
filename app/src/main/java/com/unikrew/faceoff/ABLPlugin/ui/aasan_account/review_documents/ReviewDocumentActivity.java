@@ -11,6 +11,10 @@ import androidx.annotation.Nullable;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 
 public class ReviewDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -18,6 +22,11 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     private ReviewDetailsBinding reviewDetailsBinding;
     private boolean termsAndConditions = false;
     private boolean declaration = false;
+    private Boolean IS_RESUMED;
+
+
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +34,68 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
         setBinding();
         setLayout();
         setClicks();
+        getSharedPrefData();
+        setResponse();
+        setLogoLayout(reviewDetailsBinding.logoToolbar.tvDate);
+    }
+
+    private void setResponse() {
+        if (IS_RESUMED){
+            setAccountDetails();
+        }else{
+
+        }
+    }
+
+    private void setAccountDetails() {
+        if (IS_RESUMED){
+            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+            reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+            if (accountInformation.getProofOfIncomeInd() == "1"){
+                reviewDetailsBinding.tvProofOfIncome.setText("Yes");
+            }else{
+                reviewDetailsBinding.tvProofOfIncome.setText("No");
+            }
+
+            if (accountInformation.getProofOfIncomeInd() == "1"){
+                reviewDetailsBinding.etProofOfIncome.setText("Yes");
+            }else{
+                reviewDetailsBinding.etProofOfIncome.setText("No");
+            }
+
+        }else{
+
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+            reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+            if (accountInformation.getProofOfIncomeInd() == "1"){
+                reviewDetailsBinding.tvProofOfIncome.setText("Yes");
+            }else{
+                reviewDetailsBinding.tvProofOfIncome.setText("No");
+            }
+
+            if (accountInformation.getProofOfIncomeInd() == "1"){
+                reviewDetailsBinding.etProofOfIncome.setText("Yes");
+            }else{
+                reviewDetailsBinding.etProofOfIncome.setText("No");
+            }
+        }
+    }
+
+    private void getSharedPrefData() {
+
+        //flow for new application
+        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
+            IS_RESUMED = false;
+            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        }
+        //flow for drafted application
+        else {
+            IS_RESUMED = true;
+            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+        }
+
     }
 
     private void setClicks() {

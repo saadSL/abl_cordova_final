@@ -44,6 +44,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
+        setLogoLayout(accountTypeBinding.layoutLogo.tvDate);
         getSharedPrefData();
         getPurposeOfAccount();
         setObservers();

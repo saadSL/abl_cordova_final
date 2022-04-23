@@ -48,6 +48,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         setPlaceOfBirthRecycler();
         clicks();
         setObservers();
+        setLogoLayout(personalDetailsBinding.layoutLogo.tvDate);
     }
 
     private void getSharedPrefData() {

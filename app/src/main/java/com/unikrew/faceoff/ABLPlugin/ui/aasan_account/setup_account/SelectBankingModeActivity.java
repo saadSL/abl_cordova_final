@@ -66,6 +66,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setBinding();
         setViewModel();
+        setLogoLayout(bankingModeBinding.layoutLogo.tvDate);
 //        getLatLng();
         getBranchesFromNetwork(30.18817, 71.4358);
         setObservers();

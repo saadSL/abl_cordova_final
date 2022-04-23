@@ -47,6 +47,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         getSharedPrefData();
         checkLayouts();
         observe();
+        setLogoLayout(layoutSetupTransactionBinding.logoToolbar.tvDate);
 
     }
 

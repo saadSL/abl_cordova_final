@@ -65,6 +65,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         layoutBinding.screenHeader.stepsHeading2.setText("Application");
         set();
         initializeAdapter();
+        setLogoLayout(layoutBinding.logoToolbar.tvDate);
     }
 
     private void observe() {

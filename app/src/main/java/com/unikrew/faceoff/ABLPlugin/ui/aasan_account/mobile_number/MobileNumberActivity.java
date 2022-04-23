@@ -81,8 +81,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             generateOtp = false;
             returnedFromNextScreen = false;
         }
-
+        setLogoLayout(mobileNumberAvailabilityBinding.logoToolbar.tvDate);
     }
+
 
     private void setBinding() {
         mobileNumberAvailabilityBinding = MobileNumberAvailabilityBinding.inflate(getLayoutInflater());
@@ -405,12 +406,18 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     /* Checking Ported network to true or false.  */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (isChecked) {
-            showMobileInfoDialogue();
-            isPortedMobileNetwork = true;
-        } else {
-            isPortedMobileNetwork = false;
+        switch (compoundButton.getId()){
+            case R.id.ported_mobile_network_switch:
+//                if (isChecked) {
+//                    showMobileInfoDialogue();
+//                    isPortedMobileNetwork = true;
+//                } else {
+//                    isPortedMobileNetwork = false;
+//                }
+                getCurrentDate();
+                break;
         }
+
     }
 
     @Override

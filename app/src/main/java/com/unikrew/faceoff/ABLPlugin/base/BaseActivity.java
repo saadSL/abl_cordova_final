@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +30,10 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.Config;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -41,6 +46,10 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setLoader();
         setSharedPref();
+    }
+
+    public void setLogoLayout(TextView tvDate) {
+        tvDate.setText(getCurrentDate());
     }
 
     private void setSharedPref() {
@@ -60,11 +69,15 @@ public class BaseActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    protected Serializable getSerializableFromPref(String key,Serializable className){
+    protected Serializable getSerializableFromPref(String key,Class<? extends Serializable> className){
+
         SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
+
         Gson gson = new Gson();
+
         String json = prefs.getString(key, "");
-        return gson.fromJson(json, className.getClass());
+
+        return gson.fromJson(json, className);
     }
 
     protected String getStringFromPref(String key) {
@@ -301,5 +314,29 @@ public class BaseActivity extends AppCompatActivity {
         loader.dismiss();
     }
 
+    public String getCurrentDate(){
+        Date date = new Date();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int dayName = calendar.get(Calendar.DAY_OF_WEEK);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        String[] days = {"","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+        String[] months = new String[12];
+        months[ 0 ] = "January";
+        months[ 1 ] = "February";
+        months[ 2 ] = "March";
+        months[ 3 ] = "April";
+        months[ 4 ] = "May";
+        months[ 5 ] = "June";
+        months[ 6 ] = "July";
+        months[ 7 ] = "August";
+        months[ 8 ] = "September";
+        months[ 9 ] = "October";
+        months[ 10 ] = "November";
+        months[ 11 ] = "December";
+        return days[dayName-1]+","+months[month]+" "+day+", "+year;
+    }
 
 }

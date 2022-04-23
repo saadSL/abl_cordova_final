@@ -56,6 +56,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         getSharedPrefData();
         setObservers();
         clicks();
+        setLogoLayout(personalDetailsThreeBinding.layoutLogo.tvDate);
     }
 
     private void getSharedPrefData() {

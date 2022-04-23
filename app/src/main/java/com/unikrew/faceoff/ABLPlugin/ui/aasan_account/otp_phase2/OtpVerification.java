@@ -58,6 +58,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     private void setLayout() {
         binding.screenHeader.stepsHeading1.setText("Verify");
         binding.screenHeader.stepsHeading2.setText("OTP");
+        setLogoLayout(binding.logoToolbar.tvDate);
     }
 
     private void setBinding() {
