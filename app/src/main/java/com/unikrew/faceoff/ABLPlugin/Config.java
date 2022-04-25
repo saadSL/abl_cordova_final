@@ -4,7 +4,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 
 public class Config {
     //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
-    public static final String BASE_URL = "http://192.168.8.100:8080";
+    public static final String BASE_URL = "http://10.100.102.124:8080";
     public static final String PROFILE_ID = "profile_id";
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
 

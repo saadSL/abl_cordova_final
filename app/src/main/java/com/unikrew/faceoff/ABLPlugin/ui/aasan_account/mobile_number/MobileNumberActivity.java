@@ -408,13 +408,12 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()){
             case R.id.ported_mobile_network_switch:
-//                if (isChecked) {
-//                    showMobileInfoDialogue();
-//                    isPortedMobileNetwork = true;
-//                } else {
-//                    isPortedMobileNetwork = false;
-//                }
-                getCurrentDate();
+                if (isChecked) {
+                    showMobileInfoDialogue();
+                    isPortedMobileNetwork = true;
+                } else {
+                    isPortedMobileNetwork = false;
+                }
                 break;
         }
 
