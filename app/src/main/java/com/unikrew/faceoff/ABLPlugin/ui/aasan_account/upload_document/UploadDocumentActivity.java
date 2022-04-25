@@ -31,7 +31,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.S
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
 import com.unikrew.faceoff.Config;
 
@@ -104,6 +103,8 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                     uploadDocuments();
                 } else if (savingForSig) {
                     savingForSig = false;
+                    uploadDocuments();
+                }else{
                     saveNatureOfAccount();
                 }
             }
@@ -301,14 +302,13 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                     attachmentPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN)
             );
-
         }
     }
 
     private void setAttachmentPostParams() {
         if (savingForPic) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.LIVE_PHOTO);
-            attachmentPostParams.getData().setEntityId(0);
+            attachmentPostParams.getData().setEntityId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             attachmentPostParams.getData().setFileName("PHOTO");
             attachmentPostParams.getData().setMimeType("");
             attachmentPostParams.getData().setPath("");
@@ -316,7 +316,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
         } else if (savingForSig) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.SIGNATURE_TYPE_ID);
-            attachmentPostParams.getData().setEntityId(443);
+            attachmentPostParams.getData().setEntityId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             attachmentPostParams.getData().setFileName("SIGNATURE");
             attachmentPostParams.getData().setMimeType("");
             attachmentPostParams.getData().setPath("");
@@ -344,6 +344,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.rb_joint:
                 if (isChecked) {
+                    showAdditionalApplicantLayout();
                     natureOfAccountId = Config.JOINT;
                 }
                 break;
@@ -353,6 +354,10 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 }
                 break;
         }
+    }
+
+    private void showAdditionalApplicantLayout() {
+        uploadDocumentsBinding.llJoint.setVisibility(View.VISIBLE);
     }
 
     @Override

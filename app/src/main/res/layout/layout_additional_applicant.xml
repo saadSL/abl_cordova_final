@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <include layout="@layout/layout_steps"
+        android:id="@+id/steps"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_additional_applicant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"/>
+
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include layout="@layout/layout_abl_chat_container"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

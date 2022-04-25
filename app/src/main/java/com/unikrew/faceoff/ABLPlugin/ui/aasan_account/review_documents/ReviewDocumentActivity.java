@@ -13,9 +13,13 @@ import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
+
+import java.util.List;
 
 public class ReviewDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -40,45 +44,508 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void setResponse() {
+        setSummary();
+        setAccountDetails();
+        setYourDetails();
+        setCurrentMailingAddress();
+        setTransactionDetails();
+    }
+
+    private void setTransactionDetails() {
         if (IS_RESUMED){
-            setAccountDetails();
+            GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
+
+            if (consumerDetails.getAccountInformation().getAtmType()!=null){
+                reviewDetailsBinding.tvDebitCard.setText(consumerDetails.getAccountInformation().getAtmType().toString());
+                reviewDetailsBinding.etDebitCard.setText(consumerDetails.getAccountInformation().getAtmType().toString());
+            }else{
+                reviewDetailsBinding.tvDebitCard.setText("---");
+                reviewDetailsBinding.etDebitCard.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getChequeBookReqInd()!=null){
+                reviewDetailsBinding.tvChequeBok.setText(consumerDetails.getAccountInformation().getChequeBookReqInd().toString());
+                reviewDetailsBinding.etChequeBok.setText(consumerDetails.getAccountInformation().getChequeBookReqInd().toString());
+            }else{
+                reviewDetailsBinding.tvChequeBok.setText("---");
+                reviewDetailsBinding.etChequeBok.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getTransactionalAlert()!=null){
+                reviewDetailsBinding.tvTransactionAlerts.setText(consumerDetails.getAccountInformation().getTransactionalAlert().toString());
+                reviewDetailsBinding.etTransactionAlerts.setText(consumerDetails.getAccountInformation().getTransactionalAlert().toString());
+            }else{
+                reviewDetailsBinding.tvTransactionAlerts.setText("---");
+                reviewDetailsBinding.etTransactionAlerts.setText("---");
+            }
+        }else{
+            ConsumerListItemResponse consumerDetails = registerVerifyOtpResponse.getData().getConsumerList().get(0);
+
+            if (consumerDetails.getAccountInformation().getAtmType()!=null){
+                reviewDetailsBinding.tvDebitCard.setText(consumerDetails.getAccountInformation().getAtmType().toString());
+                reviewDetailsBinding.etDebitCard.setText(consumerDetails.getAccountInformation().getAtmType().toString());
+            }else{
+                reviewDetailsBinding.tvDebitCard.setText("---");
+                reviewDetailsBinding.etDebitCard.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getChequeBookReqInd()!=null){
+                reviewDetailsBinding.tvChequeBok.setText(consumerDetails.getAccountInformation().getChequeBookReqInd().toString());
+                reviewDetailsBinding.etChequeBok.setText(consumerDetails.getAccountInformation().getChequeBookReqInd().toString());
+            }else{
+                reviewDetailsBinding.tvChequeBok.setText("---");
+                reviewDetailsBinding.etChequeBok.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getTransactionalAlert()!=null){
+                reviewDetailsBinding.tvTransactionAlerts.setText(consumerDetails.getAccountInformation().getTransactionalAlert().toString());
+                reviewDetailsBinding.etTransactionAlerts.setText(consumerDetails.getAccountInformation().getTransactionalAlert().toString());
+            }else{
+                reviewDetailsBinding.tvTransactionAlerts.setText("---");
+                reviewDetailsBinding.etTransactionAlerts.setText("---");
+            }
+        }
+    }
+
+    private void setSummary() {
+        if (IS_RESUMED){
+            GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().consumerList.get(0);
+            if (consumerDetails.getAccountInformation().getBankingMode()!=null){
+                reviewDetailsBinding.tvBankingMode.setText(consumerDetails.getAccountInformation().getBankingMode());
+            }else{
+                reviewDetailsBinding.tvBankingMode.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCustomerBranch()!=null){
+                reviewDetailsBinding.branch.setText(consumerDetails.getAccountInformation().getCustomerBranch());
+            }else{
+                reviewDetailsBinding.branch.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCustomerAccountType()!=null){
+                reviewDetailsBinding.accountType.setText(consumerDetails.getAccountInformation().getCustomerAccountType().toString());
+            }else{
+                reviewDetailsBinding.accountType.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCurrencyType()!=null){
+                reviewDetailsBinding.currency.setText(consumerDetails.getAccountInformation().getCurrencyType().toString());
+            }else{
+                reviewDetailsBinding.currency.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getAccountVariant()!=null){
+                reviewDetailsBinding.account.setText(consumerDetails.getAccountInformation().getAccountVariant().toString());
+            }else{
+                reviewDetailsBinding.account.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getNatureOfAccount()!=null){
+                reviewDetailsBinding.accountNature.setText(consumerDetails.getAccountInformation().getNatureOfAccount().toString());
+            }else{
+                reviewDetailsBinding.accountNature.setText("---");
+            }
+
+            if (consumerDetails.getMobileNo()!=null){
+                reviewDetailsBinding.mobileNumber.setText(consumerDetails.getMobileNo());
+            }else{
+                reviewDetailsBinding.mobileNumber.setText("---");
+            }
+
+            if (consumerDetails.getIdNumber()!=null){
+                reviewDetailsBinding.cnic.setText(consumerDetails.getIdNumber());
+            }else{
+                reviewDetailsBinding.cnic.setText("---");
+            }
+
+            if (consumerDetails.getDateOfBirth()!=null){
+                reviewDetailsBinding.dob.setText(consumerDetails.getDateOfBirth().toString());
+            }else{
+                reviewDetailsBinding.dob.setText("---");
+            }
+
+            if (consumerDetails.getDateOfIssue()!=null){
+                reviewDetailsBinding.cnicIssueDate.setText(consumerDetails.getDateOfIssue().toString());
+            }else{
+                reviewDetailsBinding.cnicIssueDate.setText("---");
+            }
+
+            if (consumerDetails.getExpiryDate()!=null){
+                reviewDetailsBinding.cnicExpiryDate.setText(consumerDetails.getExpiryDate().toString());
+            }else{
+                reviewDetailsBinding.cnicExpiryDate.setText("---");
+            }
+
+            if (consumerDetails.getMotherMaidenName()!=null){
+                reviewDetailsBinding.motherName.setText(consumerDetails.getMotherMaidenName());
+            }else{
+                reviewDetailsBinding.motherName.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCountry()!=null){
+                reviewDetailsBinding.country.setText(consumerDetails.getAddresses().get(0).getCountry().toString());
+            }else{
+                reviewDetailsBinding.country.setText("---");
+            }
+        }else{
+            ConsumerListItemResponse consumerDetails = registerVerifyOtpResponse.getData().getConsumerList().get(0);
+            if (consumerDetails.getAccountInformation().getBankingMode()!=null){
+                reviewDetailsBinding.tvBankingMode.setText(consumerDetails.getAccountInformation().getBankingMode().toString());
+            }else{
+                reviewDetailsBinding.tvBankingMode.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCustomerBranch()!=null){
+                reviewDetailsBinding.branch.setText(consumerDetails.getAccountInformation().getCustomerBranch());
+            }else{
+                reviewDetailsBinding.branch.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCustomerAccountType()!=null){
+                reviewDetailsBinding.accountType.setText(consumerDetails.getAccountInformation().getCustomerAccountType().toString());
+            }else{
+                reviewDetailsBinding.accountType.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getCurrencyType()!=null){
+                reviewDetailsBinding.currency.setText(consumerDetails.getAccountInformation().getCurrencyType().toString());
+            }else{
+                reviewDetailsBinding.currency.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getAccountVariant()!=null){
+                reviewDetailsBinding.account.setText(consumerDetails.getAccountInformation().getAccountVariant().toString());
+            }else{
+                reviewDetailsBinding.account.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getNatureOfAccount()!=null){
+                reviewDetailsBinding.accountNature.setText(consumerDetails.getAccountInformation().getNatureOfAccount().toString());
+            }else{
+                reviewDetailsBinding.accountNature.setText("---");
+            }
+
+            if (consumerDetails.getMobileNo()!=null){
+                reviewDetailsBinding.mobileNumber.setText(consumerDetails.getMobileNo().toString());
+            }else{
+                reviewDetailsBinding.mobileNumber.setText("---");
+            }
+
+            if (consumerDetails.getIdNumber()!=null){
+                reviewDetailsBinding.cnic.setText(consumerDetails.getIdNumber().toString());
+            }else{
+                reviewDetailsBinding.cnic.setText("---");
+            }
+
+            if (consumerDetails.getDateOfBirth()!=null){
+                reviewDetailsBinding.dob.setText(consumerDetails.getDateOfBirth().toString());
+            }else{
+                reviewDetailsBinding.dob.setText("---");
+            }
+
+            if (consumerDetails.getDateOfIssue()!=null){
+                reviewDetailsBinding.cnicIssueDate.setText(consumerDetails.getDateOfIssue().toString());
+            }else{
+                reviewDetailsBinding.cnicIssueDate.setText("---");
+            }
+
+            if (consumerDetails.getExpiryDate()!=null){
+                reviewDetailsBinding.cnicExpiryDate.setText(consumerDetails.getExpiryDate().toString());
+            }else{
+                reviewDetailsBinding.cnicExpiryDate.setText("---");
+            }
+
+            if (consumerDetails.getMotherMaidenName()!=null){
+                reviewDetailsBinding.motherName.setText(consumerDetails.getMotherMaidenName());
+            }else{
+                reviewDetailsBinding.motherName.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCountry()!=null){
+                reviewDetailsBinding.country.setText(consumerDetails.getAddresses().get(0).getCountry().toString());
+            }else{
+                reviewDetailsBinding.country.setText("---");
+            }
+        }
+    }
+
+    private void setCurrentMailingAddress() {
+        if (IS_RESUMED){
+            GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().consumerList.get(0);
+            if (consumerDetails.getAddresses().get(0).getCustomerAddress()!=null){
+                reviewDetailsBinding.tvAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
+                reviewDetailsBinding.etAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
+            }else{
+                reviewDetailsBinding.tvAddress.setText("---");
+                reviewDetailsBinding.etAddress.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getNearestLandMark()!=null){
+                reviewDetailsBinding.tvNearestLandmark.setText(consumerDetails.getAddresses().get(0).getNearestLandMark());
+                reviewDetailsBinding.etNearestLandmark.setText(consumerDetails.getAddresses().get(0).getNearestLandMark());
+            }else{
+                reviewDetailsBinding.tvNearestLandmark.setText("---");
+                reviewDetailsBinding.etNearestLandmark.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCustomerTown()!=null){
+                reviewDetailsBinding.tvTehsilTown.setText(consumerDetails.getAddresses().get(0).getCustomerTown());
+                reviewDetailsBinding.etTehsilTown.setText(consumerDetails.getAddresses().get(0).getCustomerTown());
+            }else{
+                reviewDetailsBinding.tvTehsilTown.setText("---");
+                reviewDetailsBinding.etTehsilTown.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCity()!=null){
+                reviewDetailsBinding.tvCity.setText(consumerDetails.getAddresses().get(0).getCity());
+                reviewDetailsBinding.etCity.setText(consumerDetails.getAddresses().get(0).getCity());
+            }else{
+                reviewDetailsBinding.etCity.setText("----");
+                reviewDetailsBinding.tvCity.setText("----");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCountry()!=null){
+                reviewDetailsBinding.tvCountry.setText(consumerDetails.getAddresses().get(0).getCountry());
+                reviewDetailsBinding.etCountry.setText(consumerDetails.getAddresses().get(0).getCountry());
+            }else{
+                reviewDetailsBinding.tvCountry.setText("---");
+                reviewDetailsBinding.etCountry.setText("---");
+            }
+
+            if (consumerDetails.getEmailAddress()!=null){
+                reviewDetailsBinding.tvEmailAddress.setText(consumerDetails.getEmailAddress());
+                reviewDetailsBinding.etEmailAddress.setText(consumerDetails.getEmailAddress());
+            }else{
+                reviewDetailsBinding.tvEmailAddress.setText("---");
+                reviewDetailsBinding.etEmailAddress.setText("---");
+            }
+        }else{
+            ConsumerListItemResponse consumerDetails = registerVerifyOtpResponse.getData().getConsumerList().get(0);
+            if (consumerDetails.getAddresses().get(0).getCustomerAddress()!=null){
+                reviewDetailsBinding.tvAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
+                reviewDetailsBinding.etAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
+            }else{
+                reviewDetailsBinding.tvAddress.setText("---");
+                reviewDetailsBinding.etAddress.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getNearestLandMark()!=null){
+                reviewDetailsBinding.tvNearestLandmark.setText(consumerDetails.getAddresses().get(0).getNearestLandMark());
+                reviewDetailsBinding.etNearestLandmark.setText(consumerDetails.getAddresses().get(0).getNearestLandMark());
+            }else{
+                reviewDetailsBinding.tvNearestLandmark.setText("---");
+                reviewDetailsBinding.etNearestLandmark.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCustomerTown()!=null){
+                reviewDetailsBinding.tvTehsilTown.setText(consumerDetails.getAddresses().get(0).getCustomerTown());
+                reviewDetailsBinding.etTehsilTown.setText(consumerDetails.getAddresses().get(0).getCustomerTown());
+            }else{
+                reviewDetailsBinding.tvTehsilTown.setText("---");
+                reviewDetailsBinding.etTehsilTown.setText("---");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCity()!=null){
+                reviewDetailsBinding.tvCity.setText(consumerDetails.getAddresses().get(0).getCity());
+                reviewDetailsBinding.etCity.setText(consumerDetails.getAddresses().get(0).getCity());
+            }else{
+                reviewDetailsBinding.etCity.setText("----");
+                reviewDetailsBinding.tvCity.setText("----");
+            }
+
+            if (consumerDetails.getAddresses().get(0).getCountry()!=null){
+                reviewDetailsBinding.tvCountry.setText(consumerDetails.getAddresses().get(0).getCountry());
+                reviewDetailsBinding.etCountry.setText(consumerDetails.getAddresses().get(0).getCountry());
+            }else{
+                reviewDetailsBinding.tvCountry.setText("---");
+                reviewDetailsBinding.etCountry.setText("---");
+            }
+
+            if (consumerDetails.getEmailAddress()!=null){
+                reviewDetailsBinding.tvEmailAddress.setText(consumerDetails.getEmailAddress());
+                reviewDetailsBinding.etEmailAddress.setText(consumerDetails.getEmailAddress());
+            }else{
+                reviewDetailsBinding.tvEmailAddress.setText("---");
+                reviewDetailsBinding.etEmailAddress.setText("---");
+            }
+        }
+    }
+
+    private void setYourDetails() {
+        if (IS_RESUMED){
+            GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
+
+            if (consumerDetails.getCustomerTitle()!=null){
+                reviewDetailsBinding.tvTitle.setText(consumerDetails.getCustomerTitle().toString());
+                reviewDetailsBinding.etTitle.setText(consumerDetails.getCustomerTitle().toString());
+            }else{
+                reviewDetailsBinding.tvTitle.setText("---");
+                reviewDetailsBinding.etTitle.setText("---");
+            }
+
+            if (consumerDetails.getFullName()!=null){
+                reviewDetailsBinding.tvFullName.setText(consumerDetails.getFullName());
+                reviewDetailsBinding.etFullName.setText(consumerDetails.getFullName());
+            }else{
+                reviewDetailsBinding.tvFullName.setText("---");
+                reviewDetailsBinding.etFullName.setText("---");
+            }
+
+            if (consumerDetails.getGender()!=null){
+                reviewDetailsBinding.tvGender.setText(consumerDetails.getGender().toString());
+                reviewDetailsBinding.etGender.setText(consumerDetails.getGender().toString());
+            }else{
+                reviewDetailsBinding.tvGender.setText("---");
+                reviewDetailsBinding.etGender.setText("---");
+            }
+
+            if (consumerDetails.getCityOfBirth()!=null){
+                reviewDetailsBinding.tvPlaceOfBirth.setText(consumerDetails.getCityOfBirth());
+                reviewDetailsBinding.etPlaceOfBirth.setText(consumerDetails.getCityOfBirth());
+            }else{
+                reviewDetailsBinding.tvPlaceOfBirth.setText("---");
+                reviewDetailsBinding.etPlaceOfBirth.setText("---");
+            }
+
+            if (consumerDetails.getFatherHusbandName()!=null){
+                reviewDetailsBinding.tvFatherHusbandName.setText(consumerDetails.getFatherHusbandName());
+                reviewDetailsBinding.etFatherHusbandName.setText(consumerDetails.getFatherHusbandName());
+            }else{
+                reviewDetailsBinding.tvFatherHusbandName.setText("---");
+                reviewDetailsBinding.etFatherHusbandName.setText("---");
+            }
+
+            if (consumerDetails.getProfession()!=null){
+                reviewDetailsBinding.tvProfession.setText(consumerDetails.getProfession().toString());
+                reviewDetailsBinding.etProfession.setText(consumerDetails.getProfession().toString());
+            }else{
+                reviewDetailsBinding.tvProfession.setText("---");
+                reviewDetailsBinding.etProfession.setText("---");
+            }
+
+            if (consumerDetails.getOccupation()!=null){
+                reviewDetailsBinding.tvOccupation.setText(consumerDetails.getOccupation().toString());
+                reviewDetailsBinding.etOccupation.setText(consumerDetails.getOccupation().toString());
+            }else{
+                reviewDetailsBinding.tvOccupation.setText("---");
+                reviewDetailsBinding.etOccupation.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getAverageMonthlySalary()!=null){
+                reviewDetailsBinding.tvExpectedSalary.setText(consumerDetails.getAccountInformation().getAverageMonthlySalary().toString());
+                reviewDetailsBinding.etExpectedSalary.setText(consumerDetails.getAccountInformation().getAverageMonthlySalary().toString());
+            }else{
+                reviewDetailsBinding.tvExpectedSalary.setText("---");
+                reviewDetailsBinding.etExpectedSalary.setText("---");
+            }
         }else{
 
+            ConsumerListItemResponse consumerDetails = registerVerifyOtpResponse.getData().getConsumerList().get(0);
+
+            if (consumerDetails.getCustomerTitle()!=null){
+                reviewDetailsBinding.tvTitle.setText(consumerDetails.getCustomerTitle().toString());
+                reviewDetailsBinding.etTitle.setText(consumerDetails.getCustomerTitle().toString());
+            }else{
+                reviewDetailsBinding.tvTitle.setText("---");
+                reviewDetailsBinding.etTitle.setText("---");
+            }
+
+            if (consumerDetails.getFullName()!=null){
+                reviewDetailsBinding.tvFullName.setText(consumerDetails.getFullName());
+                reviewDetailsBinding.etFullName.setText(consumerDetails.getFullName());
+            }else{
+                reviewDetailsBinding.tvFullName.setText("---");
+                reviewDetailsBinding.etFullName.setText("---");
+            }
+
+            if (consumerDetails.getGender()!=null){
+                reviewDetailsBinding.tvGender.setText(consumerDetails.getGender().toString());
+                reviewDetailsBinding.etGender.setText(consumerDetails.getGender().toString());
+            }else{
+                reviewDetailsBinding.tvGender.setText("---");
+                reviewDetailsBinding.etGender.setText("---");
+            }
+
+            if (consumerDetails.getCityOfBirth()!=null){
+                reviewDetailsBinding.tvPlaceOfBirth.setText(consumerDetails.getCityOfBirth());
+                reviewDetailsBinding.etPlaceOfBirth.setText(consumerDetails.getCityOfBirth());
+            }else{
+                reviewDetailsBinding.tvPlaceOfBirth.setText("---");
+                reviewDetailsBinding.etPlaceOfBirth.setText("---");
+            }
+
+            if (consumerDetails.getFatherHusbandName()!=null){
+                reviewDetailsBinding.tvFatherHusbandName.setText(consumerDetails.getFatherHusbandName());
+                reviewDetailsBinding.etFatherHusbandName.setText(consumerDetails.getFatherHusbandName());
+            }else{
+                reviewDetailsBinding.tvFatherHusbandName.setText("---");
+                reviewDetailsBinding.etFatherHusbandName.setText("---");
+            }
+
+            if (consumerDetails.getProfession()!=null){
+                reviewDetailsBinding.tvProfession.setText(consumerDetails.getProfession().toString());
+                reviewDetailsBinding.etProfession.setText(consumerDetails.getProfession().toString());
+            }else{
+                reviewDetailsBinding.tvProfession.setText("---");
+                reviewDetailsBinding.etProfession.setText("---");
+            }
+
+            if (consumerDetails.getOccupation()!=null){
+                reviewDetailsBinding.tvOccupation.setText(consumerDetails.getOccupation().toString());
+                reviewDetailsBinding.etOccupation.setText(consumerDetails.getOccupation().toString());
+            }else{
+                reviewDetailsBinding.tvOccupation.setText("---");
+                reviewDetailsBinding.etOccupation.setText("---");
+            }
+
+            if (consumerDetails.getAccountInformation().getAverageMonthlySalary()!=null){
+                reviewDetailsBinding.tvExpectedSalary.setText(consumerDetails.getAccountInformation().getAverageMonthlySalary().toString());
+                reviewDetailsBinding.etExpectedSalary.setText(consumerDetails.getAccountInformation().getAverageMonthlySalary().toString());
+            }else{
+                reviewDetailsBinding.tvExpectedSalary.setText("---");
+                reviewDetailsBinding.etExpectedSalary.setText("---");
+            }
         }
     }
 
     private void setAccountDetails() {
         if (IS_RESUMED){
             GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
-            reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
-            reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
-            if (accountInformation.getProofOfIncomeInd() == "1"){
-                reviewDetailsBinding.tvProofOfIncome.setText("Yes");
+
+            if (accountInformation.getPurposeOfAccount()!=null){
+                reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+                reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
             }else{
-                reviewDetailsBinding.tvProofOfIncome.setText("No");
+                reviewDetailsBinding.tvAccountPurpose.setText("---");
+                reviewDetailsBinding.etAccountPurpose.setText("---");
             }
 
-            if (accountInformation.getProofOfIncomeInd() == "1"){
-                reviewDetailsBinding.etProofOfIncome.setText("Yes");
+            if (accountInformation.getProofOfIncomeInd()!=null){
+                reviewDetailsBinding.tvProofOfIncome.setText(accountInformation.getProofOfIncomeInd().toString());
+                reviewDetailsBinding.etProofOfIncome.setText(accountInformation.getProofOfIncomeInd().toString());
             }else{
-                reviewDetailsBinding.etProofOfIncome.setText("No");
+                reviewDetailsBinding.tvProofOfIncome.setText("---");
+                reviewDetailsBinding.etProofOfIncome.setText("---");
             }
 
         }else{
 
             AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
-            reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
-            if (accountInformation.getProofOfIncomeInd() == "1"){
-                reviewDetailsBinding.tvProofOfIncome.setText("Yes");
+
+            if (accountInformation.getPurposeOfAccount()!=null){
+                reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
+                reviewDetailsBinding.etAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());
             }else{
-                reviewDetailsBinding.tvProofOfIncome.setText("No");
+                reviewDetailsBinding.tvAccountPurpose.setText("---");
+                reviewDetailsBinding.etAccountPurpose.setText("---");
             }
 
-            if (accountInformation.getProofOfIncomeInd() == "1"){
-                reviewDetailsBinding.etProofOfIncome.setText("Yes");
+            if (accountInformation.getProofOfIncomeInd()!=null){
+                reviewDetailsBinding.tvProofOfIncome.setText(accountInformation.getProofOfIncomeInd().toString());
+                reviewDetailsBinding.etProofOfIncome.setText(accountInformation.getProofOfIncomeInd().toString());
             }else{
-                reviewDetailsBinding.etProofOfIncome.setText("No");
+                reviewDetailsBinding.tvProofOfIncome.setText("---");
+                reviewDetailsBinding.etProofOfIncome.setText("---");
             }
         }
     }

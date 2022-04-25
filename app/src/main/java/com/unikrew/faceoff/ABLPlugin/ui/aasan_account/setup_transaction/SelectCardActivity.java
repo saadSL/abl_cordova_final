@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
@@ -22,6 +25,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
+import java.util.ArrayList;
+
 public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     LayoutSetupTransactionBinding layoutSetupTransactionBinding;
 
@@ -30,6 +35,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+    private AtmCardsPostParams atmCardsPostParams;
+    private ArrayList<AtmCardsResponseData> atmCardsList;
 
     private int atmTypeId = 0;
     private int transactionAlertInd = 1;
@@ -47,8 +54,19 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         getSharedPrefData();
         checkLayouts();
         observe();
+        getAtmCards();
         setLogoLayout(layoutSetupTransactionBinding.logoToolbar.tvDate);
 
+    }
+
+    private void getAtmCards() {
+        setAtmCardsPostParams();
+        selectCardViewModel.getAtmCards(atmCardsPostParams);
+        showLoading();
+    }
+
+    private void setAtmCardsPostParams() {
+        atmCardsPostParams.getData().setCodeTypeId(Config.ATM_CARDS_ID);
     }
 
     private void getSharedPrefData() {
@@ -90,6 +108,22 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 loader.dismiss();
             }
         });
+
+        selectCardViewModel.atmCardsSuccessResponse.observe(this, new Observer<AtmCardsResponse>() {
+            @Override
+            public void onChanged(AtmCardsResponse atmCardsResponse) {
+                atmCardsList = atmCardsResponse.getData();
+                dismissLoading();
+            }
+        });
+
+        selectCardViewModel.atmCardsError.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType,errMsg);
+                dismissLoading();
+            }
+        });
     }
 
     private void openUploadDocumentActivity(SetupTransactionResponse setupTransactionResponse) {
@@ -121,6 +155,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private void setViewModel() {
         selectCardViewModel = new ViewModelProvider(this).get(SelectCardViewModel.class);
         setupTransactionPostParams = new SetupTransactionPostParams();
+        atmCardsPostParams = new AtmCardsPostParams();
     }
 
     private void setClicks() {

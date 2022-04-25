@@ -44,6 +44,13 @@
         <item>Jazz</item>
         <item>Telenor</item>
     </string-array>
+    <string-array name="number_of_additional_applicant">
+        <item><font fgcolor="#7E7C7C">Select number</font></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
     <string-array name="TIN_unavailability_reason">
         <item><font fgcolor="#7E7C7C">Select Reason Unavailability</font></item>
         <item>Reason 1</item>
@@ -197,6 +204,10 @@
     <string name="succesfully_submitted_application">Your have successfully submitted your application for the Asaan Digital Account to Allied Bank.</string>
     <string name="further_inquiry">For any further inquiry, please contact <font fgcolor="#F07C00">ada@abl.com</font> or call our Helpline: <font fgcolor="#F07C00">111-225-225</font></string>
     <string name="obliged_for_feedback">We will be obliged if you can take a minute to give us feedback and provide your input to further improve the digital onboarding experience</string>
+    <string name="select_number_of_additional_applicant">Select number of additional applicants</string>
+    <string name="additional_applicant_details_heading">Additional Applicant 1 Details</string>
+    <string name="relationship_heading">Relationship</string>
+    <string name="enter_relationship">Enter Relationship</string>
 
 
 </resources>

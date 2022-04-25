@@ -113,6 +113,7 @@ public class Config {
     public static int CNIC_FRONT_TYPE_ID = 1043001;
     public static int SIGNATURE_TYPE_ID = 1043008;
     public static int LIVE_PHOTO = 1043005;
+    public static int ATM_CARDS_ID = 1086;
 }
 
 

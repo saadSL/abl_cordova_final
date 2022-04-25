@@ -6,6 +6,8 @@ import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberPostParams;
@@ -121,4 +123,7 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<SaveNatureOfAccountResponse> saveNatureOfAccount(@Body SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
 
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<AtmCardsResponse> getAtmCards(@Body AtmCardsPostParams postParams);
 }
