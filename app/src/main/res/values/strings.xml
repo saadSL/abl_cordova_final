@@ -208,6 +208,8 @@
     <string name="additional_applicant_details_heading">Additional Applicant 1 Details</string>
     <string name="relationship_heading">Relationship</string>
     <string name="enter_relationship">Enter Relationship</string>
+    <string name="select_currency">Select the Currency</string>
+    <string name="the_currency_used_to_send_and_recieve_money">"The currency that will used to send and recieve amount "</string>
 
 
 </resources>

@@ -19,12 +19,12 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object mobileNetworkId;
 	private String  emailAddress;
 	private Object educationId;
-	private Object occupationId;
+	private int occupationId;
 	private Object customerNonResidentInd;
 	private Object adcFlagId;
 	private List<String> suggestPlaceOfBirth;
 	private Object employerPhone;
-	private Object professionId;
+	private int professionId;
 	private Object profession;
 	private Object kinCnic;
 	private String customerBranch;
@@ -131,7 +131,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return educationId;
 	}
 
-	public Object getOccupationId(){
+	public int getOccupationId(){
 		return occupationId;
 	}
 
@@ -151,7 +151,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return employerPhone;
 	}
 
-	public Object getProfessionId(){
+	public int getProfessionId(){
 		return professionId;
 	}
 
@@ -271,7 +271,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return referrerCp;
 	}
 
-	public boolean isIsPrimary(){
+	public boolean isPrimary(){
 		return isPrimary;
 	}
 

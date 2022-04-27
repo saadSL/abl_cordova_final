@@ -4,8 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/nav_toolbar"/>
-    <include layout="@layout/freelancer_tablayout"/>
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,183 +18,216 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FATCA Details"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginTop="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fatca_text"
-                android:layout_marginLeft="15sp"
-                android:layout_marginTop="10sp"
-                android:textColor="@color/grey"/>
-
-
             <LinearLayout
-                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Are You U.S Tax Resident?"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
+                    android:text="FATCA Details"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/heading_black"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:textSize="@dimen/_14sdp"/>
 
-                <androidx.appcompat.widget.SwitchCompat
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
+                    android:text="@string/fatca_text"
+                    android:fontFamily="@font/worksans_regular"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textColor="@color/heading_black"/>
+
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Are You U.S Tax Resident?"
+                        android:fontFamily="@font/worksans_regular"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_us_tax_resident"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="20sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Are you a U.S. Citizen??"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_us_citizen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you have any “in-care-of” or “hold mail” address?"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_mail_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Is your place of birth in the U.S. or in any U.S. territory?"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_us_place_of_birth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you intend to issue any standing instructions for transfer of funds to U.S. or U.S. overseas territory?"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_standing_instruction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Are you holding a U.S Permanent Resident Card (Green Card Holder)?"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_green_card_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Have you issued any Attorney / Operating Authority to USA Citizen/ Green Card Holder / or a person with US address/ phone number?"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/subtle"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_issued_attorney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
+
+
+
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Are you a U.S. Citizen??"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Do you have any “in-care-of” or “hold mail” address?"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Is your place of birth in the U.S. or in any U.S. territory?"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Do you intend to issue any standing instructions for transfer of funds to U.S. or U.S. overseas territory?"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Are you holding a U.S Permanent Resident Card (Green Card Holder)?"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Have you issued any Attorney / Operating Authority to USA Citizen/ Green Card Holder / or a person with US address/ phone number?"
-                    android:layout_marginStart="15sp"
-                    android:layout_marginTop="20sp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_weight="1"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/SCBSwitch"
-                    android:layout_marginTop="20sp"/>
-            </LinearLayout>
-
-
-            <include layout="@layout/gen_buttons"/>
-
+            <include
+                android:id="@+id/abl_chat"
+                layout="@layout/layout_abl_chat_container"/>
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

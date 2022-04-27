@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
 import com.unikrew.faceoff.Config;
 
 
@@ -31,6 +33,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
     private Integer ACCOUNT_VARIANT_ID;
     private Boolean IS_RESUMED;
+    private int currencyTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,10 @@ public class SelectPreferredAccountActivity extends BaseActivity {
     }
 
     private void goToPersonalDetails() {
+//        Intent intent = new Intent(this, TaxResidentActivity.class);
+//        startActivity(intent);
+
+
         Intent intent = new Intent(this, PersonalDetailsOneActivity.class);
         startActivity(intent);
     }
@@ -105,6 +112,18 @@ public class SelectPreferredAccountActivity extends BaseActivity {
                 selectFreeLance();
             }
         });
+        preferredAccountBinding.btnRupee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectRupee();
+            }
+        });
+        preferredAccountBinding.btnDollar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDollar();
+            }
+        });
         preferredAccountBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +136,36 @@ public class SelectPreferredAccountActivity extends BaseActivity {
                 checkValidations();
             }
         });
+    }
+
+    private void selectDollar() {
+        /* Selecting Dollar */
+        preferredAccountBinding.btnDollar.setBackground(this.getDrawable(R.drawable.rounded_button));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            preferredAccountBinding.btnDollar.setTextColor(this.getColor(R.color.white));
+        }
+        currencyTypeId = Config.CURRENCY_DOLLAR;
+
+        /* Deselecting Rupee */
+        preferredAccountBinding.btnRupee.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            preferredAccountBinding.btnRupee.setTextColor(this.getColor(R.color.custom_blue));
+        }
+    }
+
+    private void selectRupee() {
+        /* Selecting Rupee */
+        preferredAccountBinding.btnRupee.setBackground(this.getDrawable(R.drawable.rounded_button));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            preferredAccountBinding.btnRupee.setTextColor(this.getColor(R.color.white));
+        }
+        currencyTypeId = Config.CURRENCY_RUPEE;
+
+        /* Deselecting Dollar */
+        preferredAccountBinding.btnDollar.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            preferredAccountBinding.btnDollar.setTextColor(this.getColor(R.color.custom_blue));
+        }
     }
 
     private void checkValidations() {

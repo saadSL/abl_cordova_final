@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.FatcaDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
@@ -40,7 +42,7 @@ public class CustomPlugin extends CordovaPlugin {
 
     private void startFlow(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
-        Intent intent = new Intent(context, MobileNumberActivity.class);
+        Intent intent = new Intent(context, TaxResidentActivity.class);
         cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, 22);
 
@@ -49,12 +51,7 @@ public class CustomPlugin extends CordovaPlugin {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 22 && resultCode == 200 && data != null) {
-            // String name = data.getExtra("name");
-            // String addr = data.getExtra("address");
-            // String phone = data.getExtra("phone");
-            // String email = data.getExtra("email");
             System.out.println(data);
-
         }
     }
 }

@@ -107,6 +107,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 }else{
                     saveNatureOfAccount();
                 }
+                dismissLoading();
             }
         });
 
@@ -114,6 +115,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
+                dismissLoading();
             }
         });
 
@@ -121,6 +123,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentViewModel.saveNatureOfAccountResponseMutableLiveData.observe(this, new Observer<SaveNatureOfAccountResponse>() {
             @Override
             public void onChanged(SaveNatureOfAccountResponse saveNatureOfAccountResponse) {
+                dismissLoading();
                 openReviewDetailsActivity();
             }
         });
@@ -128,6 +131,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentViewModel.saveNatureOfAccountErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
+                dismissLoading();
                 showAlert(Config.errorType, errMsg);
             }
         });
@@ -141,6 +145,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void saveNatureOfAccount() {
         setNatureOfAccountPostParams();
         uploadDocumentViewModel.saveNatureOfAccount(natureOfAccountPostParams, getStringFromPref(Config.ACCESS_TOKEN));
+        showLoading();
     }
 
     private void setNatureOfAccountPostParams() {
@@ -302,6 +307,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                     attachmentPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN)
             );
+            showLoading();
         }
     }
 

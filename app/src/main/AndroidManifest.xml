@@ -145,6 +145,16 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.FatcaDetailsActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

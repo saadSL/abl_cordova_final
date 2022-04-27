@@ -4,6 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.fatca_details.FatcaDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.fatca_details.FatcaDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
@@ -15,6 +19,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycP
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -195,6 +201,84 @@ public class PersonalDetailsViewModel extends BaseViewModel {
             @Override
             public void onFailure(Call<SaveKycResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+    MutableLiveData<TinUnavailabilityReasonsResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<TinUnavailabilityReasonsResponse>();
+    MutableLiveData<String> tinUnavailabilityReasonsError = new MutableLiveData<String>();
+
+    public void getTinUnavailabilityReasons(TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams) {
+        Call<TinUnavailabilityReasonsResponse> callabeRes = AblApplication.apiInterface.getTinUnavailabilityReasons(tinUnavailabilityReasonsPostParams);
+        callabeRes.enqueue(new Callback<TinUnavailabilityReasonsResponse>() {
+            @Override
+            public void onResponse(Call<TinUnavailabilityReasonsResponse> call, Response<TinUnavailabilityReasonsResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        tinUnavailabilityReasonsSuccessResponse.postValue(response.body());
+                    }else{
+                        tinUnavailabilityReasonsError.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    tinUnavailabilityReasonsError.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TinUnavailabilityReasonsResponse> call, Throwable t) {
+                tinUnavailabilityReasonsError.postValue(t.getMessage());
+            }
+        });
+    }
+
+    MutableLiveData<FreelancerTaxResponse> freelancerTaxSuccessResponse = new MutableLiveData<FreelancerTaxResponse>();
+    MutableLiveData<String> freelancerTaxErrorResponse = new MutableLiveData<String>();
+
+    public void submitFreelancerTaxDetails(FreelancerTaxPostParams freelancerTaxPostParams, String accessToken) {
+        Call<FreelancerTaxResponse> callableRes = AblApplication.apiInterface.submitFreelancerTaxDetails(freelancerTaxPostParams,"Bearer "+accessToken);
+        callableRes.enqueue(new Callback<FreelancerTaxResponse>() {
+            @Override
+            public void onResponse(Call<FreelancerTaxResponse> call, Response<FreelancerTaxResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        freelancerTaxSuccessResponse.postValue(response.body());
+                    }else{
+                        freelancerTaxErrorResponse.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    freelancerTaxErrorResponse.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FreelancerTaxResponse> call, Throwable t) {
+                freelancerTaxErrorResponse.postValue(t.getMessage());
+            }
+        });
+    }
+
+    MutableLiveData<FatcaDetailsResponse> fatcaDetailsSuccessResponse = new MutableLiveData<>();
+    MutableLiveData<String> fatcaDetailsErrorResponse = new MutableLiveData<>();
+
+    public void submitFatcaDetails(FatcaDetailsPostParams fatcaDetailsPostParams, String accessToken) {
+        Call<FatcaDetailsResponse> callableRes = AblApplication.apiInterface.submitFatcaDetails(fatcaDetailsPostParams,"Bearer "+accessToken);
+        callableRes.enqueue(new Callback<FatcaDetailsResponse>() {
+            @Override
+            public void onResponse(Call<FatcaDetailsResponse> call, Response<FatcaDetailsResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        fatcaDetailsSuccessResponse.postValue(response.body());
+                    }else{
+                        fatcaDetailsErrorResponse.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    fatcaDetailsErrorResponse.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FatcaDetailsResponse> call, Throwable t) {
+                fatcaDetailsErrorResponse.postValue(t.getMessage());
             }
         });
     }
