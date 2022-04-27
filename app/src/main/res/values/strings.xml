@@ -184,8 +184,8 @@
     <string name="where_to_send_transaction_alerts">Where do you want bank to send account transaction alerts.</string>
     <string name="sms">SMS</string>
     <string name="take_live_picture">Take Your Live Picture</string>
-    <string name="live_pic_click_here"><a href="#"><font  fgcolor="#102A83">Click Here</font></a></string>
-    <string name="scan_again"><a href="#"><font  fgcolor="#102A83">Scan Again</font></a></string>
+    <string name="live_pic_click_here"><a href="#"><font fgcolor="#102A83">Click Here</font></a></string>
+    <string name="scan_again"><a href="#"><font fgcolor="#102A83">Scan Again</font></a></string>
     <string name="take_live_sig_pic">Upload Picture Of Your Signature</string>
     <string name="take_pic_on_white_paper">Take the picture of your signature on white paper</string>
     <string name="select_nature_of_account">Select the Nature of Account</string>
@@ -199,7 +199,7 @@
     <string name="summary">Summary</string>
     <string name="current_email_address">Current/Mailing Address for Correspondence</string>
     <string name="transaction_details">Details of Transactions</string>
-    <string name="agree_terms_and_conditions">View <font  fgcolor="#F07C00"><a href="#">Terms &amp; Conditions</a></font> to agree/disagree</string>
+    <string name="agree_terms_and_conditions">View <font fgcolor="#F07C00"><a href="#">Terms &amp; Conditions</a></font> to agree/disagree</string>
     <string name="confirm_declaration">I/We confirm My/our declaration</string>
     <string name="succesfully_submitted_application">Your have successfully submitted your application for the Asaan Digital Account to Allied Bank.</string>
     <string name="further_inquiry">For any further inquiry, please contact <font fgcolor="#F07C00">ada@abl.com</font> or call our Helpline: <font fgcolor="#F07C00">111-225-225</font></string>

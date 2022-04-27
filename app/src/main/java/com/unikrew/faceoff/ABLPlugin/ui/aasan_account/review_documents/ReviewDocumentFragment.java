@@ -1,16 +1,20 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
@@ -21,7 +25,7 @@ import com.unikrew.faceoff.Config;
 
 import java.util.List;
 
-public class ReviewDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class ReviewDocumentFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private ReviewDetailsBinding reviewDetailsBinding;
     private boolean termsAndConditions = false;
@@ -32,15 +36,18 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        reviewDetailsBinding = ReviewDetailsBinding.inflate(inflater, container, false);
         setLayout();
         setClicks();
         getSharedPrefData();
         setResponse();
         setLogoLayout(reviewDetailsBinding.logoToolbar.tvDate);
+
+        return reviewDetailsBinding.getRoot();
     }
 
     private void setResponse() {
@@ -581,10 +588,6 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
         reviewDetailsBinding.screenHeader.stepsHeading2.setText("Details");
     }
 
-    private void setBinding() {
-        reviewDetailsBinding = ReviewDetailsBinding.inflate(getLayoutInflater());
-        setContentView(reviewDetailsBinding.getRoot());
-    }
 
     @Override
     public void onClick(View view) {

@@ -1,16 +1,21 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
+import static androidx.navigation.ViewKt.findNavController;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsOneBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.SelectionModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
@@ -25,7 +30,7 @@ import com.unikrew.faceoff.Config;
 import java.util.List;
 
 
-public class PersonalDetailsOneActivity extends BaseActivity implements AdapterClickListener {
+public class PersonalDetailsOneFragment extends BaseFragment implements AdapterClickListener {
 
     private ActivityPersonalDetailsOneBinding personalDetailsBinding;
     private SuggestionsAdapter motherNameAdapter, placeOfBirthAdapter;
@@ -37,10 +42,11 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     private String selectedMotherName, selectedPlaceOfBirth;
     private Boolean IS_RESUMED;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        personalDetailsBinding = ActivityPersonalDetailsOneBinding.inflate(inflater, container, false);
         getSharedPrefData();
         setData();
         setViewModel();
@@ -49,6 +55,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         clicks();
         setObservers();
         setLogoLayout(personalDetailsBinding.layoutLogo.tvDate);
+        return personalDetailsBinding.getRoot();
     }
 
     private void getSharedPrefData() {
@@ -67,7 +74,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     }
 
     private void setObservers() {
-        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(this, new Observer<RegisterEmploymentDetailsResponse>() {
+        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onChanged(RegisterEmploymentDetailsResponse registerEmploymentDetailsResponse) {
                 dismissLoading();
@@ -76,7 +83,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         });
 
 
-        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+        personalDetailsViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 dismissLoading();
@@ -101,7 +108,8 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         personalDetailsBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
     }
@@ -154,8 +162,7 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
     }
 
     private void goToPersonalDetailsTwo() {
-        Intent intent = new Intent(this, PersonalDetailsTwoActivity.class);
-        startActivity(intent);
+        findNavController(personalDetailsBinding.getRoot()).navigate(R.id.openPersonalDetailsTwo);
     }
 
 
@@ -218,8 +225,8 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             _placeOfBirthSuggestions.add(selectionModel);
         }
 
-        placeOfBirthAdapter = new SuggestionsAdapter(_placeOfBirthSuggestions, this, Config.PLACE_OF_BIRTH_SUGGESTION, this);
-        personalDetailsBinding.rvPlaceOfBirth.setLayoutManager(new GridLayoutManager(this, 3));
+        placeOfBirthAdapter = new SuggestionsAdapter(_placeOfBirthSuggestions, mContext, Config.PLACE_OF_BIRTH_SUGGESTION, this);
+        personalDetailsBinding.rvPlaceOfBirth.setLayoutManager(new GridLayoutManager(mContext, 3));
         personalDetailsBinding.rvPlaceOfBirth.setAdapter(placeOfBirthAdapter);
     }
 
@@ -240,16 +247,11 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
             _motherNameSuggestions.add(selectionModel);
         }
 
-        motherNameAdapter = new SuggestionsAdapter(_motherNameSuggestions, this, Config.MOTHER_NAME_SUGGESTION, this);
-        personalDetailsBinding.rvMotherName.setLayoutManager(new GridLayoutManager(this, 3));
+        motherNameAdapter = new SuggestionsAdapter(_motherNameSuggestions, mContext, Config.MOTHER_NAME_SUGGESTION, this);
+        personalDetailsBinding.rvMotherName.setLayoutManager(new GridLayoutManager(mContext, 3));
         personalDetailsBinding.rvMotherName.setAdapter(motherNameAdapter);
     }
 
-
-    private void setBinding() {
-        personalDetailsBinding = ActivityPersonalDetailsOneBinding.inflate(getLayoutInflater());
-        setContentView(personalDetailsBinding.getRoot());
-    }
 
     @Override
     public void onItemClick(String type, int position) {

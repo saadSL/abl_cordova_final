@@ -1,19 +1,22 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectAccountTypeBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesDataModel;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
@@ -28,7 +31,7 @@ import com.unikrew.faceoff.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectAccountTypeActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class SelectAccountTypeFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
     private ActivitySelectAccountTypeBinding accountTypeBinding;
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
@@ -39,16 +42,20 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     private ArrayList<MobileNetworkResponseData> purposeArray;
     private Boolean IS_RESUMED;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        accountTypeBinding = ActivitySelectAccountTypeBinding.inflate(inflater, container, false);
+
         setViewModel();
         setLogoLayout(accountTypeBinding.layoutLogo.tvDate);
         getSharedPrefData();
         getPurposeOfAccount();
         setObservers();
         clicks();
+
+        return accountTypeBinding.getRoot();
     }
 
     private void getSharedPrefData() {
@@ -89,7 +96,8 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         accountTypeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
     }
@@ -134,19 +142,19 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void selectCurrent() {
-        accountTypeBinding.llSavings.setBackground(getDrawable(R.drawable.rounded_corner_white));
-        accountTypeBinding.llCurrent.setBackground(getDrawable(R.drawable.rounded_corner_selected));
+        accountTypeBinding.llSavings.setBackground(mContext.getDrawable(R.drawable.rounded_corner_white));
+        accountTypeBinding.llCurrent.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
         CUSTOMER_ACCOUNT_TYPE_ID = Config.CURRENT_ACCOUNT;
     }
 
     private void selectSavings() {
-        accountTypeBinding.llCurrent.setBackground(getDrawable(R.drawable.rounded_corner_white));
-        accountTypeBinding.llSavings.setBackground(getDrawable(R.drawable.rounded_corner_selected));
+        accountTypeBinding.llCurrent.setBackground(mContext.getDrawable(R.drawable.rounded_corner_white));
+        accountTypeBinding.llSavings.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
         CUSTOMER_ACCOUNT_TYPE_ID = Config.SAVINGS_ACCOUNT;
     }
 
     private void setObservers() {
-        selectAccountTypeViewModel.accountTypeResponseLiveData.observe(this, new Observer<AccountTypeResponse>() {
+        selectAccountTypeViewModel.accountTypeResponseLiveData.observe(getViewLifecycleOwner(), new Observer<AccountTypeResponse>() {
             @Override
             public void onChanged(AccountTypeResponse accountTypeResponse) {
                 Log.d("accountTypeResponse", "onChanged: " + accountTypeResponse.toString());
@@ -154,7 +162,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
                 moveToPreferredAccount(accountTypeResponse);
             }
         });
-        selectAccountTypeViewModel.purposeOfAccountLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        selectAccountTypeViewModel.purposeOfAccountLiveData.observe(getViewLifecycleOwner(), new Observer<MobileNetworkResponse>() {
             @Override
             public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
                 Log.d("branchesResponse", "onChanged: " + mobileNetworkResponse);
@@ -163,7 +171,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
             }
         });
 
-        selectAccountTypeViewModel.errorLiveData.observe(this, new Observer<String>() {
+        selectAccountTypeViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
@@ -173,7 +181,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     }
 
     private void moveToPreferredAccount(AccountTypeResponse accountTypeResponse) {
-        Intent intent = new Intent(SelectAccountTypeActivity.this, SelectPreferredAccountActivity.class);
+        Intent intent = new Intent(mContext, SelectPreferredAccountFragment.class);
         startActivity(intent);
     }
 
@@ -191,7 +199,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
             }
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, _allPurposes);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, _allPurposes);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -208,10 +216,6 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         selectAccountTypeViewModel.getPurposeOfAccount(mobileNetworkPostParams);
     }
 
-    private void setBinding() {
-        accountTypeBinding = ActivitySelectAccountTypeBinding.inflate(getLayoutInflater());
-        setContentView(accountTypeBinding.getRoot());
-    }
 
     private void setViewModel() {
         selectAccountTypeViewModel = new ViewModelProvider(this).get(SelectAccountTypeViewModel.class);

@@ -186,7 +186,9 @@
 
             <include layout="@layout/cnic_instruction"/>
 
-            <include layout="@layout/gen_buttons" />
+            <include
+                android:id="@+id/gen_button_layout"
+                layout="@layout/gen_buttons" />
 <!--            <Button-->
 <!--                android:id="@+id/btn_next_cnic_upload_before"-->
 <!--                android:layout_width="230dp"-->

@@ -1,33 +1,36 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
 
+import static androidx.navigation.ViewKt.findNavController;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
 
-public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class SelectCardFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     LayoutSetupTransactionBinding layoutSetupTransactionBinding;
 
     private SetupTransactionPostParams setupTransactionPostParams;
@@ -44,11 +47,11 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private int transactionAlertId = 0;
     private Boolean IS_RESUMED;
 
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
-        setLayout();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        layoutSetupTransactionBinding = LayoutSetupTransactionBinding.inflate(inflater, container, false);
         setViewModel();
         setClicks();
         getSharedPrefData();
@@ -57,6 +60,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         getAtmCards();
         setLogoLayout(layoutSetupTransactionBinding.logoToolbar.tvDate);
 
+        return layoutSetupTransactionBinding.getRoot();
     }
 
     private void getAtmCards() {
@@ -87,29 +91,29 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private void setLayout() {
         layoutSetupTransactionBinding.steps.screenHeader.stepsHeading1.setText("Setup");
         layoutSetupTransactionBinding.steps.screenHeader.stepsHeading2.setText("Transaction");
-        layoutSetupTransactionBinding.steps.step1.setBackground(this.getDrawable(R.color.custom_blue));
-        layoutSetupTransactionBinding.steps.step2.setBackground(this.getDrawable(R.color.custom_blue));
-        layoutSetupTransactionBinding.steps.step3.setBackground(this.getDrawable(R.color.custom_blue));
+        layoutSetupTransactionBinding.steps.step1.setBackground(mContext.getDrawable(R.color.custom_blue));
+        layoutSetupTransactionBinding.steps.step2.setBackground(mContext.getDrawable(R.color.custom_blue));
+        layoutSetupTransactionBinding.steps.step3.setBackground(mContext.getDrawable(R.color.custom_blue));
     }
 
     private void observe() {
-        selectCardViewModel.setupTransactionResponseMutableLiveData.observe(this, new Observer<SetupTransactionResponse>() {
+        selectCardViewModel.setupTransactionResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<SetupTransactionResponse>() {
             @Override
             public void onChanged(SetupTransactionResponse setupTransactionResponse) {
                 openUploadDocumentActivity(setupTransactionResponse);
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
-        selectCardViewModel.setupTransactionErrorLiveData.observe(this, new Observer<String>() {
+        selectCardViewModel.setupTransactionErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
-        selectCardViewModel.atmCardsSuccessResponse.observe(this, new Observer<AtmCardsResponse>() {
+        selectCardViewModel.atmCardsSuccessResponse.observe(getViewLifecycleOwner(), new Observer<AtmCardsResponse>() {
             @Override
             public void onChanged(AtmCardsResponse atmCardsResponse) {
                 atmCardsList = atmCardsResponse.getData();
@@ -117,19 +121,17 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             }
         });
 
-        selectCardViewModel.atmCardsError.observe(this, new Observer<String>() {
+        selectCardViewModel.atmCardsError.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 dismissLoading();
             }
         });
     }
 
     private void openUploadDocumentActivity(SetupTransactionResponse setupTransactionResponse) {
-        Intent intent = new Intent(this, UploadDocumentActivity.class);
-        intent.putExtra(Config.RESPONSE, setupTransactionResponse);
-        startActivity(intent);
+        findNavController(layoutSetupTransactionBinding.getRoot()).navigate(R.id.openUploadDocument);
     }
 
     private void checkLayouts() {
@@ -168,11 +170,6 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         layoutSetupTransactionBinding.btnContainer.btBack.setOnClickListener(this);
         layoutSetupTransactionBinding.llClassicCard.setOnClickListener(this);
         layoutSetupTransactionBinding.llVdcCard.setOnClickListener(this);
-    }
-
-    private void setBinding() {
-        layoutSetupTransactionBinding = LayoutSetupTransactionBinding.inflate(getLayoutInflater());
-        setContentView(layoutSetupTransactionBinding.getRoot());
     }
 
     @Override
@@ -240,23 +237,23 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         switch (view.getId()) {
             case R.id.btn_sms:
                 transactionAlertId = Config.TRANSACTION_ALERT_SMS;
-                layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_button));
+                layoutSetupTransactionBinding.btnEmail.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
+                layoutSetupTransactionBinding.btnSms.setBackground(mContext.getDrawable(R.drawable.rounded_button));
                 break;
             case R.id.btn_email:
                 transactionAlertId = Config.TRANSACTION_ALERT_EMAIL;
-                layoutSetupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_button));
+                layoutSetupTransactionBinding.btnSms.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
+                layoutSetupTransactionBinding.btnEmail.setBackground(mContext.getDrawable(R.drawable.rounded_button));
                 break;
             case R.id.ll_classic_card:
                 atmTypeId = Config.UPI;
-                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
+                layoutSetupTransactionBinding.llClassicCard.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
+                layoutSetupTransactionBinding.llVdcCard.setBackground(mContext.getDrawable(R.drawable.transparent_secondary_bg));
                 break;
             case R.id.ll_vdc_card:
                 atmTypeId = Config.VDC;
-                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
+                layoutSetupTransactionBinding.llVdcCard.setBackground(mContext.getDrawable(R.drawable.rounded_corner_selected));
+                layoutSetupTransactionBinding.llClassicCard.setBackground(mContext.getDrawable(R.drawable.transparent_secondary_bg));
                 break;
             case R.id.btn_next:
                 if (atmTypeId == Config.UPI || atmTypeId == Config.VDC) {
@@ -266,14 +263,15 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 }
                 break;
             case R.id.bt_back:
-                finish();
+//                finish();
                 break;
         }
     }
 
+
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onResume() {
+        super.onResume();
         setLayout();
     }
 }

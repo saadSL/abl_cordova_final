@@ -1,28 +1,28 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
+import static androidx.navigation.ViewKt.findNavController;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsThreeBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeConsumerListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoConsumerListItemModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
@@ -32,13 +32,12 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalDetailsThreeActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class PersonalDetailsThreeFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
     private ActivityPersonalDetailsThreeBinding personalDetailsThreeBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
@@ -47,16 +46,20 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        personalDetailsThreeBinding = ActivityPersonalDetailsThreeBinding.inflate(inflater, container, false);
         setViewModel();
         getDropDownData();
         getSharedPrefData();
         setObservers();
         clicks();
         setLogoLayout(personalDetailsThreeBinding.layoutLogo.tvDate);
+
+
+        return personalDetailsThreeBinding.getRoot();
     }
 
     private void getSharedPrefData() {
@@ -78,7 +81,8 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         personalDetailsThreeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
 
@@ -131,7 +135,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
     }
 
     private void setObservers() {
-        personalDetailsViewModel.professionLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        personalDetailsViewModel.professionLiveData.observe(getViewLifecycleOwner(), new Observer<MobileNetworkResponse>() {
             @Override
             public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
                 dismissLoading();
@@ -139,7 +143,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
             }
         });
 
-        personalDetailsViewModel.occupationLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        personalDetailsViewModel.occupationLiveData.observe(getViewLifecycleOwner(), new Observer<MobileNetworkResponse>() {
             @Override
             public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
                 dismissLoading();
@@ -147,7 +151,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
             }
         });
 
-        personalDetailsViewModel.saveKycResponseMutableLiveData.observe(this, new Observer<SaveKycResponse>() {
+        personalDetailsViewModel.saveKycResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<SaveKycResponse>() {
             @Override
             public void onChanged(SaveKycResponse saveKycResponse) {
                 dismissLoading();
@@ -156,7 +160,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         });
 
 
-        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(this, new Observer<RegisterEmploymentDetailsResponse>() {
+        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onChanged(RegisterEmploymentDetailsResponse registerEmploymentDetailsResponse) {
                 dismissLoading();
@@ -165,7 +169,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         });
 
 
-        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+        personalDetailsViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 dismissLoading();
@@ -200,8 +204,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
     }
 
     private void openTransactionSelectionActivity() {
-        Intent intent = new Intent(this, SelectCardActivity.class);
-        startActivity(intent);
+        findNavController(personalDetailsThreeBinding.getRoot()).navigate(R.id.openSelectCard);
     }
 
     private void setOccupationSpinner(MobileNetworkResponse mobileNetworkResponse) {
@@ -226,7 +229,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
             }
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, _allItemsArray);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, _allItemsArray);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -237,10 +240,6 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
     }
 
 
-    private void setBinding() {
-        personalDetailsThreeBinding = ActivityPersonalDetailsThreeBinding.inflate(getLayoutInflater());
-        setContentView(personalDetailsThreeBinding.getRoot());
-    }
 
     private void setViewModel() {
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);

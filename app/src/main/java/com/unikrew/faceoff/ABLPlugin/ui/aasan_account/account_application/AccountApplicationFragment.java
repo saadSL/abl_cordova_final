@@ -1,42 +1,37 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 
+import static androidx.navigation.ViewKt.findNavController;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListItemBinding;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListLayoutBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
-public class AccountApplicationActivity extends BaseActivity implements AccountApplicationInterface, View.OnClickListener {
+public class AccountApplicationFragment extends BaseFragment implements AccountApplicationInterface, View.OnClickListener {
     GetDraftedAppsVerifyOtpResponse res;
     AccountApplicationAdapter adapter;
 
@@ -50,14 +45,18 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
 
     private Boolean deletePrompt = false;
 
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
-        setLayout();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        layoutBinding = ApplicationListLayoutBinding.inflate(inflater, container, false);
+
         set();
         initializeAdapter();
         observe();
+
+
+        return layoutBinding.getRoot();
     }
 
     private void setLayout() {
@@ -69,77 +68,77 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     }
 
     private void observe() {
-        viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
+        viewModel.consumerAccountDetailsSuccessLiveData.observe(getViewLifecycleOwner(), new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE,getConsumerAccountDetailsResponse);
+                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, getConsumerAccountDetailsResponse);
 
                 if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
 
-                    openActivity(SelectBankingModeActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openBankingMode);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
 
-                    openActivity(SelectAccountTypeActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openAccountType);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
 
-                    openActivity(SelectPreferredAccountActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openPreferredAccount);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
 
-                    openActivity(PersonalDetailsOneActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openPersonalDetailsOne);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
 
-                    openActivity(PersonalDetailsTwoActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openPersonalDetailsTwo);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
 
-                    openActivity(PersonalDetailsThreeActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openPersonalDetailsThree);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isTRANSACTIONAL_DETAIL()) {
 
-                    openActivity(SelectCardActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openSelectCard);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER()) {
 
-                    openActivity(UploadDocumentActivity.class);
+                    findNavController(layoutBinding.getRoot()).navigate(R.id.openUploadDocument);
 
                 } else {
                     showAlert(Config.successType, "Opening Summary Details ");
                 }
 
-                loader.dismiss();
+                dismissLoading();
             }
         });
-        viewModel.consumerAccountDetailsErrorLiveData.observe(this, new Observer<String>() {
+        viewModel.consumerAccountDetailsErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
-        viewModel.deleteDraftedAppSuccessLiveData.observe(this, new Observer<DeleteDraftedApplicationResponse>() {
+        viewModel.deleteDraftedAppSuccessLiveData.observe(getViewLifecycleOwner(), new Observer<DeleteDraftedApplicationResponse>() {
             @Override
             public void onChanged(DeleteDraftedApplicationResponse deleteDraftedApplicationResponse) {
                 showAlert(Config.successType, deleteDraftedApplicationResponse.getMessage().getDescription());
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
-        viewModel.deleteDraftedAppErrorLiveData.observe(this, new Observer<String>() {
+        viewModel.deleteDraftedAppErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
-                loader.dismiss();
+                dismissLoading();
             }
         });
     }
 
     private void openActivity(final Class<? extends Activity> activityToOpen) {
-        Intent intent = new Intent(this, activityToOpen);
+        Intent intent = new Intent(mContext, activityToOpen);
         startActivity(intent);
     }
 
@@ -152,8 +151,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     consumerAccDetailsPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
-        }else{
-            showAlert(Config.errorType,"No application selected !!!");
+        } else {
+            showAlert(Config.errorType, "No application selected !!!");
         }
 
 
@@ -172,7 +171,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
     }
 
     private void set() {
-        res = (GetDraftedAppsVerifyOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        res = (GetDraftedAppsVerifyOtpResponse) getArguments().getSerializable(Config.RESPONSE);
         consumerAccDetailsPostParams = new GetConsumerAccountDetailsPostParams();
         deleteDraftedAppPostParams = new DeleteDraftedApplicationPostParams();
 
@@ -183,23 +182,18 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         layoutBinding.btnContainer.btBack.setOnClickListener(this);
     }
 
-    private void setBinding() {
-        layoutBinding = ApplicationListLayoutBinding.inflate(getLayoutInflater());
-        setContentView(layoutBinding.getRoot());
-    }
 
     private void initializeAdapter() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        adapter = new AccountApplicationAdapter(res.getData().getAppList(), this, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        adapter = new AccountApplicationAdapter(res.getData().getAppList(), this, mContext);
+        layoutBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        layoutBinding.recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void deleteAppListAt(GetDraftedAppsVerifyOtpResponseAppList getDraftedAppsVerifyOtpResponseAppList, int position) {
 
         if (!deletePrompt) {
-            View checkBoxView = View.inflate(this, R.layout.delete_dialogue, null);
+            View checkBoxView = View.inflate(mContext, R.layout.delete_dialogue, null);
             CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.del_cb);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -208,7 +202,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                 }
             });
 
-            AlertDialog.Builder deleteDialogue = new AlertDialog.Builder(this);
+            AlertDialog.Builder deleteDialogue = new AlertDialog.Builder(mContext);
             deleteDialogue.setTitle("Delete Confirmation");
             deleteDialogue.setMessage("Are You Sure To Delete");
             deleteDialogue.setView(checkBoxView);
@@ -275,23 +269,19 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                 getConsumerAccountDetails();
                 break;
             case R.id.create_app_fab:
-                openSetupAccountActivity();
+                findNavController(layoutBinding.getRoot()).navigate(R.id.openBankingMode);
                 break;
             case R.id.bt_back:
-                finish();
+//                finish();
                 break;
         }
     }
 
-    private void openSetupAccountActivity() {
-
-        Intent intent = new Intent(this, SelectBankingModeActivity.class);
-        startActivity(intent);
-    }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onResume() {
+        super.onResume();
         setLayout();
     }
+
 }

@@ -1,16 +1,22 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
+import static androidx.navigation.ViewKt.findNavController;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsTwoBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAddress;
@@ -21,8 +27,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.use
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
@@ -31,7 +35,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.Config;
 
 
-public class PersonalDetailsTwoActivity extends BaseActivity {
+public class PersonalDetailsTwoFragment extends BaseFragment {
 
     private ActivityPersonalDetailsTwoBinding personalDetailsTwoBinding;
     private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
@@ -40,20 +44,24 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
+
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        personalDetailsTwoBinding = ActivityPersonalDetailsTwoBinding.inflate(inflater, container, false);
         setViewModel();
         getSharedPrefData();
         setData();
         clicks();
         setObserver();
         setLogoLayout(personalDetailsTwoBinding.layoutLogo.tvDate);
+
+        return personalDetailsTwoBinding.getRoot();
     }
 
     private void setObserver() {
-        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(this, new Observer<RegisterEmploymentDetailsResponse>() {
+        personalDetailsViewModel.registerEmploymentDetailsResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<RegisterEmploymentDetailsResponse>() {
             @Override
             public void onChanged(RegisterEmploymentDetailsResponse registerEmploymentDetailsResponse) {
                 dismissLoading();
@@ -61,7 +69,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
             }
         });
 
-        personalDetailsViewModel.userAddressMutableLiveData.observe(this, new Observer<UserAddressResponseModel>() {
+        personalDetailsViewModel.userAddressMutableLiveData.observe(getViewLifecycleOwner(), new Observer<UserAddressResponseModel>() {
             @Override
             public void onChanged(UserAddressResponseModel registerEmploymentDetailsResponse) {
                 dismissLoading();
@@ -70,7 +78,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         });
 
 
-        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+        personalDetailsViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 dismissLoading();
@@ -131,7 +139,8 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         personalDetailsTwoBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
 
@@ -188,9 +197,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void goToPersonalDetailsThree() {
-        Intent intent = new Intent(this, PersonalDetailsThreeActivity.class);
-        intent.putExtra("registerEmployeeDetailsPostParams", registerEmployeeDetailsPostParams);
-        startActivity(intent);
+        findNavController(personalDetailsTwoBinding.getRoot()).navigate(R.id.openPersonalDetailsThree);
     }
 
     private void setData() {
@@ -225,8 +232,4 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         }
     }
 
-    private void setBinding() {
-        personalDetailsTwoBinding = ActivityPersonalDetailsTwoBinding.inflate(getLayoutInflater());
-        setContentView(personalDetailsTwoBinding.getRoot());
-    }
 }

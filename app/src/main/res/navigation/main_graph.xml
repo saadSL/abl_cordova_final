@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mobileNumberFragment">
+
+    <fragment
+        android:id="@+id/mobileNumberFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberFragment"
+        android:label="MobileNumberFragment"
+        tools:layout="@layout/mobile_number_availability">
+        <action
+            android:id="@+id/openOtpVerfication"
+            app:destination="@id/otpVerficationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpVerficationFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.otp_phase2.OtpVerificationFragment"
+        android:label="OtpVerificationFragment"
+        tools:layout="@layout/open_account_otp_verification">
+        <action
+            android:id="@+id/openBankingMode"
+            app:destination="@id/bankingModeFragment" />
+        <action
+            android:id="@+id/openAccountApplication"
+            app:destination="@id/accountApplicationFragment" />
+        <action
+            android:id="@+id/openChangeNumber"
+            app:destination="@id/changeNumberFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountApplicationFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application.AccountApplicationFragment"
+        android:label="AccountApplicationFragment"
+        tools:layout="@layout/application_list_layout">
+        <action
+            android:id="@+id/openBankingMode"
+            app:destination="@id/bankingModeFragment" />
+        <action
+            android:id="@+id/openAccountType"
+            app:destination="@id/accountTypeFragment" />
+        <action
+            android:id="@+id/openPreferredAccount"
+            app:destination="@id/preferredAccountFragment" />
+        <action
+            android:id="@+id/openPersonalDetailsOne"
+            app:destination="@id/personalDetailsOneFragment" />
+        <action
+            android:id="@+id/openPersonalDetailsTwo"
+            app:destination="@id/personalDetailsTwoFragment" />
+        <action
+            android:id="@+id/openPersonalDetailsThree"
+            app:destination="@id/personalDetailsThreeFragment" />
+        <action
+            android:id="@+id/openSelectCard"
+            app:destination="@id/selectCardFragment" />
+        <action
+            android:id="@+id/openUploadDocument"
+            app:destination="@id/uploadDocumentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/changeNumberFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.change_mobile_number.ChangeMobileNumberFragment"
+        android:label="ChangeMobileNumberFragment"
+        tools:layout="@layout/change_mobile_number">
+    </fragment>
+
+    <fragment
+        android:id="@+id/bankingModeFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeFragment"
+        android:label="SelectBankingModeFragment"
+        tools:layout="@layout/activity_select_banking_mode">
+        <action
+            android:id="@+id/openAccountType"
+            app:destination="@id/accountTypeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountTypeFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeFragment"
+        android:label="SelectAccountTypeFragment"
+        tools:layout="@layout/activity_select_account_type">
+        <action
+            android:id="@+id/openPreferredAccount"
+            app:destination="@id/preferredAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preferredAccountFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountFragment"
+        android:label="SelectPreferredAccountFragment"
+        tools:layout="@layout/activity_select_preferred_account">
+        <action
+            android:id="@+id/openPersonalDetailsOne"
+            app:destination="@id/personalDetailsOneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalDetailsOneFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneFragment"
+        android:label="PersonalDetailsOneFragment"
+        tools:layout="@layout/activity_personal_details_one">
+        <action
+            android:id="@+id/openPersonalDetailsTwo"
+            app:destination="@id/personalDetailsTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalDetailsTwoFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoFragment"
+        android:label="PersonalDetailsTwoFragment"
+        tools:layout="@layout/activity_personal_details_two">
+        <action
+            android:id="@+id/openPersonalDetailsThree"
+            app:destination="@id/personalDetailsThreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalDetailsThreeFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeFragment"
+        android:label="PersonalDetailsThreeFragment"
+        tools:layout="@layout/activity_personal_details_three">
+        <action
+            android:id="@+id/openSelectCard"
+            app:destination="@id/selectCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCardFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardFragment"
+        android:label="SelectCardFragment"
+        tools:layout="@layout/layout_setup_transaction">
+        <action
+            android:id="@+id/openUploadDocument"
+            app:destination="@id/uploadDocumentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadDocumentFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentFragment"
+        android:label="UploadDocumentFragment"
+        tools:layout="@layout/upload_documents">
+        <action
+            android:id="@+id/openReviewDocument"
+            app:destination="@id/reviewDocumentFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewDocumentFragment"
+        android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentFragment"
+        android:label="ReviewDocumentFragment"
+        tools:layout="@layout/review_details"/>
+
+</navigation>

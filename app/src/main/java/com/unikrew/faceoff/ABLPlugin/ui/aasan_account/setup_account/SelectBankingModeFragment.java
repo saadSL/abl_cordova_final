@@ -1,6 +1,9 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
+import static androidx.navigation.ViewKt.findNavController;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -17,7 +20,9 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -39,7 +44,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectBankingModeBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
@@ -52,7 +57,7 @@ import com.unikrew.faceoff.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectBankingModeActivity extends BaseActivity implements OnMapReadyCallback, OnItemSelectedListener, GoogleMap.OnMarkerClickListener {
+public class SelectBankingModeFragment extends BaseFragment implements OnMapReadyCallback, OnItemSelectedListener, GoogleMap.OnMarkerClickListener {
     private ActivitySelectBankingModeBinding bankingModeBinding;
     private FusedLocationProviderClient mFusedLocationClient;
     private SelectBankingModeViewModel selectBankingModeViewModel;
@@ -61,16 +66,21 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private int BANKING_MODE_ID = 0;
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
+
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        bankingModeBinding = ActivitySelectBankingModeBinding.inflate(inflater, container, false);
+
         setViewModel();
         setLogoLayout(bankingModeBinding.layoutLogo.tvDate);
 //        getLatLng();
         getBranchesFromNetwork(30.18817, 71.4358);
         setObservers();
         clicks();
+
+        return bankingModeBinding.getRoot();
     }
 
     private void clicks() {
@@ -91,7 +101,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         bankingModeBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
 
@@ -104,14 +115,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     }
 
     private void selectIslamicBanking() {
-        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
-        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(mContext, R.drawable.rounded_corner_white));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(mContext, R.drawable.rounded_corner_selected));
         BANKING_MODE_ID = Config.ISLAMIC_BANKING;
     }
 
     private void selectConventionalBanking() {
-        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
-        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(mContext, R.drawable.rounded_corner_selected));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(mContext, R.drawable.rounded_corner_white));
         BANKING_MODE_ID = Config.CONVENTIONAL_BANKING;
     }
 
@@ -149,22 +160,22 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
 
     private void setMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     private void setObservers() {
-        selectBankingModeViewModel.registerOtpLiveData.observe(this, new Observer<RegisterVerifyOtpResponse>() {
+        selectBankingModeViewModel.registerOtpLiveData.observe(getViewLifecycleOwner(), new Observer<RegisterVerifyOtpResponse>() {
             @Override
             public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
                 Log.d("branchesResponse", "onChanged: " + registerVerifyOtpResponse);
                 dismissLoading();
                 goToSelectAccont();
-                saveSerializableInPref("registerVerifyOtpResponse",registerVerifyOtpResponse);
+                saveSerializableInPref("registerVerifyOtpResponse", registerVerifyOtpResponse);
             }
         });
-        selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
+        selectBankingModeViewModel.branchesLiveData.observe(getViewLifecycleOwner(), new Observer<BranchesModel>() {
             @Override
             public void onChanged(BranchesModel branchesModel) {
                 Log.d("branchesResponse", "onChanged: " + branchesModel);
@@ -175,7 +186,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             }
         });
 
-        selectBankingModeViewModel.errorLiveData.observe(this, new Observer<String>() {
+        selectBankingModeViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
@@ -186,8 +197,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     }
 
     private void goToSelectAccont() {
-        Intent intent = new Intent(SelectBankingModeActivity.this, SelectAccountTypeActivity.class);
-        startActivity(intent);
+        findNavController(bankingModeBinding.getRoot()).navigate(R.id.openAccountType);
     }
 
     private void setSpinner(BranchesModel branchesModel) {
@@ -205,7 +215,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             }
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, _allBranches);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, _allBranches);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -227,7 +237,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     private void getLatLng() {
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
 
         // method to get the location
         getLastLocation();
@@ -259,7 +269,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                     }
                 });
             } else {
-                Toast.makeText(this, "Please turn on" + " your location...", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Please turn on" + " your location...", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
@@ -281,7 +291,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
         // setting LocationRequest
         // on FusedLocationClient
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
@@ -297,7 +307,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     // method to check for permissions
     private boolean checkPermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         // If we want background location
         // on Android 10.0 and higher,
@@ -307,7 +317,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     // method to request for permissions
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{
+        requestPermissions( new String[]{
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION}, Config.LOCATION_PERMISSION_CODE);
     }
@@ -315,7 +325,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     // method to check
     // if location is enabled
     private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
@@ -344,10 +354,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         selectBankingModeViewModel.getBranches(getBranchPostModel);
     }
 
-    private void setBinding() {
-        bankingModeBinding = ActivitySelectBankingModeBinding.inflate(getLayoutInflater());
-        setContentView(bankingModeBinding.getRoot());
-    }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -379,7 +385,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, bankingModeBinding.spinnerAllBranches.getSelectedItemPosition() + " selected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, bankingModeBinding.spinnerAllBranches.getSelectedItemPosition() + " selected", Toast.LENGTH_SHORT).show();
         if (bankingModeBinding.spinnerAllBranches.getSelectedItemPosition() == 0) {
             selectedBranchTitle = "";
         } else {
@@ -394,7 +400,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, marker.getTitle(), Toast.LENGTH_SHORT).show();
         selectedBranchTitle = marker.getTitle();
         return false;
     }

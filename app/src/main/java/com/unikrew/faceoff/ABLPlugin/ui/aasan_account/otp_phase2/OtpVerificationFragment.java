@@ -1,25 +1,27 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.otp_phase2;
 
+import static androidx.navigation.ViewKt.findNavController;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.OpenAccountOtpVerificationBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application.AccountApplicationActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.change_mobile_number.ChangeMobileNumberActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeFragment;
 import com.unikrew.faceoff.Config;
 
 import java.nio.charset.StandardCharsets;
@@ -34,7 +36,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class OtpVerification extends BaseActivity implements View.OnClickListener {
+public class OtpVerificationFragment extends BaseFragment implements View.OnClickListener {
 
 
     OtpVerificationViewModel viewModel;
@@ -44,15 +46,18 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     ViewAppsGenerateOtpResponse res;
     private OpenAccountOtpVerificationBinding binding;
 
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
-        setLayout();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = OpenAccountOtpVerificationBinding.inflate(inflater, container, false);
         setListeners();
         setViewModel();
         setAutoFocusForOtp(binding.etOtp1, binding.etOtp2, binding.etOtp3, binding.etOtp4, binding.etOtp5, binding.etOtp6);
         observe();
+
+
+        return binding.getRoot();
     }
 
     private void setLayout() {
@@ -61,81 +66,75 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         setLogoLayout(binding.logoToolbar.tvDate);
     }
 
-    private void setBinding() {
-        binding = OpenAccountOtpVerificationBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-    }
 
     private void setViewModel() {
         viewModel = new ViewModelProvider(this).get(OtpVerificationViewModel.class);
         postParams = new GetDraftedAppsVerfiyOtpPostParams();
-        res = (ViewAppsGenerateOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        res = (ViewAppsGenerateOtpResponse) getArguments().getSerializable(Config.RESPONSE);
         viewAppsGenerateOtpPostParams = new ViewAppsGenerateOtpPostParams();
     }
 
 
     private void observe() {
-        otp6LiveData.observe(this, new Observer<Boolean>() {
+        otp6LiveData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 /* aBoolean works if last field for otp is filled. */
-                if (aBoolean){
+                if (aBoolean) {
                     postOtp();
                 }
             }
         });
 
-        viewModel.otpVerificationResponseLiveData.observe(this, new Observer<GetDraftedAppsVerifyOtpResponse>() {
+        viewModel.otpVerificationResponseLiveData.observe(getViewLifecycleOwner(), new Observer<GetDraftedAppsVerifyOtpResponse>() {
             @Override
             public void onChanged(GetDraftedAppsVerifyOtpResponse getDraftedAppsVerifyOtpResponse) {
-                if (getDraftedAppsVerifyOtpResponse.getData().getAppList().size() > 0){
+                if (getDraftedAppsVerifyOtpResponse.getData().getAppList().size() > 0) {
                     openAccountApplication(getDraftedAppsVerifyOtpResponse);
-                    saveStringInPref(Config.ACCESS_TOKEN,getDraftedAppsVerifyOtpResponse.getData().accessToken);
-                }else{
+                    saveStringInPref(Config.ACCESS_TOKEN, getDraftedAppsVerifyOtpResponse.getData().accessToken);
+                } else {
                     setupAccount();
                 }
 
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
-        viewModel.otpVerificationErrorLiveData.observe(this, new Observer<String>() {
+        viewModel.otpVerificationErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                showAlert(Config.errorType,s);
-                loader.dismiss();
+                showAlert(Config.errorType, s);
+                dismissLoading();
             }
         });
 
 
-        viewModel.reSendOtpSuccessLiveData.observe(this, new Observer<ViewAppsGenerateOtpResponse>() {
+        viewModel.reSendOtpSuccessLiveData.observe(getViewLifecycleOwner(), new Observer<ViewAppsGenerateOtpResponse>() {
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
-                showAlert(Config.successType,"OTP Request Successful !!!");
-                loader.dismiss();
+                showAlert(Config.successType, "OTP Request Successful !!!");
+                dismissLoading();
             }
         });
 
-        viewModel.reSendOtpErrorLiveData.observe(this, new Observer<String>() {
+        viewModel.reSendOtpErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                showAlert(Config.errorType,"OTP Request Failed !!!");
+                showAlert(Config.errorType, "OTP Request Failed !!!");
             }
         });
     }
 
     private void setupAccount() {
-        Intent intent = new Intent(this, SelectBankingModeActivity.class);
-        startActivity(intent);
+        findNavController(binding.getRoot()).navigate(R.id.openBankingMode);
     }
 
     private void openAccountApplication(GetDraftedAppsVerifyOtpResponse getDraftedAppsVerifyOtpResponse) {
-        Intent intent = new Intent(this, AccountApplicationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Config.RESPONSE, getDraftedAppsVerifyOtpResponse);
+        findNavController(binding.getRoot()).navigate(R.id.openAccountApplication, bundle);
 
-        intent.putExtra( Config.RESPONSE,getDraftedAppsVerifyOtpResponse );
-
-        startActivity(intent);
-        this.finish();
+//        get.finish();
     }
 
 
@@ -148,7 +147,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
                 postOtp();
                 break;
@@ -156,7 +155,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                 reSendOtp();
                 break;
             case R.id.bt_back:
-                finish();
+//                finish();
                 break;
             case R.id.change_mobile_num_link:
                 openChangeMobileNumberActivity();
@@ -165,11 +164,9 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     }
 
     private void openChangeMobileNumberActivity() {
-        Intent intent = new Intent(this, ChangeMobileNumberActivity.class);
-
-        intent.putExtra(Config.RESPONSE,res);
-
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Config.RESPONSE, res);
+        findNavController(binding.getRoot()).navigate(R.id.openChangeNumber, bundle);
     }
 
     private void reSendOtp() {
@@ -193,9 +190,9 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     private void setPostParams() {
         postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        postParams.getData().setIdNumber( res.getData().getIdNumber() );
-        postParams.getData().setMobileNo( res.getData().getMobileNo().toString() );
-        postParams.getData().setOtp( getEncryptedOtp( getOtp() ) );
+        postParams.getData().setIdNumber(res.getData().getIdNumber());
+        postParams.getData().setMobileNo(res.getData().getMobileNo().toString());
+        postParams.getData().setOtp(getEncryptedOtp(getOtp()));
 
         postParams.getPagination().setPage(Config.PAGE_NUMBER);
         postParams.getPagination().setSize(Config.PAGE_SIZE);
@@ -240,17 +237,18 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     }
 
     private String getOtp() {
-        return binding.etOtp1.getText().toString()+
-                    binding.etOtp2.getText().toString()+
-                    binding.etOtp3.getText().toString()+
-                    binding.etOtp4.getText().toString()+
-                    binding.etOtp5.getText().toString()+
-                    binding.etOtp6.getText().toString();
+        return binding.etOtp1.getText().toString() +
+                binding.etOtp2.getText().toString() +
+                binding.etOtp3.getText().toString() +
+                binding.etOtp4.getText().toString() +
+                binding.etOtp5.getText().toString() +
+                binding.etOtp6.getText().toString();
     }
 
+
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onResume() {
+        super.onResume();
         setLayout();
     }
 }

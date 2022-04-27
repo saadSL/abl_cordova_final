@@ -1,9 +1,12 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.change_mobile_number;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,12 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ChangeMobileNumberBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.Config;
 
-public class ChangeMobileNumberActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class ChangeMobileNumberFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private ChangeMobileNumberBinding binding;
     private Boolean portedMobileNetwork = false;
@@ -25,14 +29,19 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
     ChangeMobileNumberPostParams postParams;
 
     ViewAppsGenerateOtpResponse res;
+
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = ChangeMobileNumberBinding.inflate(inflater, container, false);
         setLayout();
         setListner();
         setViewModel();
         observe();
+
+
+        return binding.getRoot();
     }
 
     private void setLayout() {
@@ -42,19 +51,19 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
     }
 
     private void observe() {
-        viewModel.changeMobileNumSuccess.observe(this, new Observer<ChangeMobileNumberResponse>() {
+        viewModel.changeMobileNumSuccess.observe(getViewLifecycleOwner(), new Observer<ChangeMobileNumberResponse>() {
             @Override
             public void onChanged(ChangeMobileNumberResponse changeMobileNumberResponse) {
                 showAlert(Config.successType,changeMobileNumberResponse.getMessage().getDescription());
-                loader.dismiss();
+               dismissLoading();
             }
         });
 
-        viewModel.changeMobileNumError.observe(this, new Observer<String>() {
+        viewModel.changeMobileNumError.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType,errMsg);
-                loader.dismiss();
+               dismissLoading();
             }
         });
     }
@@ -62,7 +71,7 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
     private void setViewModel() {
         viewModel = new ViewModelProvider(this).get(ChangeMobileNumberViewModel.class);
         postParams = new ChangeMobileNumberPostParams();
-        res = (ViewAppsGenerateOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
+        res = (ViewAppsGenerateOtpResponse) getArguments().getSerializable(Config.RESPONSE);
     }
 
     private void setListner() {
@@ -71,10 +80,6 @@ public class ChangeMobileNumberActivity extends BaseActivity implements View.OnC
         binding.portedMobileNetworkSwitch.setOnCheckedChangeListener(this);
     }
 
-    private void setBinding() {
-        binding = ChangeMobileNumberBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-    }
 
     @Override
     public void onClick(View view) {

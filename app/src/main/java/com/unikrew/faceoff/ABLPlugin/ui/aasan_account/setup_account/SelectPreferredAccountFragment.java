@@ -1,29 +1,32 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
 
+import static androidx.navigation.ViewKt.findNavController;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectPreferredAccountBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
 import com.unikrew.faceoff.Config;
 
 
-public class SelectPreferredAccountActivity extends BaseActivity {
+public class SelectPreferredAccountFragment extends BaseFragment {
 
     private ActivitySelectPreferredAccountBinding preferredAccountBinding;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
@@ -32,19 +35,22 @@ public class SelectPreferredAccountActivity extends BaseActivity {
     private Integer ACCOUNT_VARIANT_ID;
     private Boolean IS_RESUMED;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        preferredAccountBinding = ActivitySelectPreferredAccountBinding.inflate(inflater, container, false);
         clicks();
         getSharedPrefData();
         setViewModel();
         setObservers();
         setLogoLayout(preferredAccountBinding.layoutLogo.tvDate);
+
+        return preferredAccountBinding.getRoot();
     }
 
     private void setObservers() {
-        selectAccountTypeViewModel.accountTypeResponseLiveData.observe(this, new Observer<AccountTypeResponse>() {
+        selectAccountTypeViewModel.accountTypeResponseLiveData.observe(getViewLifecycleOwner(), new Observer<AccountTypeResponse>() {
             @Override
             public void onChanged(AccountTypeResponse accountTypeResponse) {
                 Log.d("accountTypeResponse", "onChanged: " + accountTypeResponse.toString());
@@ -53,7 +59,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
             }
         });
 
-        selectAccountTypeViewModel.errorLiveData.observe(this, new Observer<String>() {
+        selectAccountTypeViewModel.errorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
@@ -63,8 +69,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
     }
 
     private void goToPersonalDetails() {
-        Intent intent = new Intent(this, PersonalDetailsOneActivity.class);
-        startActivity(intent);
+        findNavController(preferredAccountBinding.getRoot()).navigate(R.id.openPersonalDetailsOne);
     }
 
     private void setViewModel() {
@@ -108,7 +113,8 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         preferredAccountBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+//                finish();
             }
         });
         preferredAccountBinding.layoutBtn.btnNext.setOnClickListener(new View.OnClickListener() {
@@ -180,9 +186,6 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(false);
     }
 
-    private void setBinding() {
-        preferredAccountBinding = ActivitySelectPreferredAccountBinding.inflate(getLayoutInflater());
-        setContentView(preferredAccountBinding.getRoot());
-    }
+
 
 }

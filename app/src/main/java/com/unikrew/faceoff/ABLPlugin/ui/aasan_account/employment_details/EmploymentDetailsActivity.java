@@ -30,7 +30,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -151,9 +150,9 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     }
 
     private void openCardSelectionActivity() {
-        Intent intent = new Intent(this, SelectCardActivity.class);
-        intent.putExtra(Config.RESPONSE,nextScreenResponse);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SelectCardFragment.class);
+//        intent.putExtra(Config.RESPONSE,nextScreenResponse);
+//        startActivity(intent);
     }
 
     private void setProfessionSpinner(ProfessionResponse professionResponse) {

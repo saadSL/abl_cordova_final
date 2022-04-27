@@ -1,5 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document;
 
+import static androidx.navigation.ViewKt.findNavController;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,12 +21,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.UploadDocumentsBinding;
-import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.base.BaseFragment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountPostParams;
@@ -31,12 +36,12 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.S
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
+
 import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
 
-public class UploadDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class UploadDocumentFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     UploadDocumentsBinding uploadDocumentsBinding;
     private boolean livePic = false;
     private boolean sigPic = false;
@@ -57,16 +62,17 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private Boolean savingForSig = false;
 
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setBinding();
-        setLayout();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        uploadDocumentsBinding = UploadDocumentsBinding.inflate(inflater, container, false);
         setClicks();
         getSharedPrefData();
         setViewModel();
         observe();
         setLogoLayout(uploadDocumentsBinding.logoToolbar.tvDate);
+
+        return uploadDocumentsBinding.getRoot();
     }
 
     private void getSharedPrefData() {
@@ -87,14 +93,14 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void setLayout() {
         uploadDocumentsBinding.steps.screenHeader.stepsHeading1.setText("Upload");
         uploadDocumentsBinding.steps.screenHeader.stepsHeading2.setText("Document");
-        uploadDocumentsBinding.steps.step1.setBackground(this.getDrawable(R.color.custom_blue));
-        uploadDocumentsBinding.steps.step2.setBackground(this.getDrawable(R.color.custom_blue));
-        uploadDocumentsBinding.steps.step3.setBackground(this.getDrawable(R.color.custom_blue));
-        uploadDocumentsBinding.steps.step4.setBackground(this.getDrawable(R.color.custom_blue));
+        uploadDocumentsBinding.steps.step1.setBackground(mContext.getDrawable(R.color.custom_blue));
+        uploadDocumentsBinding.steps.step2.setBackground(mContext.getDrawable(R.color.custom_blue));
+        uploadDocumentsBinding.steps.step3.setBackground(mContext.getDrawable(R.color.custom_blue));
+        uploadDocumentsBinding.steps.step4.setBackground(mContext.getDrawable(R.color.custom_blue));
     }
 
     private void observe() {
-        uploadDocumentViewModel.saveAttachmentResponseMutableLiveData.observe(this, new Observer<SaveAttachmentResponse>() {
+        uploadDocumentViewModel.saveAttachmentResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<SaveAttachmentResponse>() {
             @Override
             public void onChanged(SaveAttachmentResponse saveAttachmentResponse) {
                 if (savingForPic) {
@@ -104,13 +110,13 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 } else if (savingForSig) {
                     savingForSig = false;
                     uploadDocuments();
-                }else{
+                } else {
                     saveNatureOfAccount();
                 }
             }
         });
 
-        uploadDocumentViewModel.saveAttachmentErrorLiveData.observe(this, new Observer<String>() {
+        uploadDocumentViewModel.saveAttachmentErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
@@ -118,14 +124,14 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         });
 
 
-        uploadDocumentViewModel.saveNatureOfAccountResponseMutableLiveData.observe(this, new Observer<SaveNatureOfAccountResponse>() {
+        uploadDocumentViewModel.saveNatureOfAccountResponseMutableLiveData.observe(getViewLifecycleOwner(), new Observer<SaveNatureOfAccountResponse>() {
             @Override
             public void onChanged(SaveNatureOfAccountResponse saveNatureOfAccountResponse) {
                 openReviewDetailsActivity();
             }
         });
 
-        uploadDocumentViewModel.saveNatureOfAccountErrorLiveData.observe(this, new Observer<String>() {
+        uploadDocumentViewModel.saveNatureOfAccountErrorLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
@@ -134,8 +140,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void openReviewDetailsActivity() {
-        Intent intent = new Intent(this, ReviewDocumentActivity.class);
-        startActivity(intent);
+        findNavController(uploadDocumentsBinding.getRoot()).navigate(R.id.openReviewDocument);
     }
 
     private void saveNatureOfAccount() {
@@ -182,10 +187,6 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentsBinding.rbMinor.setOnCheckedChangeListener(this);
     }
 
-    private void setBinding() {
-        uploadDocumentsBinding = UploadDocumentsBinding.inflate(getLayoutInflater());
-        setContentView(uploadDocumentsBinding.getRoot());
-    }
 
     @Override
     public void onClick(View view) {
@@ -194,7 +195,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 uploadDocuments();
                 break;
             case R.id.bt_back:
-                finish();
+//                finish();
                 break;
             case R.id.ll_live_pic:
                 livePic = true;
@@ -211,7 +212,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
     private void getPicFromCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Config.MY_CAMERA_PERMISSION_CODE);
             } else {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -225,19 +226,18 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Config.MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
             } else {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == Config.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap image = null;
             if (image == null && livePic) {
@@ -361,8 +361,8 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onResume() {
+        super.onResume();
         setLayout();
     }
 }
