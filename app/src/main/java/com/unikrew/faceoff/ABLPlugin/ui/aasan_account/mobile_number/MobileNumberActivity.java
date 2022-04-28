@@ -318,7 +318,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void viewAppsGenerateOtpPostData() {
-        if ( generateOtp){
+        if (!alreadyExist && generateOtp){
             setAttachmentObject();
         }
         setPostParams();

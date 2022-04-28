@@ -208,7 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/spinner_background"
+                    android:background="@drawable/rectangular_spinner"
                     android:padding="@dimen/_5sdp"
                     android:prompt="@string/choose_occupation"
                     android:spinnerMode="dialog" />
@@ -230,7 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/spinner_background"
+                    android:background="@drawable/rectangular_spinner"
                     android:padding="@dimen/_5sdp"
                     android:prompt="@string/choose_profession"
                     android:spinnerMode="dialog" />
