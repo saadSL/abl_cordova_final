@@ -233,8 +233,6 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 //        mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
         if (isPermission()){
             getImageFromCamera();
-        }else{
-            showAlert(Config.errorType,"Permission Not Granted !!!");
         }
 
     }

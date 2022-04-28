@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
@@ -49,6 +50,41 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
         setYourDetails();
         setCurrentMailingAddress();
         setTransactionDetails();
+        setImages();
+    }
+
+    private void setImages() {
+        if (IS_RESUMED){
+            for (int i = 0 ; i < getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAttachments().size() ; i++){
+                if(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAttachments().get(i).getAttachmentTypeId() == Config.CNIC_FRONT_TYPE_ID){
+                    Glide.with(this).load(getConsumerAccountDetailsResponse.
+                            getData().
+                            getConsumerList().get(0).
+                            getAttachments().get(i).
+                            getPath()).
+                            placeholder(R.drawable.no_image).
+                            into(reviewDetailsBinding.imgCnicFront);
+                }else if (getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAttachments().get(i).getAttachmentTypeId() == Config.CNIC_BACK_TYPE_ID){
+                    Glide.with(this).load(getConsumerAccountDetailsResponse.
+                            getData().
+                            getConsumerList().get(0).
+                            getAttachments().get(i).
+                            getPath()).
+                            placeholder(R.drawable.no_image).
+                            into(reviewDetailsBinding.imgCnicBack);
+                }else if (getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAttachments().get(i).getAttachmentTypeId() == Config.SIGNATURE_TYPE_ID){
+                    Glide.with(this).load(getConsumerAccountDetailsResponse.
+                            getData().
+                            getConsumerList().get(0).
+                            getAttachments().get(i).
+                            getPath()).
+                            placeholder(R.drawable.no_image).
+                            into(reviewDetailsBinding.imgSignature);
+                }
+            }
+        }else{
+
+        }
     }
 
     private void setTransactionDetails() {
