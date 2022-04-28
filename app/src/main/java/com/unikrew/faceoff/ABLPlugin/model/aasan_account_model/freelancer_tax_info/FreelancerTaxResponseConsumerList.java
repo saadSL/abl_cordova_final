@@ -1,33 +1,30 @@
-package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details;
+package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class GetConsumerAccountDetailsResponseConsumerList implements Serializable {
+public class FreelancerTaxResponseConsumerList implements Serializable {
     public int rdaCustomerProfileId;
-    public Object accessToken;
+    public Object primaryRdaCustomerProfileId;
+    public Object rdaCustomerAccInfoId;
+    public Object rdaCustomerJointAccountId;
     public Object customerTitleId;
-    public Object customerTitle;
-    public String emailAddress;
     public String fullName;
     public String mobileNo;
     public Object mobileNoCountryCodeId;
-    public String fatherHusbandName;
+    public Object emailAddress;
+    public Object fatherHusbandName;
     public String motherMaidenName;
     public Object countryOfResidenceId;
     public Object genderId;
-    public Object gender;
     public Object maritalStatusId;
     public Object dateOfBirth;
     public Object countryOfBirthPlaceId;
     public String cityOfBirth;
     public Object customerNtn;
-    public Object taxResidentInd;
+    public String taxResidentInd;
     public Object employmentTypeId;
-    public int professionId;
-    public Object profession;
-    public int occupationId;
-    public Object occupation;
+    public Object professionId;
+    public Object occupationId;
     public Object nearestLandmark;
     public Object natureOfBusiness;
     public Object nameOfOrganization;
@@ -45,31 +42,19 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public boolean existingCustomerInd;
     public Object idTypeId;
     public String idNumber;
-    public int statusId;
-    public Object nationalityTypeId;
-    public Object natureOfAccountId;
-    public GetConsumerAccountDetailsResponseStepperSections stepperSections;
-    public ArrayList<GetConsumerAccountDetailsResponseAddress> addresses;
-    public GetConsumerAccountDetailsResponseAccountInformation accountInformation;
-    public ArrayList<GetConsumerAccountDetailsResponseAttachment> attachments;
-    public boolean existingAccountInd;
     public Object customerNonResidentInd;
     public Object customerCity;
-    public String customerBranch;
-    public int customerTypeId;
+    public Object customerBranch;
     public Object kinName;
     public Object kinMobile;
     public Object kinAddress;
-    public Object kinCnic;
     public Object kinRelation;
     public boolean isPrimary;
-    public Object referredBy;
-    public Object referrerCp;
-    public Object relationshipWithMinorId;
-    public ArrayList<String> suggestPlaceOfBirth;
-    public ArrayList<String> suggestMotherNames;
-    public Object mobileNetworkId;
-    public Object portedMobileNetwork;
+    public Object statusId;
+    public Object nationalityTypeId;
+    public Object nationalities;
+    public Object residentCountries;
+    public Object kinCnic;
 
     public int getRdaCustomerProfileId() {
         return rdaCustomerProfileId;
@@ -79,12 +64,28 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.rdaCustomerProfileId = rdaCustomerProfileId;
     }
 
-    public Object getAccessToken() {
-        return accessToken;
+    public Object getPrimaryRdaCustomerProfileId() {
+        return primaryRdaCustomerProfileId;
     }
 
-    public void setAccessToken(Object accessToken) {
-        this.accessToken = accessToken;
+    public void setPrimaryRdaCustomerProfileId(Object primaryRdaCustomerProfileId) {
+        this.primaryRdaCustomerProfileId = primaryRdaCustomerProfileId;
+    }
+
+    public Object getRdaCustomerAccInfoId() {
+        return rdaCustomerAccInfoId;
+    }
+
+    public void setRdaCustomerAccInfoId(Object rdaCustomerAccInfoId) {
+        this.rdaCustomerAccInfoId = rdaCustomerAccInfoId;
+    }
+
+    public Object getRdaCustomerJointAccountId() {
+        return rdaCustomerJointAccountId;
+    }
+
+    public void setRdaCustomerJointAccountId(Object rdaCustomerJointAccountId) {
+        this.rdaCustomerJointAccountId = rdaCustomerJointAccountId;
     }
 
     public Object getCustomerTitleId() {
@@ -93,22 +94,6 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
 
     public void setCustomerTitleId(Object customerTitleId) {
         this.customerTitleId = customerTitleId;
-    }
-
-    public Object getCustomerTitle() {
-        return customerTitle;
-    }
-
-    public void setCustomerTitle(Object customerTitle) {
-        this.customerTitle = customerTitle;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
     }
 
     public String getFullName() {
@@ -135,11 +120,19 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.mobileNoCountryCodeId = mobileNoCountryCodeId;
     }
 
-    public String getFatherHusbandName() {
+    public Object getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(Object emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public Object getFatherHusbandName() {
         return fatherHusbandName;
     }
 
-    public void setFatherHusbandName(String fatherHusbandName) {
+    public void setFatherHusbandName(Object fatherHusbandName) {
         this.fatherHusbandName = fatherHusbandName;
     }
 
@@ -165,14 +158,6 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
 
     public void setGenderId(Object genderId) {
         this.genderId = genderId;
-    }
-
-    public Object getGender() {
-        return gender;
-    }
-
-    public void setGender(Object gender) {
-        this.gender = gender;
     }
 
     public Object getMaritalStatusId() {
@@ -215,11 +200,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.customerNtn = customerNtn;
     }
 
-    public Object getTaxResidentInd() {
+    public String getTaxResidentInd() {
         return taxResidentInd;
     }
 
-    public void setTaxResidentInd(Object taxResidentInd) {
+    public void setTaxResidentInd(String taxResidentInd) {
         this.taxResidentInd = taxResidentInd;
     }
 
@@ -231,36 +216,20 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.employmentTypeId = employmentTypeId;
     }
 
-    public int getProfessionId() {
+    public Object getProfessionId() {
         return professionId;
     }
 
-    public void setProfessionId(int professionId) {
+    public void setProfessionId(Object professionId) {
         this.professionId = professionId;
     }
 
-    public Object getProfession() {
-        return profession;
-    }
-
-    public void setProfession(Object profession) {
-        this.profession = profession;
-    }
-
-    public int getOccupationId() {
+    public Object getOccupationId() {
         return occupationId;
     }
 
-    public void setOccupationId(int occupationId) {
+    public void setOccupationId(Object occupationId) {
         this.occupationId = occupationId;
-    }
-
-    public Object getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(Object occupation) {
-        this.occupation = occupation;
     }
 
     public Object getNearestLandmark() {
@@ -399,70 +368,6 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.idNumber = idNumber;
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    public Object getNationalityTypeId() {
-        return nationalityTypeId;
-    }
-
-    public void setNationalityTypeId(Object nationalityTypeId) {
-        this.nationalityTypeId = nationalityTypeId;
-    }
-
-    public Object getNatureOfAccountId() {
-        return natureOfAccountId;
-    }
-
-    public void setNatureOfAccountId(Object natureOfAccountId) {
-        this.natureOfAccountId = natureOfAccountId;
-    }
-
-    public GetConsumerAccountDetailsResponseStepperSections getStepperSections() {
-        return stepperSections;
-    }
-
-    public void setStepperSections(GetConsumerAccountDetailsResponseStepperSections stepperSections) {
-        this.stepperSections = stepperSections;
-    }
-
-    public ArrayList<GetConsumerAccountDetailsResponseAddress> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(ArrayList<GetConsumerAccountDetailsResponseAddress> addresses) {
-        this.addresses = addresses;
-    }
-
-    public GetConsumerAccountDetailsResponseAccountInformation getAccountInformation() {
-        return accountInformation;
-    }
-
-    public void setAccountInformation(GetConsumerAccountDetailsResponseAccountInformation accountInformation) {
-        this.accountInformation = accountInformation;
-    }
-
-    public ArrayList<GetConsumerAccountDetailsResponseAttachment> getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(ArrayList<GetConsumerAccountDetailsResponseAttachment> attachments) {
-        this.attachments = attachments;
-    }
-
-    public boolean isExistingAccountInd() {
-        return existingAccountInd;
-    }
-
-    public void setExistingAccountInd(boolean existingAccountInd) {
-        this.existingAccountInd = existingAccountInd;
-    }
-
     public Object getCustomerNonResidentInd() {
         return customerNonResidentInd;
     }
@@ -479,20 +384,12 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.customerCity = customerCity;
     }
 
-    public String getCustomerBranch() {
+    public Object getCustomerBranch() {
         return customerBranch;
     }
 
-    public void setCustomerBranch(String customerBranch) {
+    public void setCustomerBranch(Object customerBranch) {
         this.customerBranch = customerBranch;
-    }
-
-    public int getCustomerTypeId() {
-        return customerTypeId;
-    }
-
-    public void setCustomerTypeId(int customerTypeId) {
-        this.customerTypeId = customerTypeId;
     }
 
     public Object getKinName() {
@@ -519,14 +416,6 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.kinAddress = kinAddress;
     }
 
-    public Object getKinCnic() {
-        return kinCnic;
-    }
-
-    public void setKinCnic(Object kinCnic) {
-        this.kinCnic = kinCnic;
-    }
-
     public Object getKinRelation() {
         return kinRelation;
     }
@@ -543,59 +432,43 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         isPrimary = primary;
     }
 
-    public Object getReferredBy() {
-        return referredBy;
+    public Object getStatusId() {
+        return statusId;
     }
 
-    public void setReferredBy(Object referredBy) {
-        this.referredBy = referredBy;
+    public void setStatusId(Object statusId) {
+        this.statusId = statusId;
     }
 
-    public Object getReferrerCp() {
-        return referrerCp;
+    public Object getNationalityTypeId() {
+        return nationalityTypeId;
     }
 
-    public void setReferrerCp(Object referrerCp) {
-        this.referrerCp = referrerCp;
+    public void setNationalityTypeId(Object nationalityTypeId) {
+        this.nationalityTypeId = nationalityTypeId;
     }
 
-    public Object getRelationshipWithMinorId() {
-        return relationshipWithMinorId;
+    public Object getNationalities() {
+        return nationalities;
     }
 
-    public void setRelationshipWithMinorId(Object relationshipWithMinorId) {
-        this.relationshipWithMinorId = relationshipWithMinorId;
+    public void setNationalities(Object nationalities) {
+        this.nationalities = nationalities;
     }
 
-    public ArrayList<String> getSuggestPlaceOfBirth() {
-        return suggestPlaceOfBirth;
+    public Object getResidentCountries() {
+        return residentCountries;
     }
 
-    public void setSuggestPlaceOfBirth(ArrayList<String> suggestPlaceOfBirth) {
-        this.suggestPlaceOfBirth = suggestPlaceOfBirth;
+    public void setResidentCountries(Object residentCountries) {
+        this.residentCountries = residentCountries;
     }
 
-    public ArrayList<String> getSuggestMotherNames() {
-        return suggestMotherNames;
+    public Object getKinCnic() {
+        return kinCnic;
     }
 
-    public void setSuggestMotherNames(ArrayList<String> suggestMotherNames) {
-        this.suggestMotherNames = suggestMotherNames;
-    }
-
-    public Object getMobileNetworkId() {
-        return mobileNetworkId;
-    }
-
-    public void setMobileNetworkId(Object mobileNetworkId) {
-        this.mobileNetworkId = mobileNetworkId;
-    }
-
-    public Object getPortedMobileNetwork() {
-        return portedMobileNetwork;
-    }
-
-    public void setPortedMobileNetwork(Object portedMobileNetwork) {
-        this.portedMobileNetwork = portedMobileNetwork;
+    public void setKinCnic(Object kinCnic) {
+        this.kinCnic = kinCnic;
     }
 }

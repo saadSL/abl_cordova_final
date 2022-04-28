@@ -114,6 +114,9 @@ public class Config {
     public static int SIGNATURE_TYPE_ID = 1043008;
     public static int LIVE_PHOTO = 1043005;
     public static int ATM_CARDS_ID = 1086;
+    public static int TIN_UNAVAILABILITY_REASONS = 1012;
+    public static int CURRENCY_RUPEE = 10803;
+    public static int CURRENCY_DOLLAR = 108302;
 }
 
 

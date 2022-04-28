@@ -14,6 +14,10 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_num
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.fatca_details.FatcaDetailsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.fatca_details.FatcaDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerfiyOtpPostParams;
@@ -45,6 +49,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 
@@ -131,4 +137,13 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<AtmCardsResponse> getAtmCards(@Body AtmCardsPostParams postParams);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<TinUnavailabilityReasonsResponse> getTinUnavailabilityReasons(@Body TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<FreelancerTaxResponse> submitFreelancerTaxDetails(@Body FreelancerTaxPostParams freelancerTaxPostParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-fatca-info")
+    Call<FatcaDetailsResponse> submitFatcaDetails(@Body FatcaDetailsPostParams fatcaDetailsPostParams,@Header("Authorization") String accessToken);
 }
