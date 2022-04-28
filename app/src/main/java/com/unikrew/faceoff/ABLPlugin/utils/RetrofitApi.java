@@ -31,6 +31,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.Profes
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
@@ -92,6 +94,9 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<AccountTypeResponse> postAccountType(@Body AccountTypePostParams accountTypeParams, @Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
+    Call<RemitterDetailsResponseModel> postRemitterDetails(@Body RemitterDetailsPostModel remitterDetailsPostModel, @Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-address")
     Call<UserAddressResponseModel> postUserAddress(@Body PostUserAddressModel postUserAddressModel, @Header("Authorization") String accessToken);

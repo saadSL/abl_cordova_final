@@ -119,6 +119,7 @@
     <string name="optional">(Optional)</string>
     <string name="father_name">Father/Husband Name</string>
     <string name="full_name">Full Name</string>
+    <string name="enter_full_name">Enter Full Name</string>
     <string name="full_name_ext"> (As per NADRA Record)</string>
     <string name="mother_name">Mother\'s Name</string>
     <string name="place_of_birth">Place of birth</string>
@@ -154,9 +155,14 @@
     <string name="purpose_of_account">Purpose of Account</string>
     <string name="select_your_account">Select Your Account</string>
     <string name="your">Your</string>
+    <string name="details_of">Details of</string>
+    <string name="remitter">Remitter</string>
     <string name="employment_details">Employment Details</string>
     <string name="current_mailing_address">Current/Mailing Address for Correspondence</string>
+    <string name="remitter_dets">Remitter\'s Details</string>
+    <string name="name_of_remitter">Name Of Remitter</string>
     <string name="town_tehsil">Town / Tehsil</string>
+    <string name="add_remitter">Add Remitter</string>
     <string name="country">Country</string>
     <string name="salary_caption">Please mention your average monthly salary/ income in Pakistani Rupee (PKR)</string>
     <string name="salary_placeholder">Enter Salary/Income Here</string>
@@ -184,8 +190,8 @@
     <string name="where_to_send_transaction_alerts">Where do you want bank to send account transaction alerts.</string>
     <string name="sms">SMS</string>
     <string name="take_live_picture">Take Your Live Picture</string>
-    <string name="live_pic_click_here"><a href="#"><font  fgcolor="#102A83">Click Here</font></a></string>
-    <string name="scan_again"><a href="#"><font  fgcolor="#102A83">Scan Again</font></a></string>
+    <string name="live_pic_click_here"><a href="#"><font fgcolor="#102A83">Click Here</font></a></string>
+    <string name="scan_again"><a href="#"><font fgcolor="#102A83">Scan Again</font></a></string>
     <string name="take_live_sig_pic">Upload Picture Of Your Signature</string>
     <string name="take_pic_on_white_paper">Take the picture of your signature on white paper</string>
     <string name="select_nature_of_account">Select the Nature of Account</string>
@@ -199,7 +205,7 @@
     <string name="summary">Summary</string>
     <string name="current_email_address">Current/Mailing Address for Correspondence</string>
     <string name="transaction_details">Details of Transactions</string>
-    <string name="agree_terms_and_conditions">View <font  fgcolor="#F07C00"><a href="#">Terms &amp; Conditions</a></font> to agree/disagree</string>
+    <string name="agree_terms_and_conditions">View <font fgcolor="#F07C00"><a href="#">Terms &amp; Conditions</a></font> to agree/disagree</string>
     <string name="confirm_declaration">I/We confirm My/our declaration</string>
     <string name="succesfully_submitted_application">Your have successfully submitted your application for the Asaan Digital Account to Allied Bank.</string>
     <string name="further_inquiry">For any further inquiry, please contact <font fgcolor="#F07C00">ada@abl.com</font> or call our Helpline: <font fgcolor="#F07C00">111-225-225</font></string>

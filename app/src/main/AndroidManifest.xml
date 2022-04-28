@@ -36,12 +36,16 @@
         android:usesCleartextTraffic="true">
         <activity
             android:theme="@style/AppTheme.NoActionBar"
-            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity"
             android:exported="false" />
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity"
             android:exported="false"
@@ -72,6 +76,7 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="@string/launcher_name">
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -129,22 +134,22 @@
             android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

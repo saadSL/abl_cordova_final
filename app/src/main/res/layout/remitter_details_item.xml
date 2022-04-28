@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rounded_corner_white"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_15sdp"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/_10sdp"
+        android:fontFamily="@font/worksans_regular"
+        android:text="@string/remitter_dets"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/worksans_semibold"
+        android:text="@string/name_of_remitter"
+        android:textColor="@color/black" />
+
+
+    <EditText
+        android:id="@+id/et_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/boxshape"
+        android:fontFamily="@font/worksans_regular"
+        android:hint="@string/enter_full_name"
+        android:inputType="textPersonName"
+        android:padding="@dimen/_5sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/worksans_semibold"
+        android:text="@string/relationship_heading"
+        android:textColor="@color/black" />
+
+
+    <EditText
+        android:id="@+id/et_relationship"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/boxshape"
+        android:fontFamily="@font/worksans_regular"
+        android:hint="@string/enter_relationship"
+        android:inputType="textPersonName"
+        android:padding="@dimen/_5sdp" />
+
+
+
+
+</LinearLayout>
