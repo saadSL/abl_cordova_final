@@ -217,6 +217,8 @@
     <string name="select_currency">Select the Currency</string>
     <string name="the_currency_used_to_send_and_recieve_money">"The currency that will used to send and recieve amount "</string>
     <string name="card_heading">Union Pay Pak</string>
+    <string name="additional_applicant_heading">Additional Applicant 1 Details</string>
+    <string name="relationship">Relationship</string>
 
 
 </resources>

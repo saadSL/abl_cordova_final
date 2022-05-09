@@ -86,7 +86,7 @@
                 <!--  CNIC UPLOAD  -->
                 <LinearLayout
                     android:visibility="gone"
-                    android:background="@drawable/rounded_corner_white"
+                    android:background="@drawable/transparent_secondary_bg"
                     android:layout_margin="@dimen/_10sdp"
                     android:id="@+id/ll_cnic_upload_front"
                     android:padding="@dimen/_5sdp"
@@ -152,7 +152,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:visibility="gone"
-                    android:background="@drawable/rounded_corner_white"
+                    android:background="@drawable/transparent_secondary_bg"
                     android:layout_margin="@dimen/_10sdp"
                     android:id="@+id/ll_cnic_upload_back"
                     android:padding="@dimen/_5sdp"

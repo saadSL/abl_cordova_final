@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/additional_applicant_heading"
+        android:id="@+id/heading_additional_applicant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/additional_applicant_heading"
         android:fontFamily="@font/worksans_semibold"
         android:textColor="@color/heading_black"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="@string/additional_applicant_details_heading"/>
+        android:layout_margin="@dimen/_10sdp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,19 +19,21 @@
         android:background="@drawable/rounded_corner_white"
         android:layout_margin="@dimen/_10sdp">
         <TextView
-            android:id="@+id/relationship_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/relationship"
             android:fontFamily="@font/worksans_semibold"
             android:textColor="@color/heading_black"
-            android:layout_margin="@dimen/_5sdp"
-            android:text="@string/relationship_heading"/>
-
+            android:layout_margin="@dimen/_10sdp"/>
         <EditText
-            android:id="@+id/et_relationship"
+            android:id="@+id/et_relationship_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:hint="@string/enter_relationship"/>
+            android:background="@drawable/rectangular_edit_text"
+            android:layout_margin="@dimen/_10sdp"
+            android:hint="@string/enter_relationship"
+            android:fontFamily="@font/worksans_regular"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>

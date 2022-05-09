@@ -5,11 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,14 +31,18 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.joint_applicant.JointApplicant;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class UploadDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     UploadDocumentsBinding uploadDocumentsBinding;
@@ -364,6 +372,93 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
     private void showAdditionalApplicantLayout() {
         uploadDocumentsBinding.llJoint.setVisibility(View.VISIBLE);
+        setAdditionalApplicantDropDown();
+    }
+
+    private void setAdditionalApplicantDropDown() {
+        ArrayList<JointApplicant> _additionalApplicant = new ArrayList<>();
+
+        JointApplicant jointApplicant0 = new JointApplicant();
+        JointApplicant jointApplicant1 = new JointApplicant();
+        JointApplicant jointApplicant2 = new JointApplicant();
+        JointApplicant jointApplicant3 = new JointApplicant();
+        JointApplicant jointApplicant4 = new JointApplicant();
+        JointApplicant jointApplicant5 = new JointApplicant();
+
+        jointApplicant0.setNumber(0);
+        jointApplicant0.setDescription("Choose Additional Applicant");
+
+        jointApplicant1.setNumber(1);
+        jointApplicant1.setDescription("Additional Applicant");
+
+        jointApplicant2.setNumber(2);
+        jointApplicant2.setDescription("Additional Applicant");
+
+        jointApplicant3.setNumber(3);
+        jointApplicant3.setDescription("Additional Applicant");
+
+        jointApplicant4.setNumber(4);
+        jointApplicant4.setDescription("Additional Applicant");
+
+        jointApplicant5.setNumber(5);
+        jointApplicant5.setDescription("Additional Applicant");
+
+
+        _additionalApplicant.add(jointApplicant0);
+        _additionalApplicant.add(jointApplicant1);
+        _additionalApplicant.add(jointApplicant2);
+        _additionalApplicant.add(jointApplicant3);
+        _additionalApplicant.add(jointApplicant4);
+        _additionalApplicant.add(jointApplicant5);
+
+        uploadDocumentsBinding.spAdditionalApplicant.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                if (position > 0){
+                    JointApplicant selectedJointApplicant = (JointApplicant) adapterView.getSelectedItem();
+                    openAdditionalApplicantActivity(selectedJointApplicant.getNumber());
+                }else{
+                    TextView textView = (TextView) view;
+                    textView.setTextColor(Color.GRAY);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayAdapter<JointApplicant> dataAdapter = new ArrayAdapter<JointApplicant>(this, android.R.layout.simple_spinner_item, _additionalApplicant){
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                if (position == 0){
+                    textView.setTextColor(Color.GRAY);
+                }else{
+                    textView.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        uploadDocumentsBinding.spAdditionalApplicant.setAdapter(dataAdapter);
+    }
+
+    private void openAdditionalApplicantActivity(int number) {
+        Intent intent = new Intent(this, AdditionalApplicantActivity.class);
+        intent.putExtra(Config.JOINT_APPLICANTS_NUMBER,number);
+        startActivity(intent);
     }
 
     @Override

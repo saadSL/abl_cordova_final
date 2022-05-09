@@ -117,6 +117,9 @@ public class Config {
     public static int TIN_UNAVAILABILITY_REASONS = 1012;
     public static int CURRENCY_RUPEE = 10803;
     public static int CURRENCY_DOLLAR = 108302;
+    public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
+
+
 }
 
 
