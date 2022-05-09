@@ -8,4 +8,12 @@ public class RemitterDetailsPostModel implements Serializable {
 	public RemitterDetailsDataModel getData(){
 		return data;
 	}
+
+
+	@Override
+	public String toString() {
+		return "RemitterDetailsPostModel{" +
+				"data=" + data +
+				'}';
+	}
 }

@@ -3,6 +3,7 @@ package com.unikrew.faceoff.ABLPlugin.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -48,6 +49,11 @@ public class BaseActivity extends AppCompatActivity {
         setSharedPref();
     }
 
+    protected void openActivity(final Class<? extends Activity> activityToOpen) {
+        Intent intent = new Intent(this, activityToOpen);
+        startActivity(intent);
+    }
+
     public void setLogoLayout(TextView tvDate) {
         tvDate.setText(getCurrentDate());
     }
@@ -58,6 +64,11 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void saveStringInPref(String key, String value){
         editor.putString(key, value);
+        editor.apply();
+    }
+
+    protected void saveIntInPref(String key, int value){
+        editor.putInt(key, value);
         editor.apply();
     }
 
@@ -83,6 +94,11 @@ public class BaseActivity extends AppCompatActivity {
     protected String getStringFromPref(String key) {
         SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
         return prefs.getString(key, "");
+    }
+
+    protected int getIntFromPref(String key) {
+        SharedPreferences prefs = getSharedPreferences(Config.ASAAN_ACCOUNT_PREF, MODE_PRIVATE);
+        return prefs.getInt(key, 0);
     }
 
     private void setLoader() {

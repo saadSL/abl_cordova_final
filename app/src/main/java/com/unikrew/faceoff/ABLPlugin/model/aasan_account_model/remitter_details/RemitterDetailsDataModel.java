@@ -159,4 +159,27 @@ public class RemitterDetailsDataModel implements Serializable {
 	public int getProofOfIncomeInd(){
 		return proofOfIncomeInd;
 	}
+
+	@Override
+	public String toString() {
+		return "RemitterDetailsDataModel{" +
+				"customerBranch='" + customerBranch + '\'' +
+				", transactionalAlertId=" + transactionalAlertId +
+				", physicalCardInd=" + physicalCardInd +
+				", customerAccountTypeId=" + customerAccountTypeId +
+				", accountVariantId=" + accountVariantId +
+				", rdaCustomerId=" + rdaCustomerId +
+				", bankingModeId=" + bankingModeId +
+				", customerTypeId=" + customerTypeId +
+				", purposeOfAccountId=" + purposeOfAccountId +
+				", natureOfAccountId=" + natureOfAccountId +
+				", rdaCustomerAccInfoId=" + rdaCustomerAccInfoId +
+				", pdaRemitterDetailList=" + pdaRemitterDetailList +
+				", transAlertInd=" + transAlertInd +
+				", noOfJointApplicatns=" + noOfJointApplicatns +
+				", chequeBookReqInd=" + chequeBookReqInd +
+				", atmTypeId=" + atmTypeId +
+				", proofOfIncomeInd=" + proofOfIncomeInd +
+				'}';
+	}
 }

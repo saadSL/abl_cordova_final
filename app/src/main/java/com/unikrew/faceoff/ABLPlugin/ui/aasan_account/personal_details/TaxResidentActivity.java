@@ -24,7 +24,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_in
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxPostResidentCountries;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.freelancer_tax_info.FreelancerTaxResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
@@ -100,7 +99,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
             @Override
             public void onChanged(FreelancerTaxResponse freelancerTaxResponse) {
                 dismissLoading();
-                openFatcaDetailsActivity();
+                moveNext();
             }
         });
 
@@ -114,9 +113,12 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
 
     }
 
-    private void openFatcaDetailsActivity() {
-        Intent intent = new Intent(this,FatcaDetailsActivity.class);
-        startActivity(intent);
+    private void moveNext() {
+        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID)== Config.REMITTANCE_ACCOUNT){
+            openActivity(PersonalDetailsOneActivity.class);
+        }else {
+            openActivity(FatcaDetailsActivity.class);
+        }
     }
 
     private void setViewModel() {

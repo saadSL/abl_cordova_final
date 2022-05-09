@@ -216,6 +216,9 @@
     <string name="enter_relationship">Enter Relationship</string>
     <string name="select_currency">Select the Currency</string>
     <string name="the_currency_used_to_send_and_recieve_money">"The currency that will used to send and recieve amount "</string>
+    <string name="freelance_1">Maximum limit (credit and debit) USD 5,000 or equivalent</string>
+    <string name="freelance_2"><![CDATA[Currency PKR & USD]]></string>
+    <string name="freelance_3">Cash withdrawal limit PKR 500,000 or equivalent per day</string>
 
 
 </resources>

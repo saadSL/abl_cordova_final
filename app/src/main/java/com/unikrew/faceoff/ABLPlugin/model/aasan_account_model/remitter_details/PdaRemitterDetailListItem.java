@@ -39,4 +39,14 @@ public class PdaRemitterDetailListItem implements Serializable {
 	public void setRelationshipWithRemitter(String relationshipWithRemitter) {
 		this.relationshipWithRemitter = relationshipWithRemitter;
 	}
+
+	@Override
+	public String toString() {
+		return "PdaRemitterDetailListItem{" +
+				"accountId=" + accountId +
+				", pdaRemitterDetailId=" + pdaRemitterDetailId +
+				", remitterName='" + remitterName + '\'' +
+				", relationshipWithRemitter='" + relationshipWithRemitter + '\'' +
+				'}';
+	}
 }

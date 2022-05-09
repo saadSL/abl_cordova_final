@@ -12,6 +12,16 @@ public class AccountTypeData implements Serializable {
 	private int customerAccountTypeId;
 	private Integer accountVariantId = null;
 
+	public Integer getCurrencyTypeId() {
+		return currencyTypeId;
+	}
+
+	public void setCurrencyTypeId(Integer currencyTypeId) {
+		this.currencyTypeId = currencyTypeId;
+	}
+
+	private Integer currencyTypeId = null;
+
 	public Integer getAccountVariantId() {
 		return accountVariantId;
 	}

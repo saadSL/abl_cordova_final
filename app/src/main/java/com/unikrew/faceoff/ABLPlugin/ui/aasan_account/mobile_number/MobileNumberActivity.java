@@ -221,25 +221,20 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private void getCnicBackImage() {
 //        mobileNumberAvailabilityBinding.imgCnicBackSmall.setVisibility(View.VISIBLE);
 //        mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.VISIBLE);
-        if (isPermission()){
-            getImageFromCamera();
-        }else{
-            showAlert(Config.errorType,"Permission Not Granted !!!");
-        }
+        getImageFromCamera();
     }
 
     private void getCnicFrontImage() {
 //        mobileNumberAvailabilityBinding.imgCnicFrontSmall.setVisibility(View.VISIBLE);
 //        mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
-        if (isPermission()){
             getImageFromCamera();
-        }else{
-            showAlert(Config.errorType,"Permission Not Granted !!!");
-        }
+
 
     }
 
-    private boolean isPermission() {
+
+
+    private void getImageFromCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             {
@@ -247,15 +242,10 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             }
             else
             {
-                return true;
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
             }
         }
-        return false;
-    }
-
-    private void getImageFromCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
     }
 
     @Override
@@ -266,13 +256,12 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
             }
             else
             {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+                showAlert(Config.errorType,"Allow Camera permissions to continue.");
             }
         }
     }

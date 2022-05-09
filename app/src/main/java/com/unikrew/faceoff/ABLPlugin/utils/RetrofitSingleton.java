@@ -33,8 +33,8 @@ public class RetrofitSingleton {
                     .setLenient()
                     .create();
             OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-            builder.readTimeout(10, TimeUnit.SECONDS);
-            builder.connectTimeout(5, TimeUnit.SECONDS);
+            builder.readTimeout(120, TimeUnit.SECONDS);
+            builder.connectTimeout(120, TimeUnit.SECONDS);
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
                 interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

@@ -13,7 +13,33 @@ public class GetConsumerAccountDetailsResponseStepperSections implements Seriali
     public boolean PERSONAL_DETAIL_EMPLOYMENT;
     public boolean TRANSACTIONAL_DETAIL;
     public boolean DOCUMENT_UPLOADER;
+    public boolean PERSONAL_DETAIL_REMITTER;
+    public boolean PERSONAL_DETAIL_TAX;
+    public boolean PERSONAL_DETAIL_FATCA;
 
+    public boolean isPERSONAL_DETAIL_TAX() {
+        return PERSONAL_DETAIL_TAX;
+    }
+
+    public void setPERSONAL_DETAIL_TAX(boolean PERSONAL_DETAIL_TAX) {
+        this.PERSONAL_DETAIL_TAX = PERSONAL_DETAIL_TAX;
+    }
+
+    public boolean isPERSONAL_DETAIL_FATCA() {
+        return PERSONAL_DETAIL_FATCA;
+    }
+
+    public void setPERSONAL_DETAIL_FATCA(boolean PERSONAL_DETAIL_FATCA) {
+        this.PERSONAL_DETAIL_FATCA = PERSONAL_DETAIL_FATCA;
+    }
+
+    public boolean isPERSONAL_DETAIL_REMITTER() {
+        return PERSONAL_DETAIL_REMITTER;
+    }
+
+    public void setPERSONAL_DETAIL_REMITTER(boolean PERSONAL_DETAIL_REMITTER) {
+        this.PERSONAL_DETAIL_REMITTER = PERSONAL_DETAIL_REMITTER;
+    }
 
     public boolean isSETUP_ACCOUNT_BANKING_MODE() {
         return SETUP_ACCOUNT_BANKING_MODE;

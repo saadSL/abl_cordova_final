@@ -26,9 +26,12 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.FatcaDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
@@ -72,7 +75,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         viewModel.consumerAccountDetailsSuccessLiveData.observe(this, new Observer<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
-                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE,getConsumerAccountDetailsResponse);
+                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, getConsumerAccountDetailsResponse);
 
                 if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
 
@@ -85,6 +88,14 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
 
                     openActivity(SelectPreferredAccountActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_TAX()) {
+
+                    openActivity(TaxResidentActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_FATCA()) {
+
+                    openActivity(FatcaDetailsActivity.class);
 
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
 
@@ -105,6 +116,10 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                 } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isDOCUMENT_UPLOADER()) {
 
                     openActivity(UploadDocumentActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_REMITTER()) {
+
+                    openActivity(RemitterDetailsActivity.class);
 
                 } else {
                     showAlert(Config.successType, "Opening Summary Details ");
@@ -138,22 +153,20 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
         });
     }
 
-    private void openActivity(final Class<? extends Activity> activityToOpen) {
-        Intent intent = new Intent(this, activityToOpen);
-        startActivity(intent);
-    }
+
 
     private void getConsumerAccountDetails() {
         if (selectedAppList != null) {
             setConsumerAccDetailsPostParams();
+            saveIntInPref(Config.ACCOUNT_VARIANT_ID, selectedAppList.getAccountVariantId());
             saveStringInPref(Config.PROFILE_ID, String.valueOf(selectedAppList.getRdaCustomerProfileId()));
             saveStringInPref(Config.ACCOUNT_INFO_ID, String.valueOf(selectedAppList.getRdaCustomerAccInfoId()));
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
-        }else{
-            showAlert(Config.errorType,"No application selected !!!");
+        } else {
+            showAlert(Config.errorType, "No application selected !!!");
         }
 
 

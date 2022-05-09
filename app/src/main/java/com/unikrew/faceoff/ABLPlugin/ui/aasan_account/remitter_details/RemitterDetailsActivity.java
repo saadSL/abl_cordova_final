@@ -20,6 +20,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class RemitterDetailsActivity extends BaseActivity {
             @Override
             public void onChanged(RemitterDetailsResponseModel remitterDetailsResponseModel) {
                 dismissLoading();
+                openActivity(SelectCardActivity.class);
             }
         });
 
@@ -98,6 +100,14 @@ public class RemitterDetailsActivity extends BaseActivity {
             if (pdaRemitterDetailList.get(i).getRemitterName() == null || pdaRemitterDetailList.get(i).getRelationshipWithRemitter() == null) {
                 showAlert(Config.errorType, getString(R.string.text_fields_error));
                 return;
+            }else {
+                if (IS_RESUMED) {
+                    //flow for resumed application
+                    pdaRemitterDetailList.get(i).setAccountId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+                } else {
+                    //flow for new application
+                    pdaRemitterDetailList.get(i).setAccountId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+                }
             }
         }
 
@@ -134,8 +144,9 @@ public class RemitterDetailsActivity extends BaseActivity {
         remitterDetailsDataModel.setChequeBookReqInd(null);
         remitterDetailsDataModel.setTransactionalAlertId(null);
         remitterDetailsDataModel.setNoOfJointApplicatns(0);
+        remitterDetailsDataModel.setAccountVariantId(Config.REMITTANCE_ACCOUNT);
         remitterDetailsDataModel.getPdaRemitterDetailList().addAll(pdaRemitterDetailList);
-
+        Log.d("stats", remitterDetailsPostModel.toString());
         return remitterDetailsPostModel;
     }
 

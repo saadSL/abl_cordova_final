@@ -18,11 +18,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeConsumerListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoConsumerListItemModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
@@ -32,6 +27,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
 
@@ -151,7 +147,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
             @Override
             public void onChanged(SaveKycResponse saveKycResponse) {
                 dismissLoading();
-                openTransactionSelectionActivity();
+                moveNext();
             }
         });
 
@@ -199,9 +195,12 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         return saveKycPostParams;
     }
 
-    private void openTransactionSelectionActivity() {
-        Intent intent = new Intent(this, SelectCardActivity.class);
-        startActivity(intent);
+    private void moveNext() {
+        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID)== Config.REMITTANCE_ACCOUNT){
+            openActivity(RemitterDetailsActivity.class);
+        }else {
+            openActivity(SelectCardActivity.class);
+        }
     }
 
     private void setOccupationSpinner(MobileNetworkResponse mobileNetworkResponse) {
