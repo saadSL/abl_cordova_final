@@ -6,7 +6,15 @@ public class AtmCardsResponseData implements Serializable {
     public String description;
     public int id;
     public String name;
+    public Boolean isSelected = false;
 
+    public Boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
 
     public String getDescription() {
         return description;

@@ -32,6 +32,7 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalD
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsTwoActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents.ReviewDocumentActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectAccountTypeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
@@ -122,9 +123,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     openActivity(RemitterDetailsActivity.class);
 
                 } else {
-                    showAlert(Config.successType, "Opening Summary Details ");
+                        openActivity(ReviewDocumentActivity.class);
                 }
-
                 loader.dismiss();
             }
         });

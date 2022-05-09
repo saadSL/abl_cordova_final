@@ -1,6 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -8,6 +9,8 @@ import android.widget.CompoundButton;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
@@ -27,7 +30,7 @@ import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
 
-public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener,SelectCardInterface, View.OnClickListener {
     LayoutSetupTransactionBinding layoutSetupTransactionBinding;
 
     private SetupTransactionPostParams setupTransactionPostParams;
@@ -38,12 +41,14 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private AtmCardsPostParams atmCardsPostParams;
     private ArrayList<AtmCardsResponseData> atmCardsList;
 
+    private Boolean atmCardInd = false;
     private int atmTypeId = 0;
     private int transactionAlertInd = 1;
     private int chequeBookReqInd = 1;
     private int transactionAlertId = 0;
     private Boolean IS_RESUMED;
 
+    private SelectCardAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +60,16 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         checkLayouts();
         observe();
         getAtmCards();
+
         setLogoLayout(layoutSetupTransactionBinding.logoToolbar.tvDate);
 
+    }
+
+    private void setAtmCardAdapter() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_atm_card);
+        adapter = new SelectCardAdapter(atmCardsList,SelectCardActivity.this,SelectCardActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(SelectCardActivity.this,LinearLayoutManager.HORIZONTAL,true));
+        recyclerView.setAdapter(adapter);
     }
 
     private void getAtmCards() {
@@ -112,8 +125,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         selectCardViewModel.atmCardsSuccessResponse.observe(this, new Observer<AtmCardsResponse>() {
             @Override
             public void onChanged(AtmCardsResponse atmCardsResponse) {
-                atmCardsList = atmCardsResponse.getData();
                 dismissLoading();
+                atmCardsList = atmCardsResponse.getData();
+                setAtmCardAdapter();
             }
         });
 
@@ -133,13 +147,13 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     }
 
     private void checkLayouts() {
-        if (layoutSetupTransactionBinding.debitCardSwitch.isChecked()) {
-            layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
-            layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
-        } else {
-            layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
-            layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
-        }
+//        if (layoutSetupTransactionBinding.debitCardSwitch.isChecked()) {
+//            layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
+//            layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
+//        } else {
+//            layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
+//            layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
+//        }
 
         if (layoutSetupTransactionBinding.transactionalAlertSwitch.isChecked()) {
             layoutSetupTransactionBinding.btnSms.setEnabled(true);
@@ -166,8 +180,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         layoutSetupTransactionBinding.btnEmail.setOnClickListener(this);
         layoutSetupTransactionBinding.btnContainer.btnNext.setOnClickListener(this);
         layoutSetupTransactionBinding.btnContainer.btBack.setOnClickListener(this);
-        layoutSetupTransactionBinding.llClassicCard.setOnClickListener(this);
-        layoutSetupTransactionBinding.llVdcCard.setOnClickListener(this);
+//        layoutSetupTransactionBinding.llClassicCard.setOnClickListener(this);
+//        layoutSetupTransactionBinding.llVdcCard.setOnClickListener(this);
     }
 
     private void setBinding() {
@@ -180,11 +194,13 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         switch (compoundButton.getId()) {
             case R.id.debit_card_switch:
                 if (!isChecked) {
-                    layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
-                    layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
+                    atmCardInd = false;
+//                    layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
+//                    layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
                 } else {
-                    layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
-                    layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
+                    atmCardInd = true;
+//                    layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
+//                    layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
                 }
                 break;
             case R.id.transactional_alert_switch:
@@ -210,9 +226,22 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     }
 
     private void registerTransactionDetails() {
-        setTransactionDetailsPostParams();
-        selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
-        showLoading();
+        if (!isValid()){
+            showAlert(Config.errorType, "Please select any one card !!!");
+        }else{
+            setTransactionDetailsPostParams();
+            selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
+            showLoading();
+        }
+    }
+
+    private boolean isValid() {
+        if (!atmCardInd){
+            return false;
+        }else if (atmTypeId == 0){
+            return false;
+        }
+        return true;
     }
 
     private void setTransactionDetailsPostParams() {
@@ -242,28 +271,32 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 transactionAlertId = Config.TRANSACTION_ALERT_SMS;
                 layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
                 layoutSetupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_button));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    layoutSetupTransactionBinding.btnSms.setTextColor(this.getColor(R.color.white));
+                    layoutSetupTransactionBinding.btnEmail.setTextColor(this.getColor(R.color.custom_blue));
+                }
                 break;
             case R.id.btn_email:
                 transactionAlertId = Config.TRANSACTION_ALERT_EMAIL;
                 layoutSetupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
                 layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_button));
-                break;
-            case R.id.ll_classic_card:
-                atmTypeId = Config.UPI;
-                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
-                break;
-            case R.id.ll_vdc_card:
-                atmTypeId = Config.VDC;
-                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
-                break;
-            case R.id.btn_next:
-                if (atmTypeId == Config.UPI || atmTypeId == Config.VDC) {
-                    registerTransactionDetails();
-                } else {
-                    showAlert(Config.errorType, "Please select any one card !!!");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    layoutSetupTransactionBinding.btnEmail.setTextColor(this.getColor(R.color.white));
+                    layoutSetupTransactionBinding.btnSms.setTextColor(this.getColor(R.color.custom_blue));
                 }
+                break;
+//            case R.id.ll_classic_card:
+//                atmTypeId = Config.UPI;
+//                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+//                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
+//                break;
+//            case R.id.ll_vdc_card:
+//                atmTypeId = Config.VDC;
+//                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+//                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
+//                break;
+            case R.id.btn_next:
+                registerTransactionDetails();
                 break;
             case R.id.bt_back:
                 finish();
@@ -275,5 +308,16 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     protected void onRestart() {
         super.onRestart();
         setLayout();
+    }
+
+    @Override
+    public void setSelectionAt(int position) {
+        if (atmCardInd){
+            for (int i = 0 ; i < atmCardsList.size() ; i++){
+                atmCardsList.get(i).setSelected(false);
+            }
+            atmCardsList.get(position).setSelected(true);
+            atmTypeId = atmCardsList.get(position).getId();
+        }
     }
 }

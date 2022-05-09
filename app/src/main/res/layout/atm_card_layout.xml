@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/ll_atm_card_layout"
+    android:layout_width="@dimen/_150sdp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@drawable/transparent_secondary_bg"
+    android:layout_margin="@dimen/_10sdp"
+    android:padding="@dimen/_10sdp">
+    <ImageView
+        android:id="@+id/img_atm_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_image"/>
+
+    <TextView
+        android:id="@+id/heading_atm_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_heading"
+        android:layout_margin="@dimen/_10sdp"
+        android:fontFamily="@font/worksans_semibold"
+        android:textColor="@color/beanding_orange"
+        android:textSize="@dimen/_14sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_gravity="left"
+        android:fontFamily="@font/worksans_regular"
+        android:text="\u2022 Domestic and International use" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:fontFamily="@font/worksans_regular"
+        android:text="\u2022 Daily Transaction Limit 50,000/- on ATM" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_gravity="left"
+        android:fontFamily="@font/worksans_regular"
+        android:text="\u2022 Daily Transaction Limit 50,000/- on POS" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_gravity="left"
+        android:fontFamily="@font/worksans_regular"
+        android:text="\u2022 ATM Fund Tranfer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_gravity="left"
+        android:fontFamily="@font/worksans_regular"
+        android:text="\u2022 ATM Bill Payment" />
+</LinearLayout>
