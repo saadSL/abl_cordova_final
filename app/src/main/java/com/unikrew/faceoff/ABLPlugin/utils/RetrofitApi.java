@@ -53,6 +53,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailabilit
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -146,4 +148,8 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/register-consumer-fatca-info")
     Call<FatcaDetailsResponse> submitFatcaDetails(@Body FatcaDetailsPostParams fatcaDetailsPostParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<RelationshipResponse> getRelationships(@Body RelationshipPostParams postParams);
+
 }

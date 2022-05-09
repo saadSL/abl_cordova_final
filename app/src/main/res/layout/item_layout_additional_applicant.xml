@@ -25,11 +25,11 @@
             android:fontFamily="@font/worksans_semibold"
             android:textColor="@color/heading_black"
             android:layout_margin="@dimen/_10sdp"/>
-        <EditText
-            android:id="@+id/et_relationship_name"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_relationship_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangular_edit_text"
+            android:background="@drawable/rectangular_spinner"
             android:layout_margin="@dimen/_10sdp"
             android:hint="@string/enter_relationship"
             android:fontFamily="@font/worksans_regular"

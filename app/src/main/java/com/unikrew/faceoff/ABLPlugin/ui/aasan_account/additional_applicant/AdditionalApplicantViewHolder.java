@@ -8,19 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
+import com.ofss.digx.mobile.android.allied.databinding.ItemLayoutAdditionalApplicantBinding;
 
 public class AdditionalApplicantViewHolder extends RecyclerView.ViewHolder {
 
-    TextView tvHeading;
-    EditText etName;
 
-    public AdditionalApplicantViewHolder(@NonNull View itemView) {
-        super(itemView);
-        bindItems(itemView);
-    }
-
-    private void bindItems(View itemView) {
-        tvHeading = itemView.findViewById(R.id.heading_additional_applicant);
-        etName = itemView.findViewById(R.id.et_relationship_name);
+    ItemLayoutAdditionalApplicantBinding itemBinding;
+    public AdditionalApplicantViewHolder(@NonNull ItemLayoutAdditionalApplicantBinding itemBinding) {
+        super(itemBinding.getRoot());
+        this.itemBinding = itemBinding;
     }
 }

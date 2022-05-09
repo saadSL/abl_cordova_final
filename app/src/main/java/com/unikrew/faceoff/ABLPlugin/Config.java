@@ -4,7 +4,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 
 public class Config {
     //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
-    public static final String BASE_URL = "https://rda-uat2.abl.com.pk";
+    public static final String BASE_URL = "http://10.100.102.124:8080";
     public static final String ACCOUNT_VARIANT_ID = "account_variant_id";
     public static final String PROFILE_ID = "profile_id";
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
@@ -119,7 +119,7 @@ public class Config {
     public static int CURRENCY_RUPEE = 10803;
     public static int CURRENCY_DOLLAR = 108302;
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
-
+    public static int RELATIONSHIP_ID = 1088;
 
 }
 

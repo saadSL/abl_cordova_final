@@ -61,6 +61,9 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private Boolean IS_RESUMED;
 
 
+    private JointApplicant selectedJointApplicant;
+
+
     private Boolean savingForPic = true;
     private Boolean savingForSig = false;
 
@@ -132,7 +135,11 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             @Override
             public void onChanged(SaveNatureOfAccountResponse saveNatureOfAccountResponse) {
                 dismissLoading();
-                openReviewDetailsActivity();
+                if (natureOfAccountId == Config.JOINT){
+                    openAdditionalApplicantActivity(selectedJointApplicant.getNumber());
+                }else{
+                    openReviewDetailsActivity();
+                }
             }
         });
 
@@ -415,7 +422,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0){
-                    JointApplicant selectedJointApplicant = (JointApplicant) adapterView.getSelectedItem();
+                    selectedJointApplicant = (JointApplicant) adapterView.getSelectedItem();
                     openAdditionalApplicantActivity(selectedJointApplicant.getNumber());
                 }else{
                     TextView textView = (TextView) view;
