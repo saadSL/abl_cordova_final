@@ -171,7 +171,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             natureOfAccountPostParams.getData().setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
 
         } else {
             //flow for new application
@@ -179,7 +179,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             natureOfAccountPostParams.getData().setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
 
         }
         natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
@@ -423,7 +423,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0){
                     selectedJointApplicant = (JointApplicant) adapterView.getSelectedItem();
-                    openAdditionalApplicantActivity(selectedJointApplicant.getNumber());
+
                 }else{
                     TextView textView = (TextView) view;
                     textView.setTextColor(Color.GRAY);

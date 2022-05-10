@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.Rela
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponseData;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -100,11 +102,16 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_next:
-                showAlert(Config.successType,"The Selected Relationship : "+selectedRelationship.toString());
+                showAlert(Config.successType,selectedRelationship.toString());
                 break;
             case R.id.bt_back:
                 finish();
                 break;
         }
+    }
+
+    private void openMobileNumberActivity() {
+        Intent intent = new Intent(this, MobileNumberActivity.class);
+        startActivity(intent);
     }
 }
