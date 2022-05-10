@@ -7,11 +7,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
@@ -29,7 +31,8 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     private boolean declaration = false;
     private Boolean IS_RESUMED;
 
-
+    private GetConsumerAccountDetailsPostParams accountDetailsPostParams;
+    private ReviewDocumentViewModel reviewDocumentViewModel;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
@@ -37,11 +40,36 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setViewModel();
+        getAccountDetails();
         setLayout();
         setClicks();
         getSharedPrefData();
-        setResponse();
+//        setResponse();
         setLogoLayout(reviewDetailsBinding.logoToolbar.tvDate);
+    }
+
+    private void getAccountDetails() {
+        setAccountDetailsPostParams();
+        reviewDocumentViewModel.getAccountDetails(accountDetailsPostParams,getStringFromPref(Config.ACCESS_TOKEN));
+        showLoading();
+    }
+
+    private void setAccountDetailsPostParams() {
+        if (IS_RESUMED){
+            accountDetailsPostParams.getData().setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
+            accountDetailsPostParams.getData().setRdaCustomerAccInfoId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+            accountDetailsPostParams.getData().setRdaCustomerProfileId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
+        }else{
+            accountDetailsPostParams.getData().setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
+            accountDetailsPostParams.getData().setRdaCustomerAccInfoId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
+            accountDetailsPostParams.getData().setRdaCustomerProfileId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
+        }
+    }
+
+    private void setViewModel() {
+        reviewDocumentViewModel = new ViewModelProvider(this).get(ReviewDocumentViewModel.class);
+        accountDetailsPostParams = new GetConsumerAccountDetailsPostParams();
     }
 
     private void setResponse() {

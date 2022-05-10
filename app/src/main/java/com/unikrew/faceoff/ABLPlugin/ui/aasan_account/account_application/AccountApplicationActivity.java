@@ -78,36 +78,35 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             public void onChanged(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
                 saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, getConsumerAccountDetailsResponse);
 
-//                if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
-//
-//                    openActivity(SelectBankingModeActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
-//
-//                    openActivity(SelectAccountTypeActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
-//
-//                    openActivity(SelectPreferredAccountActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_TAX()) {
-//
-//                    openActivity(TaxResidentActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_FATCA()) {
-//
-//                    openActivity(FatcaDetailsActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
-//
-//                    openActivity(PersonalDetailsOneActivity.class);
-//
-//                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
-//
-//                    openActivity(PersonalDetailsTwoActivity.class);
-//
-//                } else
-                    if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
+                if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_BANKING_MODE()) {
+
+                    openActivity(SelectBankingModeActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_TYPE()) {
+
+                    openActivity(SelectAccountTypeActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isSETUP_ACCOUNT_INCOME()) {
+
+                    openActivity(SelectPreferredAccountActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_TAX()) {
+
+                    openActivity(TaxResidentActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_FATCA()) {
+
+                    openActivity(FatcaDetailsActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_NAMES()) {
+
+                    openActivity(PersonalDetailsOneActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_ADDRESS()) {
+
+                    openActivity(PersonalDetailsTwoActivity.class);
+
+                } else if (!getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getStepperSections().isPERSONAL_DETAIL_EMPLOYMENT()) {
 
                     openActivity(PersonalDetailsThreeActivity.class);
 

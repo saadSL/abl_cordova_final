@@ -171,7 +171,12 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             natureOfAccountPostParams.getData().setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
+            if (selectedJointApplicant == null){
+                natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
+            }else{
+                natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
+            }
+
 
         } else {
             //flow for new application
@@ -179,7 +184,11 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             natureOfAccountPostParams.getData().setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
+            if (selectedJointApplicant == null){
+                natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
+            }else{
+                natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
+            }
 
         }
         natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
