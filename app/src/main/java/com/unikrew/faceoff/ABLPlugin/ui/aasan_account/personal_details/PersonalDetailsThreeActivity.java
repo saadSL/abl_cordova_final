@@ -34,7 +34,7 @@ import com.unikrew.faceoff.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalDetailsThreeActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class PersonalDetailsThreeActivity extends BaseActivity{
 
     private ActivityPersonalDetailsThreeBinding personalDetailsThreeBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
@@ -218,7 +218,6 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         List<String> _allItemsArray = new ArrayList<>();
         if (dataArrayList.size() > 0) {
             // Spinner click listener
-            spinner.setOnItemSelectedListener(this);
             // Spinner Drop down elements
             for (int i = 0; i < dataArrayList.size(); i++) {
                 _allItemsArray.add(dataArrayList.get(i).getName());
@@ -264,13 +263,4 @@ public class PersonalDetailsThreeActivity extends BaseActivity implements Adapte
         personalDetailsViewModel.getOccupation(mobileNetworkPostParams);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

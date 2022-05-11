@@ -16,7 +16,7 @@ public class ReviewDocumentViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onResponse(Call<GetConsumerAccountDetailsResponse> call, Response<GetConsumerAccountDetailsResponse> response) {
-                if (response.code() == )
+//                if (response.code() == )
             }
 
             @Override

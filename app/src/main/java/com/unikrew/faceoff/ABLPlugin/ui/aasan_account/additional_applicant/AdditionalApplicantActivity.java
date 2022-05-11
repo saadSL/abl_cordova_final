@@ -3,8 +3,10 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,15 +24,14 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumber
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdditionalApplicantActivity extends BaseActivity implements View.OnClickListener {
 
-    LayoutAdditionalApplicantBinding layoutAdditionalApplicantBinding;
-    AdditionalApplicantAdapter additionalApplicantAdapter;
-
-    private ArrayList<RelationshipResponseData> selectedRelationship;
+    private LayoutAdditionalApplicantBinding layoutAdditionalApplicantBinding;
     private AdditionalApplicantViewModel applicantViewModel;
     private RelationshipPostParams relationshipPostParams;
+    private ArrayList<RelationshipResponseData> relationshipResponseData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
         setClicks();
         getRelationships();
         observe();
+        setLogoLayout(layoutAdditionalApplicantBinding.logoToolbar.tvDate);
     }
 
     private void observe() {
@@ -47,7 +49,7 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
             @Override
             public void onChanged(RelationshipResponse relationshipResponse) {
                 dismissLoading();
-                setAdapter(relationshipResponse);
+                setRelationshipSpinner(relationshipResponse);
             }
         });
 
@@ -55,9 +57,34 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
             @Override
             public void onChanged(String s) {
                 dismissLoading();
-                showAlert(Config.successType,s);
+                showAlert(Config.successType, s);
             }
         });
+    }
+
+    private void setRelationshipSpinner(RelationshipResponse relationshipResponse) {
+        relationshipResponseData = relationshipResponse.getData();
+        setSpinner(relationshipResponseData, layoutAdditionalApplicantBinding.spRelationshipName);
+    }
+
+    private void setSpinner(ArrayList<RelationshipResponseData> relationshipResponseData, AppCompatSpinner spRelationshipName) {
+
+        List<String> _allItemsArray = new ArrayList<>();
+        if (relationshipResponseData.size() > 0) {
+            // Spinner Drop down elements
+            for (int i = 0; i < relationshipResponseData.size(); i++) {
+                _allItemsArray.add(relationshipResponseData.get(i).getName());
+            }
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, _allItemsArray);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            spRelationshipName.setAdapter(dataAdapter);
+        }
     }
 
     private void getRelationships() {
@@ -80,18 +107,6 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
         layoutAdditionalApplicantBinding.btnContainer.btBack.setOnClickListener(this);
     }
 
-    private void setAdapter(RelationshipResponse relationshipResponse) {
-        selectedRelationship = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.rv_additional_applicant);
-        additionalApplicantAdapter = new AdditionalApplicantAdapter(
-                getIntent().getIntExtra(Config.JOINT_APPLICANTS_NUMBER,0),
-                this,
-                selectedRelationship,
-                relationshipResponse
-        );
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(additionalApplicantAdapter);
-    }
 
     private void setBinding() {
         layoutAdditionalApplicantBinding = LayoutAdditionalApplicantBinding.inflate(getLayoutInflater());
@@ -100,9 +115,9 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
-                showAlert(Config.successType,selectedRelationship.toString());
+                openMobileNumberActivity();
                 break;
             case R.id.bt_back:
                 finish();

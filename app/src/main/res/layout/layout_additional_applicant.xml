@@ -1,33 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <include
         android:id="@+id/logo_toolbar"
-        layout="@layout/layout_logo_toolbar"/>
+        layout="@layout/layout_logo_toolbar" />
 
-    <include layout="@layout/layout_steps"
-        android:id="@+id/steps"/>
-    <ScrollView
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/heading_additional_applicant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:fontFamily="@font/worksans_semibold"
+            android:text="@string/additional_applicant_heading"
+            android:textColor="@color/heading_black" />
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_additional_applicant"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/rounded_corner_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:fontFamily="@font/worksans_semibold"
+                android:text="@string/relationship"
+                android:textColor="@color/heading_black" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_relationship_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"/>
-
-            <include
-                android:id="@+id/btn_container"
-                layout="@layout/layout_button_container"/>
-
-            <include layout="@layout/layout_abl_chat_container"/>
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/rectangular_spinner"
+                android:fontFamily="@font/worksans_regular"
+                android:hint="@string/enter_relationship"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/btn_container"
+        layout="@layout/layout_button_container" />
+
+    <include layout="@layout/layout_abl_chat_container" />
+
 
 </LinearLayout>
