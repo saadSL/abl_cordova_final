@@ -60,7 +60,6 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
         setClicks();
         getTinUnavailabilityReasons();
         observe();
-        saveStringInPref(Config.ACCESS_TOKEN,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2NjY2NjY2NjY2NiIsImlhdCI6MTY1MTA1ODg4OSwiZXhwIjoxNjUxMTQ1Mjg5LCJ1c2VyUHJpbmNpcGFsIjp7InVzZXJJZCI6bnVsbCwiZW50aXR5SWQiOjYyMzcsImZ1bGxOYW1lIjoiUkFaWkFLIiwicHJvZmlsZVBpY3R1cmUiOm51bGwsInVzZXJuYW1lIjoiNjY2NjY2NjY2NjYiLCJ1c2VyVHlwZUlkIjoxMDAxMDEsImhlbHBEZXNrVXNlclR5cGVJZCI6bnVsbCwic3RhdHVzSWQiOm51bGwsImFjY2Vzc1Rva2VuIjoiIiwiZXhpc3RpbmdDdXN0b21lciI6ZmFsc2UsImd1ZXN0Q29uc3VtZXIiOnRydWUsImFjY291bnRJbmZvSWQiOm51bGwsImFyZWEiOm51bGwsImFjY291bnRUeXBlIjpudWxsLCJhY2NvdW50VmFyaWFudElkIjoxMDgyNDMsIm5hdHVyZU9mQWNjb3VudElkIjoxMDIxMDEsIm1lbnVzIjpudWxsfX0.vQKVj0NU1Kxr0Ax3mg1zsHEZmYzWAz3g2kVtNiUWDbcf2dninofuUK2iDLk03uJL0l77eQzpp5kqhA-lYV8FRA");
     }
 
     private void getSharedPrefData() {
