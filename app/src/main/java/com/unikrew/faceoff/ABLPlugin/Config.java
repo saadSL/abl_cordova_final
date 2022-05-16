@@ -8,6 +8,8 @@ public class Config {
     public static final String ACCOUNT_VARIANT_ID = "account_variant_id";
     public static final String PROFILE_ID = "profile_id";
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
+    public static final String DATE_OF_BIRTH = "date_of_birth";
+    public static final String DATE_OF_ISSUE = "date_of_issue";
 
     public static String ACCOUNT_NUMBER = "account_number";
     //for resume application
@@ -120,6 +122,16 @@ public class Config {
     public static int CURRENCY_DOLLAR = 108302;
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
     public static int RELATIONSHIP_ID = 1088;
+
+
+    public static String PROFESSION_ID = "professionId";
+    public static String OCCUPATION_ID = "occupationId";
+    public static String RDA_CUSTOMER_PROFILE_ID = "rdaCustomerProfileId";
+    public static String RDA_CUSTOMER_ACC_INFO_ID = "rdaCustomerAccInfoId";
+    public static String BANKING_MODE_ID = "bankingModeId";
+    public static String PURPOSE_OF_ACCOUNT_ID = "purposeOfAccountId";
+    public static String CUSTOMER_ACCOUNT_TYPE_ID = "customerAccountTypeId";
+    public static String CUSTOMER_BRANCH = "customerBranchTitle";
 
 }
 

@@ -18,15 +18,15 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public Object genderId;
     public Object gender;
     public Object maritalStatusId;
-    public Object dateOfBirth;
+    public String dateOfBirth;
     public Object countryOfBirthPlaceId;
     public String cityOfBirth;
     public Object customerNtn;
     public Object taxResidentInd;
     public Object employmentTypeId;
-    public int professionId;
+    public Integer professionId = null;
     public Object profession;
-    public int occupationId;
+    public Integer occupationId = null;
     public Object occupation;
     public Object nearestLandmark;
     public Object natureOfBusiness;
@@ -39,7 +39,7 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public Object educationId;
     public Object designation;
     public Object placeOfIssue;
-    public Object dateOfIssue;
+    public String dateOfIssue;
     public Object expiryDate;
     public Object adcFlagId;
     public boolean existingCustomerInd;
@@ -51,6 +51,7 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
     public GetConsumerAccountDetailsResponseStepperSections stepperSections;
     public ArrayList<GetConsumerAccountDetailsResponseAddress> addresses;
     public GetConsumerAccountDetailsResponseAccountInformation accountInformation;
+    public ConsumerKycDetail consumerKycDetail;
     public ArrayList<GetConsumerAccountDetailsResponseAttachment> attachments;
     public boolean existingAccountInd;
     public Object customerNonResidentInd;
@@ -183,11 +184,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.maritalStatusId = maritalStatusId;
     }
 
-    public Object getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Object dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -231,11 +232,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.employmentTypeId = employmentTypeId;
     }
 
-    public int getProfessionId() {
+    public Integer getProfessionId() {
         return professionId;
     }
 
-    public void setProfessionId(int professionId) {
+    public void setProfessionId(Integer professionId) {
         this.professionId = professionId;
     }
 
@@ -247,11 +248,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.profession = profession;
     }
 
-    public int getOccupationId() {
+    public Integer getOccupationId() {
         return occupationId;
     }
 
-    public void setOccupationId(int occupationId) {
+    public void setOccupationId(Integer occupationId) {
         this.occupationId = occupationId;
     }
 
@@ -351,11 +352,11 @@ public class GetConsumerAccountDetailsResponseConsumerList implements Serializab
         this.placeOfIssue = placeOfIssue;
     }
 
-    public Object getDateOfIssue() {
+    public String getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public void setDateOfIssue(Object dateOfIssue) {
+    public void setDateOfIssue(String  dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 

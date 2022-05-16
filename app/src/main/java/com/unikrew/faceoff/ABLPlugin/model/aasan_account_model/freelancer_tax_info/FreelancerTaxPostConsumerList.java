@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class FreelancerTaxPostConsumerList implements Serializable {
     private int customerTypeId;
-    private int occupationId;
-    private int professionId;
+    private Integer occupationId = null;
+    private Integer professionId = null;
     private int rdaCustomerAccInfoId;
     private int rdaCustomerProfileId;
     private String fatherHusbandName;
@@ -27,7 +27,7 @@ public class FreelancerTaxPostConsumerList implements Serializable {
         return occupationId;
     }
 
-    public void setOccupationId(int occupationId) {
+    public void setOccupationId(Integer occupationId) {
         this.occupationId = occupationId;
     }
 
@@ -35,7 +35,7 @@ public class FreelancerTaxPostConsumerList implements Serializable {
         return professionId;
     }
 
-    public void setProfessionId(int professionId) {
+    public void setProfessionId(Integer professionId) {
         this.professionId = professionId;
     }
 

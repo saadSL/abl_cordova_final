@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GetConsumerAccountDetailsResponseAccountInformation implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerId;
-    public Integer purposeOfAccountId;
+    public Integer purposeOfAccountId = null;
     public Object purposeOfAccount;
     public Object physicalCardInd;
     public Object operatingInstId;
@@ -54,7 +54,7 @@ public class GetConsumerAccountDetailsResponseAccountInformation implements Seri
     public String bankingMode;
     public Object transactionalAlertId;
     public Object transactionalAlert;
-    public Integer customerAccountTypeId;
+    public Integer customerAccountTypeId = null;
     public Object customerAccountType;
     public Object proofOfIncomeInd;
     public Object averageMonthlySalary;

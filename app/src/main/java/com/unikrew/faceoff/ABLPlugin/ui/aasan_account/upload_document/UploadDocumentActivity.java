@@ -61,7 +61,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private Boolean IS_RESUMED;
 
 
-    private JointApplicant selectedJointApplicant;
+    public static JointApplicant selectedJointApplicant;
 
 
     private Boolean savingForPic = true;
@@ -136,7 +136,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             public void onChanged(SaveNatureOfAccountResponse saveNatureOfAccountResponse) {
                 dismissLoading();
                 if (natureOfAccountId == Config.JOINT){
-                    openAdditionalApplicantActivity(selectedJointApplicant.getNumber());
+                    openAdditionalApplicantActivity();
                 }else{
                     openReviewDetailsActivity();
                 }
@@ -166,7 +166,6 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void setNatureOfAccountPostParams() {
         if (IS_RESUMED) {
             //flow for drafted application
-            //flow for drafted application
             GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
             natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
@@ -191,6 +190,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             }
 
         }
+        natureOfAccountPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
     }
 
@@ -360,10 +360,6 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void setUploadDocumentPostParams() {
-
-    }
-
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()) {
@@ -471,9 +467,8 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentsBinding.spAdditionalApplicant.setAdapter(dataAdapter);
     }
 
-    private void openAdditionalApplicantActivity(int number) {
+    private void openAdditionalApplicantActivity() {
         Intent intent = new Intent(this, AdditionalApplicantActivity.class);
-        intent.putExtra(Config.JOINT_APPLICANTS_NUMBER,number);
         startActivity(intent);
     }
 

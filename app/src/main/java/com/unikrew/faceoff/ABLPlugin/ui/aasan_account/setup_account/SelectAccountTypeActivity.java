@@ -33,11 +33,11 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     private ActivitySelectAccountTypeBinding accountTypeBinding;
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
     private int CUSTOMER_ACCOUNT_TYPE_ID = 0;
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
     private String selectedPurposeOfAccount = "";
     private ArrayList<MobileNetworkResponseData> purposeArray;
     private Boolean IS_RESUMED;
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
+    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

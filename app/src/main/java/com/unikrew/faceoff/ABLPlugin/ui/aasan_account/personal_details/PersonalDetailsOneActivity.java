@@ -14,11 +14,13 @@ import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.SelectionModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOneConsumerListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOneDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
 ;import java.util.ArrayList;
@@ -125,30 +127,30 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
 
     private PersonalDetailsOnePostModel getParams() {
         PersonalDetailsOnePostModel personalDetailsOnePostModel = new PersonalDetailsOnePostModel();
-        PersonalDetailsOneConsumerListItemModel consumerListItem = new PersonalDetailsOneConsumerListItemModel();
+        PersonalDetailsOneDataModel detailsOneDataModel = new PersonalDetailsOneDataModel();
+        PersonalDetailsOneConsumerListItemModel consumerListItem;
 
         if (IS_RESUMED) {
             //flow for resumed application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
+            for (int i = 0; i < consumerList.size(); i++) {
+                consumerListItem = new PersonalDetailsOneConsumerListItemModel();
+                GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(i).getAccountInformation();
+                consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+                //used rdaCustomerProfileId instead of rdaCustomerId since both are same
+                consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            }
         } else {
             //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            List<ConsumerListItemResponse> consumerList = registerVerifyOtpResponse.getData().getConsumerList();
+            for (int i = 0; i < consumerList.size(); i++) {
+                consumerListItem = new PersonalDetailsOneConsumerListItemModel();
+                AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(i).getAccountInformation();
+                consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+                //used rdaCustomerProfileId instead of rdaCustomerId since both are same
+                consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            }
         }
-
-        consumerListItem.setFullName(personalDetailsBinding.etFullName.getText().toString());
-        consumerListItem.setFatherHusbandName(personalDetailsBinding.etFatherName.getText().toString());
-        consumerListItem.setMotherMaidenName(selectedMotherName);
-        consumerListItem.setPlaceofBirth(selectedPlaceOfBirth);
-        consumerListItem.setPrimary(true);
-        PersonalDetailsOneDataModel detailsOneDataModel = new PersonalDetailsOneDataModel();
-        detailsOneDataModel.getConsumerList().add(consumerListItem);
-
         personalDetailsOnePostModel.setData(detailsOneDataModel);
         return personalDetailsOnePostModel;
     }
@@ -184,12 +186,12 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         String fatherHusbandName = null;
         if (IS_RESUMED) {
             //flow for resumed application
-            fullName = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getFullName();
-            fatherHusbandName = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getFatherHusbandName();
+            fullName = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getFullName();
+            fatherHusbandName = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getFatherHusbandName();
         } else {
             //flow for new application
-            fullName = registerVerifyOtpResponse.getData().getConsumerList().get(0).getFullName();
-            fatherHusbandName = registerVerifyOtpResponse.getData().getConsumerList().get(0).getFatherHusbandName();
+            fullName = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getFullName();
+            fatherHusbandName = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getFatherHusbandName();
         }
         if (fullName != null) {
             personalDetailsBinding.etFullName.setText(fullName);
@@ -205,10 +207,10 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         List<String> placeOfBirthSuggestions;
         if (IS_RESUMED) {
             //flow for resumed application
-            placeOfBirthSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getSuggestPlaceOfBirth();
+            placeOfBirthSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getSuggestPlaceOfBirth();
         } else {
             //flow for new application
-            placeOfBirthSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(0).getSuggestPlaceOfBirth();
+            placeOfBirthSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getSuggestPlaceOfBirth();
         }
 
         for (int i = 0; i < placeOfBirthSuggestions.size(); i++) {
@@ -227,10 +229,10 @@ public class PersonalDetailsOneActivity extends BaseActivity implements AdapterC
         List<String> motherNameSuggestions;
         if (IS_RESUMED) {
             //flow for resumed application
-            motherNameSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getSuggestMotherNames();
+            motherNameSuggestions = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getSuggestMotherNames();
         } else {
             //flow for new application
-            motherNameSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(0).getSuggestMotherNames();
+            motherNameSuggestions = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getSuggestMotherNames();
         }
 
         for (int i = 0; i < motherNameSuggestions.size(); i++) {

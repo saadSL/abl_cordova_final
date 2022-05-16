@@ -3,7 +3,7 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acc
 import java.io.Serializable;
 
 public class GetConsumerAccountDetailsResponse implements Serializable {
-    public GetConsumerAccountDetailsResponseData data;
+    public GetConsumerAccountDetailsResponseData data = new GetConsumerAccountDetailsResponseData();
     public GetConsumerAccountDetailsResponseMessage message;
 
     public GetConsumerAccountDetailsResponseData getData() {

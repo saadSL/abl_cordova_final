@@ -61,6 +61,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private int BANKING_MODE_ID = 0;
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,14 +105,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     }
 
     private void selectIslamicBanking() {
-        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
-        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_white));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_selected));
         BANKING_MODE_ID = Config.ISLAMIC_BANKING;
     }
 
     private void selectConventionalBanking() {
-        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_selected));
-        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this,R.drawable.rounded_corner_white));
+        bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_selected));
+        bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_white));
         BANKING_MODE_ID = Config.CONVENTIONAL_BANKING;
     }
 
@@ -133,6 +134,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private RegisterVerifyOtp getPostParams() {
         ConsumerListItemVerifyOtp consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
         consumerListItemVerifyOtp.setPrimary(true);
+        consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
+        consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
         consumerListItemVerifyOtp.setBankingModeId(BANKING_MODE_ID);
         consumerListItemVerifyOtp.setCustomerBranch(selectedBranchTitle);
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
@@ -143,7 +146,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
         registerVerifyOtp.getData().setNoOfJointApplicatns(0);
 
-        Log.d("registerVerifyOtp", registerVerifyOtp.toString());
         return registerVerifyOtp;
     }
 
@@ -158,16 +160,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         selectBankingModeViewModel.registerOtpLiveData.observe(this, new Observer<RegisterVerifyOtpResponse>() {
             @Override
             public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
-                Log.d("branchesResponse", "onChanged: " + registerVerifyOtpResponse);
                 dismissLoading();
                 goToSelectAccont();
-                saveSerializableInPref("registerVerifyOtpResponse",registerVerifyOtpResponse);
+                saveDataInLocal(registerVerifyOtpResponse);
             }
         });
         selectBankingModeViewModel.branchesLiveData.observe(this, new Observer<BranchesModel>() {
             @Override
             public void onChanged(BranchesModel branchesModel) {
-                Log.d("branchesResponse", "onChanged: " + branchesModel);
                 dismissLoading();
                 setMap();
                 setMarkersOnMap(branchesModel);
@@ -183,6 +183,11 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             }
         });
 
+    }
+
+    private void saveDataInLocal(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
+        saveSerializableInPref(Config.REG_OTP_RESPONSE, registerVerifyOtpResponse);
+        saveStringInPref(Config.ACCESS_TOKEN, registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccessToken());
     }
 
     private void goToSelectAccont() {
@@ -254,7 +259,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                             requestNewLocationData();
                         } else {
                             getBranchesFromNetwork(30.18817, 71.4358);
-                            Log.d("latAndLng", "onComplete latitude is: " + location.getLatitude() + " longitude is " + location.getLongitude());
                         }
                     }
                 });
@@ -291,7 +295,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
             getBranchesFromNetwork(30.18817, 71.4358);
-            Log.d("latAndLng", "latitude is: " + mLastLocation.getLatitude() + " longitude is " + mLastLocation.getLongitude());
         }
     };
 

@@ -22,12 +22,29 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
     public Object isPrimary;
     public int customerTypeId;
     public String mobileNo;
-    public Object dateOfBirth;
     public Object mobileNetworkId;
     public Object portedMobileNetwork;
     public Object attachments;
     public boolean alreadyExist;
     public Object primary;
+    public String dateOfBirth;
+    public String dateOfIssue;
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(String dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
 
     public Object getFullName() {
         return fullName;
@@ -181,13 +198,6 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.mobileNo = mobileNo;
     }
 
-    public Object getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Object dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public Object getMobileNetworkId() {
         return mobileNetworkId;

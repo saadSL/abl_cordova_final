@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class GetConsumerAccountDetailsResponseData implements Serializable {
     public ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList;
-    public int noOfJointApplicatns;
+    public Integer noOfJointApplicatns= null;
     public Object channelId;
     public int sessionTimeout;
     public ArrayList<Object> pdaRemitterDetailList;
@@ -22,7 +22,7 @@ public class GetConsumerAccountDetailsResponseData implements Serializable {
         return noOfJointApplicatns;
     }
 
-    public void setNoOfJointApplicatns(int noOfJointApplicatns) {
+    public void setNoOfJointApplicatns(Integer noOfJointApplicatns) {
         this.noOfJointApplicatns = noOfJointApplicatns;
     }
 

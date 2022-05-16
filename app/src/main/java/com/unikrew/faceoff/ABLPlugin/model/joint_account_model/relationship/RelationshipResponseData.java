@@ -3,9 +3,9 @@ package com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship;
 import java.io.Serializable;
 
 public class RelationshipResponseData implements Serializable {
-    public String description;
-    public int id;
-    public String name;
+    private String description;
+    private int id;
+    private String name;
 
     public String getDescription() {
         return description;
@@ -31,8 +31,4 @@ public class RelationshipResponseData implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }

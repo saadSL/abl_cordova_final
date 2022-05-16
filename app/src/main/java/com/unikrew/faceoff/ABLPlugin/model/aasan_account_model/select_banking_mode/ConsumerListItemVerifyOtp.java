@@ -3,24 +3,42 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_m
 import java.io.Serializable;
 
 public class ConsumerListItemVerifyOtp implements Serializable {
-    private int bankingModeId;
+    private Integer bankingModeId = null;
     private int customerTypeId;
+    private Integer rdaCustomerAccInfoId = null;
     private String customerBranch;
     private String idNumber;
     private String mobileNo;
     private boolean isPrimary;
+    public String dateOfBirth;
+    public String dateOfIssue;
 
-    @Override
-    public String toString() {
-        return "ConsumerListItemVerifyOtp{" +
-                "bankingModeId=" + bankingModeId +
-                ", customerTypeId=" + customerTypeId +
-                ", customerBranch='" + customerBranch + '\'' +
-                ", idNumber='" + idNumber + '\'' +
-                ", mobileNo='" + mobileNo + '\'' +
-                ", isPrimary=" + isPrimary +
-                '}';
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
+
+    public Integer getRdaCustomerAccInfoId() {
+        return rdaCustomerAccInfoId;
+    }
+
+    public void setRdaCustomerAccInfoId(Integer rdaCustomerAccInfoId) {
+        this.rdaCustomerAccInfoId = rdaCustomerAccInfoId;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(String dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+
+
 
     public String getIdNumber() {
         return idNumber;
@@ -54,7 +72,7 @@ public class ConsumerListItemVerifyOtp implements Serializable {
         return isPrimary;
     }
 
-    public void setBankingModeId(int bankingModeId) {
+    public void setBankingModeId(Integer bankingModeId) {
         this.bankingModeId = bankingModeId;
     }
 

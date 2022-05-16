@@ -34,7 +34,6 @@ import com.unikrew.faceoff.Config;
 public class PersonalDetailsTwoActivity extends BaseActivity {
 
     private ActivityPersonalDetailsTwoBinding personalDetailsTwoBinding;
-    private RegisterEmployeeDetailsPostParams registerEmployeeDetailsPostParams;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private Boolean IS_RESUMED;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
@@ -89,9 +88,9 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         PostUserAddressListItem addressListItem = new PostUserAddressListItem();
         addressListItem.setAddressTypeId(Config.ADDRESS_TYPE_ID);
         if (IS_RESUMED) {
-            addressListItem.setRdaCustomerId(getConsumerAccountDetailsResponse.getData().consumerList.get(0).getRdaCustomerProfileId());
+            addressListItem.setRdaCustomerId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getRdaCustomerProfileId());
         } else {
-            addressListItem.setRdaCustomerId(registerEmployeeDetailsPostParams.getData().consumerList.get(0).getRdaCustomerProfileId());
+            addressListItem.setRdaCustomerId(registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getRdaCustomerProfileId());
         }
 
         addressListItem.setCountry(personalDetailsTwoBinding.etCountry.getText().toString());
@@ -162,13 +161,13 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
 
         if (IS_RESUMED) {
             //flow for resumed application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getAccountInformation();
             consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             //used rdaCustomerProfileId instead of rdaCustomerId since both are same
             consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
         } else {
             //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
+            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getAccountInformation();
             consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             //used rdaCustomerProfileId instead of rdaCustomerId since both are same
             consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
@@ -189,15 +188,14 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
 
     private void goToPersonalDetailsThree() {
         Intent intent = new Intent(this, PersonalDetailsThreeActivity.class);
-        intent.putExtra("registerEmployeeDetailsPostParams", registerEmployeeDetailsPostParams);
         startActivity(intent);
     }
 
     private void setData() {
         if (IS_RESUMED) {
             //address flow for resumed application
-            GetConsumerAccountDetailsResponseAddress addressesItemResponse = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAddresses().get(0);
-            bindText(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getEmailAddress(), personalDetailsTwoBinding.etEmail);
+            GetConsumerAccountDetailsResponseAddress addressesItemResponse = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getAddresses().get(0);
+            bindText(getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getEmailAddress(), personalDetailsTwoBinding.etEmail);
             bindText(addressesItemResponse.getCustomerAddress(), personalDetailsTwoBinding.etAddress);
             bindText(addressesItemResponse.getNearestLandMark(), personalDetailsTwoBinding.etLandmark);
             bindText(addressesItemResponse.getCity(), personalDetailsTwoBinding.etCity);
@@ -206,8 +204,8 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
 
         } else {
             //address flow for new application
-            AddressesItemResponse addressesItemResponse = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAddresses().get(0);
-            bindText(registerVerifyOtpResponse.getData().getConsumerList().get(0).getEmailAddress(), personalDetailsTwoBinding.etEmail);
+            AddressesItemResponse addressesItemResponse = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getAddresses().get(0);
+            bindText(registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getEmailAddress(), personalDetailsTwoBinding.etEmail);
             bindText(addressesItemResponse.getCustomerAddress(), personalDetailsTwoBinding.etAddress);
             bindText(addressesItemResponse.getNearestLandMark(), personalDetailsTwoBinding.etLandmark);
             bindText(addressesItemResponse.getCity(), personalDetailsTwoBinding.etCity);

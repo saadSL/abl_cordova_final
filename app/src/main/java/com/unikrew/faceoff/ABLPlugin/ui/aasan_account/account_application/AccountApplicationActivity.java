@@ -23,6 +23,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_ap
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponseAppList;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.employment_details.EmploymentDetailsActivity;
@@ -40,12 +41,14 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCa
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
+import java.util.ArrayList;
+
 public class AccountApplicationActivity extends BaseActivity implements AccountApplicationInterface, View.OnClickListener {
-    GetDraftedAppsVerifyOtpResponse res;
-    AccountApplicationAdapter adapter;
+    private GetDraftedAppsVerifyOtpResponse res;
+    private AccountApplicationAdapter adapter;
 
     private ApplicationListLayoutBinding layoutBinding;
-    ApplicationListItemBinding itemBinding;
+    private ApplicationListItemBinding itemBinding;
     private GetConsumerAccountDetailsPostParams consumerAccDetailsPostParams;
     private DeleteDraftedApplicationPostParams deleteDraftedAppPostParams;
     private AccountApplicationViewModel viewModel;
@@ -123,7 +126,7 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                     openActivity(RemitterDetailsActivity.class);
 
                 } else {
-                        openActivity(ReviewDocumentActivity.class);
+                    openActivity(ReviewDocumentActivity.class);
                 }
                 loader.dismiss();
             }
@@ -152,7 +155,6 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             }
         });
     }
-
 
 
     private void getConsumerAccountDetails() {
@@ -236,6 +238,9 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
                             res.getData().getAccessToken());
                     res.getData().getAppList().remove(position);
                     adapter.setList(res.getData().getAppList());
+                    if (adapter.getItemCount() == 0) {
+                        saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, null);
+                    }
                     showLoading();
                 }
             });

@@ -26,7 +26,7 @@ public class AccountInformationResponse implements Serializable {
 	private Object customerAccountType;
 	private Object remitterName;
 	private Object accountVariantId;
-	private Object bankingMode;
+	private int bankingMode;
 	private Object accountTypeId;
 	private Object natureOfAccountId;
 	private Object noOfChequeBookLeavesId;
@@ -47,16 +47,16 @@ public class AccountInformationResponse implements Serializable {
 	private List<Object> modeOfMajorTransId;
 	private Object esoaInd;
 	private Object physicalCardInd;
-	private Integer customerAccountTypeId;
+	private Integer customerAccountTypeId = null;
 	private Object currencyTypeId;
 	private int bankingModeId;
 	private Object internetBankingInd;
-	private Integer purposeOfAccountId;
+	private Integer purposeOfAccountId = null;
 	private Object referredBy;
 	private Object beneficialOwnerAccount;
 	private Object rdaCustomerJointAccountId;
 	private Object natureOfAccount;
-	private Object averageMonthlySalary;
+	private Long averageMonthlySalary;
 	private Object expectTypeOfCountParty;
 	private Object proofOfIncomeInd;
 	private Object accountVariant;
@@ -149,7 +149,7 @@ public class AccountInformationResponse implements Serializable {
 		return accountVariantId;
 	}
 
-	public Object getBankingMode(){
+	public int getBankingMode(){
 		return bankingMode;
 	}
 
@@ -269,7 +269,7 @@ public class AccountInformationResponse implements Serializable {
 		return natureOfAccount;
 	}
 
-	public Object getAverageMonthlySalary(){
+	public Long getAverageMonthlySalary(){
 		return averageMonthlySalary;
 	}
 

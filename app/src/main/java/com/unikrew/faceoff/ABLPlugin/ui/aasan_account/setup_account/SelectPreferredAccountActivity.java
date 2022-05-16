@@ -183,7 +183,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         selectAccountTypeViewModel.postAccountType(getAccountTypeParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
-    private AccountTypePostParams getAccountTypeParams() {
+    private AccountTypePostParams   getAccountTypeParams() {
         AccountTypePostParams accountTypePostParams = new AccountTypePostParams();
         if (IS_RESUMED) {
             //flow for drafted application
@@ -191,7 +191,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
             accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
-            accountTypePostParams.getData().setCustomerAccountTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
+            accountTypePostParams.getData().setCustomerAccountTypeId(accountInformation.getCustomerAccountTypeId());
             accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
             accountTypePostParams.getData().setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
         } else {

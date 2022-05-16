@@ -19,12 +19,12 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object mobileNetworkId;
 	private String  emailAddress;
 	private Object educationId;
-	private int occupationId;
+	private Integer occupationId = null;
 	private Object customerNonResidentInd;
 	private Object adcFlagId;
 	private List<String> suggestPlaceOfBirth;
 	private Object employerPhone;
-	private int professionId;
+	private Integer professionId = null;
 	private Object profession;
 	private Object kinCnic;
 	private String customerBranch;
@@ -46,7 +46,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private int rdaCustomerProfileId;
 	private Object natureOfBusiness;
 	private Object customerCity;
-	private Object idNumber;
+	private String idNumber;
 	private Object expiryDate;
 	private int customerTypeId;
 	private Object kinAddress;
@@ -61,9 +61,9 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object kinName;
 	private Object genderId;
 	private String fullName;
-	private Object dateOfBirth;
-	private Object mobileNo;
-	private Object dateOfIssue;
+	private String dateOfBirth;
+	private String mobileNo;
+	private String dateOfIssue;
 	private Object mobileNoCountryCodeId;
 	private Object employmentTypeId;
 	private Object nearestLandmark;
@@ -131,7 +131,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return educationId;
 	}
 
-	public int getOccupationId(){
+	public Integer getOccupationId(){
 		return occupationId;
 	}
 
@@ -151,7 +151,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return employerPhone;
 	}
 
-	public int getProfessionId(){
+	public Integer getProfessionId(){
 		return professionId;
 	}
 
@@ -239,7 +239,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return customerCity;
 	}
 
-	public Object getIdNumber(){
+	public String getIdNumber(){
 		return idNumber;
 	}
 
@@ -299,15 +299,15 @@ public class ConsumerListItemResponse implements Serializable {
 		return fullName;
 	}
 
-	public Object getDateOfBirth(){
+	public String getDateOfBirth(){
 		return dateOfBirth;
 	}
 
-	public Object getMobileNo(){
+	public String getMobileNo(){
 		return mobileNo;
 	}
 
-	public Object getDateOfIssue(){
+	public String getDateOfIssue(){
 		return dateOfIssue;
 	}
 

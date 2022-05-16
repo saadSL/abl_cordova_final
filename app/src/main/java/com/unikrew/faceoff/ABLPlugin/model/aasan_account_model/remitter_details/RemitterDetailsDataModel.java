@@ -51,7 +51,7 @@ public class RemitterDetailsDataModel implements Serializable {
 		this.purposeOfAccountId = purposeOfAccountId;
 	}
 
-	public void setNatureOfAccountId(int natureOfAccountId) {
+	public void setNatureOfAccountId(Integer natureOfAccountId) {
 		this.natureOfAccountId = natureOfAccountId;
 	}
 
@@ -83,7 +83,7 @@ public class RemitterDetailsDataModel implements Serializable {
 		this.proofOfIncomeInd = proofOfIncomeInd;
 	}
 
-	private int natureOfAccountId;
+	private Integer natureOfAccountId = null;
 	private int rdaCustomerAccInfoId;
 	private List<PdaRemitterDetailListItem> pdaRemitterDetailList = new ArrayList<>();
 	private int transAlertInd;

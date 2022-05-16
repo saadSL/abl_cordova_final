@@ -111,7 +111,6 @@ public class RemitterDetailsActivity extends BaseActivity {
             }
         }
 
-        Log.d("stats", "hello outside loop");
         showLoading();
         remitterDetailsViewModel.postRemitterDetails(getPostParams(),getStringFromPref(Config.ACCESS_TOKEN));
 
@@ -146,7 +145,6 @@ public class RemitterDetailsActivity extends BaseActivity {
         remitterDetailsDataModel.setNoOfJointApplicatns(0);
         remitterDetailsDataModel.setAccountVariantId(Config.REMITTANCE_ACCOUNT);
         remitterDetailsDataModel.getPdaRemitterDetailList().addAll(pdaRemitterDetailList);
-        Log.d("stats", remitterDetailsPostModel.toString());
         return remitterDetailsPostModel;
     }
 

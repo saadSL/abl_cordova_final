@@ -37,29 +37,4 @@ public class OtpVerificationViewModel extends BaseViewModel {
             }
         });
     }
-
-
-
-    public MutableLiveData<ViewAppsGenerateOtpResponse> reSendOtpSuccessLiveData = new MutableLiveData<ViewAppsGenerateOtpResponse>();
-    public MutableLiveData<String> reSendOtpErrorLiveData = new MutableLiveData<String>();
-
-    public void viewAppsGenerateOtpPostData(ViewAppsGenerateOtpPostParams postParams){
-
-        Call<ViewAppsGenerateOtpResponse> res = AblApplication.apiInterface.viewAppsGenerateOtp(postParams);
-        res.enqueue(new Callback<ViewAppsGenerateOtpResponse>() {
-            @Override
-            public void onResponse(Call<ViewAppsGenerateOtpResponse> call, Response<ViewAppsGenerateOtpResponse> response) {
-                if (response.code() == 200){
-                    reSendOtpSuccessLiveData.postValue(response.body());
-                }else{
-                    reSendOtpErrorLiveData.postValue(getErrorDetail(response));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ViewAppsGenerateOtpResponse> call, Throwable t) {
-                reSendOtpErrorLiveData.postValue(t.getMessage());
-            }
-        });
-    }
 }
