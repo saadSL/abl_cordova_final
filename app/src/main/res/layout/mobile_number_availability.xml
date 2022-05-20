@@ -85,7 +85,7 @@
 
                 <!--  CNIC UPLOAD  -->
                 <LinearLayout
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:background="@drawable/transparent_secondary_bg"
                     android:layout_margin="@dimen/_10sdp"
                     android:id="@+id/ll_cnic_upload_front"
