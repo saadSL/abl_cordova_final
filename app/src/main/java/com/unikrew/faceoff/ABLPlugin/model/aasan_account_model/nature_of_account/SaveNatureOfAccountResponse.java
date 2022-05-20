@@ -3,8 +3,8 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_accoun
 import java.io.Serializable;
 
 public class SaveNatureOfAccountResponse implements Serializable {
-    public SaveNatureOfAccountResponseData data;
-    public SaveNatureOfAccountResponseMessage message;
+    private SaveNatureOfAccountResponseData data;
+    private SaveNatureOfAccountResponseMessage message;
 
     public SaveNatureOfAccountResponseData getData() {
         return data;

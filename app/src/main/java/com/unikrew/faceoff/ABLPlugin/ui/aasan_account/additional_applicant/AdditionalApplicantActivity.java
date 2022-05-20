@@ -6,17 +6,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutAdditionalApplicantBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.joint_applicant.ApplicantModel;
-import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostData;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponseData;
@@ -32,11 +27,13 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
     private AdditionalApplicantViewModel applicantViewModel;
     private RelationshipPostParams relationshipPostParams;
     private ArrayList<RelationshipResponseData> relationshipResponseData;
+    public static int SELECTED_RELATION_CODE = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBinding();
+        setLayout();
         setViewModel();
         setClicks();
         getRelationships();
@@ -64,10 +61,10 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
 
     private void setRelationshipSpinner(RelationshipResponse relationshipResponse) {
         relationshipResponseData = relationshipResponse.getData();
-        setSpinner(relationshipResponseData, layoutAdditionalApplicantBinding.spRelationshipName);
+        setSpinner();
     }
 
-    private void setSpinner(ArrayList<RelationshipResponseData> relationshipResponseData, AppCompatSpinner spRelationshipName) {
+    private void setSpinner() {
 
         List<String> _allItemsArray = new ArrayList<>();
         if (relationshipResponseData.size() > 0) {
@@ -83,7 +80,7 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
-            spRelationshipName.setAdapter(dataAdapter);
+            layoutAdditionalApplicantBinding.spRelationshipName.setAdapter(dataAdapter);
         }
     }
 
@@ -113,6 +110,16 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
         setContentView(layoutAdditionalApplicantBinding.getRoot());
     }
 
+
+    private void setLayout() {
+        layoutAdditionalApplicantBinding.steps.screenHeader.stepsHeading1.setText("Additional");
+        layoutAdditionalApplicantBinding.steps.screenHeader.stepsHeading2.setText("Applicant");
+        layoutAdditionalApplicantBinding.steps.step1.setBackground(this.getDrawable(R.color.custom_blue));
+        layoutAdditionalApplicantBinding.steps.step2.setBackground(this.getDrawable(R.color.custom_blue));
+        layoutAdditionalApplicantBinding.steps.step3.setBackground(this.getDrawable(R.color.light_gray));
+        layoutAdditionalApplicantBinding.steps.step4.setBackground(this.getDrawable(R.color.light_gray));
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -126,7 +133,9 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
     }
 
     private void openMobileNumberActivity() {
+        SELECTED_RELATION_CODE =  relationshipResponseData.get(layoutAdditionalApplicantBinding.spRelationshipName.getSelectedItemPosition()).getId();
         Intent intent = new Intent(this, MobileNumberActivity.class);
+        intent.putExtra("isJoint",true);
         startActivity(intent);
     }
 }

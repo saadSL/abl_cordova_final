@@ -3,10 +3,10 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps
 import java.io.Serializable;
 
 public class GetDraftedAppsVerfiyOtpPostData implements Serializable {
-    public int customerTypeId;
-    public String idNumber;
-    public String mobileNo;
-    public String otp;
+    private int customerTypeId;
+    private String idNumber;
+    private String mobileNo;
+    private String otp;
 
 
     public int getCustomerTypeId() {
@@ -39,5 +39,15 @@ public class GetDraftedAppsVerfiyOtpPostData implements Serializable {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    @Override
+    public String toString() {
+        return "GetDraftedAppsVerfiyOtpPostData{" +
+                "customerTypeId=" + customerTypeId +
+                ", idNumber='" + idNumber + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", otp='" + otp + '\'' +
+                '}';
     }
 }

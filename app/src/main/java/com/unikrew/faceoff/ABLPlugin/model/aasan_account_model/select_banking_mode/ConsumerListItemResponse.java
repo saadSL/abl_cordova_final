@@ -1,5 +1,9 @@
 package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode;
 
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.ConsumerKycDetail;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAttachment;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseStepperSections;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,19 +16,297 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object employerAddress;
 	private Object relationshipWithMinorId;
 	private Object employerPostalCode;
+
+	public GetConsumerAccountDetailsResponseStepperSections getStepperSections() {
+		return stepperSections;
+	}
+
+	public void setStepperSections(GetConsumerAccountDetailsResponseStepperSections stepperSections) {
+		this.stepperSections = stepperSections;
+	}
+
 	private Object portedMobileNetwork;
+
+	public void setCustomerTitle(Object customerTitle) {
+		this.customerTitle = customerTitle;
+	}
+
+	public void setKinMobile(Object kinMobile) {
+		this.kinMobile = kinMobile;
+	}
+
+	public void setKinRelation(Object kinRelation) {
+		this.kinRelation = kinRelation;
+	}
+
+	public void setAddresses(List<AddressesItemResponse> addresses) {
+		this.addresses = addresses;
+	}
+
+	public void setOccupation(Object occupation) {
+		this.occupation = occupation;
+	}
+
+	public void setEmployerAddress(Object employerAddress) {
+		this.employerAddress = employerAddress;
+	}
+
+	public void setRelationshipWithMinorId(Object relationshipWithMinorId) {
+		this.relationshipWithMinorId = relationshipWithMinorId;
+	}
+
+	public void setEmployerPostalCode(Object employerPostalCode) {
+		this.employerPostalCode = employerPostalCode;
+	}
+
+	public void setPortedMobileNetwork(Object portedMobileNetwork) {
+		this.portedMobileNetwork = portedMobileNetwork;
+	}
+
+	public void setTaxResidentInd(Object taxResidentInd) {
+		this.taxResidentInd = taxResidentInd;
+	}
+
+	public void setIdTypeId(Object idTypeId) {
+		this.idTypeId = idTypeId;
+	}
+
+	public void setPlaceOfIssue(Object placeOfIssue) {
+		this.placeOfIssue = placeOfIssue;
+	}
+
+	public void setMobileNetworkId(Object mobileNetworkId) {
+		this.mobileNetworkId = mobileNetworkId;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setEducationId(Object educationId) {
+		this.educationId = educationId;
+	}
+
+	public void setOccupationId(Integer occupationId) {
+		this.occupationId = occupationId;
+	}
+
+	public void setCustomerNonResidentInd(Object customerNonResidentInd) {
+		this.customerNonResidentInd = customerNonResidentInd;
+	}
+
+	public void setAdcFlagId(Object adcFlagId) {
+		this.adcFlagId = adcFlagId;
+	}
+
+	public void setSuggestPlaceOfBirth(List<String> suggestPlaceOfBirth) {
+		this.suggestPlaceOfBirth = suggestPlaceOfBirth;
+	}
+
+	public void setEmployerPhone(Object employerPhone) {
+		this.employerPhone = employerPhone;
+	}
+
+	public void setProfessionId(Integer professionId) {
+		this.professionId = professionId;
+	}
+
+	public void setProfession(Object profession) {
+		this.profession = profession;
+	}
+
+	public void setKinCnic(Object kinCnic) {
+		this.kinCnic = kinCnic;
+	}
+
+	public void setCustomerBranch(String customerBranch) {
+		this.customerBranch = customerBranch;
+	}
+
+	public void setMotherMaidenName(String motherMaidenName) {
+		this.motherMaidenName = motherMaidenName;
+	}
+
+	public void setCountryOfResidenceId(Object countryOfResidenceId) {
+		this.countryOfResidenceId = countryOfResidenceId;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public void setMaritalStatusId(Object maritalStatusId) {
+		this.maritalStatusId = maritalStatusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+
+	public void setNatureOfAccountId(Object natureOfAccountId) {
+		this.natureOfAccountId = natureOfAccountId;
+	}
+
+	public void setEmployedSince(Object employedSince) {
+		this.employedSince = employedSince;
+	}
+
+	public void setDesignation(Object designation) {
+		this.designation = designation;
+	}
+
+	public void setCustomerTitleId(Object customerTitleId) {
+		this.customerTitleId = customerTitleId;
+	}
+
+	public void setAttachments(List<GetConsumerAccountDetailsResponseAttachment> attachments) {
+		this.attachments = attachments;
+	}
+
+	public void setGender(Object gender) {
+		this.gender = gender;
+	}
+
+	public void setExistingAccountInd(boolean existingAccountInd) {
+		this.existingAccountInd = existingAccountInd;
+	}
+
+	public void setCountryOfBirthPlaceId(Object countryOfBirthPlaceId) {
+		this.countryOfBirthPlaceId = countryOfBirthPlaceId;
+	}
+
+	public void setCustomerNtn(Object customerNtn) {
+		this.customerNtn = customerNtn;
+	}
+
+	public void setRdaCustomerProfileId(int rdaCustomerProfileId) {
+		this.rdaCustomerProfileId = rdaCustomerProfileId;
+	}
+
+	public void setNatureOfBusiness(Object natureOfBusiness) {
+		this.natureOfBusiness = natureOfBusiness;
+	}
+
+	public void setCustomerCity(Object customerCity) {
+		this.customerCity = customerCity;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
+	public void setExpiryDate(Object expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public void setCustomerTypeId(int customerTypeId) {
+		this.customerTypeId = customerTypeId;
+	}
+
+	public void setKinAddress(Object kinAddress) {
+		this.kinAddress = kinAddress;
+	}
+
+	public void setCityOfBirth(String cityOfBirth) {
+		this.cityOfBirth = cityOfBirth;
+	}
+
+	public void setSuggestMotherNames(List<String> suggestMotherNames) {
+		this.suggestMotherNames = suggestMotherNames;
+	}
+
+	public void setAccountInformation(AccountInformationResponse accountInformation) {
+		this.accountInformation = accountInformation;
+	}
+
+	public ConsumerKycDetail getConsumerKycDetail() {
+		return consumerKycDetail;
+	}
+
+	public void setConsumerKycDetail(ConsumerKycDetail consumerKycDetail) {
+		this.consumerKycDetail = consumerKycDetail;
+	}
+
+	public void setReferrerCp(Object referrerCp) {
+		this.referrerCp = referrerCp;
+	}
+
+	public void setPrimary(boolean primary) {
+		isPrimary = primary;
+	}
+
+	public void setExistingCustomerInd(boolean existingCustomerInd) {
+		this.existingCustomerInd = existingCustomerInd;
+	}
+
+	public void setFatherHusbandName(String fatherHusbandName) {
+		this.fatherHusbandName = fatherHusbandName;
+	}
+
+	public void setNationalityTypeId(Object nationalityTypeId) {
+		this.nationalityTypeId = nationalityTypeId;
+	}
+
+	public void setKinName(Object kinName) {
+		this.kinName = kinName;
+	}
+
+	public void setGenderId(Object genderId) {
+		this.genderId = genderId;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public void setDateOfIssue(String dateOfIssue) {
+		this.dateOfIssue = dateOfIssue;
+	}
+
+	public void setMobileNoCountryCodeId(Object mobileNoCountryCodeId) {
+		this.mobileNoCountryCodeId = mobileNoCountryCodeId;
+	}
+
+	public void setEmploymentTypeId(Object employmentTypeId) {
+		this.employmentTypeId = employmentTypeId;
+	}
+
+	public void setNearestLandmark(String nearestLandmark) {
+		this.nearestLandmark = nearestLandmark;
+	}
+
+	public void setEmployerEmail(Object employerEmail) {
+		this.employerEmail = employerEmail;
+	}
+
+	public void setReferredBy(Object referredBy) {
+		this.referredBy = referredBy;
+	}
+
+	public void setNameOfOrganization(Object nameOfOrganization) {
+		this.nameOfOrganization = nameOfOrganization;
+	}
+
 	private Object taxResidentInd;
 	private Object idTypeId;
 	private Object placeOfIssue;
 	private Object mobileNetworkId;
 	private String  emailAddress;
 	private Object educationId;
-	private int occupationId;
+	private Integer occupationId = null;
 	private Object customerNonResidentInd;
 	private Object adcFlagId;
 	private List<String> suggestPlaceOfBirth;
 	private Object employerPhone;
-	private int professionId;
+	private Integer professionId = null;
 	private Object profession;
 	private Object kinCnic;
 	private String customerBranch;
@@ -37,22 +319,23 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object employedSince;
 	private Object designation;
 	private Object customerTitleId;
-	private List<Object> attachments;
+	private List<GetConsumerAccountDetailsResponseAttachment> attachments;
 	private Object gender;
 	private boolean existingAccountInd;
 	private Object countryOfBirthPlaceId;
-	private StepperSectionsResponse stepperSections;
+	private GetConsumerAccountDetailsResponseStepperSections stepperSections;
 	private Object customerNtn;
 	private int rdaCustomerProfileId;
 	private Object natureOfBusiness;
 	private Object customerCity;
-	private Object idNumber;
+	private String idNumber;
 	private Object expiryDate;
 	private int customerTypeId;
 	private Object kinAddress;
 	private String cityOfBirth;
 	private List<String> suggestMotherNames;
 	private AccountInformationResponse accountInformation;
+	public ConsumerKycDetail consumerKycDetail;
 	private Object referrerCp;
 	private boolean isPrimary;
 	private boolean existingCustomerInd;
@@ -61,12 +344,22 @@ public class ConsumerListItemResponse implements Serializable {
 	private Object kinName;
 	private Object genderId;
 	private String fullName;
-	private Object dateOfBirth;
-	private Object mobileNo;
-	private Object dateOfIssue;
+	private String dateOfBirth;
+	private String mobileNo;
+	private String dateOfIssue;
 	private Object mobileNoCountryCodeId;
 	private Object employmentTypeId;
-	private Object nearestLandmark;
+	private String nearestLandmark;
+	private String customerAddress;
+
+	public String getCustomerAddress() {
+		return customerAddress;
+	}
+
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
+	}
+
 	private Object employerEmail;
 	private Object referredBy;
 	private Object nameOfOrganization;
@@ -131,7 +424,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return educationId;
 	}
 
-	public int getOccupationId(){
+	public Integer getOccupationId(){
 		return occupationId;
 	}
 
@@ -151,7 +444,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return employerPhone;
 	}
 
-	public int getProfessionId(){
+	public Integer getProfessionId(){
 		return professionId;
 	}
 
@@ -203,7 +496,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return customerTitleId;
 	}
 
-	public List<Object> getAttachments(){
+	public List<GetConsumerAccountDetailsResponseAttachment> getAttachments(){
 		return attachments;
 	}
 
@@ -219,9 +512,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return countryOfBirthPlaceId;
 	}
 
-	public StepperSectionsResponse getStepperSections(){
-		return stepperSections;
-	}
+
 
 	public Object getCustomerNtn(){
 		return customerNtn;
@@ -239,7 +530,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return customerCity;
 	}
 
-	public Object getIdNumber(){
+	public String getIdNumber(){
 		return idNumber;
 	}
 
@@ -299,15 +590,15 @@ public class ConsumerListItemResponse implements Serializable {
 		return fullName;
 	}
 
-	public Object getDateOfBirth(){
+	public String getDateOfBirth(){
 		return dateOfBirth;
 	}
 
-	public Object getMobileNo(){
+	public String getMobileNo(){
 		return mobileNo;
 	}
 
-	public Object getDateOfIssue(){
+	public String getDateOfIssue(){
 		return dateOfIssue;
 	}
 
@@ -319,7 +610,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return employmentTypeId;
 	}
 
-	public Object getNearestLandmark(){
+	public String getNearestLandmark(){
 		return nearestLandmark;
 	}
 
@@ -335,75 +626,4 @@ public class ConsumerListItemResponse implements Serializable {
 		return nameOfOrganization;
 	}
 
-	@Override
-	public String toString() {
-		return "ConsumerListItemResponse{" +
-				"customerTitle=" + customerTitle +
-				", kinMobile=" + kinMobile +
-				", kinRelation=" + kinRelation +
-				", addresses=" + addresses +
-				", occupation=" + occupation +
-				", employerAddress=" + employerAddress +
-				", relationshipWithMinorId=" + relationshipWithMinorId +
-				", employerPostalCode=" + employerPostalCode +
-				", portedMobileNetwork=" + portedMobileNetwork +
-				", taxResidentInd=" + taxResidentInd +
-				", idTypeId=" + idTypeId +
-				", placeOfIssue=" + placeOfIssue +
-				", mobileNetworkId=" + mobileNetworkId +
-				", emailAddress=" + emailAddress +
-				", educationId=" + educationId +
-				", occupationId=" + occupationId +
-				", customerNonResidentInd=" + customerNonResidentInd +
-				", adcFlagId=" + adcFlagId +
-				", suggestPlaceOfBirth=" + suggestPlaceOfBirth +
-				", employerPhone=" + employerPhone +
-				", professionId=" + professionId +
-				", profession=" + profession +
-				", kinCnic=" + kinCnic +
-				", customerBranch='" + customerBranch + '\'' +
-				", motherMaidenName='" + motherMaidenName + '\'' +
-				", countryOfResidenceId=" + countryOfResidenceId +
-				", accessToken='" + accessToken + '\'' +
-				", maritalStatusId=" + maritalStatusId +
-				", statusId=" + statusId +
-				", natureOfAccountId=" + natureOfAccountId +
-				", employedSince=" + employedSince +
-				", designation=" + designation +
-				", customerTitleId=" + customerTitleId +
-				", attachments=" + attachments +
-				", gender=" + gender +
-				", existingAccountInd=" + existingAccountInd +
-				", countryOfBirthPlaceId=" + countryOfBirthPlaceId +
-				", stepperSections=" + stepperSections +
-				", customerNtn=" + customerNtn +
-				", rdaCustomerProfileId=" + rdaCustomerProfileId +
-				", natureOfBusiness=" + natureOfBusiness +
-				", customerCity=" + customerCity +
-				", idNumber=" + idNumber +
-				", expiryDate=" + expiryDate +
-				", customerTypeId=" + customerTypeId +
-				", kinAddress=" + kinAddress +
-				", cityOfBirth='" + cityOfBirth + '\'' +
-				", suggestMotherNames=" + suggestMotherNames +
-				", accountInformation=" + accountInformation +
-				", referrerCp=" + referrerCp +
-				", isPrimary=" + isPrimary +
-				", existingCustomerInd=" + existingCustomerInd +
-				", fatherHusbandName=" + fatherHusbandName +
-				", nationalityTypeId=" + nationalityTypeId +
-				", kinName=" + kinName +
-				", genderId=" + genderId +
-				", fullName='" + fullName + '\'' +
-				", dateOfBirth=" + dateOfBirth +
-				", mobileNo=" + mobileNo +
-				", dateOfIssue=" + dateOfIssue +
-				", mobileNoCountryCodeId=" + mobileNoCountryCodeId +
-				", employmentTypeId=" + employmentTypeId +
-				", nearestLandmark=" + nearestLandmark +
-				", employerEmail=" + employerEmail +
-				", referredBy=" + referredBy +
-				", nameOfOrganization=" + nameOfOrganization +
-				'}';
-	}
 }

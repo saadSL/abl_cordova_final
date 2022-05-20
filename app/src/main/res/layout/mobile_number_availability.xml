@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <include
         android:id="@+id/logo_toolbar"
         layout="@layout/layout_logo_toolbar" />
+
     <include
         android:id="@+id/screen_header"
-        layout="@layout/screen_header"/>
+        layout="@layout/screen_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -26,14 +28,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:id="@+id/tv_mobile_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="@string/mobile_number_text"
                     android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/mobile_number_text"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -51,7 +52,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:fontFamily="@font/worksans_regular"
                     android:text="@string/mobile_num_inst"
                     android:textSize="@dimen/_10sdp" />
@@ -85,134 +87,143 @@
 
                 <!--  CNIC UPLOAD  -->
                 <LinearLayout
-                    android:visibility="gone"
-                    android:background="@drawable/transparent_secondary_bg"
-                    android:layout_margin="@dimen/_10sdp"
                     android:id="@+id/ll_cnic_upload_front"
-                    android:padding="@dimen/_5sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/transparent_secondary_bg"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/camera"
-                            android:layout_marginStart="@dimen/_10sdp"/>
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:src="@drawable/camera" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:fontFamily="@font/worksans_regular"
-                            android:textColor="@color/black"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:text="@string/scan_your_cnic_front"/>
+                            android:text="@string/scan_your_cnic_front"
+                            android:textColor="@color/black" />
 
                         <ImageView
-                            android:visibility="visible"
                             android:id="@+id/img_cnic_front_small"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginStart="@dimen/_20sdp"
-                            android:src="@drawable/cnic_front"/>
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/cnic_front"
+                            android:visibility="gone" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/ll_cnic_front"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
                         <ImageView
                             android:id="@+id/img_cnic_front"
                             android:layout_width="@dimen/_200sdp"
                             android:layout_height="@dimen/_100sdp"
-                            android:src="@drawable/cnic_front"
-                            android:background="@color/black"
                             android:layout_gravity="center"
-                            android:padding="@dimen/_10sdp"/>
+                            android:background="@color/black"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/cnic_front" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/worksans_semibold"
                             android:text="@string/scan_again"
                             android:textColor="@color/custom_blue"
-                            android:fontFamily="@font/worksans_semibold"
-                            android:textColorLink="@color/custom_blue"
-                            android:layout_gravity="center"/>
+                            android:textColorLink="@color/custom_blue" />
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
-                    android:visibility="gone"
-                    android:background="@drawable/transparent_secondary_bg"
-                    android:layout_margin="@dimen/_10sdp"
                     android:id="@+id/ll_cnic_upload_back"
-                    android:padding="@dimen/_5sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/transparent_secondary_bg"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/camera"
-                            android:layout_marginStart="@dimen/_10sdp"/>
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:src="@drawable/camera" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:fontFamily="@font/worksans_regular"
-                            android:textColor="@color/black"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:text="@string/scan_your_cnic_back"/>
+                            android:text="@string/scan_your_cnic_back"
+                            android:textColor="@color/black" />
 
                         <ImageView
-                            android:visibility="gone"
                             android:id="@+id/img_cnic_back_small"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginStart="@dimen/_20sdp"
-                            android:src="@drawable/cnic_front"/>
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/cnic_front"
+                            android:visibility="gone" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/ll_cnic_back"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
                         <ImageView
                             android:id="@+id/img_cnic_back"
                             android:layout_width="@dimen/_200sdp"
                             android:layout_height="@dimen/_100sdp"
-                            android:src="@drawable/cnic_front"
-                            android:background="@color/black"
                             android:layout_gravity="center"
-                            android:padding="@dimen/_10sdp"/>
+                            android:background="@color/black"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/cnic_front" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/worksans_semibold"
                             android:text="@string/scan_again"
                             android:textColor="@color/custom_blue"
-                            android:fontFamily="@font/worksans_semibold"
-                            android:textColorLink="@color/custom_blue"
-                            android:layout_gravity="center"/>
+                            android:textColorLink="@color/custom_blue" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -238,11 +249,11 @@
                         android:id="@+id/et_cnicNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="13"
-                        android:inputType="number"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:hint="@string/cnic_placeholder" />
+                        android:hint="@string/cnic_placeholder"
+                        android:inputType="number"
+                        android:maxLength="13" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,32 +266,34 @@
 
                 <include
                     android:id="@+id/btn_container"
-                    layout="@layout/layout_button_container"/>
+                    layout="@layout/layout_button_container" />
             </LinearLayout>
 
             <include
                 android:id="@+id/recaptcha"
-                layout="@layout/re_captcha"/>
+                layout="@layout/re_captcha" />
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical"
                 android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/transparent_secondary_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/worksans_medium"
-                    android:textColorLink="@color/custom_blue"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
-                    android:text="@string/dont_have_original_cnic"/>
+                    android:text="@string/dont_have_original_cnic"
+                    android:textColorLink="@color/custom_blue" />
             </LinearLayout>
 
             <include
                 android:id="@+id/abl_chat"
-                layout="@layout/layout_abl_chat_container"/>
+                layout="@layout/layout_abl_chat_container" />
             <!--            <LinearLayout-->
             <!--                android:id="@+id/ll_cnic_upload"-->
             <!--                android:visibility="gone"-->

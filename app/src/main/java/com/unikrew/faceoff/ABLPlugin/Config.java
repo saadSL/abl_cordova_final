@@ -4,10 +4,13 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 
 public class Config {
     //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
-    public static final String BASE_URL = "http://10.100.102.124:8080";
+//    public static final String BASE_URL = "http://10.100.102.124:8080";
+    public static final String BASE_URL = "http://192.168.8.101:8080";
     public static final String ACCOUNT_VARIANT_ID = "account_variant_id";
     public static final String PROFILE_ID = "profile_id";
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
+    public static final String DATE_OF_BIRTH = "date_of_birth";
+    public static final String DATE_OF_ISSUE = "date_of_issue";
 
     public static String ACCOUNT_NUMBER = "account_number";
     //for resume application
@@ -109,6 +112,7 @@ public class Config {
     public static int SINGLE = 102101;
     public static int JOINT = 102102;
     public static int MINOR = 102103;
+    public static String NO_OF_JOINT_APPLICANTS = "noOfJointApp";
 
     public static int CNIC_BACK_TYPE_ID = 1043002;
     public static int CNIC_FRONT_TYPE_ID = 1043001;
@@ -120,6 +124,16 @@ public class Config {
     public static int CURRENCY_DOLLAR = 108302;
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
     public static int RELATIONSHIP_ID = 1088;
+
+
+    public static String PROFESSION_ID = "professionId";
+    public static String OCCUPATION_ID = "occupationId";
+    public static String RDA_CUSTOMER_PROFILE_ID = "rdaCustomerProfileId";
+    public static String RDA_CUSTOMER_ACC_INFO_ID = "rdaCustomerAccInfoId";
+    public static String BANKING_MODE_ID = "bankingModeId";
+    public static String PURPOSE_OF_ACCOUNT_ID = "purposeOfAccountId";
+    public static String CUSTOMER_ACCOUNT_TYPE_ID = "customerAccountTypeId";
+    public static String CUSTOMER_BRANCH = "customerBranchTitle";
 
 }
 

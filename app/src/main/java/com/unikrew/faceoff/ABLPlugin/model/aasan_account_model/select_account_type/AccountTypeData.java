@@ -7,9 +7,9 @@ public class AccountTypeData implements Serializable {
 	private int bankingModeId;
 	private String customerBranch;
 	private int customerTypeId;
-	private int purposeOfAccountId;
+	private Integer purposeOfAccountId;
 	private int rdaCustomerAccInfoId;
-	private int customerAccountTypeId;
+	private Integer customerAccountTypeId;
 	private Integer accountVariantId = null;
 
 	public Integer getCurrencyTypeId() {
@@ -74,7 +74,7 @@ public class AccountTypeData implements Serializable {
 		this.customerTypeId = customerTypeId;
 	}
 
-	public void setPurposeOfAccountId(int purposeOfAccountId) {
+	public void setPurposeOfAccountId(Integer purposeOfAccountId) {
 		this.purposeOfAccountId = purposeOfAccountId;
 	}
 
@@ -82,7 +82,7 @@ public class AccountTypeData implements Serializable {
 		this.rdaCustomerAccInfoId = rdaCustomerAccInfoId;
 	}
 
-	public void setCustomerAccountTypeId(int customerAccountTypeId) {
+	public void setCustomerAccountTypeId(Integer customerAccountTypeId) {
 		this.customerAccountTypeId = customerAccountTypeId;
 	}
 

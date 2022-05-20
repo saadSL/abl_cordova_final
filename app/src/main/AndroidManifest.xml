@@ -36,8 +36,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.unikrew.faceoff.ABLPlugin.AddIpActivity"
+            android:exported="true"/>
+        <activity
             android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsThreeActivity"
             android:exported="false"
@@ -149,19 +153,18 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity"
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.FatcaDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.FatcaDetailsActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>

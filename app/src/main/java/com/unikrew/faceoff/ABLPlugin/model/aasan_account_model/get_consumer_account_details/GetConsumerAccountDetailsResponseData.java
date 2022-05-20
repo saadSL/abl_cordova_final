@@ -1,20 +1,22 @@
 package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details;
 
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GetConsumerAccountDetailsResponseData implements Serializable {
-    public ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList;
-    public int noOfJointApplicatns;
-    public Object channelId;
-    public int sessionTimeout;
-    public ArrayList<Object> pdaRemitterDetailList;
+    private ArrayList<ConsumerListItemResponse> consumerList;
+    private Integer noOfJointApplicatns= null;
+    private Object channelId;
+    private int sessionTimeout;
+    private ArrayList<Object> pdaRemitterDetailList;
 
-    public ArrayList<GetConsumerAccountDetailsResponseConsumerList> getConsumerList() {
+    public ArrayList<ConsumerListItemResponse> getConsumerList() {
         return consumerList;
     }
 
-    public void setConsumerList(ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList) {
+    public void setConsumerList(ArrayList<ConsumerListItemResponse> consumerList) {
         this.consumerList = consumerList;
     }
 
@@ -22,7 +24,7 @@ public class GetConsumerAccountDetailsResponseData implements Serializable {
         return noOfJointApplicatns;
     }
 
-    public void setNoOfJointApplicatns(int noOfJointApplicatns) {
+    public void setNoOfJointApplicatns(Integer noOfJointApplicatns) {
         this.noOfJointApplicatns = noOfJointApplicatns;
     }
 

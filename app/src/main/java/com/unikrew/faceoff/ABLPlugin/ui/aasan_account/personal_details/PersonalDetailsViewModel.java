@@ -1,5 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;
@@ -21,6 +23,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
+import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -159,6 +162,7 @@ public class PersonalDetailsViewModel extends BaseViewModel {
     }
 
     public void userAddress(PostUserAddressModel userAddressModel, String accessToken) {
+        Log.d("userAddress", userAddressModel.toString());
         Call<UserAddressResponseModel> callableRes = AblApplication.apiInterface.postUserAddress(userAddressModel, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<UserAddressResponseModel>() {
             @Override

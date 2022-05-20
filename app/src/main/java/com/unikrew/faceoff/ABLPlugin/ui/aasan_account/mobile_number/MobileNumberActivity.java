@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,11 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,36 +24,49 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.MobileNumberAvailabilityBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemVerifyOtp;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostAttachment;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponseData;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.otp_phase2.OtpVerification;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsOneActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsViewModel;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankingModeViewModel;
 import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MobileNumberActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     /* variables  */
     private MobileNumberViewModel viewModel;
+    private SelectBankingModeViewModel selectBankingModeViewModel;
+    private PersonalDetailsViewModel personalDetailsViewModel;
     private ViewAppsGenerateOtpPostParams postParams;
 
     private Boolean isPortedMobileNetwork = false;
     private Boolean generateOtp = false;
 
-    private ImageView imgCnicFront;
-    private ImageView imgCnicBack;
-    String cnicFrontPic = "";
-    String cnicBackPic = "";
-    Boolean frontPic = false;
-    Boolean backPic = false;
-    Bitmap image;
-    Boolean alreadyExist = false;
-    public ArrayList<ViewAppsGenerateOtpPostAttachment> attachments = new ArrayList<ViewAppsGenerateOtpPostAttachment>();
+    private String cnicFrontPic = "";
+    private String cnicBackPic = "";
+    private Boolean frontPic = false;
+    private Boolean backPic = false;
+    private Bitmap image;
+    private Boolean alreadyExist = false;
+    private ArrayList<ViewAppsGenerateOtpPostAttachment> attachments = new ArrayList<ViewAppsGenerateOtpPostAttachment>();
     private MobileNumberAvailabilityBinding mobileNumberAvailabilityBinding;
     private boolean returnedFromNextScreen = false;
+    private boolean IS_JOINT = false;
+    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
 
 
     @Override
@@ -60,16 +74,74 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setBinding();
         setLayout();
+        getIntentData();
         setListeners();
         setViewModel();
         observeData();
+    }
+
+    private void getIntentData() {
+        //for joint account
+        if (getIntent().hasExtra("isJoint")) {
+            IS_JOINT = true;
+        }
+
+    }
+
+
+    private void postBankingModeToNetwork() {
+        showLoading();
+        selectBankingModeViewModel.postBankingMethod(getBankingModeParams());
+    }
+
+    private RegisterVerifyOtp getBankingModeParams() {
+        RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
+        registerVerifyOtpResponse= (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        List<ConsumerListItemResponse> consumerList  = registerVerifyOtpResponse.getData().getConsumerList();;
+        bindOldGenericData(consumerList,registerVerifyOtp);
+        bindNewGenericData(consumerList,registerVerifyOtp);
+        registerVerifyOtp.getData().setNoOfJointApplicatns(getIntFromPref(Config.NO_OF_JOINT_APPLICANTS));
+        return registerVerifyOtp;
+
+    }
+
+    private void bindNewGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
+        //adding new item in the list for api call
+        ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+        consumerListItemVerifyOtp.setPrimary(false);
+        consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
+        consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
+        consumerListItemVerifyOtp.setBankingModeId(consumerList.get(0).getAccountInformation().getBankingModeId());
+        consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(0).getCustomerBranch());
+        consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+        consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
+        consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
+        consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
+    }
+
+    private void bindOldGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
+        //adding all the previously saved items in the list for api call
+        for (int i = 0; i < consumerList.size(); i++) {
+            ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+            consumerListItemVerifyOtp.setPrimary(consumerList.get(i).isPrimary());
+            consumerListItemVerifyOtp.setDateOfBirth(consumerList.get(i).getDateOfBirth());
+            consumerListItemVerifyOtp.setDateOfIssue(consumerList.get(i).getDateOfIssue());
+            consumerListItemVerifyOtp.setBankingModeId(consumerList.get(i).getAccountInformation().getBankingModeId());
+            consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(i).getCustomerBranch());
+            consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+            consumerListItemVerifyOtp.setMobileNo(consumerList.get(i).getMobileNo());
+            consumerListItemVerifyOtp.setIdNumber(consumerList.get(i).getIdNumber());
+            consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
+            registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
+        }
     }
 
     private void setLayout() {
         mobileNumberAvailabilityBinding.screenHeader.stepsHeading1.setText("Let's");
         mobileNumberAvailabilityBinding.screenHeader.stepsHeading2.setText("Get Started");
         mobileNumberAvailabilityBinding.btnContainer.btBack.setVisibility(View.GONE);
-        if (returnedFromNextScreen){
+        if (returnedFromNextScreen) {
             mobileNumberAvailabilityBinding.llCnic.setVisibility(View.GONE);
             mobileNumberAvailabilityBinding.llCnicUploadFront.setVisibility(View.GONE);
             mobileNumberAvailabilityBinding.llCnicUploadBack.setVisibility(View.GONE);
@@ -93,24 +165,21 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
 
     private void observeData() {
-        viewModel.responseLiveData.observe(this, new Observer<ViewAppsGenerateOtpResponse>() {
+        viewModel.generateOtpResponseLiveData.observe(this, new Observer<ViewAppsGenerateOtpResponse>() {
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
                 alreadyExist = viewAppsGenerateOtpResponse.getData().isAlreadyExist();
-
-                if ( alreadyExist ){
-                    if (generateOtp){
-                        returnedFromNextScreen = true;
-                        openOtpVerificationActivity(viewAppsGenerateOtpResponse);
-                    }else{
+                if (alreadyExist) {
+                    if (generateOtp) {
+                        goToNext(viewAppsGenerateOtpResponse);
+                    } else {
                         showCnic(viewAppsGenerateOtpResponse);
                     }
-                }else{
-                    if (generateOtp){
-                        returnedFromNextScreen = true;
-                        openOtpVerificationActivity(viewAppsGenerateOtpResponse);
-                    }else {
-                        openCnicUploadActivity();
+                } else {
+                    if (generateOtp) {
+                        goToNext(viewAppsGenerateOtpResponse);
+                    } else {
+                        showCnicFields();
                     }
 
                 }
@@ -118,30 +187,107 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        viewModel.errorLiveData.observe(this, new Observer<String>() {
+        viewModel.generateOtpErrorLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 loader.dismiss();
+            }
+        });
+
+        //for joint account
+        selectBankingModeViewModel.registerOtpLiveData.observe(this, new Observer<RegisterVerifyOtpResponse>() {
+            @Override
+            public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
+                dismissLoading();
+                saveSerializableInPref(Config.REG_OTP_RESPONSE, registerVerifyOtpResponse);
+                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, null);
+                postKycToNetwork();
+            }
+        });
+
+        selectBankingModeViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                showAlert(Config.errorType, errMsg);
+                dismissLoading();
+            }
+        });
+
+        //for joint account
+        personalDetailsViewModel.saveKycResponseMutableLiveData.observe(this, new Observer<SaveKycResponse>() {
+            @Override
+            public void onChanged(SaveKycResponse saveKycResponse) {
+                dismissLoading();
+                goToPersonalDetailsOne();
+            }
+        });
+
+        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                dismissLoading();
+                showAlert(Config.errorType, errMsg);
             }
         });
 
     }
 
+    private void goToPersonalDetailsOne() {
+        startActivity(new Intent(MobileNumberActivity.this, PersonalDetailsOneActivity.class));
+    }
+
+    private void postKycToNetwork() {
+        showLoading();
+        personalDetailsViewModel.saveKyc(getKycParams(), getStringFromPref(Config.ACCESS_TOKEN));
+    }
+
+    private SaveKycPostParams getKycParams() {
+        SaveKycPostParams saveKycPostParams = new SaveKycPostParams();
+        SaveKycPostData saveKycPostData;
+
+        List<ConsumerListItemResponse> consumerList =registerVerifyOtpResponse.getData().getConsumerList();
+
+        for (int i = 0; i < consumerList.size(); i++) {
+            saveKycPostData = new SaveKycPostData();
+            if (i == consumerList.size() - 1 && AdditionalApplicantActivity.SELECTED_RELATION_CODE != 0) {
+                saveKycPostData.setRelationCode1(AdditionalApplicantActivity.SELECTED_RELATION_CODE);
+            }else{
+                saveKycPostData.setRelationCode1(null);
+            }
+            saveKycPostData.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
+            saveKycPostData.setRdaCustomerProfileId(consumerList.get(i).getRdaCustomerProfileId());
+            saveKycPostData.setAverageMonthlySalary(consumerList.get(i).getAccountInformation().getAverageMonthlySalary());
+            saveKycPostParams.getData().add(saveKycPostData);
+        }
+        return saveKycPostParams;
+    }
+
+    private void goToNext(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
+        returnedFromNextScreen = true;
+        saveDates(viewAppsGenerateOtpResponse);
+        if (IS_JOINT) {
+            postBankingModeToNetwork();
+        } else {
+            openOtpVerificationActivity(viewAppsGenerateOtpResponse);
+        }
+    }
+
+    private void saveDates(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
+        saveStringInPref(Config.DATE_OF_BIRTH, viewAppsGenerateOtpResponse.getData().getDateOfBirth());
+        saveStringInPref(Config.DATE_OF_ISSUE, viewAppsGenerateOtpResponse.getData().getDateOfIssue());
+        saveStringInPref(Config.CNIC_NUMBER, viewAppsGenerateOtpResponse.getData().getIdNumber());
+        saveStringInPref(Config.MOBILE_NUMBER, viewAppsGenerateOtpResponse.getData().getMobileNo());
+    }
+
     private void openOtpVerificationActivity(ViewAppsGenerateOtpResponse response) {
-        saveInLocal();
         Intent intent = new Intent(this, OtpVerification.class);
-        intent.putExtra(Config.RESPONSE,response);
+        intent.putExtra(Config.RESPONSE, response);
         startActivity(intent);
     }
 
-    private void saveInLocal() {
-        saveStringInPref(Config.CNIC_NUMBER,mobileNumberAvailabilityBinding.etCnicNumber.getText().toString());
-        saveStringInPref(Config.MOBILE_NUMBER,mobileNumberAvailabilityBinding.etMobileNum.getText().toString());
-    }
-
     /* The method below will work when mobile number is not registered with cnic. */
-    private void openCnicUploadActivity() {
+    private void showCnicFields() {
         mobileNumberAvailabilityBinding.llCnic.setVisibility(View.GONE);
         mobileNumberAvailabilityBinding.llCnicUploadFront.setVisibility(View.VISIBLE);
         mobileNumberAvailabilityBinding.llCnicUploadBack.setVisibility(View.VISIBLE);
@@ -153,9 +299,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.GONE);
         mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.GONE);
         mobileNumberAvailabilityBinding.llCnic.setVisibility(View.VISIBLE);
-        if (response.getData().getIdNumber()!=null){
+        if (response.getData().getIdNumber() != null) {
             mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber());
-        }else{
+        } else {
             mobileNumberAvailabilityBinding.etCnicNumber.setText("");
         }
 
@@ -164,8 +310,11 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
 
     private void setViewModel() {
+        selectBankingModeViewModel = new ViewModelProvider(this).get(SelectBankingModeViewModel.class);
+        personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
         viewModel = new ViewModelProvider(this).get(MobileNumberViewModel.class);
         postParams = new ViewAppsGenerateOtpPostParams();
+        Log.d("baseUrl", Config.BASE_URL);
     }
 
 
@@ -183,9 +332,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_next:
-                if (!validateMobileNumActivity()){
+                if (!validateMobileNumActivity()) {
                     return;
-                }else{
+                } else {
                     viewAppsGenerateOtpPostData();
                 }
                 break;
@@ -213,7 +362,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void  hideCnicImageResources(LinearLayout layout,ImageView img) {
+    private void hideCnicImageResources(LinearLayout layout, ImageView img) {
         layout.setVisibility(View.GONE);
         img.setVisibility(View.VISIBLE);
         img.setImageBitmap(image);
@@ -228,21 +377,17 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private void getCnicFrontImage() {
 //        mobileNumberAvailabilityBinding.imgCnicFrontSmall.setVisibility(View.VISIBLE);
 //        mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
-            getImageFromCamera();
+        getImageFromCamera();
 
 
     }
 
 
-
     private void getImageFromCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Config.MY_CAMERA_PERMISSION_CODE);
-            }
-            else
-            {
+            } else {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
             }
@@ -250,19 +395,14 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == Config.MY_CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == Config.MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
-            }
-            else
-            {
-                showAlert(Config.errorType,"Allow Camera permissions to continue.");
+            } else {
+                showAlert(Config.errorType, "Allow Camera permissions to continue.");
             }
         }
     }
@@ -273,18 +413,18 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
         if (requestCode == Config.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             image = null;
-            if (image == null && frontPic){
+            if (image == null && frontPic) {
 
                 image = (Bitmap) data.getExtras().get("data");
                 mobileNumberAvailabilityBinding.imgCnicFront.setImageBitmap(image);
                 showCnicImageResource(
-                    mobileNumberAvailabilityBinding.llCnicFront
+                        mobileNumberAvailabilityBinding.llCnicFront
                 );
                 mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
                 cnicFrontPic = convertToBase64(image);
 
-            }else if (image == null && backPic){
-                image  = (Bitmap) data.getExtras().get("data");
+            } else if (image == null && backPic) {
+                image = (Bitmap) data.getExtras().get("data");
                 mobileNumberAvailabilityBinding.imgCnicBack.setImageBitmap(image);
 
                 showCnicImageResource(
@@ -303,12 +443,12 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private String convertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
 
     private void viewAppsGenerateOtpPostData() {
-        if (!alreadyExist && generateOtp){
+        if (!alreadyExist && generateOtp) {
             setAttachmentObject();
         }
         setPostParams();
@@ -337,12 +477,19 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
         postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         postParams.getData().setMobileNo(mobileNumberAvailabilityBinding.etMobileNum.getText().toString());
-        postParams.getData().setGenerateOtp(generateOtp);
+        // when we are filling up data for secondary user of a joint account then there is no need of otp
+        //hence generateOtp will be false
+        if (IS_JOINT) {
+            postParams.getData().setGenerateOtp(false);
+        } else {
+            postParams.getData().setGenerateOtp(generateOtp);
+        }
 
-        if ( generateOtp ){
-            if (alreadyExist){
+
+        if (generateOtp) {
+            if (alreadyExist) {
                 postParams.getData().setIdNumber(mobileNumberAvailabilityBinding.etCnicNumber.getText().toString());
-            }else {
+            } else {
                 postParams.getData().setAttachments(attachments);
             }
 
@@ -352,42 +499,42 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     private Boolean validateMobileNumActivity() {
-        if ( isEmpty( mobileNumberAvailabilityBinding.etMobileNum ) ){
+        if (isEmpty(mobileNumberAvailabilityBinding.etMobileNum)) {
 
-            showAlert(Config.errorType,"Mobile Number Is Empty !!!");
+            showAlert(Config.errorType, "Mobile Number Is Empty !!!");
             return false;
 
-        }else if( mobileNumberAvailabilityBinding.etMobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH){
+        } else if (mobileNumberAvailabilityBinding.etMobileNum.getText().toString().length() < Config.MOBILE_NUMBER_LENGTH) {
 
-            showAlert(Config.errorType,"Mobile Number Length Not Valid !!!");
+            showAlert(Config.errorType, "Mobile Number Length Not Valid !!!");
             return false;
 
-        }else if( alreadyExist && isEmpty(mobileNumberAvailabilityBinding.etCnicNumber) ){
+        } else if (alreadyExist && isEmpty(mobileNumberAvailabilityBinding.etCnicNumber)) {
 
-            showAlert(Config.errorType,"CNIC Number Is Empty !!!");
+            showAlert(Config.errorType, "CNIC Number Is Empty !!!");
             return false;
 
-        }else if ( alreadyExist && mobileNumberAvailabilityBinding.etCnicNumber.getText().toString().length() < Config.CNIC_LENGTH ){
+        } else if (alreadyExist && mobileNumberAvailabilityBinding.etCnicNumber.getText().toString().length() < Config.CNIC_LENGTH) {
 
-            showAlert(Config.errorType,"CNIC Number Length Not Valid !!!");
+            showAlert(Config.errorType, "CNIC Number Length Not Valid !!!");
             return false;
 
-        }else if(!alreadyExist && generateOtp && cnicFrontPic.equals("")){
+        } else if (!alreadyExist && generateOtp && cnicFrontPic.equals("")) {
 
-            showAlert(Config.errorType,"CNIC Front Pic Not Uploaded !!!");
+            showAlert(Config.errorType, "CNIC Front Pic Not Uploaded !!!");
             return false;
 
-        }else if (!alreadyExist && generateOtp && cnicBackPic.equals("")){
+        } else if (!alreadyExist && generateOtp && cnicBackPic.equals("")) {
 
-            showAlert(Config.errorType,"CNIC Back Pic Not Uploaded !!!");
+            showAlert(Config.errorType, "CNIC Back Pic Not Uploaded !!!");
             return false;
 
-        }else if ( !wifiAvailable() ){
+        } else if (!wifiAvailable()) {
 
-            showAlert(Config.errorType,"Network Is Not Available !!!");
+            showAlert(Config.errorType, "Network Is Not Available !!!");
             return false;
 
-        }else{
+        } else {
             return true;
         }
     }
@@ -396,7 +543,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     /* Checking Ported network to true or false.  */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        switch (compoundButton.getId()){
+        switch (compoundButton.getId()) {
             case R.id.ported_mobile_network_switch:
                 if (isChecked) {
                     showMobileInfoDialogue();

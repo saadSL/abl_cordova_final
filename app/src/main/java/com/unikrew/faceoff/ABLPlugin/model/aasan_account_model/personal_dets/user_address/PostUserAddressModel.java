@@ -10,4 +10,11 @@ public class PostUserAddressModel implements Serializable {
 	public List<PostUserAddressDataItem> getData(){
 		return data;
 	}
+
+	@Override
+	public String toString() {
+		return "PostUserAddressModel{" +
+				"data=" + data +
+				'}';
+	}
 }

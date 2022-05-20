@@ -6,6 +6,7 @@ import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
+import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
 import retrofit2.Callback;

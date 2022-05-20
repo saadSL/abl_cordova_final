@@ -3,12 +3,12 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps
 import java.io.Serializable;
 
 public class GetDraftedAppsVerfiyOtpPostPagination implements Serializable {
-    public int page;
-    public int size;
-    public Object totalPages;
-    public Object totalElements;
-    public Object sortOrder;
-    public Object sortBy;
+    private int page;
+    private int size;
+    private Object totalPages;
+    private Object totalElements;
+    private Object sortOrder;
+    private Object sortBy;
 
     public int getPage() {
         return page;
@@ -56,5 +56,17 @@ public class GetDraftedAppsVerfiyOtpPostPagination implements Serializable {
 
     public void setSortBy(Object sortBy) {
         this.sortBy = sortBy;
+    }
+
+    @Override
+    public String toString() {
+        return "GetDraftedAppsVerfiyOtpPostPagination{" +
+                "page=" + page +
+                ", size=" + size +
+                ", totalPages=" + totalPages +
+                ", totalElements=" + totalElements +
+                ", sortOrder=" + sortOrder +
+                ", sortBy=" + sortBy +
+                '}';
     }
 }

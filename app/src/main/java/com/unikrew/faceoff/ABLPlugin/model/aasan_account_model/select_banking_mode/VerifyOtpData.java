@@ -6,7 +6,7 @@ import java.util.List;
 
 public class VerifyOtpData implements Serializable {
 	private List<ConsumerListItemVerifyOtp> consumerList = new ArrayList<>();
-	private int noOfJointApplicatns;
+	private Integer noOfJointApplicatns = null;
 
 	public List<ConsumerListItemVerifyOtp> getConsumerList(){
 		return consumerList;
@@ -20,7 +20,7 @@ public class VerifyOtpData implements Serializable {
 		this.consumerList = consumerList;
 	}
 
-	public void setNoOfJointApplicatns(int noOfJointApplicatns) {
+	public void setNoOfJointApplicatns(Integer noOfJointApplicatns) {
 		this.noOfJointApplicatns = noOfJointApplicatns;
 	}
 
