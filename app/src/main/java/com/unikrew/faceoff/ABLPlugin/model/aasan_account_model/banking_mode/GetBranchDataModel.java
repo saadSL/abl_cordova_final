@@ -5,6 +5,17 @@ import java.io.Serializable;
 public class GetBranchDataModel implements Serializable {
 	private String categoryType;
 
+	@Override
+	public String toString() {
+		return "GetBranchDataModel{" +
+				"categoryType='" + categoryType + '\'' +
+				", distance='" + distance + '\'' +
+				", latitude='" + latitude + '\'' +
+				", branchName='" + branchName + '\'' +
+				", longitude='" + longitude + '\'' +
+				'}';
+	}
+
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
 	}

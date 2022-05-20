@@ -6,7 +6,7 @@ public class SaveNatureOfAccountPostData implements Serializable {
     public int rdaCustomerAccInfoId;
     public int rdaCustomerId;
     public int customerTypeId;
-    public int natureOfAccountId;
+    public Integer natureOfAccountId = null;
     public int noOfJointApplicatns;
 
     public int getRdaCustomerAccInfoId() {
@@ -37,7 +37,7 @@ public class SaveNatureOfAccountPostData implements Serializable {
         return natureOfAccountId;
     }
 
-    public void setNatureOfAccountId(int natureOfAccountId) {
+    public void setNatureOfAccountId(Integer natureOfAccountId) {
         this.natureOfAccountId = natureOfAccountId;
     }
 

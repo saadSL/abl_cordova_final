@@ -1,7 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.model.joint_account_model.joint_applicant;
 
 public class JointApplicant {
-    private int number;
+    private int number = 0;
     private String description;
 
     public int getNumber() {

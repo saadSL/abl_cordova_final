@@ -131,6 +131,7 @@
             android:layout_marginStart="@dimen/_10sdp"/>
 
         <LinearLayout
+            android:id="@+id/li_nature"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

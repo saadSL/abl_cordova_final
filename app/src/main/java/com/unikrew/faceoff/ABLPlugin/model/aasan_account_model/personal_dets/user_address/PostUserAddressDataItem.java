@@ -27,4 +27,12 @@ public class PostUserAddressDataItem implements Serializable {
 	public List<PostUserAddressListItem> getAddressesList(){
 		return addressesList;
 	}
+
+	@Override
+	public String toString() {
+		return "PostUserAddressDataItem{" +
+				"isPrimary=" + isPrimary +
+				", addressesList=" + addressesList +
+				'}';
+	}
 }

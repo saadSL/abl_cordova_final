@@ -3,13 +3,13 @@ package com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.pe
 import java.io.Serializable;
 
 public class PersonalDetailsThreeConsumerListItemModel implements Serializable {
-	private int occupationId;
+	private Integer occupationId;
 	private boolean isPrimary;
 	private int rdaCustomerAccInfoId;
 	private int rdaCustomerProfileId;
-	private int professionId;
+	private Integer professionId;
 
-	public void setOccupationId(int occupationId) {
+	public void setOccupationId(Integer occupationId) {
 		this.occupationId = occupationId;
 	}
 
@@ -29,11 +29,11 @@ public class PersonalDetailsThreeConsumerListItemModel implements Serializable {
 		this.rdaCustomerProfileId = rdaCustomerProfileId;
 	}
 
-	public void setProfessionId(int professionId) {
+	public void setProfessionId(Integer professionId) {
 		this.professionId = professionId;
 	}
 
-	public int getOccupationId(){
+	public Integer getOccupationId(){
 		return occupationId;
 	}
 
@@ -49,7 +49,7 @@ public class PersonalDetailsThreeConsumerListItemModel implements Serializable {
 		return rdaCustomerProfileId;
 	}
 
-	public int getProfessionId(){
+	public Integer getProfessionId(){
 		return professionId;
 	}
 }

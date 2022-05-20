@@ -19,8 +19,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCard
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
@@ -247,7 +245,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private void setTransactionDetailsPostParams() {
         if (IS_RESUMED) {
             //flow for drafted application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            AccountInformationResponse accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
             setupTransactionPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             setupTransactionPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
         } else {

@@ -28,13 +28,12 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.UploadDocumentsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_attachment.SaveAttachmentResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.joint_applicant.JointApplicant;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity;
@@ -43,29 +42,24 @@ import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UploadDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    UploadDocumentsBinding uploadDocumentsBinding;
+    private UploadDocumentsBinding uploadDocumentsBinding;
     private boolean livePic = false;
     private boolean sigPic = false;
     private String livePicString = "";
     private String liveSigString = "";
     private int natureOfAccountId = 0;
 
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
-
     private SaveAttachmentPostParams attachmentPostParams;
     private UploadDocumentViewModel uploadDocumentViewModel;
     private SaveNatureOfAccountPostParams natureOfAccountPostParams;
-    private Boolean IS_RESUMED;
 
-
-    public static JointApplicant selectedJointApplicant;
-
-
+    private JointApplicant selectedJointApplicant;
     private Boolean savingForPic = true;
     private Boolean savingForSig = false;
+    private List<ConsumerListItemResponse> consumerList;
 
 
     @Override
@@ -81,18 +75,20 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void getSharedPrefData() {
-
         //flow for new application
+
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
-
+        if (consumerList.size() > 1) {
+            uploadDocumentsBinding.liNature.setVisibility(View.GONE);
+        }
     }
 
     private void setLayout() {
@@ -115,7 +111,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 } else if (savingForSig) {
                     savingForSig = false;
                     uploadDocuments();
-                }else{
+                } else {
                     saveNatureOfAccount();
                 }
                 dismissLoading();
@@ -135,11 +131,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             @Override
             public void onChanged(SaveNatureOfAccountResponse saveNatureOfAccountResponse) {
                 dismissLoading();
-                if (natureOfAccountId == Config.JOINT){
-                    openAdditionalApplicantActivity();
-                }else{
-                    openReviewDetailsActivity();
-                }
+                moveNext();
             }
         });
 
@@ -150,6 +142,15 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 showAlert(Config.errorType, errMsg);
             }
         });
+    }
+
+    private void moveNext() {
+
+        if (getIntFromPref(Config.NO_OF_JOINT_APPLICANTS) == 0 || consumerList.size() - 1 == getIntFromPref(Config.NO_OF_JOINT_APPLICANTS)) {
+            openReviewDetailsActivity();
+        } else {
+            openAdditionalApplicantActivity();
+        }
     }
 
     private void openReviewDetailsActivity() {
@@ -164,34 +165,22 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     }
 
     private void setNatureOfAccountPostParams() {
-        if (IS_RESUMED) {
-            //flow for drafted application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
-            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
-            natureOfAccountPostParams.getData().setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            if (selectedJointApplicant == null){
-                natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
-            }else{
-                natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
-            }
+        AccountInformationResponse accountInformation = consumerList.get(consumerList.size() - 1).getAccountInformation();
+        natureOfAccountPostParams.getData().setCustomerTypeId(consumerList.get(consumerList.size() - 1).getCustomerTypeId());
+        natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+        natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
 
-
+        if (selectedJointApplicant == null) {
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(getIntFromPref(Config.NO_OF_JOINT_APPLICANTS));
         } else {
-            //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
-            natureOfAccountPostParams.getData().setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-            if (selectedJointApplicant == null){
-                natureOfAccountPostParams.getData().setNoOfJointApplicatns(accountInformation.getNoOfJointApplicatns());
-            }else{
-                natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
-            }
-
+            saveIntInPref(Config.NO_OF_JOINT_APPLICANTS, selectedJointApplicant.getNumber());
+            natureOfAccountPostParams.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
         }
         natureOfAccountPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-        natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
+        if (consumerList.size() == 1) {
+            natureOfAccountPostParams.getData().setNatureOfAccountId(natureOfAccountId);
+        }
+
     }
 
     private void setViewModel() {
@@ -322,7 +311,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         } else if (liveSigString.equals("")) {
             showAlert(Config.errorType, "Please Upload Your Signature Picture !!!");
             return;
-        } else if (natureOfAccountId == 0) {
+        } else if (consumerList.size() == 1 && natureOfAccountId == 0) {
             showAlert(Config.errorType, "Please Select Nature Of Account !!!");
             return;
         } else {
@@ -338,26 +327,18 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void setAttachmentPostParams() {
         if (savingForPic) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.LIVE_PHOTO);
-            attachmentPostParams.getData().setEntityId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             attachmentPostParams.getData().setFileName("PHOTO");
-            attachmentPostParams.getData().setMimeType("");
-            attachmentPostParams.getData().setPath("");
             attachmentPostParams.getData().setBase64Content(livePicString);
 
         } else if (savingForSig) {
             attachmentPostParams.getData().setAttachmentTypeId(Config.SIGNATURE_TYPE_ID);
-            attachmentPostParams.getData().setEntityId(Integer.parseInt(getStringFromPref(Config.PROFILE_ID)));
             attachmentPostParams.getData().setFileName("SIGNATURE");
-            attachmentPostParams.getData().setMimeType("");
-            attachmentPostParams.getData().setPath("");
             attachmentPostParams.getData().setBase64Content(liveSigString);
         }
-
-        if (IS_RESUMED) {
-            attachmentPostParams.getData().setRdaCustomerAccInfoId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().rdaCustomerAccInfoId);
-        } else {
-            attachmentPostParams.getData().setRdaCustomerAccInfoId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-        }
+        attachmentPostParams.getData().setMimeType("");
+        attachmentPostParams.getData().setPath("");
+        attachmentPostParams.getData().setEntityId(consumerList.get(consumerList.size() - 1).getRdaCustomerProfileId());
+        attachmentPostParams.getData().setRdaCustomerAccInfoId(consumerList.get(consumerList.size() - 1).getAccountInformation().getRdaCustomerAccInfoId());
     }
 
     @Override
@@ -426,10 +407,10 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         uploadDocumentsBinding.spAdditionalApplicant.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (position > 0){
+                if (position > 0) {
                     selectedJointApplicant = (JointApplicant) adapterView.getSelectedItem();
 
-                }else{
+                } else {
                     TextView textView = (TextView) view;
                     textView.setTextColor(Color.GRAY);
                 }
@@ -441,12 +422,12 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             }
         });
 
-        ArrayAdapter<JointApplicant> dataAdapter = new ArrayAdapter<JointApplicant>(this, android.R.layout.simple_spinner_item, _additionalApplicant){
+        ArrayAdapter<JointApplicant> dataAdapter = new ArrayAdapter<JointApplicant>(this, android.R.layout.simple_spinner_item, _additionalApplicant) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0){
+                if (position == 0) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -455,9 +436,9 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView textView = (TextView) view;
-                if (position == 0){
+                if (position == 0) {
                     textView.setTextColor(Color.GRAY);
-                }else{
+                } else {
                     textView.setTextColor(Color.BLACK);
                 }
                 return view;

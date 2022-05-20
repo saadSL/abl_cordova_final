@@ -345,6 +345,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         getBranchPostModel.getData().setLongitude(String.valueOf(longitude));
         getBranchPostModel.getData().setDistance("2");
         selectBankingModeViewModel.getBranches(getBranchPostModel);
+        Log.d("getBranchPostModel", getBranchPostModel.toString());
     }
 
     private void setBinding() {

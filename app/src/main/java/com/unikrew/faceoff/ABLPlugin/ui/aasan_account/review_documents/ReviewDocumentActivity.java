@@ -3,8 +3,6 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -16,14 +14,10 @@ import com.ofss.digx.mobile.android.allied.databinding.ReviewDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
-
-import java.util.List;
 
 public class ReviewDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -132,7 +126,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setTransactionDetails(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
-        GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
+        ConsumerListItemResponse consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
 
         if (consumerDetails.getAccountInformation().getAtmType() != null){
             reviewDetailsBinding.tvDebitCard.setText(consumerDetails.getAccountInformation().getAtmType().toString());
@@ -161,8 +155,8 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setSummary(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
-        GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().consumerList.get(0);
-        if (consumerDetails.getAccountInformation().getBankingMode()!=null){
+        ConsumerListItemResponse consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
+        if (consumerDetails.getAccountInformation().getBankingMode()!=0){
             reviewDetailsBinding.tvBankingMode.setText(consumerDetails.getAccountInformation().getBankingMode());
         }else{
             reviewDetailsBinding.tvBankingMode.setText("---");
@@ -243,7 +237,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setCurrentMailingAddress(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
-        GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().consumerList.get(0);
+        ConsumerListItemResponse consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
         if (consumerDetails.getAddresses().get(0).getCustomerAddress()!=null){
             reviewDetailsBinding.tvAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
             reviewDetailsBinding.etAddress.setText(consumerDetails.getAddresses().get(0).getCustomerAddress());
@@ -295,7 +289,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setYourDetails(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
-        GetConsumerAccountDetailsResponseConsumerList consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
+        ConsumerListItemResponse consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
 
         if (consumerDetails.getCustomerTitle()!=null){
             reviewDetailsBinding.tvTitle.setText(consumerDetails.getCustomerTitle().toString());
@@ -364,7 +358,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setAccountDetails(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
-        GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+        AccountInformationResponse accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
 
         if (accountInformation.getPurposeOfAccount()!=null){
             reviewDetailsBinding.tvAccountPurpose.setText(accountInformation.getPurposeOfAccount().toString());

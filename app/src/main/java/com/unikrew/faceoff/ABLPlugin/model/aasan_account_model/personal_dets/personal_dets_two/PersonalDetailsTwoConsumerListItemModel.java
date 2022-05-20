@@ -5,6 +5,15 @@ import java.io.Serializable;
 public class PersonalDetailsTwoConsumerListItemModel implements Serializable {
 	private String emailAddress;
 	private String landlineNumber;
+	private boolean isPrimary;
+
+	public boolean isPrimary() {
+		return isPrimary;
+	}
+
+	public void setPrimary(boolean primary) {
+		isPrimary = primary;
+	}
 
 	public String getLandlineNumber() {
 		return landlineNumber;

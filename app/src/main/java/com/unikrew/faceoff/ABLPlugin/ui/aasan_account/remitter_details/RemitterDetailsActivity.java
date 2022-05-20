@@ -5,15 +5,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityRemitterDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.PdaRemitterDetailListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
@@ -121,7 +118,7 @@ public class RemitterDetailsActivity extends BaseActivity {
         RemitterDetailsDataModel remitterDetailsDataModel = remitterDetailsPostModel.getData();
         if (IS_RESUMED) {
             //flow for resumed application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            AccountInformationResponse accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
             remitterDetailsDataModel.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             remitterDetailsDataModel.setRdaCustomerId(accountInformation.getRdaCustomerId());
             remitterDetailsDataModel.setBankingModeId(accountInformation.getBankingModeId());

@@ -6,6 +6,7 @@ import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
+import com.unikrew.faceoff.Config;
 
 
 import retrofit2.Call;

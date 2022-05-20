@@ -12,8 +12,6 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsTwoBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAddress;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoConsumerListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
@@ -21,23 +19,21 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.use
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostData;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AddressesItemResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.Config;
+
+import java.util.List;
 
 
 public class PersonalDetailsTwoActivity extends BaseActivity {
 
     private ActivityPersonalDetailsTwoBinding personalDetailsTwoBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
-    private Boolean IS_RESUMED;
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+    private List<ConsumerListItemResponse> consumerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,26 +81,34 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     private PostUserAddressModel getAddressParams() {
         PostUserAddressModel postUserAddressModel = new PostUserAddressModel();
         PostUserAddressDataItem userAddressDataItem = new PostUserAddressDataItem();
-        PostUserAddressListItem addressListItem = new PostUserAddressListItem();
-        addressListItem.setAddressTypeId(Config.ADDRESS_TYPE_ID);
-        if (IS_RESUMED) {
-            addressListItem.setRdaCustomerId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getRdaCustomerProfileId());
-        } else {
-            addressListItem.setRdaCustomerId(registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getRdaCustomerProfileId());
-        }
-
-        addressListItem.setCountry(personalDetailsTwoBinding.etCountry.getText().toString());
-        addressListItem.setNearestLandMark(personalDetailsTwoBinding.etLandmark.getText().toString());
-        addressListItem.setCustomerAddress(personalDetailsTwoBinding.etAddress.getText().toString());
-        addressListItem.setCity(personalDetailsTwoBinding.etCity.getText().toString());
-        addressListItem.setCustomerTown(personalDetailsTwoBinding.etTown.getText().toString());
-        addressListItem.setCountryId(Config.COUNTRY_ID);
-
-        userAddressDataItem.getAddressesList().add(addressListItem);
-        userAddressDataItem.setPrimary(true);
-
+        bindAddressGenericData(userAddressDataItem);
         postUserAddressModel.getData().add(userAddressDataItem);
         return postUserAddressModel;
+    }
+
+    private void bindAddressGenericData(PostUserAddressDataItem userAddressDataItem) {
+        for (int i = 0; i < consumerList.size(); i++) {
+            PostUserAddressListItem addressListItem = new PostUserAddressListItem();
+            addressListItem.setAddressTypeId(Config.ADDRESS_TYPE_ID);
+            addressListItem.setRdaCustomerId(consumerList.get(i).getRdaCustomerProfileId());
+            addressListItem.setCountryId(Config.COUNTRY_ID);
+            if (i == consumerList.size() - 1) {
+                addressListItem.setCountry(personalDetailsTwoBinding.etCountry.getText().toString());
+                addressListItem.setNearestLandMark(personalDetailsTwoBinding.etLandmark.getText().toString());
+                addressListItem.setCustomerAddress(personalDetailsTwoBinding.etAddress.getText().toString());
+                addressListItem.setCity(personalDetailsTwoBinding.etCity.getText().toString());
+                addressListItem.setCustomerTown(personalDetailsTwoBinding.etTown.getText().toString());
+                userAddressDataItem.setPrimary(consumerList.size() <= 1);
+            } else {
+                addressListItem.setCountry(null);
+                addressListItem.setNearestLandMark(consumerList.get(i).getNearestLandmark());
+                addressListItem.setCustomerAddress(consumerList.get(i).getCustomerAddress());
+                addressListItem.setCity(null);
+                addressListItem.setCustomerTown(null);
+                userAddressDataItem.setPrimary(false);
+            }
+            userAddressDataItem.getAddressesList().add(addressListItem);
+        }
     }
 
     private void setViewModel() {
@@ -115,13 +119,13 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
 
         //flow for new application
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
 
     }
@@ -157,33 +161,34 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
 
     private PersonalDetailsTwoPostModel getParams() {
         PersonalDetailsTwoPostModel personalDetailsTwoPostModel = new PersonalDetailsTwoPostModel();
-        PersonalDetailsTwoConsumerListItemModel consumerListItem = new PersonalDetailsTwoConsumerListItemModel();
-
-        if (IS_RESUMED) {
-            //flow for resumed application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
-        } else {
-            //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
-        }
-
-        if (!isEmpty(personalDetailsTwoBinding.etEmail)) {
-            consumerListItem.setEmailAddress(personalDetailsTwoBinding.etEmail.getText().toString());
-        }
-        if (!isEmpty(personalDetailsTwoBinding.etLandline)) {
-            consumerListItem.setLandlineNumber(personalDetailsTwoBinding.etLandline.getText().toString());
-        }
-        PersonalDetailsTwoDataModel personalDetailsTwoDataModel = new PersonalDetailsTwoDataModel();
-        personalDetailsTwoDataModel.getConsumerList().add(consumerListItem);
-
-        personalDetailsTwoPostModel.setData(personalDetailsTwoDataModel);
+        PersonalDetailsTwoDataModel detailsTwoDataModel = new PersonalDetailsTwoDataModel();
+        bindGenericData(detailsTwoDataModel);
+        personalDetailsTwoPostModel.setData(detailsTwoDataModel);
         return personalDetailsTwoPostModel;
+    }
+
+    private void bindGenericData(PersonalDetailsTwoDataModel detailsTwoDataModel) {
+        for (int i = 0; i < consumerList.size(); i++) {
+            PersonalDetailsTwoConsumerListItemModel consumerListItem = new PersonalDetailsTwoConsumerListItemModel();
+            AccountInformationResponse accountInformation = consumerList.get(i).getAccountInformation();
+            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
+            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            if (i == consumerList.size() - 1) {
+                if (!isEmpty(personalDetailsTwoBinding.etEmail)) {
+                    consumerListItem.setEmailAddress(personalDetailsTwoBinding.etEmail.getText().toString());
+                    consumerListItem.setPrimary(consumerList.size() <= 1);
+                }
+                if (!isEmpty(personalDetailsTwoBinding.etLandline)) {
+                    consumerListItem.setLandlineNumber(personalDetailsTwoBinding.etLandline.getText().toString());
+                    consumerListItem.setPrimary(false);
+                }
+            } else {
+                consumerListItem.setEmailAddress(consumerList.get(i).getEmailAddress());
+                consumerListItem.setLandlineNumber(null);
+            }
+            detailsTwoDataModel.getConsumerList().add(consumerListItem);
+        }
     }
 
     private void goToPersonalDetailsThree() {
@@ -192,29 +197,14 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void setData() {
-        if (IS_RESUMED) {
-            //address flow for resumed application
-            GetConsumerAccountDetailsResponseAddress addressesItemResponse = getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getAddresses().get(0);
-            bindText(getConsumerAccountDetailsResponse.getData().getConsumerList().get(getConsumerAccountDetailsResponse.getData().getConsumerList().size() - 1).getEmailAddress(), personalDetailsTwoBinding.etEmail);
-            bindText(addressesItemResponse.getCustomerAddress(), personalDetailsTwoBinding.etAddress);
-            bindText(addressesItemResponse.getNearestLandMark(), personalDetailsTwoBinding.etLandmark);
-            bindText(addressesItemResponse.getCity(), personalDetailsTwoBinding.etCity);
-            bindText(addressesItemResponse.getCustomerTown(), personalDetailsTwoBinding.etTown);
-            bindText(addressesItemResponse.getCountry(), personalDetailsTwoBinding.etCountry);
-
-        } else {
-            //address flow for new application
-            AddressesItemResponse addressesItemResponse = registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getAddresses().get(0);
-            bindText(registerVerifyOtpResponse.getData().getConsumerList().get(registerVerifyOtpResponse.getData().getConsumerList().size() - 1).getEmailAddress(), personalDetailsTwoBinding.etEmail);
-            bindText(addressesItemResponse.getCustomerAddress(), personalDetailsTwoBinding.etAddress);
-            bindText(addressesItemResponse.getNearestLandMark(), personalDetailsTwoBinding.etLandmark);
-            bindText(addressesItemResponse.getCity(), personalDetailsTwoBinding.etCity);
-            bindText(addressesItemResponse.getCustomerTown(), personalDetailsTwoBinding.etTown);
-            bindText(addressesItemResponse.getCountry(), personalDetailsTwoBinding.etCountry);
-
-        }
-
-
+        //to bind the data of latest member
+        AddressesItemResponse addressesItemResponse = consumerList.get(consumerList.size() - 1).getAddresses().get(0);
+        bindText(consumerList.get(consumerList.size() - 1).getEmailAddress(), personalDetailsTwoBinding.etEmail);
+        bindText(addressesItemResponse.getCustomerAddress(), personalDetailsTwoBinding.etAddress);
+        bindText(addressesItemResponse.getNearestLandMark(), personalDetailsTwoBinding.etLandmark);
+        bindText(addressesItemResponse.getCity(), personalDetailsTwoBinding.etCity);
+        bindText(addressesItemResponse.getCustomerTown(), personalDetailsTwoBinding.etTown);
+        bindText(addressesItemResponse.getCountry(), personalDetailsTwoBinding.etCountry);
     }
 
     private void bindText(String value, EditText et) {

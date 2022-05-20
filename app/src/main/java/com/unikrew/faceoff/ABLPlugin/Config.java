@@ -4,7 +4,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 
 public class Config {
     //    public static final String BASE_URL = "https://rda-uat.abl.com.pk";
-    public static final String BASE_URL = "http://10.100.102.124:8080";
+//    public static final String BASE_URL = "http://10.100.102.124:8080";
+    public static final String BASE_URL = "http://192.168.8.101:8080";
     public static final String ACCOUNT_VARIANT_ID = "account_variant_id";
     public static final String PROFILE_ID = "profile_id";
     public static final String ACCOUNT_INFO_ID = "acc_info_id";
@@ -111,6 +112,7 @@ public class Config {
     public static int SINGLE = 102101;
     public static int JOINT = 102102;
     public static int MINOR = 102103;
+    public static String NO_OF_JOINT_APPLICANTS = "noOfJointApp";
 
     public static int CNIC_BACK_TYPE_ID = 1043002;
     public static int CNIC_FRONT_TYPE_ID = 1043001;

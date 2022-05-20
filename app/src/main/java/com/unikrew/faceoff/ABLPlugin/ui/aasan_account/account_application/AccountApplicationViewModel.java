@@ -8,6 +8,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_ap
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.delete_drafted_application.DeleteDraftedApplicationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
 import retrofit2.Callback;

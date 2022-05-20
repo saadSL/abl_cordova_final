@@ -3,10 +3,8 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -14,7 +12,6 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivityPersonalDetailsThreeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeConsumerListItemModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
@@ -26,22 +23,22 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalDetailsThreeActivity extends BaseActivity{
+public class PersonalDetailsThreeActivity extends BaseActivity {
 
     private ActivityPersonalDetailsThreeBinding personalDetailsThreeBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private ArrayList<MobileNetworkResponseData> occupationArray, professionArray;
-    private Boolean IS_RESUMED;
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+    private List<ConsumerListItemResponse> consumerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +56,13 @@ public class PersonalDetailsThreeActivity extends BaseActivity{
 
         //flow for new application
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse  registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
 
     }
@@ -89,7 +86,8 @@ public class PersonalDetailsThreeActivity extends BaseActivity{
     private void checkValidations() {
         if (isEmpty(personalDetailsThreeBinding.etSalary)) {
             showAlert(Config.errorType, getString(R.string.text_fields_error));
-        } else {
+        }
+        else {
             postDetailsThree();
         }
     }
@@ -101,29 +99,30 @@ public class PersonalDetailsThreeActivity extends BaseActivity{
 
     private PersonalDetailsThreePostModel getParams() {
         PersonalDetailsThreePostModel personalDetailsThreePostModel = new PersonalDetailsThreePostModel();
-        PersonalDetailsThreeConsumerListItemModel consumerListItem = new PersonalDetailsThreeConsumerListItemModel();
-
-        if (IS_RESUMED) {
-            //flow for resumed application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
-        } else {
-            //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
-        }
-
-        consumerListItem.setOccupationId(occupationArray.get(personalDetailsThreeBinding.spinnerOccupation.getSelectedItemPosition()).getId());
-        consumerListItem.setProfessionId(professionArray.get(personalDetailsThreeBinding.spinnerProfession.getSelectedItemPosition()).getId());
-
-        PersonalDetailsThreeDataModel data = new PersonalDetailsThreeDataModel();
-        data.getConsumerList().add(consumerListItem);
-        personalDetailsThreePostModel.setData(data);
+        PersonalDetailsThreeDataModel detailsThreeDataModel = new PersonalDetailsThreeDataModel();
+        bindGenericData(detailsThreeDataModel);
+        personalDetailsThreePostModel.setData(detailsThreeDataModel);
         return personalDetailsThreePostModel;
+    }
+
+    private void bindGenericData(PersonalDetailsThreeDataModel detailsThreeDataModel) {
+        for (int i = 0; i < consumerList.size(); i++) {
+            PersonalDetailsThreeConsumerListItemModel consumerListItem = new PersonalDetailsThreeConsumerListItemModel();
+            AccountInformationResponse accountInformation = consumerList.get(i).getAccountInformation();
+            consumerListItem.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
+            consumerListItem.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            if (i == consumerList.size() - 1) {
+                consumerListItem.setOccupationId(occupationArray.get(personalDetailsThreeBinding.spinnerOccupation.getSelectedItemPosition()).getId());
+                consumerListItem.setProfessionId(professionArray.get(personalDetailsThreeBinding.spinnerProfession.getSelectedItemPosition()).getId());
+                consumerListItem.setPrimary(consumerList.size() <= 1);
+            } else {
+                consumerListItem.setOccupationId(consumerList.get(i).getOccupationId());
+                consumerListItem.setProfessionId(consumerList.get(i).getProfessionId());
+                consumerListItem.setPrimary(false);
+            }
+            detailsThreeDataModel.getConsumerList().add(consumerListItem);
+        }
     }
 
     private void setObservers() {
@@ -177,30 +176,32 @@ public class PersonalDetailsThreeActivity extends BaseActivity{
     private SaveKycPostParams getKycParams() {
         SaveKycPostParams saveKycPostParams = new SaveKycPostParams();
         SaveKycPostData saveKycPostData = new SaveKycPostData();
-        if (IS_RESUMED){
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+        for (int i = 0; i < consumerList.size(); i++) {
+            AccountInformationResponse accountInformation = consumerList.get(i).getAccountInformation();
             saveKycPostData.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             //used rdaCustomerProfileId instead of rdaCustomerId since both are same
             saveKycPostData.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
-        }else {
-            //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            saveKycPostData.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            //used rdaCustomerProfileId instead of rdaCustomerId since both are same
-            saveKycPostData.setRdaCustomerProfileId(accountInformation.getRdaCustomerId());
+            if (i == consumerList.size() - 1) {
+                saveKycPostData.setAverageMonthlySalary(Long.valueOf(personalDetailsThreeBinding.etSalary.getText().toString().trim()));
+            } else {
+                saveKycPostData.setAverageMonthlySalary(null);
+            }
+            saveKycPostParams.getData().add(saveKycPostData);
         }
-
-        saveKycPostData.setAverageMonthlySalary(Long.valueOf(personalDetailsThreeBinding.etSalary.getText().toString().trim()));
-        saveKycPostParams.getData().add(saveKycPostData);
         return saveKycPostParams;
     }
 
     private void moveNext() {
-        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID)== Config.REMITTANCE_ACCOUNT){
-            openActivity(RemitterDetailsActivity.class);
+        if (consumerList.size()>1){
+            openActivity(UploadDocumentActivity.class);
         }else {
-            openActivity(SelectCardActivity.class);
+            if (getIntFromPref(Config.ACCOUNT_VARIANT_ID) == Config.REMITTANCE_ACCOUNT) {
+                openActivity(RemitterDetailsActivity.class);
+            } else {
+                openActivity(SelectCardActivity.class);
+            }
         }
+
     }
 
     private void setOccupationSpinner(MobileNetworkResponse mobileNetworkResponse) {

@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number;
 
-import static com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity.selectedJointApplicant;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -24,16 +24,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.MobileNumberAvailabilityBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeConsumerListItemModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreeDataModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemVerifyOtp;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
@@ -73,9 +66,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private MobileNumberAvailabilityBinding mobileNumberAvailabilityBinding;
     private boolean returnedFromNextScreen = false;
     private boolean IS_JOINT = false;
-    private Boolean IS_RESUMED;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
 
 
     @Override
@@ -93,25 +84,10 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         //for joint account
         if (getIntent().hasExtra("isJoint")) {
             IS_JOINT = true;
-            getSharedPrefData();
         }
 
     }
 
-    private void getSharedPrefData() {
-
-        //flow for new application
-        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
-        }
-        //flow for drafted application
-        else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
-        }
-
-    }
 
     private void postBankingModeToNetwork() {
         showLoading();
@@ -120,72 +96,45 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private RegisterVerifyOtp getBankingModeParams() {
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
-        ConsumerListItemVerifyOtp consumerListItemVerifyOtp;
-        if (IS_RESUMED) {
-            ArrayList<GetConsumerAccountDetailsResponseConsumerList> consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
-            //adding all the previously saved items in the list for api call
-            for (int i = 0; i < consumerList.size(); i++) {
-                consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
-                consumerListItemVerifyOtp.setPrimary(consumerList.get(i).isPrimary());
-                consumerListItemVerifyOtp.setDateOfBirth(consumerList.get(i).getDateOfBirth());
-                consumerListItemVerifyOtp.setDateOfIssue(consumerList.get(i).getDateOfIssue());
-                consumerListItemVerifyOtp.setBankingModeId(consumerList.get(i).getAccountInformation().getBankingModeId());
-                consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(i).getCustomerBranch());
-                consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-                consumerListItemVerifyOtp.setMobileNo(consumerList.get(i).getMobileNo());
-                consumerListItemVerifyOtp.setIdNumber(consumerList.get(i).getIdNumber());
-                consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
-                registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
-            }
-            //adding new item in the list for api call
-            consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
-            consumerListItemVerifyOtp.setPrimary(false);
-            consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
-            consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
-            consumerListItemVerifyOtp.setBankingModeId(consumerList.get(0).getAccountInformation().getBankingModeId());
-            consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(0).getCustomerBranch());
-            consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-            consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
-            consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
-            consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
-
-        } else {
-            List<ConsumerListItemResponse> consumerList = registerVerifyOtpResponse.getData().getConsumerList();
-            //adding all the previously saved items in the list for api call
-            for (int i = 0; i < consumerList.size(); i++) {
-                consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
-                consumerListItemVerifyOtp.setPrimary(consumerList.get(i).isPrimary());
-                consumerListItemVerifyOtp.setDateOfBirth(consumerList.get(i).getDateOfBirth());
-                consumerListItemVerifyOtp.setDateOfIssue(consumerList.get(i).getDateOfIssue());
-                consumerListItemVerifyOtp.setBankingModeId(consumerList.get(i).getAccountInformation().getBankingModeId());
-                consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(i).getCustomerBranch());
-                consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-                consumerListItemVerifyOtp.setMobileNo(consumerList.get(i).getMobileNo());
-                consumerListItemVerifyOtp.setIdNumber(consumerList.get(i).getIdNumber());
-                consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
-                registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
-            }
-            //adding new item in the list for api call
-            consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
-            consumerListItemVerifyOtp.setPrimary(false);
-            consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
-            consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
-            consumerListItemVerifyOtp.setBankingModeId(consumerList.get(0).getAccountInformation().getBankingModeId());
-            consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(0).getCustomerBranch());
-            consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
-            consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
-            consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
-            consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
-
-        }
-
-
-        registerVerifyOtp.getData().setNoOfJointApplicatns(selectedJointApplicant.getNumber());
-
+        registerVerifyOtpResponse= (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        List<ConsumerListItemResponse> consumerList  = registerVerifyOtpResponse.getData().getConsumerList();;
+        bindOldGenericData(consumerList,registerVerifyOtp);
+        bindNewGenericData(consumerList,registerVerifyOtp);
+        registerVerifyOtp.getData().setNoOfJointApplicatns(getIntFromPref(Config.NO_OF_JOINT_APPLICANTS));
         return registerVerifyOtp;
 
+    }
+
+    private void bindNewGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
+        //adding new item in the list for api call
+        ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+        consumerListItemVerifyOtp.setPrimary(false);
+        consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
+        consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
+        consumerListItemVerifyOtp.setBankingModeId(consumerList.get(0).getAccountInformation().getBankingModeId());
+        consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(0).getCustomerBranch());
+        consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+        consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
+        consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
+        consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
+    }
+
+    private void bindOldGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
+        //adding all the previously saved items in the list for api call
+        for (int i = 0; i < consumerList.size(); i++) {
+            ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+            consumerListItemVerifyOtp.setPrimary(consumerList.get(i).isPrimary());
+            consumerListItemVerifyOtp.setDateOfBirth(consumerList.get(i).getDateOfBirth());
+            consumerListItemVerifyOtp.setDateOfIssue(consumerList.get(i).getDateOfIssue());
+            consumerListItemVerifyOtp.setBankingModeId(consumerList.get(i).getAccountInformation().getBankingModeId());
+            consumerListItemVerifyOtp.setCustomerBranch(consumerList.get(i).getCustomerBranch());
+            consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
+            consumerListItemVerifyOtp.setMobileNo(consumerList.get(i).getMobileNo());
+            consumerListItemVerifyOtp.setIdNumber(consumerList.get(i).getIdNumber());
+            consumerListItemVerifyOtp.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
+            registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
+        }
     }
 
     private void setLayout() {
@@ -252,6 +201,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             public void onChanged(RegisterVerifyOtpResponse registerVerifyOtpResponse) {
                 dismissLoading();
                 saveSerializableInPref(Config.REG_OTP_RESPONSE, registerVerifyOtpResponse);
+                saveSerializableInPref(Config.GET_CONSUMER_RESPONSE, null);
                 postKycToNetwork();
             }
         });
@@ -295,15 +245,15 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private SaveKycPostParams getKycParams() {
         SaveKycPostParams saveKycPostParams = new SaveKycPostParams();
         SaveKycPostData saveKycPostData;
-        RegisterVerifyOtpResponse newRegisterVerifyResponse= (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
-        List<ConsumerListItemResponse> consumerList =newRegisterVerifyResponse.getData().getConsumerList();
+
+        List<ConsumerListItemResponse> consumerList =registerVerifyOtpResponse.getData().getConsumerList();
 
         for (int i = 0; i < consumerList.size(); i++) {
             saveKycPostData = new SaveKycPostData();
             if (i == consumerList.size() - 1 && AdditionalApplicantActivity.SELECTED_RELATION_CODE != 0) {
                 saveKycPostData.setRelationCode1(AdditionalApplicantActivity.SELECTED_RELATION_CODE);
             }else{
-                saveKycPostData.setRelationCode1(AdditionalApplicantActivity.SELECTED_RELATION_CODE);
+                saveKycPostData.setRelationCode1(null);
             }
             saveKycPostData.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
             saveKycPostData.setRdaCustomerProfileId(consumerList.get(i).getRdaCustomerProfileId());
@@ -364,6 +314,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
         viewModel = new ViewModelProvider(this).get(MobileNumberViewModel.class);
         postParams = new ViewAppsGenerateOtpPostParams();
+        Log.d("baseUrl", Config.BASE_URL);
     }
 
 

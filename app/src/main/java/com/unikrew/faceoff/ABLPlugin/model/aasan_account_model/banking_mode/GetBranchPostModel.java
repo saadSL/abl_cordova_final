@@ -9,6 +9,13 @@ public class GetBranchPostModel implements Serializable {
 
 	private GetBranchDataModel data = new GetBranchDataModel();
 
+	@Override
+	public String toString() {
+		return "GetBranchPostModel{" +
+				"data=" + data +
+				'}';
+	}
+
 	public GetBranchDataModel getData(){
 		return data;
 	}

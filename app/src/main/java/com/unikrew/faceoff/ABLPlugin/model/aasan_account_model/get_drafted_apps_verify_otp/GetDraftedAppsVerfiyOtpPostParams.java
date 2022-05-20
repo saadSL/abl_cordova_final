@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class GetDraftedAppsVerfiyOtpPostParams implements Serializable {
 
-    public GetDraftedAppsVerfiyOtpPostData data = new GetDraftedAppsVerfiyOtpPostData();
-    public GetDraftedAppsVerfiyOtpPostPagination pagination = new GetDraftedAppsVerfiyOtpPostPagination();
+    private GetDraftedAppsVerfiyOtpPostData data = new GetDraftedAppsVerfiyOtpPostData();
+    private GetDraftedAppsVerfiyOtpPostPagination pagination = new GetDraftedAppsVerfiyOtpPostPagination();
 
 
     public GetDraftedAppsVerfiyOtpPostData getData() {
@@ -22,5 +22,13 @@ public class GetDraftedAppsVerfiyOtpPostParams implements Serializable {
 
     public void setPagination(GetDraftedAppsVerfiyOtpPostPagination pagination) {
         this.pagination = pagination;
+    }
+
+    @Override
+    public String toString() {
+        return "GetDraftedAppsVerfiyOtpPostParams{" +
+                "data=" + data +
+                ", pagination=" + pagination +
+                '}';
     }
 }

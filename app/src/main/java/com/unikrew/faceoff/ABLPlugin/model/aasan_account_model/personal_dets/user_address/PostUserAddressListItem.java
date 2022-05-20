@@ -6,6 +6,11 @@ public class PostUserAddressListItem implements Serializable {
 	private int rdaCustomerId;
 	private String customerAddress;
 	private String nearestLandMark;
+	private String city;
+	private String customerTown;
+	private String country;
+	private int addressTypeId;
+	private int countryId;
 
 	public String getCustomerTown() {
 		return customerTown;
@@ -15,8 +20,7 @@ public class PostUserAddressListItem implements Serializable {
 		this.customerTown = customerTown;
 	}
 
-	private String city;
-	private String customerTown;
+
 
 	public String getCountry() {
 		return country;
@@ -26,9 +30,7 @@ public class PostUserAddressListItem implements Serializable {
 		this.country = country;
 	}
 
-	private String country;
-	private int addressTypeId;
-	private int countryId;
+
 
 	public int getRdaCustomerId() {
 		return rdaCustomerId;
@@ -76,5 +78,19 @@ public class PostUserAddressListItem implements Serializable {
 
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
+	}
+
+	@Override
+	public String toString() {
+		return "PostUserAddressListItem{" +
+				"rdaCustomerId=" + rdaCustomerId +
+				", customerAddress='" + customerAddress + '\'' +
+				", nearestLandMark='" + nearestLandMark + '\'' +
+				", city='" + city + '\'' +
+				", customerTown='" + customerTown + '\'' +
+				", country='" + country + '\'' +
+				", addressTypeId=" + addressTypeId +
+				", countryId=" + countryId +
+				'}';
 	}
 }

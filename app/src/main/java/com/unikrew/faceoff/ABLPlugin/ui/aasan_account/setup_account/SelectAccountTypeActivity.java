@@ -13,9 +13,7 @@ import android.widget.ArrayAdapter;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectAccountTypeBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesDataModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponseAccountInformation;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
@@ -113,7 +111,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         AccountTypePostParams accountTypePostParams = new AccountTypePostParams();
         if (IS_RESUMED) {
             //flow for drafted application
-            GetConsumerAccountDetailsResponseAccountInformation accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
+            AccountInformationResponse accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
             accountTypePostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
             accountTypePostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
             accountTypePostParams.getData().setBankingModeId(accountInformation.getBankingModeId());
