@@ -131,6 +131,7 @@
             android:layout_marginStart="@dimen/_10sdp"/>
 
         <LinearLayout
+            android:visibility="gone"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -210,6 +211,83 @@
         </RadioGroup>
 
         </LinearLayout>
+
+        <!--   For Current Account     -->
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_income_proof"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/transparent_secondary_bg"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tv_income_proof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upload_prof_of_income"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"/>
+
+            <TextView
+                android:id="@+id/tv_income_proof_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/live_pic_click_here"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/custom_blue"
+                android:textSize="@dimen/_10sdp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/img_income_proof"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:src="@drawable/debit_card_gold"/>
+
+            <TextView
+                android:id="@+id/scan_again_income_proof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scan_again"
+                android:textColor="@color/custom_blue"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/rounded_corner_white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/if_you_want_to_open_joint_account"
+                android:fontFamily="@font/worksans_semibold"
+                android:textColor="@color/heading_black"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bi_info"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_electronic_soa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/switch_style"/>
+        </LinearLayout>
+
+
         <include
             android:id="@+id/btn_container"
             layout="@layout/layout_button_container"/>

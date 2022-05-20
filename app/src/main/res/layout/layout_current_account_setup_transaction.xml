@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_debit_card"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bi_info"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                    <Switch
+                        android:id="@+id/debit_card_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:theme="@style/switch_style"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_atm_card"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reason_for_requiring_visa_card"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"/>
+
+                <Spinner
+                    android:id="@+id/sp_visa_card_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangular_spinner"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/debit_card_delivery"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/how_to_deliver"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_10sdp"/>
+
+                <Spinner
+                    android:id="@+id/sp_debit_card_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/rectangular_spinner"/>
+                </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cheque_book_required"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bi_info"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_cheque_book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/switch_style"/>
+            </LinearLayout>
+
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include
+                android:id="@+id/layout_chat"
+                layout="@layout/layout_abl_chat_container"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

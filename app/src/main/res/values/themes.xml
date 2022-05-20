@@ -52,4 +52,12 @@
     </style>
 
 
+    <style name="switch_style" parent="Theme.AppCompat.Light">
+
+
+        <item name="colorAccent">@color/yellow</item>
+
+        <item name="colorControlNormal">@color/custom_blue</item>
+
+    </style>
 </resources>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/logo_toolbar"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <include
+        android:id="@+id/steps"
+        layout="@layout/layout_steps"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/same_as_mailing_address"
+                    android:fontFamily="@font/worksans_regular"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_same_as_mailing_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/switch_style"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                android:background="@drawable/rounded_corner_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/permanent_residential_address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/address"
+                    android:textColor="@color/black" />
+
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/address"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/landmark"
+                    android:textColor="@color/black" />
+
+
+                <EditText
+                    android:id="@+id/et_landmark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/landmark"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/city"
+                    android:textColor="@color/black" />
+
+
+                <EditText
+                    android:id="@+id/et_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/city"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/town_tehsil"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_town"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/town_tehsil"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:text="@string/landline_number"
+                    android:textColor="@color/black" />
+
+
+                <EditText
+                    android:id="@+id/et_landline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/boxshape"
+                    android:fontFamily="@font/worksans_regular"
+                    android:hint="@string/landline_placeholder"
+                    android:inputType="number"
+                    android:padding="@dimen/_5sdp" />
+            </LinearLayout>
+            
+            
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp">
+                
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mailing_address_preference"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/switch_style"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/where_to_send_letter"
+                    android:fontFamily="@font/worksans_regular"/>
+
+                
+                
+                
+            </LinearLayout>
+
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include
+                android:id="@+id/abl_chat"
+                layout="@layout/layout_abl_chat_container"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>
+
+
+
+
+

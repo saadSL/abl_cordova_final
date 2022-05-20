@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,7 @@ public class SelectCardAdapter extends RecyclerView.Adapter<SelectCardViewHolder
         }
         int atmId = this.atmCardList.get(holder.getAdapterPosition()).getId();
 
-        Glide.with(context).load("https://10.100.102.124/consumer-portal/assets/img/card/"+atmId+".png").into(holder.imgAtmCard);
+        Glide.with(context).load("https://10.100.102.124/consumer-portal/assets/img/card/"+atmId+".png").placeholder(R.drawable.no_image).into(holder.imgAtmCard);
 
 
         holder.tvAtmCardHeading.setText(atmCardList.get(holder.getAdapterPosition()).name);

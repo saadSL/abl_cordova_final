@@ -222,6 +222,31 @@
     <string name="card_heading">Union Pay Pak</string>
     <string name="additional_applicant_heading">Additional Applicant 1 Details</string>
     <string name="relationship">Relationship</string>
+    <string name="nationality">Nationality</string>
+    <string name="dual_nationality_country">Country of Dual Nationality</string>
+    <string name="add_another_country">Add Another Country</string>
+    <string name="please_enter_ntn">Please enter NTN</string>
+    <string name="ntn"><b><font color="#FF000000">NTN</font></b> (Optional)</string>
+    <string name="dont_have_TIN">If you don’t have Tax Identification Number select reason for non availibility:</string>
+    <string name="why_unable_to_obtain_tin">Why are you unable to obtain TIN?</string>
+    <string name="enter_reason_here">Enter Reason Here</string>
+    <string name="reason_for_requiring_visa_card">Reason for Requiring Visa Card</string>
+    <string name="debit_card_delivery">Debit Card Delivery</string>
+    <string name="how_to_deliver">How this Card shall be Delivered</string>
+    <string name="electronic_soa_required">Electronic SOA Required?</string>
+    <string name="next_of_kin_details">Next of Kin Details</string>
+    <string name="name_kin">Name (Kin)</string>
+    <string name="please_enter_name">Please Enter Name</string>
+    <string name="cnic">CNIC</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="cnic_hint">XXXXX-XXXXXXX-X</string>
+    <string name="mobile_number_hint">03xx xxxxxxx</string>
+    <string name="upload_prof_of_income">Upload Proof of Income</string>
+    <string name="if_you_want_to_open_joint_account">If you want to open Joint Account with another person?</string>
+    <string name="same_as_mailing_address">Same as mailing address</string>
+    <string name="permanent_residential_address">Permanent Residential Address</string>
+    <string name="mailing_address_preference">Mailing Address Preferences</string>
+    <string name="where_to_send_letter">at which address bank shall send letters/correspondence.</string>
 
 
 </resources>
