@@ -54,10 +54,12 @@
 
     <style name="switch_style" parent="Theme.AppCompat.Light">
 
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/yellow</item>
 
-        <item name="colorAccent">@color/yellow</item>
-
-        <item name="colorControlNormal">@color/custom_blue</item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/custom_blue
+        </item>
 
     </style>
 </resources>
