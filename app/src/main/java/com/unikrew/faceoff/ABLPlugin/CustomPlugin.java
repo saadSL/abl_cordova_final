@@ -39,7 +39,7 @@ public class CustomPlugin extends CordovaPlugin {
 
     private void startFlow(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
-        Intent intent = new Intent(context, PersonalDetailsActivity.class);
+        Intent intent = new Intent(context, MobileNumberActivity.class);
         cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, 22);
 
