@@ -53,7 +53,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private PersonalDetailsViewModel personalDetailsViewModel;
     private ViewAppsGenerateOtpPostParams postParams;
 
-    private Boolean isPortedMobileNetwork = false;
+    private int isPortedMobileNetwork = 0;
     private Boolean generateOtp = false;
 
     private String cnicFrontPic = "";
@@ -547,9 +547,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             case R.id.ported_mobile_network_switch:
                 if (isChecked) {
                     showMobileInfoDialogue();
-                    isPortedMobileNetwork = true;
+                    isPortedMobileNetwork = 1;
                 } else {
-                    isPortedMobileNetwork = false;
+                    isPortedMobileNetwork = 0;
                 }
                 break;
         }

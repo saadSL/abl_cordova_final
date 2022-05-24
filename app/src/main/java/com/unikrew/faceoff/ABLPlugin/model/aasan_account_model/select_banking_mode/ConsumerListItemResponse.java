@@ -175,7 +175,7 @@ public class ConsumerListItemResponse implements Serializable {
 		this.countryOfBirthPlaceId = countryOfBirthPlaceId;
 	}
 
-	public void setCustomerNtn(Object customerNtn) {
+	public void setCustomerNtn(String customerNtn) {
 		this.customerNtn = customerNtn;
 	}
 
@@ -243,7 +243,7 @@ public class ConsumerListItemResponse implements Serializable {
 		this.fatherHusbandName = fatherHusbandName;
 	}
 
-	public void setNationalityTypeId(Object nationalityTypeId) {
+	public void setNationalityTypeId(int nationalityTypeId) {
 		this.nationalityTypeId = nationalityTypeId;
 	}
 
@@ -324,7 +324,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private boolean existingAccountInd;
 	private Object countryOfBirthPlaceId;
 	private GetConsumerAccountDetailsResponseStepperSections stepperSections;
-	private Object customerNtn;
+	private String customerNtn;
 	private int rdaCustomerProfileId;
 	private Object natureOfBusiness;
 	private Object customerCity;
@@ -340,7 +340,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private boolean isPrimary;
 	private boolean existingCustomerInd;
 	private String fatherHusbandName;
-	private Object nationalityTypeId;
+	private int nationalityTypeId;
 	private Object kinName;
 	private Object genderId;
 	private String fullName;
@@ -514,7 +514,7 @@ public class ConsumerListItemResponse implements Serializable {
 
 
 
-	public Object getCustomerNtn(){
+	public String getCustomerNtn(){
 		return customerNtn;
 	}
 
@@ -574,7 +574,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return fatherHusbandName;
 	}
 
-	public Object getNationalityTypeId(){
+	public int getNationalityTypeId(){
 		return nationalityTypeId;
 	}
 

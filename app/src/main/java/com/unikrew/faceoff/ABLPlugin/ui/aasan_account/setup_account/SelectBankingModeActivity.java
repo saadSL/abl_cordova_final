@@ -47,6 +47,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.Sugg
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemVerifyOtp;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
     private int BANKING_MODE_ID = 0;
     private String selectedBranchTitle = "";
     private LatLng USER_LOCATION;
+
+    private ViewAppsGenerateOtpResponse res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +144,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
         consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
+        consumerListItemVerifyOtp.setPortedMobileNetwork(res.getData().getPortedMobileNetwork());
+
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
         registerVerifyOtp.getData().getConsumerList().add(consumerListItemVerifyOtp);
@@ -228,6 +233,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     private void setViewModel() {
         selectBankingModeViewModel = new ViewModelProvider(this).get(SelectBankingModeViewModel.class);
+        res = (ViewAppsGenerateOtpResponse) getIntent().getSerializableExtra(Config.RESPONSE);
     }
 
     private void getLatLng() {

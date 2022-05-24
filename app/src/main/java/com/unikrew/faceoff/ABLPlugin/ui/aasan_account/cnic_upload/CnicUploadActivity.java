@@ -171,7 +171,7 @@ public class CnicUploadActivity extends BaseActivity implements View.OnClickList
         postParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         postParams.getData().setMobileNo( getIntent().getStringExtra(Config.MOBILE_NUMBER) );
         postParams.getData().setGenerateOtp( true );
-        postParams.getData().setPortedMobileNetwork( getIntent().getBooleanExtra(Config.PORTED_MOBILE_NETWORK,false) );
+//        postParams.getData().setPortedMobileNetwork( getIntent().getBooleanExtra(Config.PORTED_MOBILE_NETWORK,false) );
         postParams.getData().setAttachments(attachments);
     }
 

@@ -18,7 +18,7 @@ public class ReviewDocumentViewModel extends BaseViewModel {
 
 
     public void getAccountDetails(GetConsumerAccountDetailsPostParams accountDetailsPostParams, String accessToken) {
-        Call<GetConsumerAccountDetailsResponse> callableRes = AblApplication.apiInterface.getConsumerAccDetails(accountDetailsPostParams,accessToken);
+        Call<GetConsumerAccountDetailsResponse> callableRes = AblApplication.apiInterface.getConsumerAccDetails(accountDetailsPostParams,"Bearer "+accessToken);
         callableRes.enqueue(new Callback<GetConsumerAccountDetailsResponse>() {
             @Override
             public void onResponse(Call<GetConsumerAccountDetailsResponse> call, Response<GetConsumerAccountDetailsResponse> response) {

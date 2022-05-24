@@ -24,6 +24,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private void setAtmCardAdapter() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_atm_card);
-        adapter = new SelectCardAdapter(atmCardsList,SelectCardActivity.this,SelectCardActivity.this);
+        adapter = new SelectCardAdapter(atmCardsList,SelectCardActivity.this, SelectCardActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(SelectCardActivity.this,LinearLayoutManager.HORIZONTAL,true));
         recyclerView.setAdapter(adapter);
     }

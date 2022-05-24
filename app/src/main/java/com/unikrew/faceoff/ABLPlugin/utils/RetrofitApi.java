@@ -53,6 +53,11 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailabilit
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 
@@ -152,6 +157,11 @@ public interface RetrofitApi {
     Call<RelationshipResponse> getRelationships(@Body RelationshipPostParams postParams);
 
     @POST("/RdaConsumer/api/common/public/lookup/country")
-    Call<RelationshipResponse> getCountries();
+    Call<CountriesResponse> getCountries();
 
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<CurrentAccountTaxResponse> postCurrentAccountTaxPersonalDetails(@Body CurrentAccountTaxPostParams currentAccountTaxPostParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
+    Call<CurrentAccountSetupTransactionResponse> postCurrentAccountTaxPersonalDetails(@Body CurrentAccountSetupTransactionPostParams postParams, @Header("Authorization") String accessToken);
 }

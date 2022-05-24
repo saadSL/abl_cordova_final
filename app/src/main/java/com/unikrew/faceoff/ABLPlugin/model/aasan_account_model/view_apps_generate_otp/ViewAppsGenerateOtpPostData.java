@@ -8,7 +8,7 @@ public class ViewAppsGenerateOtpPostData implements Serializable {
     public String mobileNo;
     public String idNumber;
     public boolean generateOtp;
-    public boolean isPortedMobileNetwork;
+    public int portedMobileNetwork;
     public ArrayList<ViewAppsGenerateOtpPostAttachment> attachments;
 
     public String getIdNumber() {
@@ -19,12 +19,12 @@ public class ViewAppsGenerateOtpPostData implements Serializable {
         this.idNumber = idNumber;
     }
 
-    public boolean isPortedMobileNetwork() {
-        return isPortedMobileNetwork;
+    public int isPortedMobileNetwork() {
+        return portedMobileNetwork;
     }
 
-    public void setPortedMobileNetwork(boolean portedMobileNetwork) {
-        isPortedMobileNetwork = portedMobileNetwork;
+    public void setPortedMobileNetwork(int portedMobileNetwork) {
+        this.portedMobileNetwork = portedMobileNetwork;
     }
 
 

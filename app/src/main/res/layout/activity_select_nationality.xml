@@ -36,10 +36,11 @@
                     android:id="@+id/sw_nationality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/switch_style"
                     app:showText="true"
+                    android:textOff="Single"
                     android:textOn="Dual"
-                    android:textOff="Single"/>
+                    android:thumb="@drawable/track_selector"
+                    app:switchTextAppearance="@style/switchTextColor"/>
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"

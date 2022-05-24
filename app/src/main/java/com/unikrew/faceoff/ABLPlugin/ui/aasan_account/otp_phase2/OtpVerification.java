@@ -136,6 +136,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     private void setupAccount() {
         Intent intent = new Intent(this, SelectBankingModeActivity.class);
+        intent.putExtra(Config.RESPONSE,res);
         startActivity(intent);
     }
 
