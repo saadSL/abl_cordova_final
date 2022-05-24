@@ -45,13 +45,18 @@
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/sw_tax_resident"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_75sdp"
                         android:layout_height="wrap_content"
-                        android:theme="@style/switch_style"
+                        app:showText="true"
+                        android:textOn="Yes"
+                        android:textOff="No"
+                        app:switchTextAppearance="@style/switchTextColor"
+                        android:thumb="@drawable/track_selector"
                         android:layout_marginStart="@dimen/_10sdp"/>
 
                 </LinearLayout>
                 <androidx.appcompat.widget.AppCompatSpinner
+                    android:visibility="gone"
                     android:id="@+id/sp_tax_resident_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,6 +69,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_question_tin_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
@@ -82,13 +88,18 @@
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/sw_tax_identity_number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_75sdp"
                     android:layout_height="wrap_content"
-                    android:theme="@style/switch_style"/>
+                    app:showText="true"
+                    android:textOn="Yes"
+                    android:textOff="No"
+                    app:switchTextAppearance="@style/switchTextColor"
+                    android:thumb="@drawable/track_selector"/>
             </LinearLayout>
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_TIN_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,6 +159,7 @@
                     android:layout_marginTop="@dimen/_10sdp"/>
 
                 <EditText
+                    android:id="@+id/et_tin_unavailability_reason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangular_edit_text"

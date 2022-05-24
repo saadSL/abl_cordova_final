@@ -12,6 +12,15 @@ public class ConsumerListItemVerifyOtp implements Serializable {
     private boolean isPrimary;
     public String dateOfBirth;
     public String dateOfIssue;
+    public int portedMobileNetwork;
+
+    public int getPortedMobileNetwork() {
+        return portedMobileNetwork;
+    }
+
+    public void setPortedMobileNetwork(int portedMobileNetwork) {
+        this.portedMobileNetwork = portedMobileNetwork;
+    }
 
     public String getDateOfBirth() {
         return dateOfBirth;

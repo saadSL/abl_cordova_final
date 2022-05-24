@@ -23,7 +23,7 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
     public int customerTypeId;
     public String mobileNo;
     public Object mobileNetworkId;
-    public Object portedMobileNetwork;
+    public int portedMobileNetwork;
     public Object attachments;
     public boolean alreadyExist;
     public Object primary;
@@ -207,11 +207,11 @@ public class ViewAppsGenerateOtpResponseData implements Serializable {
         this.mobileNetworkId = mobileNetworkId;
     }
 
-    public Object getPortedMobileNetwork() {
+    public int getPortedMobileNetwork() {
         return portedMobileNetwork;
     }
 
-    public void setPortedMobileNetwork(Object portedMobileNetwork) {
+    public void setPortedMobileNetwork(int portedMobileNetwork) {
         this.portedMobileNetwork = portedMobileNetwork;
     }
 
