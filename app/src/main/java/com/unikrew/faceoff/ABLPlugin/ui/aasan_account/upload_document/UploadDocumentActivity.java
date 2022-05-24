@@ -346,6 +346,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
         switch (compoundButton.getId()) {
             case R.id.rb_single:
                 if (isChecked) {
+                    hideAdditionalApplicantLayout();
                     natureOfAccountId = Config.SINGLE;
                 }
                 break;
@@ -357,6 +358,7 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.rb_minor:
                 if (isChecked) {
+                    hideAdditionalApplicantLayout();
                     natureOfAccountId = Config.MINOR;
                 }
                 break;
@@ -366,6 +368,12 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
     private void showAdditionalApplicantLayout() {
         uploadDocumentsBinding.llJoint.setVisibility(View.VISIBLE);
         setAdditionalApplicantDropDown();
+    }
+
+    private void hideAdditionalApplicantLayout() {
+        selectedJointApplicant = null;
+        uploadDocumentsBinding.llJoint.setVisibility(View.GONE);
+        uploadDocumentsBinding.spAdditionalApplicant.setAdapter(null);
     }
 
     private void setAdditionalApplicantDropDown() {

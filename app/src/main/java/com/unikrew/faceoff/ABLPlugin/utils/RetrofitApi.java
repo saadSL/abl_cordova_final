@@ -136,7 +136,6 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<SaveNatureOfAccountResponse> saveNatureOfAccount(@Body SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
 
-
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<AtmCardsResponse> getAtmCards(@Body AtmCardsPostParams postParams);
 
@@ -151,5 +150,8 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<RelationshipResponse> getRelationships(@Body RelationshipPostParams postParams);
+
+    @POST("/RdaConsumer/api/common/public/lookup/country")
+    Call<RelationshipResponse> getCountries();
 
 }

@@ -13,7 +13,7 @@ public class RemitterDetailsDataModel implements Serializable {
 	private int rdaCustomerId;
 	private Object bankingModeId;
 	private int customerTypeId;
-	private int purposeOfAccountId;
+	private Integer purposeOfAccountId;
 
 	public void setCustomerBranch(String customerBranch) {
 		this.customerBranch = customerBranch;
@@ -47,7 +47,7 @@ public class RemitterDetailsDataModel implements Serializable {
 		this.customerTypeId = customerTypeId;
 	}
 
-	public void setPurposeOfAccountId(int purposeOfAccountId) {
+	public void setPurposeOfAccountId(Integer purposeOfAccountId) {
 		this.purposeOfAccountId = purposeOfAccountId;
 	}
 

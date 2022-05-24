@@ -29,7 +29,8 @@ public class Config {
     public static final int ISLAMIC_BANKING = 114202;
     public static final int CURRENT_ACCOUNT = 114301;
     public static final int SAVINGS_ACCOUNT = 114302;
-    public static final int ADDRESS_TYPE_ID = 106901;
+    public static final int CURRENT_ADDRESS_TYPE_ID = 103301;
+    public static final int PERMANENT_ADDRESS_TYPE_ID = 103302;
     public static final String IS_RESUMED = "is_resumed";
 
     public static String templateType = "WSQ";

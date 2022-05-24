@@ -23,7 +23,18 @@ public class NationalityActivity extends BaseActivity implements View.OnClickLis
         setBinding();
         setNationalityAdapter();
         setClicks();
+        setLayout();
+        setLogoLayout(nationalityBinding.logoToolbar.tvDate);
 
+    }
+
+    private void setLayout() {
+        nationalityBinding.steps.screenHeader.stepsHeading1.setText("Your");
+        nationalityBinding.steps.screenHeader.stepsHeading2.setText("Details");
+        nationalityBinding.steps.step1.setBackground(this.getDrawable(R.color.custom_blue));
+        nationalityBinding.steps.step2.setBackground(this.getDrawable(R.color.custom_blue));
+        nationalityBinding.steps.step3.setBackground(this.getDrawable(R.color.light_gray));
+        nationalityBinding.steps.step4.setBackground(this.getDrawable(R.color.light_gray));
     }
 
 

@@ -16,6 +16,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
@@ -26,9 +27,7 @@ import java.util.List;
 public class RemitterDetailsActivity extends BaseActivity {
 
     private ActivityRemitterDetailsBinding remitterDetailsBinding;
-    private Boolean IS_RESUMED;
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+    private List<ConsumerListItemResponse> consumerList;
     private List<PdaRemitterDetailListItem> pdaRemitterDetailList;
     private RemitterDetailsAdapter remitterDetailsAdapter;
     private RemitterDetailsViewModel remitterDetailsViewModel;
@@ -98,13 +97,7 @@ public class RemitterDetailsActivity extends BaseActivity {
                 showAlert(Config.errorType, getString(R.string.text_fields_error));
                 return;
             }else {
-                if (IS_RESUMED) {
-                    //flow for resumed application
-                    pdaRemitterDetailList.get(i).setAccountId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-                } else {
-                    //flow for new application
-                    pdaRemitterDetailList.get(i).setAccountId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-                }
+                pdaRemitterDetailList.get(i).setAccountId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
             }
         }
 
@@ -116,23 +109,12 @@ public class RemitterDetailsActivity extends BaseActivity {
     private RemitterDetailsPostModel getPostParams() {
         RemitterDetailsPostModel remitterDetailsPostModel =  new RemitterDetailsPostModel();
         RemitterDetailsDataModel remitterDetailsDataModel = remitterDetailsPostModel.getData();
-        if (IS_RESUMED) {
-            //flow for resumed application
-            AccountInformationResponse accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation();
-            remitterDetailsDataModel.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            remitterDetailsDataModel.setRdaCustomerId(accountInformation.getRdaCustomerId());
-            remitterDetailsDataModel.setBankingModeId(accountInformation.getBankingModeId());
-            remitterDetailsDataModel.setCustomerBranch(accountInformation.getCustomerBranch());
-            remitterDetailsDataModel.setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
-        } else {
-            //flow for new application
-            AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
-            remitterDetailsDataModel.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
-            remitterDetailsDataModel.setRdaCustomerId(accountInformation.getRdaCustomerId());
-            remitterDetailsDataModel.setBankingModeId(accountInformation.getBankingModeId());
-            remitterDetailsDataModel.setCustomerBranch(accountInformation.getCustomerBranch());
-            remitterDetailsDataModel.setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
-        }
+        AccountInformationResponse accountInformation = consumerList.get(0).getAccountInformation();
+        remitterDetailsDataModel.setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
+        remitterDetailsDataModel.setRdaCustomerId(accountInformation.getRdaCustomerId());
+        remitterDetailsDataModel.setBankingModeId(accountInformation.getBankingModeId());
+        remitterDetailsDataModel.setCustomerBranch(accountInformation.getCustomerBranch());
+        remitterDetailsDataModel.setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
         remitterDetailsDataModel.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         remitterDetailsDataModel.setPhysicalCardInd(0);
         remitterDetailsDataModel.setAtmTypeId(null);
@@ -167,13 +149,13 @@ public class RemitterDetailsActivity extends BaseActivity {
 
         //flow for new application
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
 
     }

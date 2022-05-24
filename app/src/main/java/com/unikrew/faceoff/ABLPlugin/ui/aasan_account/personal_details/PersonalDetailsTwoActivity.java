@@ -89,7 +89,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     private void bindAddressGenericData(PostUserAddressDataItem userAddressDataItem) {
         for (int i = 0; i < consumerList.size(); i++) {
             PostUserAddressListItem addressListItem = new PostUserAddressListItem();
-            addressListItem.setAddressTypeId(Config.ADDRESS_TYPE_ID);
+            addressListItem.setAddressTypeId(Config.CURRENT_ADDRESS_TYPE_ID);
             addressListItem.setRdaCustomerId(consumerList.get(i).getRdaCustomerProfileId());
             addressListItem.setCountryId(Config.COUNTRY_ID);
             if (i == consumerList.size() - 1) {
