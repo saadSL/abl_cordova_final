@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
+package com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -43,7 +43,6 @@ public class SelectCardViewModel extends BaseViewModel {
 
 
     MutableLiveData<LookUpCodeResponse> atmCardsSuccessResponse = new MutableLiveData<LookUpCodeResponse>();
-    MutableLiveData<String> atmCardsError = new MutableLiveData<String>();
 
     public void getAtmCards(LookUpCodePostParams atmCardsPostParams) {
         Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getAtmCards(atmCardsPostParams);
@@ -54,16 +53,67 @@ public class SelectCardViewModel extends BaseViewModel {
                     if (response.body().getMessage().getStatus().equals("200")){
                         atmCardsSuccessResponse.postValue(response.body());
                     }else{
-                        atmCardsError.postValue(getErrorDetail(response));
+                        errorLiveData.postValue(getErrorDetail(response));
                     }
                 }else{
-                    atmCardsError.postValue(getErrorDetail(response));
+                    errorLiveData.postValue(getErrorDetail(response));
                 }
             }
 
             @Override
             public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
-                atmCardsError.postValue(t.getMessage());
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+    MutableLiveData<LookUpCodeResponse> visaCardSuccessResponse = new MutableLiveData<>();
+
+    public void getVisaCardReasons(LookUpCodePostParams visaCardPostParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(visaCardPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
+            @Override
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        visaCardSuccessResponse.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+
+                }else{
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
+
+    MutableLiveData<LookUpCodeResponse> cardDeliverySuccessResponse = new MutableLiveData<>();
+
+    public void getCardDeliveryOptions(LookUpCodePostParams cardDeliveryPostParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(cardDeliveryPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
+            @Override
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        cardDeliverySuccessResponse.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
             }
         });
     }

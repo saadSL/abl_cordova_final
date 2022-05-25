@@ -12,12 +12,9 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.nationality.NationalityActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.organizational_details.OrganizationDetailsActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.kin_details.KinDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.current_account.personal_details.PersonalDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity2;
 
 
 /**
@@ -39,7 +36,7 @@ public class CustomPlugin extends CordovaPlugin {
 
     private void startFlow(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
-        Intent intent = new Intent(context, NationalityActivity.class);
+        Intent intent = new Intent(context, KinDetailsActivity.class);
         cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, 22);
 

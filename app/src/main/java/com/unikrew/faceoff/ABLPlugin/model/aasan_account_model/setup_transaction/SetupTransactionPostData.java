@@ -10,6 +10,33 @@ public class SetupTransactionPostData implements Serializable {
     public int transAlertInd;
     public int chequeBookReqInd;
     public int transactionalAlertId;
+    public int reasonForVisaDebitCardRequestId;
+    public int mailingAddrPrefId;
+    public int esoaInd;
+
+    public int getReasonForVisaDebitCardRequestId() {
+        return reasonForVisaDebitCardRequestId;
+    }
+
+    public void setReasonForVisaDebitCardRequestId(int reasonForVisaDebitCardRequestId) {
+        this.reasonForVisaDebitCardRequestId = reasonForVisaDebitCardRequestId;
+    }
+
+    public int getMailingAddrPrefId() {
+        return mailingAddrPrefId;
+    }
+
+    public void setMailingAddrPrefId(int mailingAddrPrefId) {
+        this.mailingAddrPrefId = mailingAddrPrefId;
+    }
+
+    public int getEsoaInd() {
+        return esoaInd;
+    }
+
+    public void setEsoaInd(int esoaInd) {
+        this.esoaInd = esoaInd;
+    }
 
     public int getRdaCustomerAccInfoId() {
         return rdaCustomerAccInfoId;

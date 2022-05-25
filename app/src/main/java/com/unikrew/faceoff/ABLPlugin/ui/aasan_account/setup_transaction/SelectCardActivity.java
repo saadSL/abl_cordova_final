@@ -15,16 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -37,8 +36,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
-    private AtmCardsPostParams atmCardsPostParams;
-    private ArrayList<AtmCardsResponseData> atmCardsList;
+    private LookUpCodePostParams atmCardsPostParams;
+    private ArrayList<LookUpCodeResponseData> atmCardsList;
 
     private Boolean atmCardInd = false;
     private int atmTypeId = 0;
@@ -121,9 +120,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             }
         });
 
-        selectCardViewModel.atmCardsSuccessResponse.observe(this, new Observer<AtmCardsResponse>() {
+        selectCardViewModel.atmCardsSuccessResponse.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(AtmCardsResponse atmCardsResponse) {
+            public void onChanged(LookUpCodeResponse atmCardsResponse) {
                 dismissLoading();
                 atmCardsList = atmCardsResponse.getData();
                 setAtmCardAdapter();
@@ -161,14 +160,12 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             layoutSetupTransactionBinding.btnSms.setEnabled(false);
             layoutSetupTransactionBinding.btnEmail.setEnabled(false);
         }
-
-
     }
 
     private void setViewModel() {
         selectCardViewModel = new ViewModelProvider(this).get(SelectCardViewModel.class);
         setupTransactionPostParams = new SetupTransactionPostParams();
-        atmCardsPostParams = new AtmCardsPostParams();
+        atmCardsPostParams = new LookUpCodePostParams();
     }
 
     private void setClicks() {
@@ -194,12 +191,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             case R.id.debit_card_switch:
                 if (!isChecked) {
                     atmCardInd = false;
-//                    layoutSetupTransactionBinding.llClassicCard.setEnabled(false);
-//                    layoutSetupTransactionBinding.llVdcCard.setEnabled(false);
+
                 } else {
                     atmCardInd = true;
-//                    layoutSetupTransactionBinding.llClassicCard.setEnabled(true);
-//                    layoutSetupTransactionBinding.llVdcCard.setEnabled(true);
                 }
                 break;
             case R.id.transactional_alert_switch:
@@ -284,16 +278,6 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                     layoutSetupTransactionBinding.btnSms.setTextColor(this.getColor(R.color.custom_blue));
                 }
                 break;
-//            case R.id.ll_classic_card:
-//                atmTypeId = Config.UPI;
-//                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-//                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
-//                break;
-//            case R.id.ll_vdc_card:
-//                atmTypeId = Config.VDC;
-//                layoutSetupTransactionBinding.llVdcCard.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-//                layoutSetupTransactionBinding.llClassicCard.setBackground(this.getDrawable(R.drawable.transparent_secondary_bg));
-//                break;
             case R.id.btn_next:
                 registerTransactionDetails();
                 break;

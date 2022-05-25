@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,13 +28,13 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/choose_debit_card"
-                        android:layout_margin="@dimen/_10sdp"
                         android:fontFamily="@font/worksans_semibold"
                         android:textColor="@color/black"
                         android:layout_gravity="center"
@@ -43,14 +44,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/bi_info"
-                        android:layout_marginTop="@dimen/_10sdp"/>
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_gravity="center"/>
 
                     <Switch
-                        android:id="@+id/debit_card_switch"
+                        android:id="@+id/sw_debit_card"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:theme="@style/switch_style"/>
+                        android:showText="true"
+                        android:textOn="Yes"
+                        android:textOff="No"
+                        android:switchTextAppearance="@style/switchTextColor"
+                        android:thumb="@drawable/track_selector"/>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -58,21 +63,29 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reason_for_requiring_visa_card"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:fontFamily="@font/worksans_semibold"
-                    android:textColor="@color/black"/>
-
-                <Spinner
-                    android:id="@+id/sp_visa_card_reason"
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_visa_card_reason"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:background="@drawable/rectangular_spinner"/>
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reason_for_requiring_visa_card"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/black"/>
+
+                    <Spinner
+                        android:id="@+id/sp_visa_card_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/rectangular_spinner"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -115,7 +128,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner_white"
                 android:layout_margin="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp">
+                android:padding="@dimen/_10sdp"
+                android:gravity="center">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,14 +142,119 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/bi_info"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_10sdp"/>
+                    android:layout_marginEnd="@dimen/_10sdp"/>
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/sw_cheque_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/switch_style"/>
+                    app:showText="true"
+                    android:textOff="No"
+                    android:textOn="Yes"
+                    android:gravity="center"
+                    android:thumb="@drawable/track_selector"
+                    app:switchTextAppearance="@style/switchTextColor"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/electronic_soa_required"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bi_info"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/_10sdp"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_electronic_soa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:showText="true"
+                    android:textOn="Yes"
+                    android:textOff="No"
+                    android:gravity="center"
+                    android:thumb="@drawable/track_selector"
+                    app:switchTextAppearance="@style/switchTextColor"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corner_white"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transactional_alerts"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/heading_black"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bi_info"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_transaction_alerts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:showText="true"
+                        android:textOn="Yes"
+                        android:textOff="No"
+                        android:gravity="center"
+                        android:thumb="@drawable/track_selector"
+                        app:switchTextAppearance="@style/switchTextColor"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/where_to_send_transaction_alerts"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/worksans_regular"
+                    android:layout_marginTop="@dimen/_10sdp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
+                    <Button
+                        android:id="@+id/btn_sms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sms"
+                        android:enabled="false"
+                        android:background="@drawable/rounded_corner_selected"/>
+                    <Button
+                        android:id="@+id/btn_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:enabled="false"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:background="@drawable/rounded_corner_selected"/>
+                </LinearLayout>
             </LinearLayout>
 
             <include

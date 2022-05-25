@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.current_account.personal_details;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.TaxResidentDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
@@ -30,6 +32,7 @@ import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_i
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostResidentCountries;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -51,9 +54,16 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         setBinding();
         setViewModel();
         setClicks();
+        setLayout();
         observe();
         getSharedPrefData();
         getTinUnavailabilityReasons();
+    }
+
+    private void setLayout() {
+        taxResidentDetailsBinding.steps.screenHeader.stepsHeading1.setText("Personal");
+        taxResidentDetailsBinding.steps.screenHeader.stepsHeading2.setText("Details");
+        setLogoLayout(taxResidentDetailsBinding.logoToolbar.tvDate);
     }
 
     private void getSharedPrefData() {
@@ -95,7 +105,11 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0){
                     tinUnavailabilityReason = (TinUnavailabilityReasonsResponseData) adapterView.getSelectedItem();
-//                    if (tinUnavailabilityReason.getId() == )
+                    if (tinUnavailabilityReason.getId() == 101202){
+                        taxResidentDetailsBinding.llTinUnavailabilityReason.setVisibility(View.VISIBLE);
+                    }else{
+                        taxResidentDetailsBinding.llTinUnavailabilityReason.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -162,7 +176,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             @Override
             public void onChanged(CurrentAccountTaxResponse currentAccountTaxResponse) {
                 dismissLoading();
-                showAlert(Config.successType,currentAccountTaxResponse.getMessage().getDescription());
+                openTransactionActivity();
             }
         });
 
@@ -173,6 +187,10 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
                 showAlert(Config.errorType,errMsg);
             }
         });
+    }
+
+    private void openTransactionActivity() {
+        Intent intent = new Intent(this, SetupTransactionActivity.class);
     }
 
     private void setCountriesSpinner(CountriesResponse countriesResponse) {
@@ -324,16 +342,25 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         currentAccountTaxPostConsumerList.setPrimary(consumerList.get(0).isPrimary());
         currentAccountTaxPostConsumerList.setEmailAddress(consumerList.get(0).getEmailAddress());
         currentAccountTaxPostConsumerList.setTaxResidentInd(isTaxResidentOutside);
-        currentAccountTaxPostConsumerList.setOccupationId(consumerList.get(0).getOccupationId());
-        currentAccountTaxPostConsumerList.setProfessionId(consumerList.get(0).getProfessionId());
-        currentAccountTaxPostConsumerList.setProfessionId(consumerList.get(0).getProfessionId());
+
+        if (consumerList.get(0).getOccupationId()!=null){
+            currentAccountTaxPostConsumerList.setOccupationId(consumerList.get(0).getOccupationId());
+        }
+
+        if (consumerList.get(0).getProfessionId()!=null){
+            currentAccountTaxPostConsumerList.setProfessionId(consumerList.get(0).getProfessionId());
+        }
+
         currentAccountTaxPostConsumerList.setCustomerNtn(consumerList.get(0).getCustomerNtn());
-        currentAccountTaxPostConsumerList.setRdaCustomerCountryId(selectedResidentCountry.getId());
+        if (selectedResidentCountry!=null){
+            currentAccountTaxPostConsumerList.setRdaCustomerCountryId(selectedResidentCountry.getId());
+        }
+
         currentAccountTaxPostConsumerList.setKinName(consumerList.get(0).getKinName());
         currentAccountTaxPostConsumerList.setKinCnic(consumerList.get(0).getKinCnic());
         currentAccountTaxPostConsumerList.setKinMobile(consumerList.get(0).getKinMobile());
         currentAccountTaxPostConsumerList.setNationalityTypeId(consumerList.get(0).getNationalityTypeId());
-        currentAccountTaxPostConsumerList.setNationalities(getNationalities());
+        currentAccountTaxPostConsumerList.setNationalities(null);
         currentAccountTaxPostConsumerList.setResidentCountries(getResidentCountries());
 
         currentAccountConsumerList.add(currentAccountTaxPostConsumerList);
@@ -345,9 +372,14 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         ArrayList<CurrentAccountTaxPostResidentCountries> residentCountries = new ArrayList<>();
 
         CurrentAccountTaxPostResidentCountries postResidentCountries = new CurrentAccountTaxPostResidentCountries();
-        postResidentCountries.setCountryOfTaxResidenceId(selectedResidentCountry.getId());
+        if (selectedResidentCountry!=null){
+            postResidentCountries.setCountryOfTaxResidenceId(selectedResidentCountry.getId());
+        }
+
         postResidentCountries.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
-        postResidentCountries.setTaxIdentityNo(Integer.parseInt(taxResidentDetailsBinding.etTaxIdentityNumber.getText().toString()));
+        if (tinNumberAvailable){
+            postResidentCountries.setTaxIdentityNo(Integer.parseInt(taxResidentDetailsBinding.etTaxIdentityNumber.getText().toString()));
+        }
         postResidentCountries.setTinReasonId(tinUnavailabilityReason.getId());
         postResidentCountries.setExplanation(taxResidentDetailsBinding.etTinUnavailabilityReason.getText().toString());
 
@@ -356,40 +388,30 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         return residentCountries;
     }
 
-    private ArrayList<CurrentAccountTaxPostNationality> getNationalities() {
-        ArrayList<CurrentAccountTaxPostNationality> nationalities = new ArrayList<>();
-
-        CurrentAccountTaxPostNationality nationalitiesObject = new CurrentAccountTaxPostNationality();
-
-        nationalitiesObject.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
-        nationalitiesObject.setNationalityId("157");
-        nationalitiesObject.setIdNumber(consumerList.get(0).getIdNumber());
-
-        nationalities.add(nationalitiesObject);
-
-        return nationalities;
-    }
-
     private boolean isValid() {
         if (isTaxResidentOutside == 1){
             if (selectedResidentCountry == null){
                 showAlert(Config.errorType,"Please Select One Country !!!");
                 return false;
             }
-        }else if (tinNumberAvailable){
+        }
+        if (tinNumberAvailable){
             if (isEmpty(taxResidentDetailsBinding.etTaxIdentityNumber)){
                 showAlert(Config.errorType,"Please Enter Tax Identity Number !!!");
                 return false;
             }
-        }else if (!tinNumberAvailable){
+        }
+        if (!tinNumberAvailable){
             if (tinUnavailabilityReason == null){
                 showAlert(Config.errorType,"Please Select A Reason For Tax Identity Unavailability !!!");
                 return false;
             }
 
-            if (isEmpty(taxResidentDetailsBinding.etTinUnavailabilityReason)){
-                showAlert(Config.errorType,"Please Enter A Reason For Tax Identity Unavailability !!!");
-                return false;
+            if ( tinUnavailabilityReason.getId() == 101202 ){
+                if (isEmpty(taxResidentDetailsBinding.etTinUnavailabilityReason)){
+                    showAlert(Config.errorType,"Please Enter A Reason For Tax Identity Unavailability !!!");
+                    return false;
+                }
             }
         }
         return true;

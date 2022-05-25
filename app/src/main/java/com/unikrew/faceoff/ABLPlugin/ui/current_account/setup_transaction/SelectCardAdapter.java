@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
+package com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.ofss.digx.mobile.android.allied.R;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
+
 
 import java.util.ArrayList;
 
