@@ -144,7 +144,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         consumerListItemVerifyOtp.setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         consumerListItemVerifyOtp.setMobileNo(getStringFromPref(Config.MOBILE_NUMBER));
         consumerListItemVerifyOtp.setIdNumber(getStringFromPref(Config.CNIC_NUMBER));
-        consumerListItemVerifyOtp.setPortedMobileNetwork(res.getData().getPortedMobileNetwork());
+
 
 
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
@@ -389,7 +389,6 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, bankingModeBinding.spinnerAllBranches.getSelectedItemPosition() + " selected", Toast.LENGTH_SHORT).show();
         if (bankingModeBinding.spinnerAllBranches.getSelectedItemPosition() == 0) {
             selectedBranchTitle = "";
         } else {

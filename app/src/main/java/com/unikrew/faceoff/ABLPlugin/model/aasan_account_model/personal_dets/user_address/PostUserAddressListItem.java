@@ -7,10 +7,30 @@ public class PostUserAddressListItem implements Serializable {
 	private String customerAddress;
 	private String nearestLandMark;
 	private String city;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	private String phone;
 	private String customerTown;
 	private String country;
 	private int addressTypeId;
-	private int countryId;
+	private Integer countryId = null;
+
+	public Integer getRdaCustomerProfileAddrId() {
+		return rdaCustomerProfileAddrId;
+	}
+
+	public void setRdaCustomerProfileAddrId(Integer rdaCustomerProfileAddrId) {
+		this.rdaCustomerProfileAddrId = rdaCustomerProfileAddrId;
+	}
+
+	private Integer rdaCustomerProfileAddrId = null;
 
 	public String getCustomerTown() {
 		return customerTown;
@@ -72,11 +92,11 @@ public class PostUserAddressListItem implements Serializable {
 		this.addressTypeId = addressTypeId;
 	}
 
-	public int getCountryId() {
+	public Integer getCountryId() {
 		return countryId;
 	}
 
-	public void setCountryId(int countryId) {
+	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
 	}
 

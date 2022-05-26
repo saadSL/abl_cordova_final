@@ -162,7 +162,6 @@ public class PersonalDetailsViewModel extends BaseViewModel {
     }
 
     public void userAddress(PostUserAddressModel userAddressModel, String accessToken) {
-        Log.d("userAddress", userAddressModel.toString());
         Call<UserAddressResponseModel> callableRes = AblApplication.apiInterface.postUserAddress(userAddressModel, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<UserAddressResponseModel>() {
             @Override

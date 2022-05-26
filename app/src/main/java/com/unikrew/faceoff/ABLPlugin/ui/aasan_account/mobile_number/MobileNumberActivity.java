@@ -234,7 +234,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void goToPersonalDetailsOne() {
-        startActivity(new Intent(MobileNumberActivity.this, PersonalDetailsOneActivity.class));
+        openActivity(PersonalDetailsOneActivity.class);
     }
 
     private void postKycToNetwork() {
@@ -300,7 +300,12 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.GONE);
         mobileNumberAvailabilityBinding.llCnic.setVisibility(View.VISIBLE);
         if (response.getData().getIdNumber() != null) {
-            mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber());
+            if (response.getData().getIdNumber().contains("-")){
+                mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber().replace("-","").trim());
+            }else {
+                mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber());
+            }
+
         } else {
             mobileNumberAvailabilityBinding.etCnicNumber.setText("");
         }

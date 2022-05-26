@@ -17,6 +17,8 @@ public class Config {
     public static String GET_CONSUMER_RESPONSE = "getConsumerAccountDetailsResponse";
     //for new application
     public static String REG_OTP_RESPONSE = "registerVerifyOtpResponse";
+
+    public static String USER_ADDRESS_RESPONSE = "userAddressResponse";
     public static int COUNTRY_ID = 157;
 
     public static String ASAAN_ACCOUNT_PREF = "asaanAccountPref";
@@ -54,6 +56,7 @@ public class Config {
 
     public static int countDownTime = 5 * 60 * 1000;
 
+    public static int CURRENT_DIGITAL_ACCOUNT = 108201;
     public static int ASAAN_DIGITAL_ACCOUNT = 108243;
     public static int REMITTANCE_ACCOUNT = 108244;
     public static int FREELANCE_ACCOUNT = 108245;
@@ -110,6 +113,10 @@ public class Config {
     public static int UPI = 108613;
     public static int VDC = 108614;
 
+
+    public static int SINGLE_NATIONALITY = 100901;
+    public static int DUAL_NATIONALITY = 100902;
+
     public static int SINGLE = 102101;
     public static int JOINT = 102102;
     public static int MINOR = 102103;
@@ -121,8 +128,13 @@ public class Config {
     public static int LIVE_PHOTO = 1043005;
     public static int ATM_CARDS_ID = 1086;
     public static int TIN_UNAVAILABILITY_REASONS = 1012;
-    public static int CURRENCY_RUPEE = 10803;
+    public static int CURRENCY_RUPEE = 108301;
     public static int CURRENCY_DOLLAR = 108302;
+    public static int CURRENCY_EURO = 108303;
+    public static int CURRENCY_POUND = 108304;
+    public static int CURRENCY_YEN = 108305;
+
+
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
     public static int RELATIONSHIP_ID = 1088;
 

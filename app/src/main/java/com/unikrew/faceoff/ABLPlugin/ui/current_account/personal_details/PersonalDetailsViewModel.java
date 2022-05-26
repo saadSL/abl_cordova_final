@@ -16,23 +16,23 @@ import retrofit2.Response;
 
 public class PersonalDetailsViewModel extends BaseViewModel {
 
-    MutableLiveData<CountriesResponse> countriesResponse = new MutableLiveData<>();
-    MutableLiveData<TinUnavailabilityReasonsResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<>();
-    MutableLiveData<CurrentAccountTaxResponse> currentAccountTaxSuccessResponse = new MutableLiveData<>();
+    public MutableLiveData<CountriesResponse> countriesResponse = new MutableLiveData<>();
+    public MutableLiveData<TinUnavailabilityReasonsResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<>();
+    public MutableLiveData<CurrentAccountTaxResponse> currentAccountTaxSuccessResponse = new MutableLiveData<>();
 
 
-    public void getCountries(){
+    public void getCountries() {
         Call<CountriesResponse> callableRes = AblApplication.apiInterface.getCountries();
         callableRes.enqueue(new Callback<CountriesResponse>() {
             @Override
             public void onResponse(Call<CountriesResponse> call, Response<CountriesResponse> response) {
-                if (response.code() == 200){
-                    if (response.body().getMessage().getStatus().equals("200")){
+                if (response.code() == 200) {
+                    if (response.body().getMessage().getStatus().equals("200")) {
                         countriesResponse.postValue(response.body());
-                    }else{
+                    } else {
                         errorLiveData.postValue(getErrorDetail(response));
                     }
-                }else{
+                } else {
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
@@ -49,13 +49,13 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         callableRes.enqueue(new Callback<TinUnavailabilityReasonsResponse>() {
             @Override
             public void onResponse(Call<TinUnavailabilityReasonsResponse> call, Response<TinUnavailabilityReasonsResponse> response) {
-                if (response.code() == 200){
-                    if (response.body().getMessage().getStatus().equals("200")){
+                if (response.code() == 200) {
+                    if (response.body().getMessage().getStatus().equals("200")) {
                         tinUnavailabilityReasonsSuccessResponse.postValue(response.body());
-                    }else{
+                    } else {
                         errorLiveData.postValue(getErrorDetail(response));
                     }
-                }else{
+                } else {
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }
@@ -67,18 +67,18 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         });
     }
 
-    public void postPersonalDetails(CurrentAccountTaxPostParams postParams,String accessToken) {
-        Call<CurrentAccountTaxResponse> callableRes = AblApplication.apiInterface.postCurrentAccountTaxPersonalDetails(postParams,"Bearer "+accessToken);
+    public void postPersonalDetails(CurrentAccountTaxPostParams postParams, String accessToken) {
+        Call<CurrentAccountTaxResponse> callableRes = AblApplication.apiInterface.postCurrentAccountTaxPersonalDetails(postParams, "Bearer " + accessToken);
         callableRes.enqueue(new Callback<CurrentAccountTaxResponse>() {
             @Override
             public void onResponse(Call<CurrentAccountTaxResponse> call, Response<CurrentAccountTaxResponse> response) {
-                if (response.code() == 200){
-                    if (response.body().getMessage().getStatus().equals("200")){
+                if (response.code() == 200) {
+                    if (response.body().getMessage().getStatus().equals("200")) {
                         currentAccountTaxSuccessResponse.postValue(response.body());
-                    }else{
+                    } else {
                         errorLiveData.postValue(getErrorDetail(response));
                     }
-                }else{
+                } else {
                     errorLiveData.postValue(getErrorDetail(response));
                 }
             }

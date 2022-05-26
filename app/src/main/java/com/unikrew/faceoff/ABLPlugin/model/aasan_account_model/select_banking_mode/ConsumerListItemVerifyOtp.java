@@ -12,13 +12,13 @@ public class ConsumerListItemVerifyOtp implements Serializable {
     private boolean isPrimary;
     public String dateOfBirth;
     public String dateOfIssue;
-    public int portedMobileNetwork;
+    public Integer portedMobileNetwork = null;
 
     public int getPortedMobileNetwork() {
         return portedMobileNetwork;
     }
 
-    public void setPortedMobileNetwork(int portedMobileNetwork) {
+    public void setPortedMobileNetwork(Integer portedMobileNetwork) {
         this.portedMobileNetwork = portedMobileNetwork;
     }
 

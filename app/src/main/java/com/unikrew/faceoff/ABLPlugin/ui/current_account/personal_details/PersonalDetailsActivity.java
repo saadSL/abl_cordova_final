@@ -30,6 +30,8 @@ import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_i
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostResidentCountries;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -162,7 +164,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             @Override
             public void onChanged(CurrentAccountTaxResponse currentAccountTaxResponse) {
                 dismissLoading();
-                showAlert(Config.successType,currentAccountTaxResponse.getMessage().getDescription());
+                goToNext();
             }
         });
 
@@ -173,6 +175,10 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
                 showAlert(Config.errorType,errMsg);
             }
         });
+    }
+
+    private void goToNext() {
+        openActivity(SetupTransactionActivity.class);
     }
 
     private void setCountriesSpinner(CountriesResponse countriesResponse) {
@@ -325,7 +331,6 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         currentAccountTaxPostConsumerList.setEmailAddress(consumerList.get(0).getEmailAddress());
         currentAccountTaxPostConsumerList.setTaxResidentInd(isTaxResidentOutside);
         currentAccountTaxPostConsumerList.setOccupationId(consumerList.get(0).getOccupationId());
-        currentAccountTaxPostConsumerList.setProfessionId(consumerList.get(0).getProfessionId());
         currentAccountTaxPostConsumerList.setProfessionId(consumerList.get(0).getProfessionId());
         currentAccountTaxPostConsumerList.setCustomerNtn(consumerList.get(0).getCustomerNtn());
         currentAccountTaxPostConsumerList.setRdaCustomerCountryId(selectedResidentCountry.getId());

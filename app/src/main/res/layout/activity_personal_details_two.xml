@@ -30,7 +30,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/li_top_bar"
             android:orientation="vertical">
 
             <LinearLayout

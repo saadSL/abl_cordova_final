@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -24,12 +23,11 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
 
-public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener,SelectCardInterface, View.OnClickListener {
+public class SelectCardActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, SelectCardInterface, View.OnClickListener {
     LayoutSetupTransactionBinding layoutSetupTransactionBinding;
 
     private SetupTransactionPostParams setupTransactionPostParams;
@@ -48,6 +46,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private Boolean IS_RESUMED;
 
     private SelectCardAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +65,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     private void setAtmCardAdapter() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_atm_card);
-        adapter = new SelectCardAdapter(atmCardsList,SelectCardActivity.this, SelectCardActivity.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(SelectCardActivity.this,LinearLayoutManager.HORIZONTAL,true));
+        adapter = new SelectCardAdapter(atmCardsList, SelectCardActivity.this, SelectCardActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(SelectCardActivity.this, LinearLayoutManager.HORIZONTAL, true));
         recyclerView.setAdapter(adapter);
     }
 
@@ -108,7 +107,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         selectCardViewModel.setupTransactionResponseMutableLiveData.observe(this, new Observer<SetupTransactionResponse>() {
             @Override
             public void onChanged(SetupTransactionResponse setupTransactionResponse) {
-                openUploadDocumentActivity(setupTransactionResponse);
+                openToNext();
                 loader.dismiss();
             }
         });
@@ -133,16 +132,14 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         selectCardViewModel.atmCardsError.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errMsg) {
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
                 dismissLoading();
             }
         });
     }
 
-    private void openUploadDocumentActivity(SetupTransactionResponse setupTransactionResponse) {
-        Intent intent = new Intent(this, UploadDocumentActivity.class);
-        intent.putExtra(Config.RESPONSE, setupTransactionResponse);
-        startActivity(intent);
+    private void openToNext() {
+        openActivity(UploadDocumentActivity.class);
     }
 
     private void checkLayouts() {
@@ -225,9 +222,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     }
 
     private void registerTransactionDetails() {
-        if (!isValid()){
+        if (!isValid()) {
             showAlert(Config.errorType, "Please select any one card !!!");
-        }else{
+        } else {
             setTransactionDetailsPostParams();
             selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
@@ -235,9 +232,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     }
 
     private boolean isValid() {
-        if (!atmCardInd){
+        if (!atmCardInd) {
             return false;
-        }else if (atmTypeId == 0){
+        } else if (atmTypeId == 0) {
             return false;
         }
         return true;
@@ -311,8 +308,8 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
 
     @Override
     public void setSelectionAt(int position) {
-        if (atmCardInd){
-            for (int i = 0 ; i < atmCardsList.size() ; i++){
+        if (atmCardInd) {
+            for (int i = 0; i < atmCardsList.size(); i++) {
                 atmCardsList.get(i).setSelected(false);
             }
             atmCardsList.get(position).setSelected(true);

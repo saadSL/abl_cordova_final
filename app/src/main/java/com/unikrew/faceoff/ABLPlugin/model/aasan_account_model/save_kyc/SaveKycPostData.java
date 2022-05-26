@@ -7,6 +7,24 @@ public class SaveKycPostData implements Serializable {
     private int rdaCustomerProfileId;
     private Long averageMonthlySalary = null;
     private Integer relationCode1 = null;
+    private String occupationId ;
+    private String customerNtn ;
+
+    public String getOccupationId() {
+        return occupationId;
+    }
+
+    public void setOccupationId(String occupationId) {
+        this.occupationId = occupationId;
+    }
+
+    public String getCustomerNtn() {
+        return customerNtn;
+    }
+
+    public void setCustomerNtn(String customerNtn) {
+        this.customerNtn = customerNtn;
+    }
 
     public Integer getRelationCode1() {
         return relationCode1;

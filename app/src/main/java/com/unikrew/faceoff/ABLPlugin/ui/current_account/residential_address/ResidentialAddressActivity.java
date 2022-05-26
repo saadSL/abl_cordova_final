@@ -1,6 +1,7 @@
 package com.unikrew.faceoff.ABLPlugin.ui.current_account.residential_address;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,9 +14,11 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressDataItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressListItem;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsViewModel;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.nationality.NationalityActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.List;
@@ -25,6 +28,7 @@ public class ResidentialAddressActivity extends BaseActivity {
     private AcitvityPermanentResidentialAddressBinding residentialAddressBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private List<ConsumerListItemResponse> consumerList;
+    private UserAddressResponseModel userAddressResponseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,31 @@ public class ResidentialAddressActivity extends BaseActivity {
         getSharedPrefData();
         setViewModel();
         setClicks();
+        observers();
         setLogoLayout(residentialAddressBinding.logoToolbar.tvDate);
         setLayout();
+    }
+
+    private void observers() {
+        personalDetailsViewModel.userAddressMutableLiveData.observe(this, new Observer<UserAddressResponseModel>() {
+            @Override
+            public void onChanged(UserAddressResponseModel registerEmploymentDetailsResponse) {
+                dismissLoading();
+                goToNext();
+            }
+        });
+
+        personalDetailsViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errMsg) {
+                dismissLoading();
+                showAlert(Config.errorType, errMsg);
+            }
+        });
+    }
+
+    private void goToNext() {
+        openActivity(NationalityActivity.class);
     }
 
     private void setLayout() {
@@ -48,15 +75,14 @@ public class ResidentialAddressActivity extends BaseActivity {
 
     private void getSharedPrefData() {
 
-        //flow for new application
-        if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
-            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
-        }
         //flow for drafted application
-        else {
+        if (getSerializableFromPref(Config.USER_ADDRESS_RESPONSE, UserAddressResponseModel.class) == null) {
             GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
             consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
+        }
+        //flow for new application
+        else {
+            userAddressResponseModel = (UserAddressResponseModel) getSerializableFromPref(Config.USER_ADDRESS_RESPONSE, UserAddressResponseModel.class);
         }
 
     }
@@ -78,29 +104,36 @@ public class ResidentialAddressActivity extends BaseActivity {
     }
 
     private void bindAddressGenericData(PostUserAddressDataItem userAddressDataItem) {
-        for (int i = 0; i < consumerList.size(); i++) {
-            PostUserAddressListItem addressListItem = new PostUserAddressListItem();
-            addressListItem.setAddressTypeId(Config.PERMANENT_ADDRESS_TYPE_ID);
-            addressListItem.setRdaCustomerId(consumerList.get(i).getRdaCustomerProfileId());
-            addressListItem.setCountryId(Config.COUNTRY_ID);
-            addressListItem.setCountry(null);
-            if (i == consumerList.size() - 1) {
-
-                addressListItem.setNearestLandMark(residentialAddressBinding.etLandmark.getText().toString());
-                addressListItem.setCustomerAddress(residentialAddressBinding.etAddress.getText().toString());
-                addressListItem.setCity(residentialAddressBinding.etCity.getText().toString());
-                addressListItem.setCustomerTown(residentialAddressBinding.etTown.getText().toString());
-                userAddressDataItem.setPrimary(consumerList.size() <= 1);
-            } else {
-
-                addressListItem.setNearestLandMark(consumerList.get(i).getNearestLandmark());
-                addressListItem.setCustomerAddress(consumerList.get(i).getCustomerAddress());
-                addressListItem.setCity(null);
-                addressListItem.setCustomerTown(null);
-                userAddressDataItem.setPrimary(false);
-            }
-            userAddressDataItem.getAddressesList().add(addressListItem);
+        PostUserAddressListItem addressListItemOne = new PostUserAddressListItem();
+        addressListItemOne.setCountryId(Config.COUNTRY_ID);
+        addressListItemOne.setAddressTypeId(Config.CURRENT_ADDRESS_TYPE_ID);
+        if (userAddressResponseModel != null) {
+            addressListItemOne.setRdaCustomerProfileAddrId(userAddressResponseModel.getData().get(0).getAddressesList().get(0).getRdaCustomerProfileAddrId());
+            addressListItemOne.setRdaCustomerId(userAddressResponseModel.getData().get(0).getAddressesList().get(0).getRdaCustomerId());
+            addressListItemOne.setNearestLandMark(userAddressResponseModel.getData().get(0).getAddressesList().get(0).getNearestLandMark());
+            addressListItemOne.setCustomerAddress(userAddressResponseModel.getData().get(0).getAddressesList().get(0).getCustomerAddress());
+        } else {
+            addressListItemOne.setRdaCustomerProfileAddrId(consumerList.get(0).getRdaCustomerProfileAddrId());
+            addressListItemOne.setNearestLandMark(consumerList.get(0).getNearestLandmark());
+            addressListItemOne.setCustomerAddress(consumerList.get(0).getCustomerAddress());
+            addressListItemOne.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
         }
+        userAddressDataItem.getAddressesList().add(addressListItemOne);
+
+        PostUserAddressListItem addressListItemTwo = new PostUserAddressListItem();
+        addressListItemTwo.setAddressTypeId(Config.PERMANENT_ADDRESS_TYPE_ID);
+        addressListItemTwo.setNearestLandMark(residentialAddressBinding.etLandmark.getText().toString());
+        addressListItemTwo.setCustomerAddress(residentialAddressBinding.etAddress.getText().toString());
+        addressListItemTwo.setCustomerTown(residentialAddressBinding.etTown.getText().toString());
+        addressListItemTwo.setCity(residentialAddressBinding.etCity.getText().toString());
+        addressListItemTwo.setPhone(residentialAddressBinding.etLandline.getText().toString());
+        if (userAddressResponseModel != null) {
+            addressListItemTwo.setRdaCustomerId(userAddressResponseModel.getData().get(0).getAddressesList().get(0).getRdaCustomerId());
+        } else {
+            addressListItemTwo.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
+        }
+        userAddressDataItem.getAddressesList().add(addressListItemTwo);
+        userAddressDataItem.setPrimary(true);
     }
 
     private void setClicks() {

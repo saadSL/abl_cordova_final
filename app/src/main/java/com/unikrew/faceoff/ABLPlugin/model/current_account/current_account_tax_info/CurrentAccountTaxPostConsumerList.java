@@ -14,8 +14,8 @@ public class CurrentAccountTaxPostConsumerList implements Serializable {
     public boolean isPrimary;
     public String emailAddress;
     public int taxResidentInd;
-    public int occupationId;
-    public int professionId;
+    public Integer occupationId;
+    public Integer professionId;
     public String customerNtn;
     public Object rdaCustomerCountryId;
     public Object kinName;
@@ -105,19 +105,19 @@ public class CurrentAccountTaxPostConsumerList implements Serializable {
         this.taxResidentInd = taxResidentInd;
     }
 
-    public int getOccupationId() {
+    public Integer getOccupationId() {
         return occupationId;
     }
 
-    public void setOccupationId(int occupationId) {
+    public void setOccupationId(Integer occupationId) {
         this.occupationId = occupationId;
     }
 
-    public int getProfessionId() {
+    public Integer getProfessionId() {
         return professionId;
     }
 
-    public void setProfessionId(int professionId) {
+    public void setProfessionId(Integer professionId) {
         this.professionId = professionId;
     }
 

@@ -1,6 +1,8 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -8,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ActivitySelectPreferredAccountBinding;
@@ -110,6 +113,12 @@ public class SelectPreferredAccountActivity extends BaseActivity {
                 selectFreeLance();
             }
         });
+        preferredAccountBinding.cvCurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCurrent();
+            }
+        });
         preferredAccountBinding.btnRupee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +129,24 @@ public class SelectPreferredAccountActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 selectDollar();
+            }
+        });
+        preferredAccountBinding.btnYen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectYen();
+            }
+        });
+        preferredAccountBinding.btnPound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectPound();
+            }
+        });
+        preferredAccountBinding.btnEuro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectEuro();
             }
         });
         preferredAccountBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
@@ -136,39 +163,67 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         });
     }
 
-    private void selectDollar() {
-        /* Selecting Dollar */
-        preferredAccountBinding.btnDollar.setBackground(this.getDrawable(R.drawable.rounded_button));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            preferredAccountBinding.btnDollar.setTextColor(this.getColor(R.color.white));
-        }
-        currencyTypeId = Config.CURRENCY_DOLLAR;
+    private void selectYen() {
+        currencyTypeId = Config.CURRENCY_YEN;
+        deselectCurrency(preferredAccountBinding.btnRupee);
+        deselectCurrency(preferredAccountBinding.btnDollar);
+        selectCurrency(preferredAccountBinding.btnYen);
+        deselectCurrency(preferredAccountBinding.btnPound);
+        deselectCurrency(preferredAccountBinding.btnEuro);
+    }
 
-        /* Deselecting Rupee */
-        preferredAccountBinding.btnRupee.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            preferredAccountBinding.btnRupee.setTextColor(this.getColor(R.color.custom_blue));
-        }
+    private void selectPound() {
+        currencyTypeId = Config.CURRENCY_POUND;
+        deselectCurrency(preferredAccountBinding.btnRupee);
+        deselectCurrency(preferredAccountBinding.btnDollar);
+        deselectCurrency(preferredAccountBinding.btnYen);
+        selectCurrency(preferredAccountBinding.btnPound);
+        deselectCurrency(preferredAccountBinding.btnEuro);
+    }
+
+    private void selectEuro() {
+        currencyTypeId = Config.CURRENCY_EURO;
+        deselectCurrency(preferredAccountBinding.btnRupee);
+        deselectCurrency(preferredAccountBinding.btnDollar);
+        deselectCurrency(preferredAccountBinding.btnYen);
+        deselectCurrency(preferredAccountBinding.btnPound);
+        selectCurrency(preferredAccountBinding.btnEuro);
+    }
+
+
+    private void selectDollar() {
+        currencyTypeId = Config.CURRENCY_DOLLAR;
+        deselectCurrency(preferredAccountBinding.btnRupee);
+        selectCurrency(preferredAccountBinding.btnDollar);
+        deselectCurrency(preferredAccountBinding.btnYen);
+        deselectCurrency(preferredAccountBinding.btnPound);
+        deselectCurrency(preferredAccountBinding.btnEuro);
     }
 
     private void selectRupee() {
-        /* Selecting Rupee */
-        preferredAccountBinding.btnRupee.setBackground(this.getDrawable(R.drawable.rounded_button));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            preferredAccountBinding.btnRupee.setTextColor(this.getColor(R.color.white));
-        }
         currencyTypeId = Config.CURRENCY_RUPEE;
+        selectCurrency(preferredAccountBinding.btnRupee);
+        deselectCurrency(preferredAccountBinding.btnDollar);
+        deselectCurrency(preferredAccountBinding.btnYen);
+        deselectCurrency(preferredAccountBinding.btnPound);
+        deselectCurrency(preferredAccountBinding.btnEuro);
+    }
 
-        /* Deselecting Dollar */
-        preferredAccountBinding.btnDollar.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            preferredAccountBinding.btnDollar.setTextColor(this.getColor(R.color.custom_blue));
-        }
+    private void deselectCurrency(Button button) {
+        button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_corner_selected));
+        button.setTextColor(ContextCompat.getColor(this, R.color.custom_blue));
+    }
+
+    private void selectCurrency(Button button) {
+        button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_button));
+        button.setTextColor(ContextCompat.getColor(this, R.color.white));
     }
 
     private void checkValidations() {
-        if (preferredAccountBinding.cbAsaanDigitalAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked() || preferredAccountBinding.cbAsaanRemittanceDigitalAccount.isChecked()) {
+        if (preferredAccountBinding.cbAsaanDigitalAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked() || preferredAccountBinding.cbAsaanRemittanceDigitalAccount.isChecked()|| preferredAccountBinding.cbCurrentAccount.isChecked()) {
             postPreferredAccount();
+        } else if ((preferredAccountBinding.cbCurrentAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked()) && currencyTypeId == null) {
+            showAlert(Config.errorType, getString(R.string.select_preferred_currency));
         } else {
             showAlert(Config.errorType, getString(R.string.select_preferred_error));
         }
@@ -179,7 +234,7 @@ public class SelectPreferredAccountActivity extends BaseActivity {
         selectAccountTypeViewModel.postAccountType(getAccountTypeParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 
-    private AccountTypePostParams   getAccountTypeParams() {
+    private AccountTypePostParams getAccountTypeParams() {
         AccountTypePostParams accountTypePostParams = new AccountTypePostParams();
         if (IS_RESUMED) {
             //flow for drafted application
@@ -209,29 +264,46 @@ public class SelectPreferredAccountActivity extends BaseActivity {
 
     private void selectFreeLance() {
         preferredAccountBinding.liCurrency.setVisibility(View.VISIBLE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.GONE);
         ACCOUNT_VARIANT_ID = Config.FREELANCE_ACCOUNT;
         preferredAccountBinding.cbAsaanDigitalAccount.setChecked(false);
         preferredAccountBinding.cbAsaanRemittanceDigitalAccount.setChecked(false);
+        preferredAccountBinding.cbCurrentAccount.setChecked(false);
         preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(true);
     }
 
     private void selectRemittence() {
         currencyTypeId = null;
         preferredAccountBinding.liCurrency.setVisibility(View.GONE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.GONE);
         ACCOUNT_VARIANT_ID = Config.REMITTANCE_ACCOUNT;
         preferredAccountBinding.cbAsaanDigitalAccount.setChecked(false);
         preferredAccountBinding.cbAsaanRemittanceDigitalAccount.setChecked(true);
         preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(false);
+        preferredAccountBinding.cbCurrentAccount.setChecked(false);
     }
 
     private void selectAsaan() {
         currencyTypeId = null;
         preferredAccountBinding.liCurrency.setVisibility(View.GONE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.GONE);
         ACCOUNT_VARIANT_ID = Config.ASAAN_DIGITAL_ACCOUNT;
         preferredAccountBinding.cbAsaanDigitalAccount.setChecked(true);
         preferredAccountBinding.cbAsaanRemittanceDigitalAccount.setChecked(false);
         preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(false);
+        preferredAccountBinding.cbCurrentAccount.setChecked(false);
     }
+
+    private void selectCurrent() {
+        preferredAccountBinding.liCurrency.setVisibility(View.VISIBLE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.VISIBLE);
+        ACCOUNT_VARIANT_ID = Config.CURRENT_DIGITAL_ACCOUNT;
+        preferredAccountBinding.cbAsaanDigitalAccount.setChecked(false);
+        preferredAccountBinding.cbAsaanRemittanceDigitalAccount.setChecked(false);
+        preferredAccountBinding.cbCurrentAccount.setChecked(true);
+        preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(false);
+    }
+
 
     private void setBinding() {
         preferredAccountBinding = ActivitySelectPreferredAccountBinding.inflate(getLayoutInflater());

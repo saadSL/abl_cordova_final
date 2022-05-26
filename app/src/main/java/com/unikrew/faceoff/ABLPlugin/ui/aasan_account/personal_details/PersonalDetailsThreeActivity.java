@@ -192,12 +192,16 @@ public class PersonalDetailsThreeActivity extends BaseActivity {
     }
 
     private void moveNext() {
+        //for joint
         if (consumerList.size()>1){
             openActivity(UploadDocumentActivity.class);
         }else {
+            //for single
             if (getIntFromPref(Config.ACCOUNT_VARIANT_ID) == Config.REMITTANCE_ACCOUNT) {
+                //for remittance account
                 openActivity(RemitterDetailsActivity.class);
             } else {
+                //for assan digital account
                 openActivity(SelectCardActivity.class);
             }
         }

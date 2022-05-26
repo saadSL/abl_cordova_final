@@ -24,6 +24,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AddressesItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.residential_address.ResidentialAddressActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.List;
@@ -60,7 +61,8 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
             @Override
             public void onChanged(UserAddressResponseModel registerEmploymentDetailsResponse) {
                 dismissLoading();
-                goToPersonalDetailsThree();
+                saveSerializableInPref(Config.USER_ADDRESS_RESPONSE,registerEmploymentDetailsResponse);
+                goToNext();
             }
         });
 
@@ -191,9 +193,15 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
         }
     }
 
-    private void goToPersonalDetailsThree() {
-        Intent intent = new Intent(this, PersonalDetailsThreeActivity.class);
-        startActivity(intent);
+    private void goToNext() {
+        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID) == Config.CURRENT_DIGITAL_ACCOUNT) {
+            //for current account
+            openActivity(ResidentialAddressActivity.class);
+        } else {
+            //generic flow
+            openActivity(PersonalDetailsThreeActivity.class);
+        }
+
     }
 
     private void setData() {

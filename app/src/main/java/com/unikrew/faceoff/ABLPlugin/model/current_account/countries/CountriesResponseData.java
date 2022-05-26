@@ -3,11 +3,11 @@ package com.unikrew.faceoff.ABLPlugin.model.current_account.countries;
 import java.io.Serializable;
 
 public class CountriesResponseData implements Serializable {
-    public String code;
-    public String dialingCode;
-    public Object description;
-    public int id;
-    public String name;
+    private String code;
+    private String dialingCode;
+    private Object description;
+    private int id;
+    private String name;
 
     public String getCode() {
         return code;

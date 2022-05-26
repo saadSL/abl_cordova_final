@@ -3,6 +3,7 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.account_application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListItemBinding;
 import com.ofss.digx.mobile.android.allied.databinding.ApplicationListLayoutBinding;
@@ -159,6 +161,10 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             saveStringInPref(Config.PROFILE_ID, String.valueOf(selectedAppList.getRdaCustomerProfileId()));
             saveStringInPref(Config.ACCOUNT_INFO_ID, String.valueOf(selectedAppList.getRdaCustomerAccInfoId()));
             saveIntInPref(Config.ACCOUNT_INFO_ID, selectedAppList.getNoOfJointApplicatns());
+            Gson gson = new Gson();
+            String json = gson.toJson(consumerAccDetailsPostParams);
+            Log.d("consumerAcc", json);
+            Log.d("token", getStringFromPref(Config.ACCESS_TOKEN));
             viewModel.getConsumerAccDetails(
                     consumerAccDetailsPostParams,
                     getStringFromPref(Config.ACCESS_TOKEN));

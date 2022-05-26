@@ -25,7 +25,7 @@ public class ConsumerListItemResponse implements Serializable {
 		this.stepperSections = stepperSections;
 	}
 
-	private Object portedMobileNetwork;
+	private int portedMobileNetwork;
 
 	public void setCustomerTitle(Object customerTitle) {
 		this.customerTitle = customerTitle;
@@ -59,7 +59,7 @@ public class ConsumerListItemResponse implements Serializable {
 		this.employerPostalCode = employerPostalCode;
 	}
 
-	public void setPortedMobileNetwork(Object portedMobileNetwork) {
+	public void setPortedMobileNetwork(int portedMobileNetwork) {
 		this.portedMobileNetwork = portedMobileNetwork;
 	}
 
@@ -315,6 +315,16 @@ public class ConsumerListItemResponse implements Serializable {
 	private String accessToken;
 	private Object maritalStatusId;
 	private int statusId;
+	private int rdaCustomerProfileAddrId;
+
+	public int getRdaCustomerProfileAddrId() {
+		return rdaCustomerProfileAddrId;
+	}
+
+	public void setRdaCustomerProfileAddrId(int rdaCustomerProfileAddrId) {
+		this.rdaCustomerProfileAddrId = rdaCustomerProfileAddrId;
+	}
+
 	private Object natureOfAccountId;
 	private Object employedSince;
 	private Object designation;
@@ -396,7 +406,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return employerPostalCode;
 	}
 
-	public Object getPortedMobileNetwork(){
+	public int getPortedMobileNetwork(){
 		return portedMobileNetwork;
 	}
 
