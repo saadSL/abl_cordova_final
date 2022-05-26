@@ -149,22 +149,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rectangular_spinner" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/why_unable_to_obtain_tin"
-                    android:fontFamily="@font/worksans_semibold"
-                    android:textColor="@color/heading_black"
-                    android:layout_marginTop="@dimen/_10sdp"/>
-
-                <EditText
-                    android:id="@+id/et_tin_unavailability_reason"
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_tin_unavailability_reason"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rectangular_edit_text"
-                    android:hint="@string/enter_reason_here"
-                    android:layout_marginTop="@dimen/_10sdp"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/why_unable_to_obtain_tin"
+                        android:fontFamily="@font/worksans_semibold"
+                        android:textColor="@color/heading_black"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                    <EditText
+                        android:id="@+id/et_tin_unavailability_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangular_edit_text"
+                        android:hint="@string/enter_reason_here"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 

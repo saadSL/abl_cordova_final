@@ -12,13 +12,6 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.TaxResidentActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectPreferredAccountActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.nationality.NationalityActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.organizational_details.OrganizationDetailsActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.personal_details.PersonalDetailsActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity2;
 
 
 /**

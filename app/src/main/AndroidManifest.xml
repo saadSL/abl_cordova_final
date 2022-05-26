@@ -193,8 +193,9 @@
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name="com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity2"
+            android:name="com.unikrew.faceoff.ABLPlugin.ui.current_account.kin_details.KinDetailsActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />

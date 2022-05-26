@@ -137,6 +137,8 @@ public class Config {
 
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";
     public static int RELATIONSHIP_ID = 1088;
+    public static int VISA_CARD_REASONS_CODE = 1126;
+    public static int DEBIT_CARD_DELIVERY_CODE = 1033;
 
 
     public static String PROFESSION_ID = "professionId";

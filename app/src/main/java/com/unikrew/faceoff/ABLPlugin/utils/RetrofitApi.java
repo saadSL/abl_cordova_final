@@ -6,8 +6,6 @@ import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.BioMetricVerificationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.VerifyOtpBioMetricVerificationResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.atm_cards.AtmCardsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.BranchesModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.banking_mode.GetBranchPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.change_mobile_number.ChangeMobileNumberPostParams;
@@ -33,7 +31,6 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.use
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmployeeDetailsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
@@ -53,6 +50,10 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailabilit
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
@@ -142,7 +143,7 @@ public interface RetrofitApi {
     Call<SaveNatureOfAccountResponse> saveNatureOfAccount(@Body SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<AtmCardsResponse> getAtmCards(@Body AtmCardsPostParams postParams);
+    Call<LookUpCodeResponse> getAtmCards(@Body LookUpCodePostParams postParams);
 
     @POST("/RdaConsumer/api/common/public/lookup/code")
     Call<TinUnavailabilityReasonsResponse> getTinUnavailabilityReasons(@Body TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams);
@@ -164,4 +165,10 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<CurrentAccountSetupTransactionResponse> postCurrentAccountTaxPersonalDetails(@Body CurrentAccountSetupTransactionPostParams postParams, @Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/common/public/lookup/code")
+    Call<LookUpCodeResponse> getLookUpResponse(@Body LookUpCodePostParams visaCardPostParams);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
+    Call<RegisterConsumerBasicInfoResponse> postKinDetails(@Body RegisterConsumerBasicInfoPostParams registerKinDetailsPostParams,@Header("Authorization") String accessToken);
 }
