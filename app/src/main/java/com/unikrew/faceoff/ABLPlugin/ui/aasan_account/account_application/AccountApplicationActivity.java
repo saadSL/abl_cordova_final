@@ -220,8 +220,8 @@ public class AccountApplicationActivity extends BaseActivity implements AccountA
             CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.del_cb);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    deletePrompt = true;
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    deletePrompt = isChecked;
                 }
             });
 

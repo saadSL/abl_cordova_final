@@ -25,6 +25,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.remitter_details.RemitterDetailsActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
@@ -37,7 +40,7 @@ public class PersonalDetailsThreeActivity extends BaseActivity {
 
     private ActivityPersonalDetailsThreeBinding personalDetailsThreeBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
-    private ArrayList<MobileNetworkResponseData> occupationArray, professionArray;
+    private ArrayList<LookUpCodeResponseData> occupationArray, professionArray;
     private List<ConsumerListItemResponse> consumerList;
 
     @Override
@@ -126,17 +129,17 @@ public class PersonalDetailsThreeActivity extends BaseActivity {
     }
 
     private void setObservers() {
-        personalDetailsViewModel.professionLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        personalDetailsViewModel.professionLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
+            public void onChanged(LookUpCodeResponse mobileNetworkResponse) {
                 dismissLoading();
                 setProfessionSpinner(mobileNetworkResponse);
             }
         });
 
-        personalDetailsViewModel.occupationLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        personalDetailsViewModel.occupationLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
+            public void onChanged(LookUpCodeResponse mobileNetworkResponse) {
                 dismissLoading();
                 setOccupationSpinner(mobileNetworkResponse);
             }
@@ -208,18 +211,18 @@ public class PersonalDetailsThreeActivity extends BaseActivity {
 
     }
 
-    private void setOccupationSpinner(MobileNetworkResponse mobileNetworkResponse) {
+    private void setOccupationSpinner(LookUpCodeResponse mobileNetworkResponse) {
         occupationArray = mobileNetworkResponse.getData();
         setSpinner(occupationArray, personalDetailsThreeBinding.spinnerOccupation);
     }
 
-    private void setProfessionSpinner(MobileNetworkResponse mobileNetworkResponse) {
+    private void setProfessionSpinner(LookUpCodeResponse mobileNetworkResponse) {
         professionArray = mobileNetworkResponse.getData();
         setSpinner(professionArray, personalDetailsThreeBinding.spinnerProfession);
     }
 
 
-    private void setSpinner(ArrayList<MobileNetworkResponseData> dataArrayList, Spinner spinner) {
+    private void setSpinner(ArrayList<LookUpCodeResponseData> dataArrayList, Spinner spinner) {
         List<String> _allItemsArray = new ArrayList<>();
         if (dataArrayList.size() > 0) {
             // Spinner click listener
@@ -256,14 +259,14 @@ public class PersonalDetailsThreeActivity extends BaseActivity {
     }
 
     private void getProfession() {
-        MobileNetworkPostParams mobileNetworkPostParams = new MobileNetworkPostParams();
+        LookUpCodePostParams mobileNetworkPostParams = new LookUpCodePostParams();
         mobileNetworkPostParams.getData().codeTypeId = Config.PROFESSION_CODE;
         personalDetailsViewModel.getProfession(mobileNetworkPostParams);
     }
 
 
     private void getOccupation() {
-        MobileNetworkPostParams mobileNetworkPostParams = new MobileNetworkPostParams();
+        LookUpCodePostParams mobileNetworkPostParams = new LookUpCodePostParams();
         mobileNetworkPostParams.getData().codeTypeId = Config.OCCUPATION_CODE;
         personalDetailsViewModel.getOccupation(mobileNetworkPostParams);
     }

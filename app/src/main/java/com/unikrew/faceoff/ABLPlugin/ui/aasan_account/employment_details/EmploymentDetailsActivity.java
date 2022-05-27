@@ -30,6 +30,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.Config;
 
@@ -40,8 +43,8 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     private EmploymentDetailsBinding employmentDetailsBinding;
     private EmploymentDetailsViewModel employmentDetailsViewModel;
 
-    private OccupationPostParams occupationPostParams;
-    private ProfessionPostParams professionPostParams;
+    private LookUpCodePostParams occupationPostParams;
+    private LookUpCodePostParams professionPostParams;
 
     private OccupationResponseData selectedOccupation;
     private ProfessionResponseData selectedProfession;
@@ -69,9 +72,9 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     }
 
     private void observe() {
-        employmentDetailsViewModel.occupationResponseMutableLiveData.observe(this, new Observer<OccupationResponse>() {
+        employmentDetailsViewModel.occupationResponseMutableLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(OccupationResponse occupationResponse) {
+            public void onChanged(LookUpCodeResponse occupationResponse) {
                 setOccupationSpinner(occupationResponse);
                 loader.dismiss();
             }
@@ -85,9 +88,9 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
             }
         });
 
-        employmentDetailsViewModel.professionResponseMutableLiveData.observe(this, new Observer<ProfessionResponse>() {
+        employmentDetailsViewModel.professionResponseMutableLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(ProfessionResponse professionResponse) {
+            public void onChanged(LookUpCodeResponse professionResponse) {
                 setProfessionSpinner(professionResponse);
                 loader.dismiss();
             }
@@ -156,9 +159,9 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         startActivity(intent);
     }
 
-    private void setProfessionSpinner(ProfessionResponse professionResponse) {
-        ArrayList<ProfessionResponseData> _allProfession = new ArrayList<>();
-        ProfessionResponseData professionResponseData = new ProfessionResponseData();
+    private void setProfessionSpinner(LookUpCodeResponse professionResponse) {
+        ArrayList<LookUpCodeResponseData> _allProfession = new ArrayList<>();
+        LookUpCodeResponseData professionResponseData = new LookUpCodeResponseData();
         professionResponseData.setName("Choose Profession");
         professionResponseData.setId(0);
         professionResponseData.setDescription("");
@@ -170,7 +173,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
             for (int i = 0 ; i < professionResponse.getData().size() ; i++){
                 _allProfession.add(professionResponse.getData().get(i));
             }
-            ArrayAdapter<ProfessionResponseData> dataAdapter = new ArrayAdapter<ProfessionResponseData>(this, android.R.layout.simple_spinner_item, _allProfession){
+            ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allProfession){
                 @Override
                 public boolean isEnabled(int position) {
                     if (position == 0){
@@ -198,10 +201,10 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     }
 
-    private void setOccupationSpinner(OccupationResponse occupationResponse) {
-        ArrayList<OccupationResponseData> _allOccupation = new ArrayList<>();
+    private void setOccupationSpinner(LookUpCodeResponse occupationResponse) {
+        ArrayList<LookUpCodeResponseData> _allOccupation = new ArrayList<>();
 
-        OccupationResponseData occupationResponseData = new OccupationResponseData();
+        LookUpCodeResponseData occupationResponseData = new LookUpCodeResponseData();
         occupationResponseData.setName("Choose Occupation");
         occupationResponseData.setId(0);
         occupationResponseData.setDescription("");
@@ -214,7 +217,7 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
                 _allOccupation.add(occupationResponse.getData().get(i));
             }
 
-            ArrayAdapter<OccupationResponseData> dataAdapter = new ArrayAdapter<OccupationResponseData>(this, android.R.layout.simple_spinner_item, _allOccupation){
+            ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allOccupation){
                 @Override
                 public boolean isEnabled(int position) {
                     if (position == 0){
@@ -247,8 +250,8 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
 
     private void setViewModel() {
         employmentDetailsViewModel = new ViewModelProvider(this).get(EmploymentDetailsViewModel.class);
-        occupationPostParams = new OccupationPostParams();
-        professionPostParams = new ProfessionPostParams();
+        occupationPostParams = new LookUpCodePostParams();
+        professionPostParams = new LookUpCodePostParams();
         registerEmploymentDetailsPostParams = new RegisterEmploymentDetailsPostParams();
         registerEmploymentDetailsPostConsumerList = new RegisterEmploymentDetailsPostConsumerList();
         consumerList = new ArrayList<>();

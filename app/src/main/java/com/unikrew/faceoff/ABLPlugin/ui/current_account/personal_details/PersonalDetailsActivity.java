@@ -24,6 +24,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponseData;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostConsumerList;
@@ -40,7 +43,7 @@ import java.util.List;
 public class PersonalDetailsActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     private TaxResidentDetailsBinding taxResidentDetailsBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
-    private TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams;
+    private LookUpCodePostParams tinUnavailabilityReasonsPostParams;
     private TinUnavailabilityReasonsResponseData tinUnavailabilityReason = null;
     private CountriesResponseData selectedResidentCountry = null;
     private int isTaxResidentOutside = 0;
@@ -89,10 +92,10 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         tinUnavailabilityReasonsPostParams.getData().setCodeTypeId(Config.TIN_UNAVAILABILITY_REASONS);
     }
 
-    private void setUnavailabilityReasons(ArrayList<TinUnavailabilityReasonsResponseData> tinUnavailabilityReasonsResponse) {
-        ArrayList<TinUnavailabilityReasonsResponseData> _allReasons = new ArrayList<>();
+    private void setUnavailabilityReasons(ArrayList<LookUpCodeResponseData> tinUnavailabilityReasonsResponse) {
+        ArrayList<LookUpCodeResponseData> _allReasons = new ArrayList<>();
 
-        TinUnavailabilityReasonsResponseData data = new TinUnavailabilityReasonsResponseData();
+        LookUpCodeResponseData data = new LookUpCodeResponseData();
         data.setDescription("");
         data.setId(0);
         data.setName("Choose Reasons");
@@ -121,7 +124,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             _allReasons.add(tinUnavailabilityReasonsResponse.get(i));
         }
 
-        ArrayAdapter<TinUnavailabilityReasonsResponseData> dataAdapter = new ArrayAdapter<TinUnavailabilityReasonsResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
+        ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
             @Override
             public boolean isEnabled(int position) {
                 if (position == 0){
@@ -150,7 +153,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
 
     private void setViewModel() {
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
-        tinUnavailabilityReasonsPostParams = new TinUnavailabilityReasonsPostParams();
+        tinUnavailabilityReasonsPostParams = new LookUpCodePostParams();
         currentAccountTaxPostParams = new CurrentAccountTaxPostParams();
     }
 
@@ -163,9 +166,9 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             }
         });
 
-        personalDetailsViewModel.tinUnavailabilityReasonsSuccessResponse.observe(this, new Observer<TinUnavailabilityReasonsResponse>() {
+        personalDetailsViewModel.tinUnavailabilityReasonsSuccessResponse.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(TinUnavailabilityReasonsResponse tinUnavailabilityReasonsResponse) {
+            public void onChanged(LookUpCodeResponse tinUnavailabilityReasonsResponse) {
                 dismissLoading();
                 setUnavailabilityReasons(tinUnavailabilityReasonsResponse.getData());
             }

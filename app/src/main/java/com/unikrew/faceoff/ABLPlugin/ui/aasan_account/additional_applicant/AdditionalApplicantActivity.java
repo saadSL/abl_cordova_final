@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutAdditionalApplicantBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponseData;
@@ -25,8 +28,8 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
 
     private LayoutAdditionalApplicantBinding layoutAdditionalApplicantBinding;
     private AdditionalApplicantViewModel applicantViewModel;
-    private RelationshipPostParams relationshipPostParams;
-    private ArrayList<RelationshipResponseData> relationshipResponseData;
+    private LookUpCodePostParams relationshipPostParams;
+    private ArrayList<LookUpCodeResponseData> relationshipResponseData;
     public static int SELECTED_RELATION_CODE = 0;
 
     @Override
@@ -42,9 +45,9 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
     }
 
     private void observe() {
-        applicantViewModel.relationshipSuccessResponse.observe(this, new Observer<RelationshipResponse>() {
+        applicantViewModel.relationshipSuccessResponse.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(RelationshipResponse relationshipResponse) {
+            public void onChanged(LookUpCodeResponse relationshipResponse) {
                 dismissLoading();
                 setRelationshipSpinner(relationshipResponse);
             }
@@ -59,7 +62,7 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
         });
     }
 
-    private void setRelationshipSpinner(RelationshipResponse relationshipResponse) {
+    private void setRelationshipSpinner(LookUpCodeResponse relationshipResponse) {
         relationshipResponseData = relationshipResponse.getData();
         setSpinner();
     }
@@ -96,7 +99,7 @@ public class AdditionalApplicantActivity extends BaseActivity implements View.On
 
     private void setViewModel() {
         applicantViewModel = new ViewModelProvider(this).get(AdditionalApplicantViewModel.class);
-        relationshipPostParams = new RelationshipPostParams();
+        relationshipPostParams = new LookUpCodePostParams();
     }
 
     private void setClicks() {

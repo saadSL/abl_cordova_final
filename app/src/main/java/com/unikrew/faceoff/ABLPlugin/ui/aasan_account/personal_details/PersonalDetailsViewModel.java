@@ -23,6 +23,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
@@ -32,20 +34,20 @@ import retrofit2.Response;
 
 public class PersonalDetailsViewModel extends BaseViewModel {
 
-    public MutableLiveData<MobileNetworkResponse> occupationLiveData = new MutableLiveData<>();
-    public MutableLiveData<MobileNetworkResponse> professionLiveData = new MutableLiveData<>();
+    public MutableLiveData<LookUpCodeResponse> occupationLiveData = new MutableLiveData<>();
+    public MutableLiveData<LookUpCodeResponse> professionLiveData = new MutableLiveData<>();
 
     public MutableLiveData<RegisterEmploymentDetailsResponse> registerEmploymentDetailsResponseMutableLiveData = new MutableLiveData<RegisterEmploymentDetailsResponse>();
     public MutableLiveData<UserAddressResponseModel> userAddressMutableLiveData = new MutableLiveData<UserAddressResponseModel>();
 
     public MutableLiveData<SaveKycResponse> saveKycResponseMutableLiveData = new MutableLiveData<SaveKycResponse>();
 
-    public void getOccupation(MobileNetworkPostParams mobileNetworkPostParams) {
+    public void getOccupation(LookUpCodePostParams mobileNetworkPostParams) {
 
-        Call<MobileNetworkResponse> callableRes = AblApplication.apiInterface.getPurposeOfAccount(mobileNetworkPostParams);
-        callableRes.enqueue(new Callback<MobileNetworkResponse>() {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(mobileNetworkPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         occupationLiveData.postValue(response.body());
@@ -58,19 +60,19 @@ public class PersonalDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<MobileNetworkResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
             }
         });
 
     }
 
-    public void getProfession(MobileNetworkPostParams mobileNetworkPostParams) {
+    public void getProfession(LookUpCodePostParams mobileNetworkPostParams) {
 
-        Call<MobileNetworkResponse> callableRes = AblApplication.apiInterface.getPurposeOfAccount(mobileNetworkPostParams);
-        callableRes.enqueue(new Callback<MobileNetworkResponse>() {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(mobileNetworkPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         professionLiveData.postValue(response.body());
@@ -83,7 +85,7 @@ public class PersonalDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<MobileNetworkResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
             }
         });
@@ -208,14 +210,14 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         });
     }
 
-    MutableLiveData<TinUnavailabilityReasonsResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<TinUnavailabilityReasonsResponse>();
+    MutableLiveData<LookUpCodeResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<LookUpCodeResponse>();
     MutableLiveData<String> tinUnavailabilityReasonsError = new MutableLiveData<String>();
 
-    public void getTinUnavailabilityReasons(TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams) {
-        Call<TinUnavailabilityReasonsResponse> callabeRes = AblApplication.apiInterface.getTinUnavailabilityReasons(tinUnavailabilityReasonsPostParams);
-        callabeRes.enqueue(new Callback<TinUnavailabilityReasonsResponse>() {
+    public void getTinUnavailabilityReasons(LookUpCodePostParams tinUnavailabilityReasonsPostParams) {
+        Call<LookUpCodeResponse> callabeRes = AblApplication.apiInterface.getLookUpResponse(tinUnavailabilityReasonsPostParams);
+        callabeRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<TinUnavailabilityReasonsResponse> call, Response<TinUnavailabilityReasonsResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         tinUnavailabilityReasonsSuccessResponse.postValue(response.body());
@@ -228,7 +230,7 @@ public class PersonalDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<TinUnavailabilityReasonsResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 tinUnavailabilityReasonsError.postValue(t.getMessage());
             }
         });

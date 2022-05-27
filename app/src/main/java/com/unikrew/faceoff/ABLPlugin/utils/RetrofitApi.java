@@ -100,8 +100,8 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/public/change-mobile-no")
     Call<ChangeMobileNumberResponse> changeMobileNumber(@Body ChangeMobileNumberPostParams postParams);
 
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<MobileNetworkResponse> getPurposeOfAccount(@Body MobileNetworkPostParams mobileNetworkPostParams);
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<MobileNetworkResponse> getPurposeOfAccount(@Body MobileNetworkPostParams mobileNetworkPostParams);
 
     @POST("/RdaConsumer/api/consumer/register-verify-otp")
     Call<RegisterVerifyOtpResponse> registerVerifyOtp(@Body RegisterVerifyOtp registerVerifyOtp);
@@ -115,11 +115,11 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-address")
     Call<UserAddressResponseModel> postUserAddress(@Body PostUserAddressModel postUserAddressModel, @Header("Authorization") String accessToken);
 
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<OccupationResponse> getOccupation(@Body OccupationPostParams postParams);
-
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<ProfessionResponse> getProfession(@Body ProfessionPostParams postParams);
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<OccupationResponse> getOccupation(@Body OccupationPostParams postParams);
+//
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<ProfessionResponse> getProfession(@Body ProfessionPostParams postParams);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
     Call<RegisterEmploymentDetailsResponse> postPersonalDetailsOne(@Body PersonalDetailsOnePostModel postParams, @Header("Authorization") String accessToken);
@@ -142,11 +142,11 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
     Call<SaveNatureOfAccountResponse> saveNatureOfAccount(@Body SaveNatureOfAccountPostParams postParams,@Header("Authorization") String accessToken);
 
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<LookUpCodeResponse> getAtmCards(@Body LookUpCodePostParams postParams);
-
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<TinUnavailabilityReasonsResponse> getTinUnavailabilityReasons(@Body TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams);
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<LookUpCodeResponse> getAtmCards(@Body LookUpCodePostParams postParams);
+//
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<TinUnavailabilityReasonsResponse> getTinUnavailabilityReasons(@Body TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams);
 
     @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
     Call<FreelancerTaxResponse> submitFreelancerTaxDetails(@Body FreelancerTaxPostParams freelancerTaxPostParams,@Header("Authorization") String accessToken);
@@ -154,8 +154,8 @@ public interface RetrofitApi {
     @POST("/RdaConsumer/api/consumer/register-consumer-fatca-info")
     Call<FatcaDetailsResponse> submitFatcaDetails(@Body FatcaDetailsPostParams fatcaDetailsPostParams,@Header("Authorization") String accessToken);
 
-    @POST("/RdaConsumer/api/common/public/lookup/code")
-    Call<RelationshipResponse> getRelationships(@Body RelationshipPostParams postParams);
+//    @POST("/RdaConsumer/api/common/public/lookup/code")
+//    Call<RelationshipResponse> getRelationships(@Body RelationshipPostParams postParams);
 
     @POST("/RdaConsumer/api/common/public/lookup/country")
     Call<CountriesResponse> getCountries();

@@ -21,6 +21,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponseData;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
     private SelectAccountTypeViewModel selectAccountTypeViewModel;
     private int CUSTOMER_ACCOUNT_TYPE_ID = 0;
     private String selectedPurposeOfAccount = "";
-    private ArrayList<MobileNetworkResponseData> purposeArray;
+    private ArrayList<LookUpCodeResponseData> purposeArray;
     private Boolean IS_RESUMED;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
     private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
@@ -152,9 +155,9 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
                 moveToPreferredAccount(accountTypeResponse);
             }
         });
-        selectAccountTypeViewModel.purposeOfAccountLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        selectAccountTypeViewModel.purposeOfAccountLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
+            public void onChanged(LookUpCodeResponse mobileNetworkResponse) {
                 Log.d("branchesResponse", "onChanged: " + mobileNetworkResponse);
                 dismissLoading();
                 setSpinner(mobileNetworkResponse);
@@ -175,7 +178,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
         startActivity(intent);
     }
 
-    private void setSpinner(MobileNetworkResponse mobileNetworkResponse) {
+    private void setSpinner(LookUpCodeResponse mobileNetworkResponse) {
         purposeArray = mobileNetworkResponse.getData();
         List<String> _allPurposes = new ArrayList<>();
 
@@ -201,7 +204,7 @@ public class SelectAccountTypeActivity extends BaseActivity implements AdapterVi
 
     private void getPurposeOfAccount() {
         showLoading();
-        MobileNetworkPostParams mobileNetworkPostParams = new MobileNetworkPostParams();
+        LookUpCodePostParams mobileNetworkPostParams = new LookUpCodePostParams();
         mobileNetworkPostParams.getData().codeTypeId = Config.ACCOUNT_PURPOSE_CODE;
         selectAccountTypeViewModel.getPurposeOfAccount(mobileNetworkPostParams);
     }

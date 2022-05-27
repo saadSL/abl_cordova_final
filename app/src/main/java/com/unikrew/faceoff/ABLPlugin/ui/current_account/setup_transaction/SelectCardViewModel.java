@@ -45,7 +45,7 @@ public class SelectCardViewModel extends BaseViewModel {
     MutableLiveData<LookUpCodeResponse> atmCardsSuccessResponse = new MutableLiveData<LookUpCodeResponse>();
 
     public void getAtmCards(LookUpCodePostParams atmCardsPostParams) {
-        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getAtmCards(atmCardsPostParams);
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(atmCardsPostParams);
         callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
             public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
