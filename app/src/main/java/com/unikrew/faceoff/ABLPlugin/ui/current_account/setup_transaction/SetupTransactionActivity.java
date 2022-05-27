@@ -29,6 +29,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
+import com.unikrew.faceoff.ABLPlugin.ui.current_account.kin_details.KinDetailsActivity;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -39,8 +40,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     private SetupTransactionPostParams setupTransactionPostParams;
     private SelectCardViewModel selectCardViewModel;
 
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+
     private LookUpCodePostParams atmCardsPostParams;
     private ArrayList<LookUpCodeResponseData> atmCardsList;
 
@@ -51,12 +51,10 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     private int transactionAlertId = 0;
     private int esoaReqInd = 0;
 
-    private Boolean IS_RESUMED;
-
     private SelectCardAdapter adapter;
     private LookUpCodeResponseData selectedVisaCardReason = null;
     private LookUpCodeResponseData selectedCardDeliveryOption;
-
+    private List<ConsumerListItemResponse> consumerList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,13 +74,14 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
         //flow for new application
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
 
     }
@@ -136,8 +135,8 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
         selectCardViewModel.setupTransactionResponseMutableLiveData.observe(this, new Observer<SetupTransactionResponse>() {
             @Override
             public void onChanged(SetupTransactionResponse setupTransactionResponse) {
-//                openUploadDocumentActivity(setupTransactionResponse);
-                loader.dismiss();
+                goToNext();
+                dismissLoading();
             }
         });
 
@@ -145,7 +144,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
             @Override
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
-                loader.dismiss();
+                dismissLoading();
             }
         });
 
@@ -178,9 +177,13 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
             @Override
             public void onChanged(String errMsg) {
                 dismissLoading();
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
             }
         });
+    }
+
+    private void goToNext() {
+        openActivity(KinDetailsActivity.class);
     }
 
     private void setCardDeliverySpinner(ArrayList<LookUpCodeResponseData> lookUpCodeResponse) {
@@ -196,7 +199,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
         setupTransactionBinding.spDebitCardDelivery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (position > 0){
+                if (position > 0) {
                     selectedCardDeliveryOption = (LookUpCodeResponseData) adapterView.getSelectedItem();
                 }
             }
@@ -206,16 +209,16 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
             }
         });
-        for (int i = 0 ; i < lookUpCodeResponse.size() ; i++){
+        for (int i = 0; i < lookUpCodeResponse.size(); i++) {
             _allReasons.add(lookUpCodeResponse.get(i));
         }
 
-        ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
+        ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0){
+                if (position == 0) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -224,9 +227,9 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView textView = (TextView) view;
-                if (position == 0){
+                if (position == 0) {
                     textView.setTextColor(Color.GRAY);
-                }else{
+                } else {
                     textView.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -249,7 +252,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
         setupTransactionBinding.spVisaCardReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (position > 0){
+                if (position > 0) {
                     selectedVisaCardReason = (LookUpCodeResponseData) adapterView.getSelectedItem();
                 }
             }
@@ -259,16 +262,16 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
             }
         });
-        for (int i = 0 ; i < lookUpCodeResponse.size() ; i++){
+        for (int i = 0; i < lookUpCodeResponse.size(); i++) {
             _allReasons.add(lookUpCodeResponse.get(i));
         }
 
-        ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
+        ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0){
+                if (position == 0) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -277,9 +280,9 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView textView = (TextView) view;
-                if (position == 0){
+                if (position == 0) {
                     textView.setTextColor(Color.GRAY);
-                }else{
+                } else {
                     textView.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -292,7 +295,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     private void setAtmCardAdapter() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_atm_card);
         adapter = new SelectCardAdapter(atmCardsList, SetupTransactionActivity.this, SetupTransactionActivity.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(SetupTransactionActivity.this,LinearLayoutManager.HORIZONTAL,true));
+        recyclerView.setLayoutManager(new LinearLayoutManager(SetupTransactionActivity.this, LinearLayoutManager.HORIZONTAL, true));
         recyclerView.setAdapter(adapter);
     }
 
@@ -311,6 +314,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     private void setAtmCardsPostParams() {
         atmCardsPostParams.getData().setCodeTypeId(Config.ATM_CARDS_ID);
     }
+
     private void setBinding() {
         setupTransactionBinding = LayoutCurrentAccountSetupTransactionBinding.inflate(getLayoutInflater());
         setContentView(setupTransactionBinding.getRoot());
@@ -318,8 +322,8 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
     @Override
     public void setSelectionAt(int position) {
-        if (atmCardInd == 1){
-            for (int i = 0 ; i < atmCardsList.size() ; i++){
+        if (atmCardInd == 1) {
+            for (int i = 0; i < atmCardsList.size(); i++) {
                 atmCardsList.get(i).setSelected(false);
             }
             atmCardsList.get(position).setSelected(true);
@@ -371,7 +375,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
                 registerTransactionDetails();
                 break;
@@ -400,7 +404,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private void registerTransactionDetails() {
-        if ( isValid() ){
+        if (isValid()) {
             setTransactionDetailsPostParams();
             selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
@@ -408,22 +412,22 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private boolean isValid() {
-        if (atmCardInd == 1){
-            if (atmTypeId == 0){
-                showAlert(Config.errorType,"Please Select A Card !!!");
+        if (atmCardInd == 1) {
+            if (atmTypeId == 0) {
+                showAlert(Config.errorType, "Please Select A Card !!!");
                 return false;
-            }else if (selectedVisaCardReason == null){
-                showAlert(Config.errorType,"Please Select A Reason For Requiring Visa Card !!!");
+            } else if (selectedVisaCardReason == null) {
+                showAlert(Config.errorType, "Please Select A Reason For Requiring Visa Card !!!");
                 return false;
             }
         }
-        if (selectedCardDeliveryOption == null){
-            showAlert(Config.errorType,"Please Select Card Delivery Option !!!");
+        if (selectedCardDeliveryOption == null) {
+            showAlert(Config.errorType, "Please Select Card Delivery Option !!!");
             return false;
         }
-        if (transactionAlertInd == 1){
-            if (transactionAlertId == 0){
-                showAlert(Config.errorType,"Please Select Where To Send Transaction Alert !!!");
+        if (transactionAlertInd == 1) {
+            if (transactionAlertId == 0) {
+                showAlert(Config.errorType, "Please Select Where To Send Transaction Alert !!!");
                 return false;
             }
         }
@@ -431,20 +435,12 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private void setTransactionDetailsPostParams() {
-        if (IS_RESUMED) {
-            //flow for drafted application
-            ArrayList<ConsumerListItemResponse> accountInformation = getConsumerAccountDetailsResponse.getData().getConsumerList();
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(accountInformation.get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            setupTransactionPostParams.getData().setRdaCustomerId(accountInformation.get(0).getAccountInformation().getRdaCustomerId());
-            setupTransactionPostParams.getData().setCustomerTypeId(accountInformation.get(0).getCustomerTypeId());
-        } else {
-            //flow for new application
-            List<ConsumerListItemResponse> accountInformation = registerVerifyOtpResponse.getData().getConsumerList();
-            setupTransactionPostParams.getData().setRdaCustomerAccInfoId(accountInformation.get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            setupTransactionPostParams.getData().setRdaCustomerId(accountInformation.get(0).getAccountInformation().getRdaCustomerId());
-            setupTransactionPostParams.getData().setCustomerTypeId(accountInformation.get(0).getCustomerTypeId());
-        }
 
+
+        setupTransactionPostParams.getData().setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        setupTransactionPostParams.getData().setRdaCustomerId(consumerList.get(0).getAccountInformation().getRdaCustomerId());
+
+        setupTransactionPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
         setupTransactionPostParams.getData().setReasonForVisaDebitCardRequestId(selectedVisaCardReason.getId());
         setupTransactionPostParams.getData().setMailingAddrPrefId(selectedCardDeliveryOption.getId());

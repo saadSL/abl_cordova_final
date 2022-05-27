@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CurrentAccountTaxPostResidentCountries implements Serializable {
     private Object countryOfTaxResidenceId;
     private int rdaCustomerId;
-    private int taxIdentityNo;
+    private Long taxIdentityNo;
     private int tinReasonId;
     private String explanation;
 
@@ -33,11 +33,11 @@ public class CurrentAccountTaxPostResidentCountries implements Serializable {
         this.rdaCustomerId = rdaCustomerId;
     }
 
-    public int getTaxIdentityNo() {
+    public Long getTaxIdentityNo() {
         return taxIdentityNo;
     }
 
-    public void setTaxIdentityNo(int taxIdentityNo) {
+    public void setTaxIdentityNo(Long taxIdentityNo) {
         this.taxIdentityNo = taxIdentityNo;
     }
 

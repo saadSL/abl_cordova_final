@@ -26,7 +26,7 @@ public class AccountInformationResponse implements Serializable {
 	private Object customerAccountType;
 	private Object remitterName;
 	private Object accountVariantId;
-	private int bankingMode;
+	private String bankingMode;
 	private Object accountTypeId;
 	private Object natureOfAccountId;
 	private Object noOfChequeBookLeavesId;
@@ -149,7 +149,7 @@ public class AccountInformationResponse implements Serializable {
 		return accountVariantId;
 	}
 
-	public int getBankingMode(){
+	public String getBankingMode(){
 		return bankingMode;
 	}
 

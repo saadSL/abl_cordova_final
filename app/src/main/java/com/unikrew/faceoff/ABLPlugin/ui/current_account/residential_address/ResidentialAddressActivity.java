@@ -92,6 +92,7 @@ public class ResidentialAddressActivity extends BaseActivity {
     }
 
     private void postUserAddress() {
+        showLoading();
         personalDetailsViewModel.userAddress(getAddressParams(), getStringFromPref(Config.ACCESS_TOKEN));
     }
 

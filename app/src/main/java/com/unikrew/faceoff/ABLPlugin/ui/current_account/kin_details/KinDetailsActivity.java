@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.current_account.kin_details;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,6 +11,7 @@ import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutKinDetailsBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostConsumerList;
 import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostParams;
@@ -20,15 +20,13 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocu
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KinDetailsActivity extends BaseActivity implements View.OnClickListener {
     private LayoutKinDetailsBinding kinDetailsBinding;
     private KinDetailsViewModel kinDetailsViewModel;
     private RegisterConsumerBasicInfoPostParams registerKinDetailsPostParams;
-    private Boolean IS_RESUMED;
-
-    private RegisterVerifyOtpResponse registerVerifyOtpResponse;
-    private GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse;
+    private List<ConsumerListItemResponse> consumerList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,27 +51,26 @@ public class KinDetailsActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onChanged(String errMsg) {
                 dismissLoading();
-                showAlert(Config.errorType,errMsg);
+                showAlert(Config.errorType, errMsg);
             }
         });
     }
 
     private void openUploadDocumentActivity() {
-        Intent intent = new Intent(this, UploadDocumentActivity.class);
-        startActivity(intent);
+        openActivity(UploadDocumentActivity.class);
     }
 
     private void getSharedPrefData() {
 
         //flow for new application
         if (getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class) == null) {
-            IS_RESUMED = false;
-            registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            RegisterVerifyOtpResponse registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+            consumerList = registerVerifyOtpResponse.getData().getConsumerList();
         }
         //flow for drafted application
         else {
-            IS_RESUMED = true;
-            getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse = (GetConsumerAccountDetailsResponse) getSerializableFromPref(Config.GET_CONSUMER_RESPONSE, GetConsumerAccountDetailsResponse.class);
+            consumerList = getConsumerAccountDetailsResponse.getData().getConsumerList();
         }
 
     }
@@ -95,7 +92,7 @@ public class KinDetailsActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_next:
                 postKinDetails();
                 break;
@@ -106,50 +103,45 @@ public class KinDetailsActivity extends BaseActivity implements View.OnClickList
     }
 
     private void postKinDetails() {
-        if (isValid()){
+        if (isValid()) {
             setKinDetailsPostParams();
-            kinDetailsViewModel.postKinDetails(registerKinDetailsPostParams,getStringFromPref(Config.ACCESS_TOKEN));
+            kinDetailsViewModel.postKinDetails(registerKinDetailsPostParams, getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
         }
     }
 
     private void setKinDetailsPostParams() {
-        ArrayList<RegisterConsumerBasicInfoPostConsumerList> consumerList= new ArrayList<>();
+        ArrayList<RegisterConsumerBasicInfoPostConsumerList> registerConsumerBasicInfoPostConsumerLists = new ArrayList<>();
 
         RegisterConsumerBasicInfoPostConsumerList consumer = new RegisterConsumerBasicInfoPostConsumerList();
 
-        if (IS_RESUMED){
-            consumer.setRdaCustomerProfileId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
-            consumer.setRdaCustomerAccInfoId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            consumer.setCustomerTypeId(getConsumerAccountDetailsResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-        }else{
-            consumer.setRdaCustomerProfileId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getRdaCustomerProfileId());
-            consumer.setRdaCustomerAccInfoId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation().getRdaCustomerAccInfoId());
-            consumer.setCustomerTypeId(registerVerifyOtpResponse.getData().getConsumerList().get(0).getCustomerTypeId());
-        }
+        consumer.setRdaCustomerProfileId(consumerList.get(0).getRdaCustomerProfileId());
+        consumer.setRdaCustomerAccInfoId(consumerList.get(0).getAccountInformation().getRdaCustomerAccInfoId());
+        consumer.setCustomerTypeId(consumerList.get(0).getCustomerTypeId());
 
         consumer.setKinName(kinDetailsBinding.etKinName.getText().toString());
         consumer.setKinCnic(kinDetailsBinding.etKinCnic.getText().toString());
         consumer.setKinMobile(kinDetailsBinding.etKinMobileNumber.getText().toString());
+        consumer.setNationalityTypeId(null);
 
-        consumerList.add(consumer);
+        registerConsumerBasicInfoPostConsumerLists.add(consumer);
 
-        registerKinDetailsPostParams.getData().setConsumerList(consumerList);
+        registerKinDetailsPostParams.getData().setConsumerList(registerConsumerBasicInfoPostConsumerLists);
     }
 
     private boolean isValid() {
-        if (isEmpty(kinDetailsBinding.etKinName)){
-            showAlert(Config.errorType,"Please Enter Kin Name !!!");
+        if (isEmpty(kinDetailsBinding.etKinName)) {
+            showAlert(Config.errorType, "Please Enter Kin Name !!!");
             return false;
         }
 
-        if (isEmpty(kinDetailsBinding.etKinCnic)){
-            showAlert(Config.errorType,"Please Enter Kin CNIC !!!");
+        if (isEmpty(kinDetailsBinding.etKinCnic)) {
+            showAlert(Config.errorType, "Please Enter Kin CNIC !!!");
             return false;
         }
 
-        if (isEmpty(kinDetailsBinding.etKinMobileNumber)){
-            showAlert(Config.errorType,"Please Enter Kin Mobile Number !!!");
+        if (isEmpty(kinDetailsBinding.etKinMobileNumber)) {
+            showAlert(Config.errorType, "Please Enter Kin Mobile Number !!!");
             return false;
         }
         return true;

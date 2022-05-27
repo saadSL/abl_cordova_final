@@ -1,6 +1,5 @@
 package com.unikrew.faceoff.ABLPlugin.ui.current_account.personal_details;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +31,6 @@ import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_i
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostResidentCountries;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
-import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
-import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction.SelectCardActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.current_account.setup_transaction.SetupTransactionActivity;
 import com.unikrew.faceoff.Config;
 
@@ -192,7 +189,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
     }
 
     private void openTransactionActivity() {
-        Intent intent = new Intent(this, SetupTransactionActivity.class);
+        openActivity(SetupTransactionActivity.class);
     }
 
     private void setCountriesSpinner(CountriesResponse countriesResponse) {
@@ -354,7 +351,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         currentAccountTaxPostConsumerList.setKinName(consumerList.get(0).getKinName());
         currentAccountTaxPostConsumerList.setKinCnic(consumerList.get(0).getKinCnic());
         currentAccountTaxPostConsumerList.setKinMobile(consumerList.get(0).getKinMobile());
-        currentAccountTaxPostConsumerList.setNationalityTypeId(consumerList.get(0).getNationalityTypeId());
+        currentAccountTaxPostConsumerList.setNationalityTypeId(null);
         currentAccountTaxPostConsumerList.setNationalities(null);
         currentAccountTaxPostConsumerList.setResidentCountries(getResidentCountries());
 
@@ -373,7 +370,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
 
         postResidentCountries.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
         if (tinNumberAvailable){
-            postResidentCountries.setTaxIdentityNo(Integer.parseInt(taxResidentDetailsBinding.etTaxIdentityNumber.getText().toString()));
+            postResidentCountries.setTaxIdentityNo(Long.valueOf(taxResidentDetailsBinding.etTaxIdentityNumber.getText().toString()));
         }
         postResidentCountries.setTinReasonId(tinUnavailabilityReason.getId());
         postResidentCountries.setExplanation(taxResidentDetailsBinding.etTinUnavailabilityReason.getText().toString());

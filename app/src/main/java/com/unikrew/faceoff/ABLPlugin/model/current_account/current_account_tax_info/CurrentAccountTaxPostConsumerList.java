@@ -21,7 +21,7 @@ public class CurrentAccountTaxPostConsumerList implements Serializable {
     public Object kinName;
     public Object kinCnic;
     public Object kinMobile;
-    public int nationalityTypeId;
+    public Integer nationalityTypeId;
     public ArrayList<CurrentAccountTaxPostNationality> nationalities;
     private ArrayList<CurrentAccountTaxPostResidentCountries> residentCountries;
 
@@ -161,11 +161,11 @@ public class CurrentAccountTaxPostConsumerList implements Serializable {
         this.kinMobile = kinMobile;
     }
 
-    public int getNationalityTypeId() {
+    public Integer getNationalityTypeId() {
         return nationalityTypeId;
     }
 
-    public void setNationalityTypeId(int nationalityTypeId) {
+    public void setNationalityTypeId(Integer nationalityTypeId) {
         this.nationalityTypeId = nationalityTypeId;
     }
 

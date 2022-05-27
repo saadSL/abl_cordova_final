@@ -194,7 +194,7 @@ public class PersonalDetailsTwoActivity extends BaseActivity {
     }
 
     private void goToNext() {
-        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID) == Config.CURRENT_DIGITAL_ACCOUNT) {
+        if (getIntFromPref(Config.ACCOUNT_VARIANT_ID) == Config.CURRENT_DIGITAL_ACCOUNT && consumerList.size() == 1) {
             //for current account
             openActivity(ResidentialAddressActivity.class);
         } else {

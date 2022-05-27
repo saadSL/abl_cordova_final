@@ -21,7 +21,7 @@ public class RegisterConsumerBasicInfoPostConsumerList implements Serializable {
     public String kinName;
     public String kinCnic;
     public String kinMobile;
-    public int nationalityTypeId;
+    public Integer nationalityTypeId = null;
     public ArrayList<RegisterConsumerBasicInfoPostNationality> nationalities;
     public ArrayList<RegisterConsumerBasicInfoPostResidentCountries> residentCountries;
 
@@ -161,11 +161,11 @@ public class RegisterConsumerBasicInfoPostConsumerList implements Serializable {
         this.kinMobile = kinMobile;
     }
 
-    public int getNationalityTypeId() {
+    public Integer getNationalityTypeId() {
         return nationalityTypeId;
     }
 
-    public void setNationalityTypeId(int nationalityTypeId) {
+    public void setNationalityTypeId(Integer nationalityTypeId) {
         this.nationalityTypeId = nationalityTypeId;
     }
 

@@ -156,7 +156,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
     private void setSummary(GetConsumerAccountDetailsResponse getConsumerAccountDetailsResponse) {
 
         ConsumerListItemResponse consumerDetails = getConsumerAccountDetailsResponse.getData().getConsumerList().get(0);
-        if (consumerDetails.getAccountInformation().getBankingMode()!=0){
+        if (!consumerDetails.getAccountInformation().getBankingMode().isEmpty()){
             reviewDetailsBinding.tvBankingMode.setText(consumerDetails.getAccountInformation().getBankingMode());
         }else{
             reviewDetailsBinding.tvBankingMode.setText("---");

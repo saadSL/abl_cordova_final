@@ -243,7 +243,7 @@ public class ConsumerListItemResponse implements Serializable {
 		this.fatherHusbandName = fatherHusbandName;
 	}
 
-	public void setNationalityTypeId(int nationalityTypeId) {
+	public void setNationalityTypeId(Integer nationalityTypeId) {
 		this.nationalityTypeId = nationalityTypeId;
 	}
 
@@ -350,7 +350,7 @@ public class ConsumerListItemResponse implements Serializable {
 	private boolean isPrimary;
 	private boolean existingCustomerInd;
 	private String fatherHusbandName;
-	private int nationalityTypeId;
+	private Integer nationalityTypeId = null;
 	private Object kinName;
 	private Object genderId;
 	private String fullName;
@@ -584,7 +584,7 @@ public class ConsumerListItemResponse implements Serializable {
 		return fatherHusbandName;
 	}
 
-	public int getNationalityTypeId(){
+	public Integer getNationalityTypeId(){
 		return nationalityTypeId;
 	}
 

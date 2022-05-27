@@ -178,7 +178,7 @@ public class NationalityActivity extends BaseActivity implements View.OnClickLis
         currentAccountTaxPostConsumerList.setKinName(consumerList.get(0).getKinName());
         currentAccountTaxPostConsumerList.setKinCnic(consumerList.get(0).getKinCnic());
         currentAccountTaxPostConsumerList.setKinMobile(consumerList.get(0).getKinMobile());
-        currentAccountTaxPostConsumerList.setNationalityTypeId(consumerList.get(0).getNationalityTypeId());
+        currentAccountTaxPostConsumerList.setNationalityTypeId(NATIONALITY_TYPE_ID);
         currentAccountTaxPostConsumerList.setNationalities(nationalitiesArray);
 
         currentAccountConsumerList.add(currentAccountTaxPostConsumerList);
