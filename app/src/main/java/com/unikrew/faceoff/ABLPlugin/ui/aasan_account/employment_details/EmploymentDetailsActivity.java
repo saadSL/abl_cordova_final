@@ -46,8 +46,8 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     private LookUpCodePostParams occupationPostParams;
     private LookUpCodePostParams professionPostParams;
 
-    private OccupationResponseData selectedOccupation;
-    private ProfessionResponseData selectedProfession;
+    private LookUpCodeResponseData selectedOccupation;
+    private LookUpCodeResponseData selectedProfession;
 
     private RegisterEmploymentDetailsPostParams registerEmploymentDetailsPostParams;
     private RegisterEmploymentDetailsPostConsumerList registerEmploymentDetailsPostConsumerList;
@@ -214,7 +214,8 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
         employmentDetailsBinding.occupation.setOnItemSelectedListener(this);
         if (occupationResponse.getData().size() > 0){
             for (int i = 0 ; i < occupationResponse.getData().size() ; i++){
-                _allOccupation.add(occupationResponse.getData().get(i));
+                if (occupationResponse.getData().get(i).getId() != Config.ID_TO_REMOVE_FOR_OCCUPATION)
+                    _allOccupation.add(occupationResponse.getData().get(i));
             }
 
             ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allOccupation){
@@ -295,10 +296,11 @@ public class EmploymentDetailsActivity extends BaseActivity implements AdapterVi
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()){
             case R.id.profession:
-                selectedProfession = (ProfessionResponseData) adapterView.getSelectedItem();
+                selectedProfession = (LookUpCodeResponseData) adapterView.getSelectedItem();
                 break;
             case R.id.occupation:
-                selectedOccupation = (OccupationResponseData) adapterView.getSelectedItem();
+                selectedOccupation = (LookUpCodeResponseData) adapterView.getSelectedItem();
+
                 break;
         }
 

@@ -1061,6 +1061,10 @@
             </LinearLayout>
 
 
+
+
+
+            <!--     Submission Screen       -->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/ll_submission_screen"

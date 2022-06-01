@@ -46,7 +46,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
     private LookUpCodePostParams tinUnavailabilityReasonsPostParams;
     private PersonalDetailsViewModel personalDetailsViewModel;
 
-    private TinUnavailabilityReasonsResponseData tinUnavailabilityReason;
+    private LookUpCodeResponseData tinUnavailabilityReason;
 
     private Boolean IS_RESUMED;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
@@ -191,7 +191,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
         freelancerTaxResidentInfoBinding.spUnavailabilityReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tinUnavailabilityReason = (TinUnavailabilityReasonsResponseData) adapterView.getSelectedItem();
+                tinUnavailabilityReason = (LookUpCodeResponseData) adapterView.getSelectedItem();
 
             }
 
@@ -264,10 +264,10 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
     }
 
     private void submitTaxInfo() {
-        if (taxIdentificationNumber){
-            if (isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
+        if (taxIdentificationNumber && isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
+//            if (isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
                 showAlert(Config.errorType,"Please Enter Tax Identification Number !!!");
-            }
+//            }
         }else if (!taxIdentificationNumber && (tinUnavailabilityReason == null || tinUnavailabilityReason.getId() == 0)){
                 showAlert(Config.errorType,"Please Select TIN unavailability reason !!!");
         }else{

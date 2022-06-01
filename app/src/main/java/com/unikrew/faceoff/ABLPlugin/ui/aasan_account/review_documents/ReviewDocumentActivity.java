@@ -1,5 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.review_documents;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -17,6 +18,7 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_acco
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.AccountInformationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
+import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.mobile_number.MobileNumberActivity;
 import com.unikrew.faceoff.Config;
 
 public class ReviewDocumentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -401,6 +403,7 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
         reviewDetailsBinding.btnContainer.btBack.setOnClickListener(this);
         reviewDetailsBinding.termsAndConditions.cbTermsAndConditions.setOnCheckedChangeListener(this);
         reviewDetailsBinding.termsAndConditions.cbDeclaration.setOnCheckedChangeListener(this);
+        reviewDetailsBinding.btnNoThanks.setOnClickListener(this);
     }
 
     private void setLayout() {
@@ -432,7 +435,15 @@ public class ReviewDocumentActivity extends BaseActivity implements View.OnClick
             case R.id.btn_next:
                 submitApplication();
                 break;
+            case R.id.btn_no_thanks:
+                openMobileActivity();
+                break;
         }
+    }
+
+    private void openMobileActivity() {
+        Intent intent = new Intent(this, MobileNumberActivity.class);
+        startActivity(intent);
     }
 
     private void submitApplication() {

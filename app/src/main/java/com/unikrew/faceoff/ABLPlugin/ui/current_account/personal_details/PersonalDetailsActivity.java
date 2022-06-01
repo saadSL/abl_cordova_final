@@ -44,7 +44,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
     private TaxResidentDetailsBinding taxResidentDetailsBinding;
     private PersonalDetailsViewModel personalDetailsViewModel;
     private LookUpCodePostParams tinUnavailabilityReasonsPostParams;
-    private TinUnavailabilityReasonsResponseData tinUnavailabilityReason = null;
+    private LookUpCodeResponseData tinUnavailabilityReason = null;
     private CountriesResponseData selectedResidentCountry = null;
     private int isTaxResidentOutside = 0;
     private boolean tinNumberAvailable = false;
@@ -106,7 +106,7 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0){
-                    tinUnavailabilityReason = (TinUnavailabilityReasonsResponseData) adapterView.getSelectedItem();
+                    tinUnavailabilityReason = (LookUpCodeResponseData) adapterView.getSelectedItem();
                     if (tinUnavailabilityReason.getId() == 101202){
                         taxResidentDetailsBinding.llTinUnavailabilityReason.setVisibility(View.VISIBLE);
                     }else{
@@ -374,9 +374,11 @@ public class PersonalDetailsActivity extends BaseActivity implements CompoundBut
         postResidentCountries.setRdaCustomerId(consumerList.get(0).getRdaCustomerProfileId());
         if (tinNumberAvailable){
             postResidentCountries.setTaxIdentityNo(Long.valueOf(taxResidentDetailsBinding.etTaxIdentityNumber.getText().toString()));
+        }else{
+            postResidentCountries.setTinReasonId(tinUnavailabilityReason.getId());
+            postResidentCountries.setExplanation(taxResidentDetailsBinding.etTinUnavailabilityReason.getText().toString());
         }
-        postResidentCountries.setTinReasonId(tinUnavailabilityReason.getId());
-        postResidentCountries.setExplanation(taxResidentDetailsBinding.etTinUnavailabilityReason.getText().toString());
+
 
         residentCountries.add(postResidentCountries);
 

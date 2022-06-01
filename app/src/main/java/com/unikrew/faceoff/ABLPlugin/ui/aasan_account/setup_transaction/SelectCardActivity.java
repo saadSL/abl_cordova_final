@@ -252,7 +252,6 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         setupTransactionPostParams.getData().setTransAlertInd(transactionAlertInd);
         setupTransactionPostParams.getData().setChequeBookReqInd(chequeBookReqInd);
         setupTransactionPostParams.getData().setTransactionalAlertId(transactionAlertId);
-
     }
 
     @Override

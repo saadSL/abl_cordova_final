@@ -22,15 +22,11 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_drafted_apps_verify_otp.GetDraftedAppsVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.nature_of_account.SaveNatureOfAccountResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.occupation.OccupationResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_one.PersonalDetailsOnePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_three.PersonalDetailsThreePostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.personal_dets_two.PersonalDetailsTwoPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.PostUserAddressModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.personal_dets.user_address.UserAddressResponseModel;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.profession.ProfessionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsPostModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.remitter_details.RemitterDetailsResponseModel;
@@ -40,27 +36,21 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycP
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtp;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.view_apps_generate_otp.ViewAppsGenerateOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionResponse;
-import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.joint_account_model.relationship.RelationshipResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -171,4 +161,8 @@ public interface RetrofitApi {
 
     @POST("/RdaConsumer/api/consumer/register-consumer-basic-info")
     Call<RegisterConsumerBasicInfoResponse> postKinDetails(@Body RegisterConsumerBasicInfoPostParams registerKinDetailsPostParams,@Header("Authorization") String accessToken);
+
+    @POST("/RdaConsumer/api/consumer/register-consumer-account-info")
+    Call<CurrentAccountSetupTransactionResponse> currentAccountSetupTransactionDetails(@Body CurrentAccountSetupTransactionPostParams postParams, @Header("Authorization") String accessToken);
+
 }

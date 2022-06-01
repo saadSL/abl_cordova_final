@@ -29,6 +29,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.current_account.kin_details.KinDetailsActivity;
 import com.unikrew.faceoff.Config;
 
@@ -37,7 +39,7 @@ import java.util.List;
 
 public class SetupTransactionActivity extends BaseActivity implements SelectCardInterface, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     private LayoutCurrentAccountSetupTransactionBinding setupTransactionBinding;
-    private SetupTransactionPostParams setupTransactionPostParams;
+    private CurrentAccountSetupTransactionPostParams setupTransactionPostParams;
     private SelectCardViewModel selectCardViewModel;
 
 
@@ -132,9 +134,9 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private void observe() {
-        selectCardViewModel.setupTransactionResponseMutableLiveData.observe(this, new Observer<SetupTransactionResponse>() {
+        selectCardViewModel.setupTransactionResponseMutableLiveData.observe(this, new Observer<CurrentAccountSetupTransactionResponse>() {
             @Override
-            public void onChanged(SetupTransactionResponse setupTransactionResponse) {
+            public void onChanged(CurrentAccountSetupTransactionResponse setupTransactionResponse) {
                 goToNext();
                 dismissLoading();
             }
@@ -307,7 +309,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
     private void setViewModel() {
         selectCardViewModel = new ViewModelProvider(this).get(SelectCardViewModel.class);
-        setupTransactionPostParams = new SetupTransactionPostParams();
+        setupTransactionPostParams = new CurrentAccountSetupTransactionPostParams();
         atmCardsPostParams = new LookUpCodePostParams();
     }
 
