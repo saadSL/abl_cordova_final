@@ -12,6 +12,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.register_employee_details.RegisterEmploymentDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.save_kyc.SaveKycResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
@@ -19,10 +21,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EmploymentDetailsViewModel extends BaseViewModel {
-    MutableLiveData<OccupationResponse> occupationResponseMutableLiveData = new MutableLiveData<OccupationResponse>();
+    MutableLiveData<LookUpCodeResponse> occupationResponseMutableLiveData = new MutableLiveData<LookUpCodeResponse>();
     MutableLiveData<String> occupationErrorLiveData = new MutableLiveData<String>();
 
-    MutableLiveData<ProfessionResponse> professionResponseMutableLiveData = new MutableLiveData<ProfessionResponse>();
+    MutableLiveData<LookUpCodeResponse> professionResponseMutableLiveData = new MutableLiveData<LookUpCodeResponse>();
     MutableLiveData<String> professionErrorLiveData = new MutableLiveData<String>();
 
     MutableLiveData<RegisterEmploymentDetailsResponse> registerEmploymentDetailsResponseMutableLiveData = new MutableLiveData<RegisterEmploymentDetailsResponse>();
@@ -31,11 +33,11 @@ public class EmploymentDetailsViewModel extends BaseViewModel {
     MutableLiveData<SaveKycResponse> saveKycResponseMutableLiveData = new MutableLiveData<SaveKycResponse>();
     MutableLiveData<String> saveKycResponseErrorLiveData = new MutableLiveData<String>();
 
-    public void postOccupationData(OccupationPostParams occupationPostParams) {
-        Call<OccupationResponse> callableRes = AblApplication.apiInterface.getOccupation(occupationPostParams);
-        callableRes.enqueue(new Callback<OccupationResponse>() {
+    public void postOccupationData(LookUpCodePostParams occupationPostParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(occupationPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<OccupationResponse> call, Response<OccupationResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         occupationResponseMutableLiveData.postValue(response.body());
@@ -48,17 +50,17 @@ public class EmploymentDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<OccupationResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 occupationErrorLiveData.postValue(t.getMessage());
             }
         });
     }
 
-    public void postProfessionData(ProfessionPostParams professionPostParams) {
-        Call<ProfessionResponse> callableRes = AblApplication.apiInterface.getProfession(professionPostParams);
-        callableRes.enqueue(new Callback<ProfessionResponse>() {
+    public void postProfessionData(LookUpCodePostParams professionPostParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(professionPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<ProfessionResponse> call, Response<ProfessionResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         professionResponseMutableLiveData.postValue(response.body());
@@ -71,7 +73,7 @@ public class EmploymentDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<ProfessionResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 professionErrorLiveData.postValue(t.getMessage());
             }
         });

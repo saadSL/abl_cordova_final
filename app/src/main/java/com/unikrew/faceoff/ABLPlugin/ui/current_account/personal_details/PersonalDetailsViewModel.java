@@ -6,6 +6,8 @@ import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.countries.CountriesResponse;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.current_account.current_account_tax_info.CurrentAccountTaxResponse;
@@ -17,7 +19,7 @@ import retrofit2.Response;
 public class PersonalDetailsViewModel extends BaseViewModel {
 
     public MutableLiveData<CountriesResponse> countriesResponse = new MutableLiveData<>();
-    public MutableLiveData<TinUnavailabilityReasonsResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<>();
+    public MutableLiveData<LookUpCodeResponse> tinUnavailabilityReasonsSuccessResponse = new MutableLiveData<>();
     public MutableLiveData<CurrentAccountTaxResponse> currentAccountTaxSuccessResponse = new MutableLiveData<>();
 
 
@@ -44,11 +46,11 @@ public class PersonalDetailsViewModel extends BaseViewModel {
         });
     }
 
-    public void getTinUnavailabilityReasons(TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams) {
-        Call<TinUnavailabilityReasonsResponse> callableRes = AblApplication.apiInterface.getTinUnavailabilityReasons(tinUnavailabilityReasonsPostParams);
-        callableRes.enqueue(new Callback<TinUnavailabilityReasonsResponse>() {
+    public void getTinUnavailabilityReasons(LookUpCodePostParams tinUnavailabilityReasonsPostParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(tinUnavailabilityReasonsPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<TinUnavailabilityReasonsResponse> call, Response<TinUnavailabilityReasonsResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200) {
                     if (response.body().getMessage().getStatus().equals("200")) {
                         tinUnavailabilityReasonsSuccessResponse.postValue(response.body());
@@ -61,7 +63,7 @@ public class PersonalDetailsViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<TinUnavailabilityReasonsResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
             }
         });

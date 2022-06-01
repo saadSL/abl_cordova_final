@@ -24,6 +24,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.additional_applicant.AdditionalApplicantActivity;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.personal_details.PersonalDetailsViewModel;
 import com.unikrew.faceoff.ABLPlugin.ui.current_account.personal_details.PersonalDetailsActivity;
@@ -37,7 +40,7 @@ public class OrganizationDetailsActivity extends BaseActivity {
     private PersonalDetailsViewModel personalDetailsViewModel;
     private OrganizationDetailsBinding organizationDetailsBinding;
     private List<ConsumerListItemResponse> consumerList;
-    private ArrayList<MobileNetworkResponseData> occupationArray;
+    private ArrayList<LookUpCodeResponseData> occupationArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +117,9 @@ public class OrganizationDetailsActivity extends BaseActivity {
 
 
     private void setObservers() {
-        personalDetailsViewModel.occupationLiveData.observe(this, new Observer<MobileNetworkResponse>() {
+        personalDetailsViewModel.occupationLiveData.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(MobileNetworkResponse mobileNetworkResponse) {
+            public void onChanged(LookUpCodeResponse mobileNetworkResponse) {
                 occupationArray = mobileNetworkResponse.getData();
                 dismissLoading();
                 setSpinner();
@@ -173,7 +176,7 @@ public class OrganizationDetailsActivity extends BaseActivity {
 
     private void getOccupation() {
         showLoading();
-        MobileNetworkPostParams mobileNetworkPostParams = new MobileNetworkPostParams();
+        LookUpCodePostParams mobileNetworkPostParams = new LookUpCodePostParams();
         mobileNetworkPostParams.getData().codeTypeId = Config.OCCUPATION_CODE;
         personalDetailsViewModel.getOccupation(mobileNetworkPostParams);
     }

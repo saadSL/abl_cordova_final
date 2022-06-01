@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ofss.digx.mobile.android.allied.AblApplication;
 import com.unikrew.faceoff.ABLPlugin.base.BaseViewModel;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

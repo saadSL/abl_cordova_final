@@ -13,9 +13,9 @@ import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostConsumerList;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info.RegisterConsumerBasicInfoResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoPostConsumerList;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details.RegisterConsumerBasicInfoResponse;
 import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.upload_document.UploadDocumentActivity;
 import com.unikrew.faceoff.Config;
 

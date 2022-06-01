@@ -8,6 +8,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionPostParams;
+import com.unikrew.faceoff.ABLPlugin.model.current_account.setup_transactions.CurrentAccountSetupTransactionResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,14 +17,14 @@ import retrofit2.Response;
 
 public class SelectCardViewModel extends BaseViewModel {
 
-    MutableLiveData<SetupTransactionResponse> setupTransactionResponseMutableLiveData = new MutableLiveData<SetupTransactionResponse>();
+    MutableLiveData<CurrentAccountSetupTransactionResponse> setupTransactionResponseMutableLiveData = new MutableLiveData<CurrentAccountSetupTransactionResponse>();
     MutableLiveData<String> setupTransactionErrorLiveData = new MutableLiveData<String>();
 
-    public void registerTransactionDetails(SetupTransactionPostParams postParams, String accessToken){
-        Call<SetupTransactionResponse> callableRes = AblApplication.apiInterface.setupTransactionDetails(postParams, "Bearer "+accessToken);
-        callableRes.enqueue(new Callback<SetupTransactionResponse>() {
+    public void registerTransactionDetails(CurrentAccountSetupTransactionPostParams postParams, String accessToken){
+        Call<CurrentAccountSetupTransactionResponse> callableRes = AblApplication.apiInterface.currentAccountSetupTransactionDetails(postParams, "Bearer "+accessToken);
+        callableRes.enqueue(new Callback<CurrentAccountSetupTransactionResponse>() {
             @Override
-            public void onResponse(Call<SetupTransactionResponse> call, Response<SetupTransactionResponse> response) {
+            public void onResponse(Call<CurrentAccountSetupTransactionResponse> call, Response<CurrentAccountSetupTransactionResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         setupTransactionResponseMutableLiveData.postValue(response.body());
@@ -35,7 +37,7 @@ public class SelectCardViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<SetupTransactionResponse> call, Throwable t) {
+            public void onFailure(Call<CurrentAccountSetupTransactionResponse> call, Throwable t) {
                 setupTransactionErrorLiveData.postValue(t.getMessage());
             }
         });
@@ -45,7 +47,7 @@ public class SelectCardViewModel extends BaseViewModel {
     MutableLiveData<LookUpCodeResponse> atmCardsSuccessResponse = new MutableLiveData<LookUpCodeResponse>();
 
     public void getAtmCards(LookUpCodePostParams atmCardsPostParams) {
-        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getAtmCards(atmCardsPostParams);
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(atmCardsPostParams);
         callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
             public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {

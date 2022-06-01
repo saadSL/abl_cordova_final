@@ -1,4 +1,4 @@
-package com.unikrew.faceoff.ABLPlugin.model.common.register_consumer_basic_info;
+package com.unikrew.faceoff.ABLPlugin.model.current_account.kin_details;
 
 import java.io.Serializable;
 import java.util.ArrayList;

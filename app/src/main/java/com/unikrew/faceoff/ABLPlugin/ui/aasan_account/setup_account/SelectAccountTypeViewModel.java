@@ -8,6 +8,8 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_ty
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.AccountTypeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_account_type.MobileNetworkResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.Config;
 
 import retrofit2.Call;
@@ -16,16 +18,16 @@ import retrofit2.Response;
 
 public class SelectAccountTypeViewModel extends BaseViewModel {
 
-    public MutableLiveData<MobileNetworkResponse> purposeOfAccountLiveData = new MutableLiveData<>();
+    public MutableLiveData<LookUpCodeResponse> purposeOfAccountLiveData = new MutableLiveData<>();
     public MutableLiveData<AccountTypeResponse> accountTypeResponseLiveData = new MutableLiveData<>();
 
 
-    public void getPurposeOfAccount(MobileNetworkPostParams mobileNetworkPostParams) {
+    public void getPurposeOfAccount(LookUpCodePostParams mobileNetworkPostParams) {
 
-        Call<MobileNetworkResponse> callableRes = AblApplication.apiInterface.getPurposeOfAccount(mobileNetworkPostParams);
-        callableRes.enqueue(new Callback<MobileNetworkResponse>() {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(mobileNetworkPostParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
             @Override
-            public void onResponse(Call<MobileNetworkResponse> call, Response<MobileNetworkResponse> response) {
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
                 if (response.code() == 200){
                     if (response.body().getMessage().getStatus().equals("200")){
                         purposeOfAccountLiveData.postValue(response.body());
@@ -38,7 +40,7 @@ public class SelectAccountTypeViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onFailure(Call<MobileNetworkResponse> call, Throwable t) {
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
                 errorLiveData.postValue(t.getMessage());
             }
         });

@@ -28,6 +28,9 @@ import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mo
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsPostParams;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.tin_unavailability_reasons.TinUnavailabilityReasonsResponseData;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
+import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
 import com.unikrew.faceoff.Config;
 
 import java.util.ArrayList;
@@ -40,10 +43,10 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
     private Boolean taxIdentificationNumber = false;
 
     private FreelancerTaxPostParams freelancerTaxPostParams;
-    private TinUnavailabilityReasonsPostParams tinUnavailabilityReasonsPostParams;
+    private LookUpCodePostParams tinUnavailabilityReasonsPostParams;
     private PersonalDetailsViewModel personalDetailsViewModel;
 
-    private TinUnavailabilityReasonsResponseData tinUnavailabilityReason;
+    private LookUpCodeResponseData tinUnavailabilityReason;
 
     private Boolean IS_RESUMED;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
@@ -78,9 +81,9 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
     }
 
     private void observe() {
-        personalDetailsViewModel.tinUnavailabilityReasonsSuccessResponse.observe(this, new Observer<TinUnavailabilityReasonsResponse>() {
+        personalDetailsViewModel.tinUnavailabilityReasonsSuccessResponse.observe(this, new Observer<LookUpCodeResponse>() {
             @Override
-            public void onChanged(TinUnavailabilityReasonsResponse tinUnavailabilityReasonsResponse) {
+            public void onChanged(LookUpCodeResponse tinUnavailabilityReasonsResponse) {
                 setUnavailabilityReasons(tinUnavailabilityReasonsResponse.getData());
                 dismissLoading();
             }
@@ -122,7 +125,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
 
     private void setViewModel() {
         personalDetailsViewModel = new ViewModelProvider(this).get(PersonalDetailsViewModel.class);
-        tinUnavailabilityReasonsPostParams = new TinUnavailabilityReasonsPostParams();
+        tinUnavailabilityReasonsPostParams = new LookUpCodePostParams();
         freelancerTaxPostParams = new FreelancerTaxPostParams();
     }
 
@@ -175,10 +178,10 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
         }
     }
 
-    private void setUnavailabilityReasons(ArrayList<TinUnavailabilityReasonsResponseData> tinUnavailabilityReasonsResponse) {
-        ArrayList<TinUnavailabilityReasonsResponseData> _allReasons = new ArrayList<>();
+    private void setUnavailabilityReasons(ArrayList<LookUpCodeResponseData> tinUnavailabilityReasonsResponse) {
+        ArrayList<LookUpCodeResponseData> _allReasons = new ArrayList<>();
 
-        TinUnavailabilityReasonsResponseData data = new TinUnavailabilityReasonsResponseData();
+        LookUpCodeResponseData data = new LookUpCodeResponseData();
         data.setDescription("");
         data.setId(0);
         data.setName("Choose Reasons");
@@ -188,7 +191,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
         freelancerTaxResidentInfoBinding.spUnavailabilityReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tinUnavailabilityReason = (TinUnavailabilityReasonsResponseData) adapterView.getSelectedItem();
+                tinUnavailabilityReason = (LookUpCodeResponseData) adapterView.getSelectedItem();
 
             }
 
@@ -201,7 +204,7 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
                 _allReasons.add(tinUnavailabilityReasonsResponse.get(i));
             }
 
-            ArrayAdapter<TinUnavailabilityReasonsResponseData> dataAdapter = new ArrayAdapter<TinUnavailabilityReasonsResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
+            ArrayAdapter<LookUpCodeResponseData> dataAdapter = new ArrayAdapter<LookUpCodeResponseData>(this, android.R.layout.simple_spinner_item, _allReasons){
                 @Override
                 public boolean isEnabled(int position) {
                     if (position == 0){
@@ -261,10 +264,10 @@ public class TaxResidentActivity extends BaseActivity implements CompoundButton.
     }
 
     private void submitTaxInfo() {
-        if (taxIdentificationNumber){
-            if (isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
+        if (taxIdentificationNumber && isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
+//            if (isEmpty(freelancerTaxResidentInfoBinding.etTaxIdentityNumber)){
                 showAlert(Config.errorType,"Please Enter Tax Identification Number !!!");
-            }
+//            }
         }else if (!taxIdentificationNumber && (tinUnavailabilityReason == null || tinUnavailabilityReason.getId() == 0)){
                 showAlert(Config.errorType,"Please Select TIN unavailability reason !!!");
         }else{
