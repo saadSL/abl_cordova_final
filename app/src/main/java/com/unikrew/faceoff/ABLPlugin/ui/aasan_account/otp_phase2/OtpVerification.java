@@ -2,6 +2,8 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.otp_phase2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 
@@ -51,9 +53,214 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         setBinding();
         setLayout();
         setListeners();
+        textChangeListeners();
         setViewModel();
-        setAutoFocusForOtp(binding.etOtp1, binding.etOtp2, binding.etOtp3, binding.etOtp4, binding.etOtp5, binding.etOtp6);
         observe();
+    }
+
+    private void textChangeListeners() {
+        binding.etOtp1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length()==1){
+                    binding.etOtp2.requestFocus();
+                }
+            }
+        });
+
+
+
+        binding.etOtp2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length()==0){
+                    binding.etOtp1.requestFocus();
+                }else {
+                    binding.etOtp3.requestFocus();
+                }
+            }
+        });
+
+
+
+        binding.etOtp3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length()==0){
+                    binding.etOtp2.requestFocus();
+                }else {
+                    binding.etOtp4.requestFocus();
+                }
+            }
+        });
+
+
+
+        binding.etOtp4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length()==0){
+                    binding.etOtp3.requestFocus();
+                }else {
+                    binding.etOtp5.requestFocus();
+                }
+            }
+        });
+
+
+
+        binding.etOtp5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length()==0){
+                    binding.etOtp4.requestFocus();
+                }else {
+                    binding.etOtp6.requestFocus();
+                }
+            }
+        });
+        binding.etOtp6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+
+
+
+                if (text.length() == 0) {
+                    binding.etOtp5.requestFocus();
+                }else {
+                    postOtp();
+                }
+            }
+        });
     }
 
     private void setLayout() {
@@ -77,15 +284,6 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
 
     private void observe() {
-        otp6LiveData.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                /* aBoolean works if last field for otp is filled. */
-                if (aBoolean) {
-                    postOtp();
-                }
-            }
-        });
 
         viewModel.otpVerificationResponseLiveData.observe(this, new Observer<GetDraftedAppsVerifyOtpResponse>() {
             @Override
