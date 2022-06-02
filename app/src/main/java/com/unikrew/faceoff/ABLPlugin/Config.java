@@ -138,6 +138,7 @@ public class Config {
     public static int PENSION = 810;
     public static int STUDENT = 650;
     public static int ID_TO_REMOVE_FOR_OCCUPATION = 101409;
+    public static int PREFERRED_ACCOUNT_CODE = 1082;
 
 
     public static String JOINT_APPLICANTS_NUMBER = "joint_applicants_number";

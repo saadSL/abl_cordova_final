@@ -70,4 +70,28 @@ public class SelectAccountTypeViewModel extends BaseViewModel {
         });
 
     }
+
+    MutableLiveData<LookUpCodeResponse> preferredAccountSuccess = new MutableLiveData<>();
+    public void getPreferredAccount(LookUpCodePostParams postParams) {
+        Call<LookUpCodeResponse> callableRes = AblApplication.apiInterface.getLookUpResponse(postParams);
+        callableRes.enqueue(new Callback<LookUpCodeResponse>() {
+            @Override
+            public void onResponse(Call<LookUpCodeResponse> call, Response<LookUpCodeResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getMessage().getStatus().equals("200")){
+                        preferredAccountSuccess.postValue(response.body());
+                    }else{
+                        errorLiveData.postValue(getErrorDetail(response));
+                    }
+                }else{
+                    errorLiveData.postValue(getErrorDetail(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookUpCodeResponse> call, Throwable t) {
+                errorLiveData.postValue(t.getMessage());
+            }
+        });
+    }
 }
