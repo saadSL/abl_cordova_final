@@ -1,7 +1,6 @@
 package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account;
 
 
-import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -187,36 +186,36 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
 //                selectCurrent();
 //            }
 //        });
-//        preferredAccountBinding.btnRupee.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectRupee();
-//            }
-//        });
-//        preferredAccountBinding.btnDollar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectDollar();
-//            }
-//        });
-//        preferredAccountBinding.btnYen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectYen();
-//            }
-//        });
-//        preferredAccountBinding.btnPound.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectPound();
-//            }
-//        });
-//        preferredAccountBinding.btnEuro.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectEuro();
-//            }
-//        });
+        preferredAccountBinding.btnRupee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectRupee();
+            }
+        });
+        preferredAccountBinding.btnDollar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDollar();
+            }
+        });
+        preferredAccountBinding.btnYen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectYen();
+            }
+        });
+        preferredAccountBinding.btnPound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectPound();
+            }
+        });
+        preferredAccountBinding.btnEuro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectEuro();
+            }
+        });
 
         preferredAccountBinding.btnYesIncomeProof.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,6 +242,7 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
                     preferredAccountBinding.btnYesIncomeProof.setTextColor(getColor(R.color.black));
                 }
                 adapter.setList(preferredAccountListForNoIncomeProof);
+                deselectCurrent();
             }
         });
         preferredAccountBinding.layoutBtn.btBack.setOnClickListener(new View.OnClickListener() {
@@ -319,11 +319,14 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
 //        if (preferredAccountBinding.cbAsaanDigitalAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked() || preferredAccountBinding.cbAsaanRemittanceDigitalAccount.isChecked()|| preferredAccountBinding.cbCurrentAccount.isChecked()) {
 //            postPreferredAccount();
 //        }
-        if (ACCOUNT_VARIANT_ID!=null || ACCOUNT_VARIANT_ID!=0){
-            postPreferredAccount();
+        if (ACCOUNT_VARIANT_ID == null){
+            showAlert(Config.errorType,getString(R.string.select_preferred_error));
+        }else if (ACCOUNT_VARIANT_ID == Config.CURRENT_DIGITAL_ACCOUNT && currencyTypeId == null){
+            showAlert(Config.errorType,getString(R.string.select_preferred_currency));
         }else{
-            showAlert(Config.errorType, getString(R.string.select_preferred_error));
+            postPreferredAccount();
         }
+
 //        else if ((preferredAccountBinding.cbCurrentAccount.isChecked() || preferredAccountBinding.cbFreelancerDigitalAccount.isChecked()) && currencyTypeId == null) {
 //            showAlert(Config.errorType, getString(R.string.select_preferred_currency));
 //        } else {
@@ -347,6 +350,7 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
             accountTypePostParams.getData().setCustomerAccountTypeId(accountInformation.getCustomerAccountTypeId());
             accountTypePostParams.getData().setCustomerBranch(accountInformation.getCustomerBranch());
             accountTypePostParams.getData().setPurposeOfAccountId(accountInformation.getPurposeOfAccountId());
+
         } else {
             //flow for new application
             AccountInformationResponse accountInformation = registerVerifyOtpResponse.getData().getConsumerList().get(0).getAccountInformation();
@@ -360,6 +364,7 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
         accountTypePostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         accountTypePostParams.getData().setAccountVariantId(ACCOUNT_VARIANT_ID);
         accountTypePostParams.getData().setCurrencyTypeId(currencyTypeId);
+        accountTypePostParams.getData().setProofOfIncomeInd(proofOfIncome);
 
         return accountTypePostParams;
     }
@@ -396,15 +401,15 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
 //        preferredAccountBinding.cbCurrentAccount.setChecked(false);
 //    }
 //
-//    private void selectCurrent() {
-//        preferredAccountBinding.liCurrency.setVisibility(View.VISIBLE);
-//        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.VISIBLE);
-//        ACCOUNT_VARIANT_ID = Config.CURRENT_DIGITAL_ACCOUNT;
+    private void selectCurrent() {
+        preferredAccountBinding.liCurrency.setVisibility(View.VISIBLE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.VISIBLE);
+        ACCOUNT_VARIANT_ID = Config.CURRENT_DIGITAL_ACCOUNT;
 //        preferredAccountBinding.cbAsaanDigitalAccount.setChecked(false);
 //        preferredAccountBinding.cbAsaanRemittanceDigitalAccount.setChecked(false);
 //        preferredAccountBinding.cbCurrentAccount.setChecked(true);
 //        preferredAccountBinding.cbFreelancerDigitalAccount.setChecked(false);
-//    }
+    }
 
 
     private void setBinding() {
@@ -429,7 +434,15 @@ public class SelectPreferredAccountActivity extends BaseActivity implements Acco
             ACCOUNT_VARIANT_ID = preferredAccountListForIncomeProof.get(position).getId();
             adapter.setList(preferredAccountListForIncomeProof);
         }
+        if (ACCOUNT_VARIANT_ID == Config.CURRENT_DIGITAL_ACCOUNT){
+            selectCurrent();
+        }
 
+    }
 
+    private void deselectCurrent() {
+        preferredAccountBinding.liCurrency.setVisibility(View.GONE);
+        preferredAccountBinding.liCurrentCurrencies.setVisibility(View.GONE);
+        ACCOUNT_VARIANT_ID = null;
     }
 }

@@ -11,6 +11,15 @@ public class AccountTypeData implements Serializable {
 	private int rdaCustomerAccInfoId;
 	private Integer customerAccountTypeId;
 	private Integer accountVariantId = null;
+	private Integer proofOfIncomeInd;
+
+	public Integer getProofOfIncomeInd() {
+		return proofOfIncomeInd;
+	}
+
+	public void setProofOfIncomeInd(Integer proofOfIncomeInd) {
+		this.proofOfIncomeInd = proofOfIncomeInd;
+	}
 
 	public Integer getCurrencyTypeId() {
 		return currencyTypeId;
