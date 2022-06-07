@@ -23,10 +23,10 @@
                     android:id="@+id/tv_debit_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Debit Card"
+                    android:text="@string/debit_card"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_margin="10sp"/>
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_margin="@dimen/_10sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"

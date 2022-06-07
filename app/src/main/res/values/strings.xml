@@ -258,6 +258,8 @@
     <string name="pound">£ Pound Sterling</string>
     <string name="euro">€ Euro</string>
     <string name="do_you_have_income_proof">Do You Have Proof Of Income ?</string>
+    <string name="select_preferred_branch">Select Your Preferred Branch</string>
+    <string name="debit_card">Debit Card</string>
 
 
 </resources>

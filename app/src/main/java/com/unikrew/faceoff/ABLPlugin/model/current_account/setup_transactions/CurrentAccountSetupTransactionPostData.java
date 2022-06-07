@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CurrentAccountSetupTransactionPostData implements Serializable {
-    public int rdaCustomerAccInfoId;
-    public int rdaCustomerId;
-    public int customerTypeId;
-    public int esoaInd;
+    public Integer rdaCustomerAccInfoId;
+    public Integer rdaCustomerId;
+    public Integer customerTypeId;
+    public Integer esoaInd;
 //    public int physicalCardInd;
 //    public int bankingModeId;
 //    public String customerBranch;
@@ -15,16 +15,16 @@ public class CurrentAccountSetupTransactionPostData implements Serializable {
 //    public int purposeOfAccountId;
 //    public int proofOfIncomeInd;
 //    public int accountVariantId;
-    public int atmTypeId;
-    public int transAlertInd;
-    public int chequeBookReqInd;
-    public Object transactionalAlertId;
+    public Integer atmTypeId;
+    public Integer transAlertInd;
+    public Integer chequeBookReqInd;
+    public Integer transactionalAlertId;
 //    public int natureOfAccountId;
 //    public int currencyTypeId;
 //    public ArrayList<Object> pdaRemitterDetailList;
 //    public int noOfJointApplicatns;
-    public int mailingAddrPrefId;
-    public int reasonForVisaDebitCardRequestId;
+    public Integer mailingAddrPrefId;
+    public Integer reasonForVisaDebitCardRequestId;
 
     public int getRdaCustomerAccInfoId() {
         return rdaCustomerAccInfoId;
@@ -50,11 +50,11 @@ public class CurrentAccountSetupTransactionPostData implements Serializable {
         this.customerTypeId = customerTypeId;
     }
 
-    public int getEsoaInd() {
+    public Integer getEsoaInd() {
         return esoaInd;
     }
 
-    public void setEsoaInd(int esoaInd) {
+    public void setEsoaInd(Integer esoaInd) {
         this.esoaInd = esoaInd;
     }
 
@@ -114,35 +114,35 @@ public class CurrentAccountSetupTransactionPostData implements Serializable {
 //        this.accountVariantId = accountVariantId;
 //    }
 
-    public int getAtmTypeId() {
+    public Integer getAtmTypeId() {
         return atmTypeId;
     }
 
-    public void setAtmTypeId(int atmTypeId) {
+    public void setAtmTypeId(Integer atmTypeId) {
         this.atmTypeId = atmTypeId;
     }
 
-    public int getTransAlertInd() {
+    public Integer getTransAlertInd() {
         return transAlertInd;
     }
 
-    public void setTransAlertInd(int transAlertInd) {
+    public void setTransAlertInd(Integer transAlertInd) {
         this.transAlertInd = transAlertInd;
     }
 
-    public int getChequeBookReqInd() {
+    public Integer getChequeBookReqInd() {
         return chequeBookReqInd;
     }
 
-    public void setChequeBookReqInd(int chequeBookReqInd) {
+    public void setChequeBookReqInd(Integer chequeBookReqInd) {
         this.chequeBookReqInd = chequeBookReqInd;
     }
 
-    public Object getTransactionalAlertId() {
+    public Integer getTransactionalAlertId() {
         return transactionalAlertId;
     }
 
-    public void setTransactionalAlertId(Object transactionalAlertId) {
+    public void setTransactionalAlertId(Integer transactionalAlertId) {
         this.transactionalAlertId = transactionalAlertId;
     }
 
@@ -178,11 +178,11 @@ public class CurrentAccountSetupTransactionPostData implements Serializable {
 //        this.noOfJointApplicatns = noOfJointApplicatns;
 //    }
 
-    public int getMailingAddrPrefId() {
+    public Integer getMailingAddrPrefId() {
         return mailingAddrPrefId;
     }
 
-    public void setMailingAddrPrefId(int mailingAddrPrefId) {
+    public void setMailingAddrPrefId(Integer mailingAddrPrefId) {
         this.mailingAddrPrefId = mailingAddrPrefId;
     }
 
@@ -190,7 +190,7 @@ public class CurrentAccountSetupTransactionPostData implements Serializable {
         return reasonForVisaDebitCardRequestId;
     }
 
-    public void setReasonForVisaDebitCardRequestId(int reasonForVisaDebitCardRequestId) {
+    public void setReasonForVisaDebitCardRequestId(Integer reasonForVisaDebitCardRequestId) {
         this.reasonForVisaDebitCardRequestId = reasonForVisaDebitCardRequestId;
     }
 }

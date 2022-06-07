@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/abl_branch_locations"
-                android:layout_marginTop="20sp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"/>
@@ -34,17 +34,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Your Preferred Branch"
+                android:text="@string/select_preferred_branch"
                 android:textColor="@color/black"
-                android:layout_marginLeft="20sp"
-                android:layout_marginTop="10sp"/>
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:entries="@array/branches"
                 android:backgroundTint="@color/yellow"
                 style="@style/Widget.AppCompat.Spinner.Underlined"/>
@@ -54,10 +54,10 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:background="@drawable/rounded_corner_bg"
                 android:padding="10dp"
-                android:text="Next"
+                android:text="@string/next"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 
@@ -69,7 +69,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/transparent_bg"
                 android:padding="10dp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/primary" />
         </LinearLayout>

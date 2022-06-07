@@ -15,7 +15,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select the Nature of Account"
+                android:text="@string/select_nature_of_account"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Single"
+                    android:text="@string/single"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -60,7 +60,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Joint"
+                        android:text="@string/joint"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="20sp"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Minor"
+                    android:text="@string/minor"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="20sp"

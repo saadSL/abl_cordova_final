@@ -46,12 +46,12 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     private LookUpCodePostParams atmCardsPostParams;
     private ArrayList<LookUpCodeResponseData> atmCardsList;
 
-    private int atmCardInd = 0;
-    private int atmTypeId = 0;
-    private int transactionAlertInd = 0;
-    private int chequeBookReqInd = 0;
-    private int transactionAlertId = 0;
-    private int esoaReqInd = 0;
+    private Integer atmCardInd;
+    private Integer atmTypeId;
+    private Integer transactionAlertInd;
+    private Integer chequeBookReqInd;
+    private Integer transactionAlertId;
+    private Integer esoaReqInd;
 
     private SelectCardAdapter adapter;
     private LookUpCodeResponseData selectedVisaCardReason = null;
@@ -324,7 +324,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
     @Override
     public void setSelectionAt(int position) {
-        if (atmCardInd == 1) {
+        if (atmCardInd != null) {
             for (int i = 0; i < atmCardsList.size(); i++) {
                 atmCardsList.get(i).setSelected(false);
             }
@@ -414,7 +414,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private boolean isValid() {
-        if (atmCardInd == 1) {
+        if (atmCardInd != null) {
             if (atmTypeId == 0) {
                 showAlert(Config.errorType, "Please Select A Card !!!");
                 return false;
@@ -427,7 +427,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
             showAlert(Config.errorType, "Please Select Card Delivery Option !!!");
             return false;
         }
-        if (transactionAlertInd == 1) {
+        if (transactionAlertInd != null) {
             if (transactionAlertId == 0) {
                 showAlert(Config.errorType, "Please Select Where To Send Transaction Alert !!!");
                 return false;
@@ -444,7 +444,10 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
 
         setupTransactionPostParams.getData().setCustomerTypeId(Config.CUSTOMER_TYPE_ID);
         setupTransactionPostParams.getData().setAtmTypeId(atmTypeId);
-        setupTransactionPostParams.getData().setReasonForVisaDebitCardRequestId(selectedVisaCardReason.getId());
+        if (atmCardInd != null){
+            setupTransactionPostParams.getData().setReasonForVisaDebitCardRequestId(selectedVisaCardReason.getId());
+        }
+
         setupTransactionPostParams.getData().setMailingAddrPrefId(selectedCardDeliveryOption.getId());
         setupTransactionPostParams.getData().setChequeBookReqInd(chequeBookReqInd);
         setupTransactionPostParams.getData().setEsoaInd(esoaReqInd);
