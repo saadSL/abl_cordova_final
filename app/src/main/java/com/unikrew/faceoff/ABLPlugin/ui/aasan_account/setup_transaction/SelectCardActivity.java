@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,10 +40,10 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private ArrayList<LookUpCodeResponseData> atmCardsList;
 
     private Boolean atmCardInd = false;
-    private int atmTypeId = 0;
-    private int transactionAlertInd = 1;
-    private int chequeBookReqInd = 1;
-    private int transactionAlertId = 0;
+    private Integer atmTypeId;
+    private Integer transactionAlertInd;
+    private Integer chequeBookReqInd;
+    private Integer transactionAlertId;
     private Boolean IS_RESUMED;
 
     private SelectCardAdapter adapter;
@@ -183,20 +184,26 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
         setContentView(layoutSetupTransactionBinding.getRoot());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()) {
             case R.id.debit_card_switch:
                 if (!isChecked) {
                     atmCardInd = false;
-
+                    deSelectAllCards();
                 } else {
                     atmCardInd = true;
                 }
                 break;
             case R.id.transactional_alert_switch:
                 if (!isChecked) {
-                    transactionAlertInd = 0;
+                    transactionAlertInd = null;
+                    transactionAlertId = null;
+                    layoutSetupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+                    layoutSetupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+                    layoutSetupTransactionBinding.btnEmail.setTextColor(this.getColor(R.color.custom_blue));
+                    layoutSetupTransactionBinding.btnSms.setTextColor(this.getColor(R.color.custom_blue));
                     layoutSetupTransactionBinding.btnSms.setEnabled(false);
                     layoutSetupTransactionBinding.btnEmail.setEnabled(false);
                 } else {
@@ -207,7 +214,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
                 break;
             case R.id.cheque_book_switch:
                 if (!isChecked) {
-                    chequeBookReqInd = 0;
+                    chequeBookReqInd = null;
                 } else {
                     chequeBookReqInd = 1;
                 }
@@ -229,7 +236,7 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
     private boolean isValid() {
         if (!atmCardInd) {
             return false;
-        } else if (atmTypeId == 0) {
+        } else if (atmTypeId == null) {
             return false;
         }
         return true;
@@ -299,5 +306,13 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             atmCardsList.get(position).setSelected(true);
             atmTypeId = atmCardsList.get(position).getId();
         }
+    }
+
+    private void deSelectAllCards() {
+        for (int i = 0; i < atmCardsList.size(); i++) {
+            atmCardsList.get(i).setSelected(false);
+        }
+        atmTypeId = null;
+        adapter.notifyDataSetChanged();
     }
 }

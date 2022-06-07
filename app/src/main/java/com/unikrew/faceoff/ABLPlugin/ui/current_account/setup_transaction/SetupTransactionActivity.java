@@ -24,8 +24,6 @@ import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.get_consumer_account_details.GetConsumerAccountDetailsResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.ConsumerListItemResponse;
 import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.select_banking_mode.RegisterVerifyOtpResponse;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionPostParams;
-import com.unikrew.faceoff.ABLPlugin.model.aasan_account_model.setup_transaction.SetupTransactionResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodePostParams;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponse;
 import com.unikrew.faceoff.ABLPlugin.model.common.look_up_code.LookUpCodeResponseData;
@@ -341,7 +339,8 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
                     atmCardInd = 1;
                     setupTransactionBinding.llVisaCardReason.setVisibility(View.VISIBLE);
                 } else {
-                    atmCardInd = 0;
+                    atmCardInd = null;
+                    deSelectAllCards();
                     setupTransactionBinding.llVisaCardReason.setVisibility(View.GONE);
                 }
                 break;
@@ -351,7 +350,12 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
                     setupTransactionBinding.btnSms.setEnabled(true);
                     setupTransactionBinding.btnEmail.setEnabled(true);
                 } else {
-                    transactionAlertInd = 0;
+                    transactionAlertInd = null;
+                    transactionAlertId = null;
+                    setupTransactionBinding.btnEmail.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+                    setupTransactionBinding.btnSms.setBackground(this.getDrawable(R.drawable.rounded_corner_selected));
+                    setupTransactionBinding.btnEmail.setTextColor(this.getColor(R.color.custom_blue));
+                    setupTransactionBinding.btnSms.setTextColor(this.getColor(R.color.custom_blue));
                     setupTransactionBinding.btnSms.setEnabled(false);
                     setupTransactionBinding.btnEmail.setEnabled(false);
                 }
@@ -360,7 +364,7 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
                 if (isChecked) {
                     chequeBookReqInd = 1;
                 } else {
-                    chequeBookReqInd = 0;
+                    chequeBookReqInd = null;
                 }
                 break;
 
@@ -368,11 +372,19 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
                 if (isChecked) {
                     esoaReqInd = 1;
                 } else {
-                    esoaReqInd = 0;
+                    esoaReqInd = null;
                 }
                 break;
 
         }
+    }
+
+    private void deSelectAllCards() {
+        for (int i = 0; i < atmCardsList.size(); i++) {
+            atmCardsList.get(i).setSelected(false);
+        }
+        atmTypeId = null;
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -414,8 +426,11 @@ public class SetupTransactionActivity extends BaseActivity implements SelectCard
     }
 
     private boolean isValid() {
-        if (atmCardInd != null) {
-            if (atmTypeId == 0) {
+        if (atmCardInd == null){
+            showAlert(Config.errorType,"Please Select A Card !!!");
+            return false;
+        }else {
+            if (atmTypeId == null) {
                 showAlert(Config.errorType, "Please Select A Card !!!");
                 return false;
             } else if (selectedVisaCardReason == null) {
