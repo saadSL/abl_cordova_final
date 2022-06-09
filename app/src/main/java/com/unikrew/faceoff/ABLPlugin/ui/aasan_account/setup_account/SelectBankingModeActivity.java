@@ -72,7 +72,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         setViewModel();
         setLogoLayout(bankingModeBinding.layoutLogo.tvDate);
 //        getLatLng();
-        getBranchesFromNetwork(30.18817, 71.4358);
+//        getBranchesFromNetwork(30.18817, 71.4358);
         setObservers();
         clicks();
     }
@@ -111,12 +111,14 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_white));
         bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_selected));
         BANKING_MODE_ID = Config.ISLAMIC_BANKING;
+        getBranchesFromNetwork(30.18817, 71.4358,"I");
     }
 
     private void selectConventionalBanking() {
         bankingModeBinding.llConventional.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_selected));
         bankingModeBinding.llIslamic.setBackground(AppCompatResources.getDrawable(this, R.drawable.rounded_corner_white));
         BANKING_MODE_ID = Config.CONVENTIONAL_BANKING;
+        getBranchesFromNetwork(30.18817, 71.4358,"C");
     }
 
     private void checkValidations() {
@@ -174,8 +176,8 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
             @Override
             public void onChanged(BranchesModel branchesModel) {
                 dismissLoading();
-                setMap();
-                setMarkersOnMap(branchesModel);
+//                setMap();
+//                setMarkersOnMap(branchesModel);
                 setSpinner(branchesModel);
             }
         });
@@ -264,7 +266,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            getBranchesFromNetwork(30.18817, 71.4358);
+//                            getBranchesFromNetwork(30.18817, 71.4358);
                         }
                     }
                 });
@@ -300,7 +302,7 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            getBranchesFromNetwork(30.18817, 71.4358);
+//            getBranchesFromNetwork(30.18817, 71.4358);
         }
     };
 
@@ -341,17 +343,15 @@ public class SelectBankingModeActivity extends BaseActivity implements OnMapRead
         }
     }
 
-    private void getBranchesFromNetwork(double latitude, double longitude) {
+    private void getBranchesFromNetwork(double latitude, double longitude,String categoryType) {
         showLoading();
         USER_LOCATION = new LatLng(latitude, longitude);
         GetBranchPostModel getBranchPostModel = new GetBranchPostModel();
         getBranchPostModel.getData().setBranchName("");
-        getBranchPostModel.getData().setCategoryType("C");
+        getBranchPostModel.getData().setCategoryType(categoryType);
         getBranchPostModel.getData().setLatitude(String.valueOf(latitude));
         getBranchPostModel.getData().setLongitude(String.valueOf(longitude));
-        getBranchPostModel.getData().setDistance("2");
         selectBankingModeViewModel.getBranches(getBranchPostModel);
-        Log.d("getBranchPostModel", getBranchPostModel.toString());
     }
 
     private void setBinding() {

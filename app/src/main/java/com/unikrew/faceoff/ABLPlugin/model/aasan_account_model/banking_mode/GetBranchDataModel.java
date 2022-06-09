@@ -9,7 +9,6 @@ public class GetBranchDataModel implements Serializable {
 	public String toString() {
 		return "GetBranchDataModel{" +
 				"categoryType='" + categoryType + '\'' +
-				", distance='" + distance + '\'' +
 				", latitude='" + latitude + '\'' +
 				", branchName='" + branchName + '\'' +
 				", longitude='" + longitude + '\'' +
@@ -18,10 +17,6 @@ public class GetBranchDataModel implements Serializable {
 
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
-	}
-
-	public void setDistance(String distance) {
-		this.distance = distance;
 	}
 
 	public void setLatitude(String latitude) {
@@ -36,17 +31,12 @@ public class GetBranchDataModel implements Serializable {
 		this.longitude = longitude;
 	}
 
-	private String distance;
 	private String latitude;
 	private String branchName;
 	private String longitude;
 
 	public String getCategoryType(){
 		return categoryType;
-	}
-
-	public String getDistance(){
-		return distance;
 	}
 
 	public String getLatitude(){

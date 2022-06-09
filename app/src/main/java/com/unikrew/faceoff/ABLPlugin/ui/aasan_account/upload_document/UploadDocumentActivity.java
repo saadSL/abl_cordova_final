@@ -166,7 +166,6 @@ public class UploadDocumentActivity extends BaseActivity implements View.OnClick
 
     private void setNatureOfAccountPostParams() {
         AccountInformationResponse accountInformation = consumerList.get(consumerList.size() - 1).getAccountInformation();
-        natureOfAccountPostParams.getData().setCustomerTypeId(consumerList.get(consumerList.size() - 1).getCustomerTypeId());
         natureOfAccountPostParams.getData().setRdaCustomerAccInfoId(accountInformation.getRdaCustomerAccInfoId());
         natureOfAccountPostParams.getData().setRdaCustomerId(accountInformation.getRdaCustomerId());
 

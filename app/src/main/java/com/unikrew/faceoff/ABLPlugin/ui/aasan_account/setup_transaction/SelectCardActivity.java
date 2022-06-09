@@ -2,6 +2,7 @@ package com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_transaction;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.LayoutSetupTransactionBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
@@ -221,6 +223,9 @@ public class SelectCardActivity extends BaseActivity implements CompoundButton.O
             showAlert(Config.errorType, "Please select any one card !!!");
         } else {
             setTransactionDetailsPostParams();
+            Gson gson = new Gson();
+            String json = gson.toJson(setupTransactionPostParams);
+            Log.d("setupTransactionPostParams", json);
             selectCardViewModel.registerTransactionDetails(setupTransactionPostParams, getStringFromPref(Config.ACCESS_TOKEN));
             showLoading();
         }

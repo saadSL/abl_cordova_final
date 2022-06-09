@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -18,9 +21,11 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ofss.digx.mobile.android.allied.BuildConfig;
 import com.ofss.digx.mobile.android.allied.R;
 import com.ofss.digx.mobile.android.allied.databinding.MobileNumberAvailabilityBinding;
 import com.unikrew.faceoff.ABLPlugin.base.BaseActivity;
@@ -42,8 +47,11 @@ import com.unikrew.faceoff.ABLPlugin.ui.aasan_account.setup_account.SelectBankin
 import com.unikrew.faceoff.Config;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MobileNumberActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -68,6 +76,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private boolean IS_JOINT = false;
     private RegisterVerifyOtpResponse registerVerifyOtpResponse;
 
+    private final String APP_TAG = "MyCustomApp";
+    private String photoFileName = "photo.jpg";
+    private File photoFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,10 +107,11 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private RegisterVerifyOtp getBankingModeParams() {
         RegisterVerifyOtp registerVerifyOtp = new RegisterVerifyOtp();
-        registerVerifyOtpResponse= (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
-        List<ConsumerListItemResponse> consumerList  = registerVerifyOtpResponse.getData().getConsumerList();;
-        bindOldGenericData(consumerList,registerVerifyOtp);
-        bindNewGenericData(consumerList,registerVerifyOtp);
+        registerVerifyOtpResponse = (RegisterVerifyOtpResponse) getSerializableFromPref(Config.REG_OTP_RESPONSE, RegisterVerifyOtpResponse.class);
+        List<ConsumerListItemResponse> consumerList = registerVerifyOtpResponse.getData().getConsumerList();
+        ;
+        bindOldGenericData(consumerList, registerVerifyOtp);
+        bindNewGenericData(consumerList, registerVerifyOtp);
         registerVerifyOtp.getData().setNoOfJointApplicatns(getIntFromPref(Config.NO_OF_JOINT_APPLICANTS));
         return registerVerifyOtp;
 
@@ -107,7 +119,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private void bindNewGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
         //adding new item in the list for api call
-        ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+        ConsumerListItemVerifyOtp consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
         consumerListItemVerifyOtp.setPrimary(false);
         consumerListItemVerifyOtp.setDateOfBirth(getStringFromPref(Config.DATE_OF_BIRTH));
         consumerListItemVerifyOtp.setDateOfIssue(getStringFromPref(Config.DATE_OF_ISSUE));
@@ -123,7 +135,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
     private void bindOldGenericData(List<ConsumerListItemResponse> consumerList, RegisterVerifyOtp registerVerifyOtp) {
         //adding all the previously saved items in the list for api call
         for (int i = 0; i < consumerList.size(); i++) {
-            ConsumerListItemVerifyOtp  consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
+            ConsumerListItemVerifyOtp consumerListItemVerifyOtp = new ConsumerListItemVerifyOtp();
             consumerListItemVerifyOtp.setPrimary(consumerList.get(i).isPrimary());
             consumerListItemVerifyOtp.setDateOfBirth(consumerList.get(i).getDateOfBirth());
             consumerListItemVerifyOtp.setDateOfIssue(consumerList.get(i).getDateOfIssue());
@@ -169,6 +181,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onChanged(ViewAppsGenerateOtpResponse viewAppsGenerateOtpResponse) {
                 alreadyExist = viewAppsGenerateOtpResponse.getData().isAlreadyExist();
+                alreadyExist = false;
                 if (alreadyExist) {
                     if (generateOtp) {
                         goToNext(viewAppsGenerateOtpResponse);
@@ -192,6 +205,10 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             public void onChanged(String errMsg) {
                 showAlert(Config.errorType, errMsg);
                 loader.dismiss();
+
+//                showCnicFields();
+
+
             }
         });
 
@@ -246,13 +263,13 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         SaveKycPostParams saveKycPostParams = new SaveKycPostParams();
         SaveKycPostData saveKycPostData;
 
-        List<ConsumerListItemResponse> consumerList =registerVerifyOtpResponse.getData().getConsumerList();
+        List<ConsumerListItemResponse> consumerList = registerVerifyOtpResponse.getData().getConsumerList();
 
         for (int i = 0; i < consumerList.size(); i++) {
             saveKycPostData = new SaveKycPostData();
             if (i == consumerList.size() - 1 && AdditionalApplicantActivity.SELECTED_RELATION_CODE != 0) {
                 saveKycPostData.setRelationCode1(AdditionalApplicantActivity.SELECTED_RELATION_CODE);
-            }else{
+            } else {
                 saveKycPostData.setRelationCode1(null);
             }
             saveKycPostData.setRdaCustomerAccInfoId(consumerList.get(i).getAccountInformation().getRdaCustomerAccInfoId());
@@ -300,9 +317,9 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.GONE);
         mobileNumberAvailabilityBinding.llCnic.setVisibility(View.VISIBLE);
         if (response.getData().getIdNumber() != null) {
-            if (response.getData().getIdNumber().contains("-")){
-                mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber().replace("-","").trim());
-            }else {
+            if (response.getData().getIdNumber().contains("-")) {
+                mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber().replace("-", "").trim());
+            } else {
                 mobileNumberAvailabilityBinding.etCnicNumber.setText(response.getData().getIdNumber());
             }
 
@@ -349,7 +366,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_cnic_upload_front:
                 frontPic = true;
                 backPic = false;
-                getCnicFrontImage();
+                getImageFromCamera();
                 hideCnicImageResources(
                         mobileNumberAvailabilityBinding.llCnicBack,
                         mobileNumberAvailabilityBinding.imgCnicBackSmall
@@ -358,7 +375,7 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_cnic_upload_back:
                 backPic = true;
                 frontPic = false;
-                getCnicBackImage();
+                getImageFromCamera();
                 hideCnicImageResources(
                         mobileNumberAvailabilityBinding.llCnicFront,
                         mobileNumberAvailabilityBinding.imgCnicFrontSmall
@@ -373,28 +390,13 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         img.setImageBitmap(image);
     }
 
-    private void getCnicBackImage() {
-//        mobileNumberAvailabilityBinding.imgCnicBackSmall.setVisibility(View.VISIBLE);
-//        mobileNumberAvailabilityBinding.llCnicBack.setVisibility(View.VISIBLE);
-        getImageFromCamera();
-    }
-
-    private void getCnicFrontImage() {
-//        mobileNumberAvailabilityBinding.imgCnicFrontSmall.setVisibility(View.VISIBLE);
-//        mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
-        getImageFromCamera();
-
-
-    }
-
 
     private void getImageFromCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Config.MY_CAMERA_PERMISSION_CODE);
             } else {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
+                openCamera();
             }
         }
     }
@@ -404,23 +406,60 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Config.MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, Config.CAMERA_REQUEST);
+                openCamera();
             } else {
                 showAlert(Config.errorType, "Allow Camera permissions to continue.");
             }
         }
     }
 
+    private void openCamera() {
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFileName);
+
+        // wrap File object into a content provider
+        // required for API >= 24
+        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
+        Uri fileProvider = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                BuildConfig.APPLICATION_ID + ".provider", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            startActivityForResult(intent, Config.CAMERA_REQ_CODE);
+        }
+    }
+
+    public File getPhotoFileUri(String fileName) {
+        // Get safe storage directory for photos
+        // Use `getExternalFilesDir` on Context to access package-specific directories.
+        // This way, we don't need to request external read/write runtime permissions.
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            Log.d(APP_TAG, "failed to create directory");
+        }
+
+        // Return the file target for the photo based on filename
+        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+
+        return file;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Config.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Config.CAMERA_REQ_CODE && resultCode == Activity.RESULT_OK) {
             image = null;
-            if (image == null && frontPic) {
+            if (frontPic) {
 
-                image = (Bitmap) data.getExtras().get("data");
+                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 mobileNumberAvailabilityBinding.imgCnicFront.setImageBitmap(image);
                 showCnicImageResource(
                         mobileNumberAvailabilityBinding.llCnicFront
@@ -428,8 +467,8 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
                 mobileNumberAvailabilityBinding.llCnicFront.setVisibility(View.VISIBLE);
                 cnicFrontPic = convertToBase64(image);
 
-            } else if (image == null && backPic) {
-                image = (Bitmap) data.getExtras().get("data");
+            } else if (backPic) {
+                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 mobileNumberAvailabilityBinding.imgCnicBack.setImageBitmap(image);
 
                 showCnicImageResource(
@@ -447,9 +486,8 @@ public class MobileNumberActivity extends BaseActivity implements View.OnClickLi
 
     private String convertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 60, byteArrayOutputStream);
+        return Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
     }
 
     private void viewAppsGenerateOtpPostData() {
