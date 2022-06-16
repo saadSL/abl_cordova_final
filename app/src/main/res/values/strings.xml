@@ -260,6 +260,46 @@
     <string name="do_you_have_income_proof">Do You Have Proof Of Income ?</string>
     <string name="select_preferred_branch">Select Your Preferred Branch</string>
     <string name="debit_card">Debit Card</string>
+    <string name="welcome_text"><![CDATA[Welcome to the World of Possibilities & Lifestyle.]]></string>
+    <string name="open_your_account_in_4_easy_steps">Open your account in 4 easy steps</string>
+    <string name="things_you_need">Things You Need</string>
+    <string name="original_cnic">Original Cnic</string>
+    <string name="picture_of_your_signature">Picture of your signature</string>
+    <string name="proof_of_income">Proof of Income</string>
+    <string name="proof_of_income_not_required_account"><![CDATA[(Not required for Asaan Digital Account, Asaan Digital Remittance Account & Freelancer Digital Account)]]></string>
+    <string name="please_note">Please Note</string>
+    <string name="ensure_mobile_registered_on_cnic">You need to ensure that mobile number is registered on your CNIC</string>
+    <string name="inform_of_live_picture">Be informed that during the process your live picture will be taken</string>
+    <string name="wish_to_open_joint_or_minor_account">If you wish to open Joint/Minor Account, details of joint/Minor applicant will be taken at the end of the process</string>
+    <string name="customer_support_and_suggestions"><![CDATA["For Customer Support, Suggestions & Complaints "]]></string>
+    <string name="contact_number">111-225-225</string>
+    <string name="support_email">cm@abl.com</string>
+    <string name="obliged_to_have_feedback">"We will be obliged to have your feedback on overall user experience at the end of the process. "</string>
+    <string name="must_read">Must Read</string>
 
+    <string name="must_read_1">
+        <font fgcolor="#F9893B">&#8226;</font> In case of expired NADRA ID Document (CNIC/ SNIC), please upload original NADRA Token in place of Original ID Card. Please be informed that you shall update bank record with original renewed NADRA ID Card immediately on receipt but not later than ‘30’ days, otherwise, bank reserves the right to block operation in your account.\n
+    </string>
+    <string name="must_read_2">
+        <font fgcolor="#F9893B">&#8226;</font> Bank will protect your personal details through strict information security controls, provided information will not be divulged
+    </string>
+    <string name="must_read_3">
+        <font fgcolor="#F9893B">&#8226;</font> All fields are mandatory except mentioned otherwise
+    </string>
 
+    <string name="must_read_4">
+        <font fgcolor="#F9893B">&#8226;</font> Please ensure you use camera enabled device during whole onboarding process. Your Photograph/ Video call session(s) may be recorded for bank use.
+    </string>
+
+    <string name="must_read_5">
+        <font fgcolor="#F9893B">&#8226;</font> Recommended browsers: Chrome, Firefox, Safari and Microsoft Edge
+    </string>
+    <string name="quick_link">Quick Links</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="help_and_support">Help And Support</string>
+    <string name="Sitemap">Sitemap</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="web_mail">Web Mail</string>
+    <string name="copy_right_text">© 2021 Copyrights Allied Bank Limited.  All Rights Reserved.</string>
+    <string name="creative_chaos">Creative Chaos</string>
 </resources>

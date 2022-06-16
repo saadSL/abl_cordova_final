@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/logo_layout"
+        layout="@layout/layout_logo_toolbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_text"
+        android:fontFamily="@font/worksans_semibold"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/heading_black"
+        android:layout_margin="@dimen/_10sdp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/orange"
+        android:layout_margin="@dimen/_10sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_your_account_in_4_easy_steps"
+        android:fontFamily="@font/worksans_regular"
+        android:textColor="@color/grey"
+        android:layout_margin="@dimen/_10sdp"
+        android:textSize="@dimen/_10sdp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                android:id="@+id/things_you_need"
+                layout="@layout/layout_things_you_need"/>
+
+            <include
+                android:id="@+id/please_note"
+                layout="@layout/layout_please_note"/>
+
+            <include
+                android:id="@+id/customer_support_suggestions"
+                layout="@layout/layout_customer_support_suggestions"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/obliged_to_have_feedback"
+                android:fontFamily="@font/worksans_regular"
+                android:layout_margin="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"/>
+
+            <include
+                android:id="@+id/btn_container"
+                layout="@layout/layout_button_container"/>
+
+            <include
+                android:id="@+id/must_read"
+                layout="@layout/layout_must_read"/>
+
+
+            <include
+                android:id="@+id/footer_links"
+                layout="@layout/layout_footer_links"/>
+
+            <include
+                android:id="@+id/footer_copy_rights"
+                layout="@layout/layout_footer_copyright"/>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>
